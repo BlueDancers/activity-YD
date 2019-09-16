@@ -4,7 +4,7 @@
       <div class="item_img">
         <img src="../../assets/logo.png" alt="" />
       </div>
-      <div class="item_add">
+      <div class="item_add" @click="createObject">
         新建项目
       </div>
     </div>
@@ -73,8 +73,41 @@ export default {
           disp: '',
           timer: '',
           photo: '',
+        },
+        {
+          id: '7',
+          title: '',
+          disp: '',
+          timer: '',
+          photo: '',
+        },
+        {
+          id: '8',
+          title: '',
+          disp: '',
+          timer: '',
+          photo: '',
+        },
+        {
+          id: '9',
+          title: '',
+          disp: '',
+          timer: '',
+          photo: '',
+        },
+        {
+          id: '10',
+          title: '',
+          disp: '',
+          timer: '',
+          photo: '',
         }
       ]
+    }
+  },
+  methods: {
+    createObject() {
+      this.$router.push({ name: 'main' })
     }
   }
 }
@@ -92,15 +125,20 @@ export default {
       text-align: center;
     }
     .item_add {
+      border-top: 1px solid #e8e8ea;
+      line-height: 40px;
+      font-size: 15px;
       position: absolute;
       bottom: 0px;
       left: 0px;
       right: 0px;
       text-align: center;
+      background-color: #fafafa;
     }
   }
   .base_item {
     position: relative;
+    border: 1px solid #e8e8ea;
     box-sizing: border-box;
     width: 18%;
     min-width: 300px;
@@ -110,9 +148,9 @@ export default {
     background-color: white;
     cursor: pointer;
     border-radius: 5px;
-    transition: all 0.5s;
+    transition: all 0.3s;
     &:hover {
-      transition: all 0.5s;
+      transition: all 0.3s;
       box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
       margin-top: 10px;
     }

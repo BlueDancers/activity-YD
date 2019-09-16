@@ -21,11 +21,15 @@ export default {
 
 <style lang="less" scoped>
 .header_con {
+  z-index: 10000;
+  min-height: 50px;
+  height: 6%;
   .header_back {
-    height: 50px;
+    height: 100%;
     width: 100%;
   }
   .header {
+    z-index: 10000;
     position: fixed;
     top: 0px;
     left: 0px;
@@ -33,7 +37,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: 6%;
+    min-height: 50px;
     background-color: white;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     .left_header {

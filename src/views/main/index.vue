@@ -1,61 +1,68 @@
 <template>
-  <div class="main">
-    <div class="main_con" v-for="item in mainList" :key="item.id">
-      <!--初始化项目 -->
-      <div class="item" v-if="id == ''">
-        <div class="item_default">
-          <img src="" alt="" />
-        </div>
-      </div>
-      <div class="item" v-else>
-        <div class="item_img">
-          <img src="" alt="" />
-        </div>
-        <div class="item_disp">
-          <span class="title">
-            {{ item.title }}
-          </span>
-          <span class="disp"></span>
-          <span class="timer"></span>
-        </div>
-        <div class="active"></div>
-      </div>
+  <div class="index">
+    <div class="index_left">
+      <a-tabs defaultActiveKey="1" @change="callback">
+        <a-tab-pane tab="组件列表" key="1">
+          <component-page></component-page>
+        </a-tab-pane>
+        <a-tab-pane tab="页面管理" key="2">
+          <page></page>
+        </a-tab-pane>
+        <a-tab-pane tab="使用模板" key="3">
+          <template-page></template-page>
+        </a-tab-pane>
+      </a-tabs>
+    </div>
+    <div class="index_center">
+      <core></core>
+    </div>
+    <div class="index_right">
+      <a-tabs defaultActiveKey="1" @change="callback">
+        <a-tab-pane tab="属性" key="1">
+          <component-page></component-page>
+        </a-tab-pane>
+        <a-tab-pane tab="脚本" key="2">
+          <page></page>
+        </a-tab-pane>
+      </a-tabs>
     </div>
   </div>
 </template>
 
 <script>
+import componentPage from './components/component';
+import page from './components/page';
+import templatePage from './components/template';
+import core from './components/core';
 export default {
-  mounted() {
+  components: {
+    componentPage,
+    page,
+    templatePage,
+    core
   },
-  data() {
-    return {
-      mainList: [
-        {
-          id: '',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        }
-      ]
-    }
+  methods: {
+    callback() { }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.main {
-  .main_con {
-    .item {
-      width: 200px;
-      height: 200px;
-      background-color: white;
-      .item_default {
-
-
-      }
-    }
+.index {
+  height: 94%;
+  display: flex;
+  justify-content: space-between;
+  .index_left {
+    position: relative;
+    background-color: white;
+    width: 330px;
+    height: 100%;
+  }
+  .index_right {
+    position: relative;
+    background-color: white;
+    width: 330px;
+    height: 100%;
   }
 }
 </style>
