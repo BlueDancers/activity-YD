@@ -42,4 +42,7 @@ body {
     }
   }
 }
+.baseComplate {
+  position: absolute;
+}
 </style>
