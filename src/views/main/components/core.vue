@@ -15,16 +15,16 @@
 <script>
 // 数据源
 import core from '../../../store/modules/core';
-
 // 组件源
 import baseButtom from '../../../template/baseButtom';
+import baseImg from '../../../template/baseImg';
 export default {
   components: {
-    baseButtom
+    baseButtom,
+    baseImg
   },
   computed: {
     template() {
-      console.log(core.state.template);
       return core.state.template
     }
   }

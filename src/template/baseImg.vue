@@ -1,11 +1,15 @@
 <template>
-  <div class="btn_con" @mousedown="toggleEdit">
+  <div class="base_img" @mousedown="toggleEdit">
     <edit v-if="editStatus" :styles="style" :id="id">
-      <button class="inline_btn">{{ text }}</button>
+      <img class="inline_img" :src="text" alt="" />
     </edit>
-    <button v-if="!editStatus" class="baseComplate" :style="style">
-      {{ text }}
-    </button>
+    <img
+      class="baseComplate"
+      v-if="!editStatus"
+      :src="text"
+      alt=""
+      :style="style"
+    />
   </div>
 </template>
 
@@ -22,7 +26,6 @@ export default {
     },
     text: {
       type: String,
-      default: '按钮'
     },
     option: {
       type: Object,
@@ -43,11 +46,15 @@ export default {
       this.$store.commit('core/toggle_temp_status', this.id)
     }
   }
-} 
+}
 </script>
 
 <style lang="less" scoped>
-.btn_con {
+.inline_img {
   user-select: none;
+  vertical-align: middle;
+  border-style: none;
+  width: 100%;
+  height: 100%;
 }
 </style>

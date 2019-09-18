@@ -31,78 +31,7 @@ export default {
   },
   data() {
     return {
-      mainList: [
-        {
-          id: '1',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '2',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '3',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '4',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '5',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '6',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '7',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '8',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '9',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        },
-        {
-          id: '10',
-          title: '',
-          disp: '',
-          timer: '',
-          photo: '',
-        }
-      ]
+      mainList: []
     }
   },
   methods: {

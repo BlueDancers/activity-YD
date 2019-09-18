@@ -1,9 +1,5 @@
 <template>
-  <div v-show="editStatus" class="edit" :style="styles" @mousedown="mousedown">
-    <!--  
-    @mouseup="mouseup"
-    @mousemove="mousemove"
-    @mouseleave="mouseleave" -->
+  <div class="edit" :style="styles" @mousedown="mousedown">
     <div
       class="top_left"
       @mousemove.stop="topTop"
@@ -49,10 +45,6 @@ export default {
     styles: {
       type: Object,
       default: {}
-    },
-    editStatus: {
-      type: Boolean,
-      default: false
     }
   },
   data() {

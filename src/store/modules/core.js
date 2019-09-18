@@ -3,26 +3,13 @@ const core = {
   state: {
     template: [
       {
-        id: 1231231212312,
+        id: new Date().getTime(), // 暂定
         editStatus: false,
-        name: "base-buttom",
-        text: "按钮",
+        name: "base-img",
+        text: require("../../assets/logo.png"),
         css: {
-          top: 200,
+          top: 100,
           left: 100,
-          width: 120,
-          height: 40,
-          zIndex: 1
-        }
-      },
-      {
-        id: 323423432,
-        editStatus: true,
-        name: "base-buttom",
-        text: "按钮11",
-        css: {
-          top: 300,
-          left: 200,
           width: 100,
           height: 50,
           zIndex: 1
@@ -31,10 +18,16 @@ const core = {
     ]
   },
   mutations: {
-    set_tempLate(state, name) {
+    // 增加元素
+    set_tempLate(state, template) {
       // 增加页面上的元素
-      state.template = name;
+      console.log(state.template);
+      console.log(template);
+      let list = state.template;
+      list.push(template);
+      state.template = list;
     },
+    // 更新元素可编辑状态
     toggle_temp_status(state, id) {
       let list = state.template;
       list.map(item => {
@@ -57,6 +50,7 @@ const core = {
       });
       state.template = list;
     },
+    // 更新元素大小
     updateZoom(state, data) {
       let list = state.template;
       if (data.status) {

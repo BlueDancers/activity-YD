@@ -9,7 +9,8 @@
           <page></page>
         </a-tab-pane>
         <a-tab-pane tab="使用模板" key="3">
-          <template-page></template-page>
+          123
+          <!-- <template-page></template-page> -->
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -19,7 +20,7 @@
     <div class="index_right">
       <a-tabs defaultActiveKey="1" @change="callback">
         <a-tab-pane tab="属性" key="1">
-          <component-page></component-page>
+          属性
         </a-tab-pane>
         <a-tab-pane tab="脚本" key="2">
           <page></page>
