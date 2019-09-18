@@ -7,17 +7,35 @@
     <div
       class="top_left"
       @mousemove.stop="topTop"
-      @mousedown.stop="roundMousedown"
+      @mousedown.stop="roundMousedown(true)"
+      @mouseup.stop="roundMounseup"
     ></div>
     <div
       class="top_top"
       @mousemove.stop="topTop"
-      mousedown.stop="roundMousedown"
+      @mousedown.stop="roundMousedown(true)"
+      @mouseup.stop="roundMounseup"
     ></div>
-    <div class="top_right" mousedown.stop="roundMousedown"></div>
-    <div class="bottom_left" mousedown.stop="roundMousedown"></div>
-    <div class="bottom_bottom" mousedown.stop="roundMousedown"></div>
-    <div class="bottom_right" mousedown.stop="roundMousedown"></div>
+    <div
+      class="top_right"
+      @mousedown.stop="roundMousedown(false)"
+      @mouseup.stop="roundMounseup"
+    ></div>
+    <div
+      class="bottom_left"
+      @mousedown.stop="roundMousedown(true)"
+      @mouseup.stop="roundMounseup"
+    ></div>
+    <div
+      class="bottom_bottom"
+      @mousedown.stop="roundMousedown(false)"
+      @mouseup.stop="roundMounseup"
+    ></div>
+    <div
+      class="bottom_right"
+      @mousedown.stop="roundMousedown(false)"
+      @mouseup.stop="roundMounseup"
+    ></div>
     <slot></slot>
   </div>
 </template>
@@ -41,7 +59,7 @@ export default {
     return {
       down: false, // 移动元素
       roundDown: false, // 缩放元素
-      startX: 0
+      roundDownState: false // false 无数处理的子节点 true 需要处理的子节点
     }
   },
   mounted() {
@@ -69,14 +87,14 @@ export default {
     mousedown(e) {
       console.log('鼠标按下');
       this.down = true
-      this.startX = e.clientX
     },
     mouseup() {
       console.log('鼠标松开');
       this.down = false
+      this.roundDown = false
     },
     mousemove(e) {
-      let moveX = e.movementX // e.clientX - this.startX
+      let moveX = e.movementX
       let moveY = e.movementY
       this.$store.commit('core/updatePos', {
         id: this.id,
@@ -84,26 +102,34 @@ export default {
         y: moveY
       })
     },
-    roundMousedown() {
-      console.log('子元素按下');
+    roundMousedown(state) {
+      console.log('坐标元素按下');
+      this.roundDown = true
+      this.roundDownState = state
+    },
+    roundMounseup() {
+      console.log('坐标元素松开');
+      this.roundDown = false
     },
     topTop(e) {
       console.log(e.movementY, 3121231);
-      this.roundDown = true
+
     },
     // 缩放元素
     Zoom(e) {
+      console.log('缩放');
       // 对接缩放元素的偏移坐标
       const data = {
         id: this.id,
-        x: 0,
-        y: 0
+        x: e.movementX,
+        y: e.movementY,
+        status: this.roundDownState
       }
-      this.$store.commit('core/updateZoom', {
-        id: this.id,
-        x: moveX,
-        y: moveY
-      })
+      console.log(data);
+      // 拖拽子元素分为两种情况
+      // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
+      this.$store.commit('core/updateZoom', data)
+      // 2. 上方中间 上方右边 下方左边
     }
   }
 }

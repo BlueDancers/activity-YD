@@ -59,12 +59,23 @@ const core = {
     },
     updateZoom(state, data) {
       let list = state.template;
-      list.map(item => {
-        if (item.id == data.id) {
-          item.css.width = item.css.width + data.width;
-          item.css.height = item.css.height + data.height;
-        }
-      });
+      if (data.status) {
+        list.map(item => {
+          if (item.id == data.id) {
+            item.css.left = item.css.left + data.x;
+            item.css.top = item.css.top + data.y;
+            item.css.width = item.css.width - data.x;
+            item.css.height = item.css.height - data.y;
+          }
+        });
+      } else {
+        list.map(item => {
+          if (item.id == data.id) {
+            item.css.width = item.css.width + data.x;
+            item.css.height = item.css.height + data.y;
+          }
+        });
+      }
       state.template = list;
     }
   },
