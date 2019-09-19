@@ -12,16 +12,19 @@
   </div>
 </template>
 
+
 <script>
 // 数据源
 import core from '../../../store/modules/core';
 // 组件源
 import baseButtom from '../../../template/baseButtom';
 import baseImg from '../../../template/baseImg';
+import baseText from '../../../template/baseText';
 export default {
   components: {
     baseButtom,
-    baseImg
+    baseImg,
+    baseText
   },
   computed: {
     template() {

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { baseButtom, baseImg } from '../../../utils/baseReact';
+import { baseButtom, baseImg, baseText } from '../../../utils/baseReact';
 export default {
   data() {
     return {
@@ -55,7 +55,7 @@ export default {
         this.ImgStatus = true
         // 弹窗代码 this.ImgSuccess
       } else if (index == 1) {
-        this.$message.info('暂未开发');
+        this.$store.commit('core/set_tempLate', baseText())
       } else if (index == 2) {
         this.$store.commit('core/set_tempLate', baseButtom())
       } else if (index == 3) {
