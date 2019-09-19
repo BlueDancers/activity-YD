@@ -7,8 +7,6 @@ const core = {
     // 增加元素
     set_tempLate(state, template) {
       // 增加页面上的元素
-      console.log(state.template);
-      console.log(template);
       let list = state.template;
       list.push(template);
       state.template = list;

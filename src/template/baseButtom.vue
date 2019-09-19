@@ -1,7 +1,7 @@
 <template>
   <div class="btn_con" @mousedown="toggleEdit">
     <edit v-show="editStatus" :styles="style" :id="id">
-      <button class="inline_btn">{{ text }}</button>
+      <button :style="style" class="inline_btn">{{ text }}</button>
     </edit>
     <button v-show="!editStatus" class="baseComplate" :style="style">
       {{ text }}

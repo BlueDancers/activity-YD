@@ -9,7 +9,7 @@
           <page></page>
         </a-tab-pane>
         <a-tab-pane tab="使用模板" key="3">
-          123
+          使用模板-暂时未在开发计划内
           <!-- <template-page></template-page> -->
         </a-tab-pane>
       </a-tabs>
@@ -20,7 +20,7 @@
     <div class="index_right">
       <a-tabs defaultActiveKey="1" @change="callback">
         <a-tab-pane tab="属性" key="1">
-          属性
+          <attributesPage></attributesPage>
         </a-tab-pane>
         <a-tab-pane tab="脚本" key="2">
           <page></page>
@@ -32,12 +32,14 @@
 
 <script>
 import componentPage from './components/component';
+import attributesPage from './components/attributes';
 import page from './components/page';
 import templatePage from './components/template';
 import core from './components/core';
 export default {
   components: {
     componentPage,
+    attributesPage,
     page,
     templatePage,
     core

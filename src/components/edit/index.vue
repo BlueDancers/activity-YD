@@ -104,12 +104,9 @@ export default {
       this.roundDown = false
     },
     topTop(e) {
-      console.log(e.movementY, 3121231);
-
     },
     // 缩放元素
     Zoom(e) {
-      console.log('缩放');
       // 对接缩放元素的偏移坐标
       const data = {
         id: this.id,
@@ -117,7 +114,6 @@ export default {
         y: e.movementY,
         status: this.roundDownState
       }
-      console.log(data);
       // 拖拽子元素分为两种情况
       // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
       this.$store.commit('core/updateZoom', data)

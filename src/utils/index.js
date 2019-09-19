@@ -3,7 +3,6 @@
  * @param {object} css 未经处理的css
  */
 function handleStyle(css) {
-  console.log(css);
   let cssUsable = {};
   const process = ["top", "left", "width", "height", "font-size"];
   for (const key in css) {
