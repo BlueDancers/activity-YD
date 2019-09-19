@@ -1,6 +1,6 @@
 module.exports = {
   //关闭eslint
-  publicPath: "/",
+  publicPath: "./",
   lintOnSave: false,
   productionSourceMap: false,
   css: {
