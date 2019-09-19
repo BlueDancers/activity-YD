@@ -1,5 +1,6 @@
 module.exports = {
   //关闭eslint
+  publicPath: "/",
   lintOnSave: false,
   productionSourceMap: false,
   css: {
@@ -9,6 +10,5 @@ module.exports = {
       }
     }
   },
-
   outputDir: "docs"
 };
