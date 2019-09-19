@@ -55,11 +55,11 @@ export default {
         this.ImgStatus = true
         // 弹窗代码 this.ImgSuccess
       } else if (index == 1) {
-
+        this.$message.info('暂未开发');
       } else if (index == 2) {
         this.$store.commit('core/set_tempLate', baseButtom())
       } else if (index == 3) {
-
+        this.$message.info('暂未开发');
       }
     },
     ImgSuccess() {

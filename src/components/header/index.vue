@@ -30,7 +30,7 @@ export default {
 
 <style lang="less" scoped>
 .header_con {
-  z-index: 10000;
+  z-index: 2;
   min-height: 50px;
   height: 6%;
   .header_back {
@@ -38,7 +38,7 @@ export default {
     width: 100%;
   }
   .header {
-    z-index: 10000;
+    z-index: 1;
     position: fixed;
     top: 0px;
     left: 0px;
