@@ -1,11 +1,11 @@
 <template>
   <div class="base_img" @mousedown="toggleEdit">
-    <edit v-if="editStatus" :styles="style" :id="id">
-      <img class="inline_img" :src="text" alt="" />
+    <edit v-show="editStatus" :styles="style" :id="id">
+      <img @mousedown="mousedown" class="inline_img" :src="text" alt="" />
     </edit>
     <img
       class="baseComplate"
-      v-if="!editStatus"
+      v-show="!editStatus"
       :src="text"
       alt=""
       :style="style"
@@ -44,6 +44,9 @@ export default {
   methods: {
     toggleEdit() {
       this.$store.commit('core/toggle_temp_status', this.id)
+    },
+    mousedown(e) {
+      e.preventDefault()
     }
   }
 }
@@ -52,7 +55,6 @@ export default {
 <style lang="less" scoped>
 .inline_img {
   user-select: none;
-  vertical-align: middle;
   border-style: none;
   width: 100%;
   height: 100%;

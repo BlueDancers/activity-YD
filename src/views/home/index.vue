@@ -1,10 +1,10 @@
 <template>
   <div class="main">
-    <div class="item">
-      <div class="item_img">
-        <img src="../../assets/logo.png" alt="" />
+    <div class="item" @click="createObject">
+      <div class="base_img">
+        <img src="../../assets/add.png" alt="" />
       </div>
-      <div class="item_add" @click="createObject">
+      <div class="item_add" >
         新建项目
       </div>
     </div>
@@ -52,6 +52,17 @@ export default {
       width: 100%;
       height: 200px;
       text-align: center;
+      line-height: 200px;
+    }
+    .base_img {
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 20px;
+        height: 20px;
+      }
     }
     .item_add {
       border-top: 1px solid #e8e8ea;

@@ -1,9 +1,9 @@
 <template>
   <div class="btn_con" @mousedown="toggleEdit">
-    <edit v-if="editStatus" :styles="style" :id="id">
+    <edit v-show="editStatus" :styles="style" :id="id">
       <button class="inline_btn">{{ text }}</button>
     </edit>
-    <button v-if="!editStatus" class="baseComplate" :style="style">
+    <button v-show="!editStatus" class="baseComplate" :style="style">
       {{ text }}
     </button>
   </div>

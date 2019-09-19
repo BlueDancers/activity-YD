@@ -1,21 +1,7 @@
 const core = {
   namespaced: true,
   state: {
-    template: [
-      {
-        id: new Date().getTime(), // 暂定
-        editStatus: false,
-        name: "base-img",
-        text: require("../../assets/logo.png"),
-        css: {
-          top: 100,
-          left: 100,
-          width: 100,
-          height: 50,
-          zIndex: 1
-        }
-      }
-    ]
+    template: []
   },
   mutations: {
     // 增加元素

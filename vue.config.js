@@ -1,10 +1,14 @@
 module.exports = {
-  lintOnSave: false, //关闭eslint
+  //关闭eslint
+  lintOnSave: false,
+  productionSourceMap: false,
   css: {
     loaderOptions: {
       less: {
         javascriptEnabled: true
       }
     }
-  }
+  },
+
+  outputDir: "docs"
 };

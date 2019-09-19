@@ -2,7 +2,7 @@
   <div class="header_con">
     <div class="header_back"></div>
     <div class="header">
-      <div class="left_header">
+      <div @click="gotoHome" class="left_header">
         易动编辑器
       </div>
       <!-- 左侧为操作栏 -->
@@ -15,7 +15,16 @@
 
 <script>
 export default {
+  data() {
+    return {
 
+    }
+  },
+  methods: {
+    gotoHome() {
+      this.$router.push({ name: 'home' })
+    }
+  }
 }
 </script>
 
@@ -42,6 +51,7 @@ export default {
     background-color: white;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     .left_header {
+      cursor: pointer;
       margin-left: 20px;
     }
     .right_header {
