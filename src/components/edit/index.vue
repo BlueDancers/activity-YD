@@ -1,5 +1,10 @@
 <template>
-  <div class="edit" :style="styles" @mousedown="mousedown">
+  <div
+    class="edit"
+    :style="styles"
+    @mousedown="mousedown"
+    @keyup.native.delete="deleteItem"
+  >
     <div
       class="top_left"
       @mousemove.stop="topTop"
@@ -118,6 +123,14 @@ export default {
       // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
       this.$store.commit('core/updateZoom', data)
       // 2. 上方中间 上方右边 下方左边
+    },
+    // 删除元素
+    deleteItem() {
+      console.log('删除元素');
+      const data = {
+        id: this.id
+      }
+      this.$store.commit('core/deleteCompLate', data)
     }
   }
 }

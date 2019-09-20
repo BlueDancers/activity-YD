@@ -1,5 +1,11 @@
 <template>
-  <div class="core">
+  <div
+    class="core"
+    :style="{
+      width: `${comm.width}px`,
+      height: `${comm.height}px`
+    }"
+  >
     <component
       v-for="(item, index) in template"
       :key="index"
@@ -28,7 +34,18 @@ export default {
   },
   computed: {
     template() {
+      console.log(core.state.template);
       return core.state.template
+    },
+    comm() {
+      console.log({
+        width: core.state.commWidth,
+        height: core.state.commHeight
+      });
+      return {
+        width: core.state.commWidth,
+        height: core.state.commHeight
+      }
     }
   }
 }
@@ -37,9 +54,7 @@ export default {
 <style lang="less" scoped>
 .core {
   position: relative;
-  margin-top: 20px;
-  width: 375px;
-  height: 600px;
   background-color: white;
+
 }
 </style>

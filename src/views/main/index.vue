@@ -15,6 +15,10 @@
       </a-tabs>
     </div>
     <div class="index_center">
+      <!-- <div class="index_center_header">
+        <span>开发模式</span>
+        <span>预览模式</span>
+      </div> -->
       <core></core>
     </div>
     <div class="index_right">
@@ -60,6 +64,17 @@ export default {
     background-color: white;
     width: 330px;
     height: 100%;
+  }
+  .index_center {
+    position: relative;
+    top: 20px;
+    display: flex;
+    justify-content: center;
+    height: 600px;
+    flex: 1;
+    overflow-x: hidden;
+    // display: flex;
+    // flex-direction: column;
   }
   .index_right {
     position: relative;

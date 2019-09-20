@@ -4,7 +4,14 @@
  */
 function handleStyle(css) {
   let cssUsable = {};
-  const process = ["top", "left", "width", "height", "font-size"];
+  const process = [
+    "top",
+    "left",
+    "width",
+    "height",
+    "font-size",
+    "border-radius"
+  ];
   for (const key in css) {
     if (process.includes(key)) {
       cssUsable[key] = `${css[key]}px`;

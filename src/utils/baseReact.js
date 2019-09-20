@@ -16,7 +16,12 @@ export function baseButtom() {
       left: 100 + dynamic,
       width: 100,
       height: 50,
-      zIndex: core.state.template.length + 1
+      zIndex: core.state.template.length + 1,
+      background: "rgb(242, 242, 242)",
+      border: "none",
+      color: "black",
+      "font-size": 20,
+      "border-radius": 10
     }
   };
 }
@@ -57,6 +62,10 @@ export function baseText() {
       width: 100,
       height: 50,
       zIndex: core.state.template.length + 1,
+      background: "rgb(242, 242, 242)",
+      border: "none",
+      color: "black",
+      "font-size": 12
     }
   };
 }

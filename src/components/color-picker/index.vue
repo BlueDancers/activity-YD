@@ -21,7 +21,7 @@
           v-on:click="handleDefaultColor"
           v-on:mouseover="hoveColor = defaultColor"
           v-on:mouseout="hoveColor = null"
-        >默认颜色</div>
+        >默认</div>
       </div>
       <div class="bd">
         <h3>主题颜色</h3>
@@ -228,6 +228,7 @@ export default {
     cursor: no-drop;
   }
   .box {
+    z-index: 1000;
     position: absolute;
     width: 190px;
     background: #fff;
@@ -264,7 +265,7 @@ export default {
       transition: background-color 0.3s ease;
     }
     .defaultColor {
-      width: 80px;
+      width: 60px;
       float: right;
       text-align: center;
       border: 1px solid #ddd;

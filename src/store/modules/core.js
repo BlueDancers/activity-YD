@@ -1,6 +1,8 @@
 const core = {
   namespaced: true,
   state: {
+    commWidth: 375, // web设计稿的尺寸
+    commHeight: 600,
     template: []
   },
   mutations: {
@@ -55,6 +57,54 @@ const core = {
         });
       }
       state.template = list;
+    },
+    deleteCompLate(state, data) {
+      let list = state.template;
+      let subscript = null;
+      list.map((e, index) => {
+        if (e.id == data.id) {
+          subscript = index;
+        }
+      });
+      list.splice(subscript, 1);
+      state.template = list;
+    },
+    // 左右居中
+    centerLR(state, data) {
+      let list = state.template;
+      list.map(item => {
+        if (item.id == data.id) {
+          item.css.left = (state.commWidth - item.css.width) / 2;
+        }
+      });
+    },
+    //左右铺满
+    fullLR(state, data) {
+      let list = state.template;
+      list.map(item => {
+        if (item.id == data.id) {
+          item.css.width = state.commWidth;
+          item.css.left = 0;
+        }
+      });
+    },
+    // 紧贴上方
+    pasteTop(state, data) {
+      let list = state.template;
+      list.map(item => {
+        if (item.id == data.id) {
+          item.css.top = 0;
+        }
+      });
+    },
+    // 紧贴下方
+    pastebottom(state, data) {
+      let list = state.template;
+      list.map(item => {
+        if (item.id == data.id) {
+          item.css.top = state.commHeight - item.css.height;
+        }
+      });
     }
   },
   actions: {}
