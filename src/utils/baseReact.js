@@ -20,8 +20,8 @@ export function baseButtom() {
       background: "rgb(242, 242, 242)",
       border: "none",
       color: "black",
-      "font-size": 20,
-      "border-radius": 10
+      "font-size": 18,
+      "border-radius": 0
     }
   };
 }

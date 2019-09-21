@@ -4,7 +4,7 @@
       <div class="base_img">
         <img src="../../assets/add.png" alt="" />
       </div>
-      <div class="item_add" >
+      <div class="item_add">
         新建项目
       </div>
     </div>
@@ -26,8 +26,16 @@
 </template>
 
 <script>
+import { getActivity } from '../../utils/request';
 export default {
   mounted() {
+    getActivity().then(e => {
+      console.log(e);
+    })
+      .catch(err => {
+        console.log('错误', err);
+
+      })
   },
   data() {
     return {
