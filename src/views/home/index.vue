@@ -22,11 +22,38 @@
       </div>
       <div class="active"></div>
     </div>
+    <!-- 增加弹窗 -->
+    <a-modal
+      title="增加项目"
+      :visible="Objectvisible"
+      okText="确认"
+      cancelText="取消"
+      @ok="objSuccess"
+      :confirmLoading="confirmLoading"
+      @cancel="obFall"
+    >
+      <a-form :form="objform">
+        <a-form-item
+          label="项目名称"
+          :label-col="{ span: 5 }"
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-input v-model="objform.name" />
+        </a-form-item>
+        <a-form-item
+          label="项目描述"
+          :label-col="{ span: 5 }"
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-input type="textarea" v-model="objform.disp" />
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
 <script>
-import { getActivity } from '../../utils/request';
+import { getActivity, setObject } from '../../api/index';
 export default {
   mounted() {
     getActivity().then(e => {
@@ -39,12 +66,31 @@ export default {
   },
   data() {
     return {
-      mainList: []
+      mainList: [],
+      Objectvisible: false,
+      confirmLoading: false,
+      objform: {
+        name: '',
+        disp: ''
+      }
     }
   },
   methods: {
     createObject() {
-      this.$router.push({ name: 'main' })
+      this.Objectvisible = true
+      // this.$router.push({ name: 'main' })
+    },
+    objSuccess() {
+      console.log('确定');
+      setObject(this.objform).then(res => {
+        console.log(res);
+      })
+    },
+    obFall() {
+      this.Objectvisible = false
+    },
+    objSubmit() {
+      console.log('提交表单');
     }
   }
 }

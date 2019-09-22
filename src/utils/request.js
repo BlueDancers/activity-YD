@@ -1,9 +1,9 @@
-import axios from "axios";
-const baseUrl = "http://127.0.0.1:7002";
+import Axios from "axios";
 
-export function getActivity() {
-  return axios.request({
-    url: `${baseUrl}/getActivity`,
-    method: "get"
-  });
-}
+const baseURL = "http://127.0.0.1:7001";
+
+const axios = Axios.create({
+  baseURL
+});
+
+export default axios;

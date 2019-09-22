@@ -1,3 +1,5 @@
+import { saveActivity } from "../../api/index";
+
 const core = {
   namespaced: true,
   state: {
@@ -107,7 +109,20 @@ const core = {
       });
     }
   },
-  actions: {}
+  actions: {
+    saveObject({ state }) {
+      return new Promise((resolve, reject) => {
+        if (state.template.length == 0) {
+          reject("请不要保存空页面");
+        } else {
+          resolve("成功");
+          saveActivity(state.template).then(e => {
+            resolve(e);
+          });
+        }
+      });
+    }
+  }
 };
 
 export default core;

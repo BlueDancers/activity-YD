@@ -7,6 +7,14 @@
       </div>
       <!-- 左侧为操作栏 -->
       <div class="right_header">
+        <a-button
+          @click="saveObject"
+          v-if="ismain"
+          type="primary"
+          icon="cloud"
+          class="right_header_item"
+          >发布</a-button
+        >
         <span>github</span>
       </div>
     </div>
@@ -17,12 +25,32 @@
 export default {
   data() {
     return {
-
+      ismain: false
+    }
+  },
+  watch: {
+    $route(to, form) {
+      if (to.name == 'main') {
+        this.ismain = true
+      } else {
+        this.ismain = false
+      }
     }
   },
   methods: {
     gotoHome() {
-      this.$router.push({ name: 'home' })
+      if (this.ismain) {
+        this.$router.push({ name: 'home' })
+      }
+    },
+    saveObject() {
+      // 保存当前页面的配置
+      this.$store.dispatch('core/saveObject').then(res => {
+        console.log(res);
+      })
+        .catch(err => {
+          this.$message.error(err)
+        })
     }
   }
 }
@@ -56,6 +84,9 @@ export default {
     }
     .right_header {
       margin-right: 20px;
+      .right_header_item {
+        margin-right: 20px;
+      }
     }
   }
 }
