@@ -18,7 +18,7 @@ export default new Router({
       component: Home
     },
     {
-      path: "/main",
+      path: "/main/:objectName",
       name: "main",
       component: () => import("./views/main/index.vue")
     }

@@ -61,7 +61,6 @@ export default {
     })
       .catch(err => {
         console.log('错误', err);
-
       })
   },
   data() {
@@ -81,9 +80,12 @@ export default {
       // this.$router.push({ name: 'main' })
     },
     objSuccess() {
-      console.log('确定');
       setObject(this.objform).then(res => {
-        console.log(res);
+        if (res.data.code == 200) {
+          this.$router.push({ name: 'main', params: { objectName: res.data.data } })
+        } else {
+          this.$message.error(res.data.data)
+        }
       })
     },
     obFall() {
