@@ -14,13 +14,19 @@
         <img src="../../assets/logo.png" alt="" />
       </div>
       <div class="item_disp">
-        <span class="title">
-          {{ item.title }}
-        </span>
-        <span class="disp"></span>
-        <span class="timer"></span>
+        <p class="name_con">
+          项目名: <span class="name">{{ item.name }}</span>
+        </p>
+        <p class="disp_con">
+          描述: <span class="disp">{{ item.disp }}</span>
+        </p>
+        <p class="time_con">
+          时间: <span class="time">{{ item.time }}</span>
+        </p>
       </div>
-      <div class="active"></div>
+      <div class="active">
+        后期开发
+      </div>
     </div>
     <!-- 增加弹窗 -->
     <a-modal
@@ -53,11 +59,12 @@
 </template>
 
 <script>
-import { getActivity, setObject } from '../../api/index';
+import { getObject, setObject } from '../../api/index';
 export default {
   mounted() {
-    getActivity().then(e => {
+    getObject().then(e => {
       console.log(e);
+      this.mainList = e.data.data
     })
       .catch(err => {
         console.log('错误', err);
@@ -77,7 +84,6 @@ export default {
   methods: {
     createObject() {
       this.Objectvisible = true
-      // this.$router.push({ name: 'main' })
     },
     objSuccess() {
       setObject(this.objform).then(res => {
@@ -120,7 +126,39 @@ export default {
         height: 20px;
       }
     }
+    .item_disp {
+      margin-left: 10px;
+      border-top: 1px solid #e8e8ea;
+      padding-top: 10px;
+      .name_con {
+        font-size: 16px;
+        margin-bottom: 5px;
+        .name {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+      .disp_con {
+        color: #8d8d8d;
+        margin-bottom: 5px;
+      }
+      .time_con {
+        color: #8d8d8d;
+        margin-bottom: 5px;
+      }
+    }
     .item_add {
+      border-top: 1px solid #e8e8ea;
+      line-height: 40px;
+      font-size: 15px;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      text-align: center;
+      background-color: #fafafa;
+    }
+    .active {
       border-top: 1px solid #e8e8ea;
       line-height: 40px;
       font-size: 15px;

@@ -5,9 +5,14 @@ const core = {
   state: {
     commWidth: 375, // web设计稿的尺寸
     commHeight: 600,
+    parentName: "",
     template: []
   },
   mutations: {
+    // 保存当前项目名
+    set_objectName(state, name) {
+      state.parentName = name;
+    },
     // 增加元素
     set_tempLate(state, template) {
       // 增加页面上的元素
@@ -110,13 +115,23 @@ const core = {
     }
   },
   actions: {
+    // 保存当前项目数据
     saveObject({ state }) {
       return new Promise((resolve, reject) => {
         if (state.template.length == 0) {
           reject("请不要保存空页面");
         } else {
           resolve("成功");
-          saveActivity(state.template).then(e => {
+          let data = [];
+          state.template.map(item => {
+            data.push({
+              objectName: state.parentName,
+              name: item.name,
+              text: item.text,
+              css: item.css
+            });
+          });
+          saveActivity(data).then(e => {
             resolve(e);
           });
         }

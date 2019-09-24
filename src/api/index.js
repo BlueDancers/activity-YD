@@ -1,11 +1,11 @@
 import request from "../utils/request";
 
 /**
- * 获取后端数据
+ * 获取现有项目
  */
-export function getActivity() {
+export function getObject() {
   return request({
-    url: `/getActivity`,
+    url: `/getObject`,
     method: "get"
   });
 }

@@ -48,6 +48,10 @@ export default {
     templatePage,
     core
   },
+  mounted() {
+    let objName = this.$route.params.objectName
+    this.$store.commit('core/set_objectName', objName)
+  },
   methods: {
     callback() { }
   }
