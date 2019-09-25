@@ -47,6 +47,11 @@ export default {
       // 保存当前页面的配置
       this.$store.dispatch('core/saveObject').then(res => {
         console.log(res);
+        if (res.data.code == 200) {
+          this.$message.success(res.data.data)
+        } else {
+          this.$message.error(res.data.data)
+        }
       })
         .catch(err => {
           this.$message.error(err)

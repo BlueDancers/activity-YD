@@ -1,4 +1,4 @@
-import { saveActivity } from "../../api/index";
+import { saveActivity, getActivity } from "../../api/index";
 
 const core = {
   namespaced: true,
@@ -121,20 +121,27 @@ const core = {
         if (state.template.length == 0) {
           reject("请不要保存空页面");
         } else {
-          resolve("成功");
-          let data = [];
-          state.template.map(item => {
-            data.push({
-              objectName: state.parentName,
-              name: item.name,
-              text: item.text,
-              css: item.css
-            });
-          });
-          saveActivity(data).then(e => {
+          saveActivity(state.parentName, state.template).then(e => {
             resolve(e);
           });
         }
+      });
+    },
+    // 获取当前配置
+    getActivity({ state }, data) {
+      return new Promise((resolve, reject) => {
+        getActivity(data.name).then(e => {
+          if (e.data.code !== 200) {
+            reject(e.data.data);
+          } else {
+            let template = [];
+            e.data.data.map(e => {
+              template.push({ ...e, editStatus: false });
+            });
+            state.template = template;
+            resolve("数据查询完成");
+          }
+        });
       });
     }
   }

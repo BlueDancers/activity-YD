@@ -8,7 +8,12 @@
         新建项目
       </div>
     </div>
-    <div class="item" v-for="item in mainList" :key="item.id">
+    <div
+      class="item"
+      v-for="item in mainList"
+      :key="item.id"
+      @click="gotoObject(item.name)"
+    >
       <!--初始化项目 -->
       <div class="item_img">
         <img src="../../assets/logo.png" alt="" />
@@ -97,8 +102,8 @@ export default {
     obFall() {
       this.Objectvisible = false
     },
-    objSubmit() {
-      console.log('提交表单');
+    gotoObject(name) {
+      this.$router.push({ name: 'main', params: { objectName: name } })
     }
   }
 }

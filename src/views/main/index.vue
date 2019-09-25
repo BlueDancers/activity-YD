@@ -51,6 +51,11 @@ export default {
   mounted() {
     let objName = this.$route.params.objectName
     this.$store.commit('core/set_objectName', objName)
+    this.$store.dispatch('core/getActivity', { name: objName }).then((result) => {
+      // this.$message.success(result)
+    }).catch((err) => {
+      this.$message.error(err)
+    });
   },
   methods: {
     callback() { }

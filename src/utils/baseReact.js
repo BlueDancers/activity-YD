@@ -7,7 +7,7 @@ import core from "../store/modules/core";
 export function baseButtom() {
   let dynamic = core.state.template.length * 10;
   return {
-    id: new Date().getTime(), // 暂定
+    id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: "base-buttom",
     text: "按钮",
@@ -32,7 +32,7 @@ export function baseButtom() {
 export function baseImg(img) {
   let dynamic = core.state.template.length * 10;
   return {
-    id: new Date().getTime(), // 暂定
+    id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: "base-img",
     text: img,
@@ -52,7 +52,7 @@ export function baseImg(img) {
 export function baseText() {
   let dynamic = core.state.template.length * 10;
   return {
-    id: new Date().getTime(), // 暂定
+    id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: "base-text",
     text: "请修改此处的文字",

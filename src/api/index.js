@@ -1,24 +1,12 @@
 import request from "../utils/request";
 
 /**
- * 获取现有项目
+ * 获取所有项目
  */
 export function getObject() {
   return request({
     url: `/getObject`,
     method: "get"
-  });
-}
-
-/**
- *
- * @param {object} ActvityList 当前页面映射元素
- */
-export function saveActivity(ActvityList) {
-  return request({
-    url: `/saveActivity`,
-    method: "post",
-    data: ActvityList
   });
 }
 
@@ -31,5 +19,32 @@ export function setObject(form) {
     url: `/setObject`,
     method: "post",
     data: form
+  });
+}
+
+/**
+ *
+ * @param {string} parentName 项目名
+ * @param {Array} template 项目模板信息
+ */
+export function saveActivity(parentName, template) {
+  return request({
+    url: `/saveActivity`,
+    method: "post",
+    data: {
+      parentName,
+      template
+    }
+  });
+}
+
+/**
+ * 获取项目配置
+ * @param {string} name 项目名称
+ */
+export function getActivity(name) {
+  return request({
+    url: `/getActivity/${name}`,
+    method: "post"
   });
 }

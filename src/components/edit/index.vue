@@ -3,7 +3,8 @@
     class="edit"
     :style="styles"
     @mousedown="mousedown"
-    @keyup.native.delete="deleteItem"
+    @keyup.delete="deleteItem"
+    @click.right="mouseRight"
   >
     <div
       class="top_left"
@@ -45,7 +46,7 @@
 export default {
   props: {
     id: {
-      type: Number
+      type: String
     },
     styles: {
       type: Object,
@@ -131,6 +132,14 @@ export default {
         id: this.id
       }
       this.$store.commit('core/deleteCompLate', data)
+    },
+    mouseRight(e) {
+      e.preventDefault()
+      const data = {
+        id: this.id
+      }
+      this.$store.commit('core/deleteCompLate', data)
+      console.log('鼠标右击');
     }
   }
 }
