@@ -65,6 +65,8 @@
 
 <script>
 import { getObject, setObject } from '../../api/index';
+import { commHeight } from '../../config/index';
+import core from '../../store/modules/core';
 export default {
   mounted() {
     getObject().then(e => {
@@ -91,7 +93,7 @@ export default {
       this.Objectvisible = true
     },
     objSuccess() {
-      setObject(this.objform).then(res => {
+      setObject({ ...this.objform, height: core.state.commHeight }).then(res => {
         if (res.data.code == 200) {
           this.$router.push({ name: 'main', params: { objectName: res.data.data } })
         } else {

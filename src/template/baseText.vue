@@ -1,5 +1,5 @@
 <template>
-  <div class="btn_con" @mousedown="toggleEdit">
+  <div class="btn_con" @mouseover="toggleEdit" @mouseleave="clearEdit">
     <edit v-show="editStatus" :styles="style" :id="id">
       <div class="inline_btn">{{ text }}</div>
     </edit>
@@ -41,6 +41,9 @@ export default {
   methods: {
     toggleEdit() {
       this.$store.commit('core/toggle_temp_status', this.id)
+    },
+    clearEdit() {
+      // this.$store.commit('core/clear_template')
     }
   }
 } 

@@ -1,10 +1,9 @@
-import { saveActivity, getActivity } from "../../api/index";
-
+import { saveActivity, getActivity, updateObjHeight } from "../../api/index";
+import { commHeight } from "../../config/index";
 const core = {
   namespaced: true,
   state: {
-    commWidth: 375, // web设计稿的尺寸
-    commHeight: 600,
+    commHeight: commHeight,
     parentName: "",
     template: []
   },
@@ -30,6 +29,12 @@ const core = {
           item.editStatus = false;
         }
       });
+      state.template = list;
+    },
+    // 去除选择状态
+    clear_template(state) {
+      let list = state.template;
+      list.map(item => (item.editStatus = false));
       state.template = list;
     },
     // 更新元素位置
@@ -112,20 +117,25 @@ const core = {
           item.css.top = state.commHeight - item.css.height;
         }
       });
+    },
+    // 修改页面高度
+    updateCommHeigth(state, heigth) {
+      state.commHeight = heigth;
     }
   },
   actions: {
     // 保存当前项目数据
-    saveObject({ state }) {
-      return new Promise((resolve, reject) => {
-        if (state.template.length == 0) {
-          reject("请不要保存空页面");
-        } else {
-          saveActivity(state.parentName, state.template).then(e => {
-            resolve(e);
-          });
-        }
-      });
+    async saveObject({ state }) {
+      if (state.template.length == 0) {
+        return Promise.reject("请不要保存空页面");
+      }
+      let { parentName, commHeight, template } = state;
+      let saveActivityapi = saveActivity(parentName, template).then(e => e);
+      let updateObjHeightapi = updateObjHeight(parentName, commHeight).then(
+        e => e
+      );
+      const e_2 = await Promise.all([updateObjHeightapi, saveActivityapi]);
+      return e_2[1];
     },
     // 获取当前配置
     getActivity({ state }, data) {
@@ -135,10 +145,11 @@ const core = {
             reject(e.data.data);
           } else {
             let template = [];
-            e.data.data.map(e => {
+            e.data.data.data.map(e => {
               template.push({ ...e, editStatus: false });
             });
             state.template = template;
+            state.commHeight = e.data.data.objHeight;
             resolve("数据查询完成");
           }
         });

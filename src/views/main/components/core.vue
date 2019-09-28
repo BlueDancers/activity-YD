@@ -2,8 +2,7 @@
   <div
     class="core"
     :style="{
-      width: `${comm.width}px`,
-      height: `${comm.height}px`
+      height: `${commHeight}px`
     }"
   >
     <component
@@ -26,6 +25,7 @@ import core from '../../../store/modules/core';
 import baseButtom from '../../../template/baseButtom';
 import baseImg from '../../../template/baseImg';
 import baseText from '../../../template/baseText';
+import { commHeight } from '../../../config/index';
 export default {
   components: {
     baseButtom,
@@ -34,18 +34,10 @@ export default {
   },
   computed: {
     template() {
-      console.log(core.state.template);
       return core.state.template
     },
-    comm() {
-      console.log({
-        width: core.state.commWidth,
-        height: core.state.commHeight
-      });
-      return {
-        width: core.state.commWidth,
-        height: core.state.commHeight
-      }
+    commHeight() {
+      return core.state.commHeight
     }
   }
 }
@@ -53,8 +45,8 @@ export default {
 
 <style lang="less" scoped>
 .core {
+  width: 375px;
   position: relative;
   background-color: white;
-
 }
 </style>
