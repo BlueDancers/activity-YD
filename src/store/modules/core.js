@@ -1,8 +1,9 @@
 import { saveActivity, getActivity, updateObjHeight } from "../../api/index";
-import { commHeight } from "../../config/index";
+import { commHeight, commWidth } from "../../config/index";
 const core = {
   namespaced: true,
   state: {
+    commWidth: commWidth,
     commHeight: commHeight,
     parentName: "",
     template: []
@@ -51,20 +52,50 @@ const core = {
     // 更新元素大小
     updateZoom(state, data) {
       let list = state.template;
-      if (data.status) {
+      let { type } = data;
+      if (type == 1) {
         list.map(item => {
           if (item.id == data.id) {
-            item.css.left = item.css.left + data.x;
-            item.css.top = item.css.top + data.y;
+            item.css.left = Number(item.css.left) + data.x;
+            item.css.top = Number(item.css.top) + data.y;
             item.css.width = item.css.width - data.x;
             item.css.height = item.css.height - data.y;
           }
         });
-      } else {
+      } else if (type == 2) {
         list.map(item => {
           if (item.id == data.id) {
-            item.css.width = item.css.width + data.x;
-            item.css.height = item.css.height + data.y;
+            item.css.top = Number(item.css.top) + data.y;
+            item.css.height = item.css.height - data.y;
+          }
+        });
+      } else if (type == 3) {
+        list.map(item => {
+          if (item.id == data.id) {
+            item.css.top = Number(item.css.top) + data.y;
+            item.css.width = Number(item.css.width) + data.x;
+            item.css.height = item.css.height - data.y;
+          }
+        });
+      } else if (type == 4) {
+        list.map(item => {
+          if (item.id == data.id) {
+            item.css.left = Number(item.css.left) + data.x;
+            item.css.width = item.css.width - data.x;
+            item.css.height = Number(item.css.height) + data.y;
+          }
+        });
+      } else if (type == 5) {
+        list.map(item => {
+          if (item.id == data.id) {
+            item.css.height = Number(item.css.height) + data.y;
+          }
+        });
+      } else if (type == 6) {
+        list.map(item => {
+          if (item.id == data.id) {
+            item.css.width = Number(item.css.width) + data.x;
+            item.css.height = Number(item.css.height) + data.y;
           }
         });
       }

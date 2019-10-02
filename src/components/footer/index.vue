@@ -23,6 +23,7 @@ export default {
 <style lang="less" scoped>
 .footer {
   padding: 20px 0px;
+  text-align: center;
   .footer_main {
     font-size: 14px;
     color: rgba(0, 0, 0, 0.45);

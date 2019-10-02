@@ -1,10 +1,10 @@
 <template>
   <div class="btn_con" @mouseover="toggleEdit" @mouseleave="clearEdit">
     <edit v-show="editStatus" :styles="style" :id="id">
-      <div class="inline_btn">{{ text }}</div>
+      <p class="inline_btn" v-html="text"></p>
     </edit>
     <div v-show="!editStatus" class="baseComplate" :style="style">
-      {{ text }}
+      <p v-html="text"></p>
     </div>
   </div>
 </template>

@@ -9,33 +9,33 @@
     <div
       class="top_left"
       @mousemove.stop="topTop"
-      @mousedown.stop="roundMousedown(true)"
+      @mousedown.stop="roundMousedown(1)"
       @mouseup.stop="roundMounseup"
     ></div>
     <div
       class="top_top"
       @mousemove.stop="topTop"
-      @mousedown.stop="roundMousedown(true)"
+      @mousedown.stop="roundMousedown(2)"
       @mouseup.stop="roundMounseup"
     ></div>
     <div
       class="top_right"
-      @mousedown.stop="roundMousedown(false)"
+      @mousedown.stop="roundMousedown(3)"
       @mouseup.stop="roundMounseup"
     ></div>
     <div
       class="bottom_left"
-      @mousedown.stop="roundMousedown(true)"
+      @mousedown.stop="roundMousedown(4)"
       @mouseup.stop="roundMounseup"
     ></div>
     <div
       class="bottom_bottom"
-      @mousedown.stop="roundMousedown(false)"
+      @mousedown.stop="roundMousedown(5)"
       @mouseup.stop="roundMounseup"
     ></div>
     <div
       class="bottom_right"
-      @mousedown.stop="roundMousedown(false)"
+      @mousedown.stop="roundMousedown(6)"
       @mouseup.stop="roundMounseup"
     ></div>
     <slot></slot>
@@ -57,7 +57,7 @@ export default {
     return {
       down: false, // 移动元素
       roundDown: false, // 缩放元素
-      roundDownState: false // false 无数处理的子节点 true 需要处理的子节点
+      roundDownState: false // 1 2 3 4 5 6 对应每个节点
     }
   },
   mounted() {
@@ -101,7 +101,6 @@ export default {
       })
     },
     roundMousedown(state) {
-      console.log('坐标元素按下');
       this.roundDown = true
       this.roundDownState = state
     },
@@ -118,7 +117,7 @@ export default {
         id: this.id,
         x: e.movementX,
         y: e.movementY,
-        status: this.roundDownState
+        type: this.roundDownState
       }
       // 拖拽子元素分为两种情况
       // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)

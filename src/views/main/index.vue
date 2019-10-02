@@ -75,15 +75,12 @@ export default {
     height: 100%;
   }
   .index_center {
+    padding: 20px 0;
     position: relative;
-    top: 20px;
     display: flex;
     justify-content: center;
-    height: 600px;
     flex: 1;
     overflow-x: hidden;
-    // display: flex;
-    // flex-direction: column;
   }
   .index_right {
     position: relative;
