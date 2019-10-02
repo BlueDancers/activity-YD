@@ -10,7 +10,10 @@ function handleStyle(css) {
     "width",
     "height",
     "font-size",
-    "border-radius"
+    "border-radius",
+    "border-width",
+    "padding-left",
+    "padding-right"
   ];
   for (const key in css) {
     if (process.includes(key)) {

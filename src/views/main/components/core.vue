@@ -26,12 +26,14 @@ import core from '../../../store/modules/core';
 import baseButtom from '../../../template/baseButtom';
 import baseImg from '../../../template/baseImg';
 import baseText from '../../../template/baseText';
+import baseInput from '../../../template/baseInput'
 import { commHeight } from '../../../config/index';
 export default {
   components: {
     baseButtom,
     baseImg,
-    baseText
+    baseText,
+    baseInput
   },
   mounted() {
     this.initBack()

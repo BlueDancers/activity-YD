@@ -165,8 +165,11 @@ const core = {
       let updateObjHeightapi = updateObjHeight(parentName, commHeight).then(
         e => e
       );
-      const e_2 = await Promise.all([updateObjHeightapi, saveActivityapi]);
-      return e_2[1];
+      const objandSave = await Promise.all([
+        updateObjHeightapi,
+        saveActivityapi
+      ]);
+      return objandSave[1];
     },
     // 获取当前配置
     getActivity({ state }, data) {

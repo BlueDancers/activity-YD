@@ -10,8 +10,8 @@
 
     <div class="arrt_list" v-if="JSON.stringify(core) !== '{}'">
       <!-- 当是按钮/图片的时候 文字都是必须存在的特殊配置 -->
-      <!-- 通用的 -->
-      <div class="attr_item">
+      <!-- 通用的(文本框不存在) -->
+      <div class="attr_item" v-show="core.name !== 'base-input'">
         <div class="attr_list_left">
           {{ core.name !== "base-img" ? "文本:" : "链接:" }}
         </div>
@@ -25,6 +25,16 @@
         </div>
       </div>
       <div class="attr_item">
+        <div class="attr_list_left">名称:</div>
+        <div class="attr_list_right">
+          <a-input
+            class="attr_textarea"
+            placeholder="请输入文字"
+            v-model="core.inputName"
+          />
+        </div>
+      </div>
+      <div class="attr_item">
         <div class="attr_list_left">层级:</div>
         <div class="attr_list_right">
           <a-input-number
@@ -34,7 +44,7 @@
           />
         </div>
       </div>
-      <!-- 文本框 按钮 可以使用的属性 -->
+      <!-- 文本框 按钮 文本框 可以使用的属性 -->
       <div class="attr_item" v-if="core.name !== 'base-img'">
         <div class="attr_list_left">背景颜色:</div>
         <div class="attr_list_right">
@@ -57,8 +67,11 @@
           />
         </div>
       </div>
-      <!-- 只有按钮才有的属性 -->
-      <div class="attr_item" v-if="core.name == 'base-buttom'">
+      <!-- 一些共有属性 -->
+      <div
+        class="attr_item"
+        v-if="core.name == 'base-buttom' || core.name == 'base-input'"
+      >
         <div class="attr_list_left">圆角:</div>
         <div class="attr_list_right">
           <a-input-number
@@ -68,6 +81,7 @@
           />
         </div>
       </div>
+      <!-- 按钮独有的属性 -->
       <div class="attr_item" v-if="core.name == 'base-buttom'">
         <div class="attr_list_left">按钮链接:</div>
         <div class="attr_list_right">
@@ -75,6 +89,23 @@
             class="attr_textarea"
             placeholder="请输入链接地址"
             v-model="core.link"
+          />
+        </div>
+      </div>
+      <!-- 文本框独有的属性 -->
+      <div class="attr_item" v-if="core.name == 'base-input'">
+        <div class="attr_list_left">边框颜色:</div>
+        <div class="attr_list_right">
+          <color-picker v-model="core.css['border-color']" />
+        </div>
+      </div>
+      <div class="attr_item" v-if="core.name !== 'base-buttom'">
+        <div class="attr_list_left">边框宽度:</div>
+        <div class="attr_list_right">
+          <a-input-number
+            class="attr_textarea"
+            placeholder="请输入文字"
+            v-model="core.css['border-width']"
           />
         </div>
       </div>

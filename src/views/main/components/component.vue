@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { baseButtom, baseImg, baseText } from '../../../utils/baseReact';
+import { baseButtom, baseImg, baseText, baseInput } from '../../../utils/baseReact';
 export default {
   data() {
     return {
@@ -59,7 +59,7 @@ export default {
       } else if (index == 2) {
         this.$store.commit('core/set_tempLate', baseButtom())
       } else if (index == 3) {
-        this.$message.info('暂未开发');
+        this.$store.commit('core/set_tempLate', baseInput())
       }
     },
     ImgSuccess() {
@@ -95,6 +95,7 @@ export default {
     .item_name {
       margin: 0;
       margin-top: 10px;
+     
     }
   }
 }
