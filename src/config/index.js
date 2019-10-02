@@ -1,4 +1,4 @@
-export const mobileUrl = "http://10.16.58.46:8080/index";
+export const mobileUrl = "http://192.168.1.13:8080/index/"; // 前台域名
 
 /**
  * 默认页面高度

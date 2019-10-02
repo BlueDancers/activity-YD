@@ -5,6 +5,7 @@
       height: `${commHeight}px`
     }"
   >
+    <canvas id="canvas"></canvas>
     <component
       v-for="(item, index) in template"
       :key="index"
@@ -32,12 +33,37 @@ export default {
     baseImg,
     baseText
   },
+  mounted() {
+    this.initBack()
+  },
   computed: {
     template() {
       return core.state.template
     },
     commHeight() {
       return core.state.commHeight
+    }
+  },
+  methods: {
+    initBack() {
+      this.$nextTick(() => {
+        let back = document.querySelector('#canvas')
+        let core = document.querySelector('.core')
+        back.width = core.clientWidth
+        back.height = core.clientHeight
+        var context = back.getContext("2d");
+        let height = 1;
+        while (height <= this.commHeight) {
+          context.moveTo(0, height);
+          context.lineTo(back.width, height);
+          context.strokeStyle = "rgb(168, 168, 168)";
+          context.lineWidth = 1;
+          context.setLineDash([2, 13]);
+          context.stroke();
+          context.beginPath();
+          height = height + 20
+        }
+      })
     }
   }
 }
@@ -48,5 +74,8 @@ export default {
   width: 375px;
   position: relative;
   background-color: white;
+  #canvas {
+    position: absolute;
+  }
 }
 </style>

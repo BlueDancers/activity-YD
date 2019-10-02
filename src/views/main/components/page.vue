@@ -10,6 +10,7 @@
           <div class="item_right">
             <a-input-number placeholder="" v-model="height" />
           </div>
+          <span class="item_other">667为移动端100%高度</span>
         </div>
       </div>
     </div>
@@ -45,6 +46,11 @@ export default {
         align-items: center;
         .item_left {
           margin-right: 10px;
+        }
+        .item_other {
+          margin-left: 10px;
+          color: rgb(179, 179, 179);
+          font-size: 12px;
         }
       }
     }

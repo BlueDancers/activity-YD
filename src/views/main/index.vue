@@ -27,7 +27,7 @@
           <attributesPage></attributesPage>
         </a-tab-pane>
         <a-tab-pane tab="脚本" key="2">
-          <page></page>
+          <div>3213</div>
         </a-tab-pane>
       </a-tabs>
     </div>

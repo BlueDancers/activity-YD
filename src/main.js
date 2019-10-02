@@ -2,6 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store/index";
+import VueQriously from "vue-qriously";
+Vue.use(VueQriously);
 import {
   Button,
   Tabs,
@@ -17,6 +19,7 @@ Vue.use(Input);
 Vue.use(InputNumber);
 Vue.use(Modal);
 Vue.use(Form);
+
 Vue.prototype.$message = message;
 Vue.config.productionTip = false;
 

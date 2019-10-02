@@ -11,6 +11,7 @@ export function baseButtom() {
     editStatus: false,
     name: "base-buttom",
     text: "按钮",
+    link: "", // 按钮点击跳转地址
     css: {
       top: 100 + dynamic,
       left: 100 + dynamic,

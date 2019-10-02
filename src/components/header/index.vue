@@ -18,14 +18,29 @@
         <span>github</span>
       </div>
     </div>
+    <!-- 成功的模态框 -->
+    <a-modal
+      title="发布成功"
+      v-model="succModal"
+      @ok="hideModal"
+      okText="确认"
+      cancelText="取消"
+    >
+      <div class="success_modal">
+        <qriously :value="objUrl" :size="200" />
+      </div>
+    </a-modal>
   </div>
 </template>
 
 <script>
+import { mobileUrl } from '../../config/index'
 export default {
   data() {
     return {
-      ismain: false
+      ismain: false,
+      succModal: false,
+      objUrl: ''
     }
   },
   watch: {
@@ -46,9 +61,9 @@ export default {
     saveObject() {
       // 保存当前页面的配置
       this.$store.dispatch('core/saveObject').then(res => {
-        console.log(res);
         if (res.data.code == 200) {
-          this.$message.success(res.data.data)
+          this.objUrl = mobileUrl + res.data.data
+          this.succModal = true
         } else {
           this.$message.error(res.data.data)
         }
@@ -56,7 +71,8 @@ export default {
         .catch(err => {
           this.$message.error(err)
         })
-    }
+    },
+    hideModal() { }
   }
 }
 </script>
@@ -93,6 +109,17 @@ export default {
         margin-right: 20px;
       }
     }
+  }
+}
+</style>
+
+<style lang="less">
+.success_modal {
+  display: flex;
+  justify-content: center;
+  div {
+    width: 200px;
+    height: 200px;
   }
 }
 </style>
