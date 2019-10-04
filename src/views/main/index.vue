@@ -85,7 +85,7 @@ export default {
   .index_right {
     position: relative;
     background-color: white;
-    width: 330px;
+    width: 400px;
     height: 100%;
   }
 }

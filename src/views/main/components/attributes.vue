@@ -83,6 +83,23 @@
       </div>
       <!-- 按钮独有的属性 -->
       <div class="attr_item" v-if="core.name == 'base-buttom'">
+        <div class="attr_list_left">按钮事件:</div>
+        <div class="attr_list_right">
+          <a-radio-group
+            name="radioGroup"
+            v-model="core.btnType"
+            @change="btnTypeChange(core)"
+          >
+            <a-radio :value="0">无事件</a-radio>
+            <a-radio :value="1">外部链接</a-radio>
+            <a-radio :value="2">提交表单</a-radio>
+          </a-radio-group>
+        </div>
+      </div>
+      <div
+        class="attr_item"
+        v-if="core.name == 'base-buttom' && core.btnType == 1"
+      >
         <div class="attr_list_left">按钮链接:</div>
         <div class="attr_list_right">
           <a-input
@@ -92,6 +109,55 @@
           />
         </div>
       </div>
+      <div
+        class="attr_item"
+        v-if="core.name == 'base-buttom' && core.btnType == 2"
+      >
+        <div class="attr_list_left">提交地址:</div>
+        <div class="attr_list_right">
+          <a-input
+            class="attr_textarea"
+            placeholder="请输入链接地址"
+            v-model="core.inputFromUrl"
+          />
+        </div>
+      </div>
+      <div class="attr_item"  v-if="core.name == 'base-buttom' && core.btnType == 2">
+        <div class="attr_list_left">提交方式:</div>
+        <div class="attr_list_right">
+          <a-radio-group
+            name="radioGroup"
+            v-model="core.urlMethod"
+          >
+            <a-radio :value="'get'">get</a-radio>
+            <a-radio :value="'post'">post</a-radio>
+          </a-radio-group>
+        </div>
+      </div>
+      <div
+        class="attr_item"
+        v-if="core.name == 'base-buttom' && core.btnType == 2"
+      >
+        <div class="attr_list_left">提交输入框:</div>
+        <div class="attr_list_right">
+          <a-select
+            mode="tags"
+            v-model="core.refInput"
+            placeholder="请选择需要提交的"
+            style="width: 200px"
+            @change="handleChange"
+          >
+            <a-select-option
+              v-for="inputItem in refInputList"
+              :key="inputItem.id"
+              :value="inputItem.inputName"
+            >
+              {{ inputItem.inputName }}
+            </a-select-option>
+          </a-select>
+        </div>
+      </div>
+
       <!-- 文本框独有的属性 -->
       <div class="attr_item" v-if="core.name == 'base-input'">
         <div class="attr_list_left">边框颜色:</div>
@@ -124,6 +190,9 @@ export default {
     core() {
       let form = core.state.template.filter(e => e.editStatus)[0] || {}
       return form
+    },
+    refInputList() {
+      return core.state.template.filter(e => e.name == 'base-input')
     }
   },
   methods: {
@@ -140,6 +209,19 @@ export default {
       } else if (type == 4) {
         // 紧贴下方
         this.$store.commit('core/pastebottom', { id: this.core.id })
+      }
+    },
+    handleChange(e) {
+      console.log(e);
+    },
+    btnTypeChange(item) {
+      if (item.bthType == 0) {
+        item.link = ''
+        item.refInput = []
+      } else if (item.bthType == 1) {
+        item.refInput = []
+      } else if (item.bthType == 2) {
+        item.link = ''
       }
     }
   }
@@ -159,7 +241,7 @@ export default {
     align-items: center;
     .attr_list_left {
       text-align: right;
-      width: 60px;
+      width: 80px;
       margin-left: 20px;
     }
     .attr_list_right {

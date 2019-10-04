@@ -10,5 +10,9 @@ module.exports = {
       }
     }
   },
-  outputDir: "docs"
+  outputDir: "docs",
+  devServer: {
+    port: 8888,
+    open: true
+  }
 };

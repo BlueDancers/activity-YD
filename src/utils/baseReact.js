@@ -11,6 +11,10 @@ export function baseButtom() {
     editStatus: false,
     name: "base-buttom",
     text: "按钮",
+    btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3
+    refInput: [], // 提交的input表单
+    inputFromUrl: "", // 数据提交的地址
+    urlMethod: "get", // 提交格式
     link: "", // 按钮点击跳转地址
     css: {
       top: 100 + dynamic,

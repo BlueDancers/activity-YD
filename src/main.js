@@ -11,7 +11,9 @@ import {
   InputNumber,
   Modal,
   message,
-  Form
+  Form,
+  Select,
+  Radio
 } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Tabs);
@@ -19,7 +21,8 @@ Vue.use(Input);
 Vue.use(InputNumber);
 Vue.use(Modal);
 Vue.use(Form);
-
+Vue.use(Select);
+Vue.use(Radio);
 Vue.prototype.$message = message;
 Vue.config.productionTip = false;
 
