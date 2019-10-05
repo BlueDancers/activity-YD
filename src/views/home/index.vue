@@ -45,18 +45,29 @@
     >
       <a-form :form="objform">
         <a-form-item
-          label="项目名称"
+          label="网页名称"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-input v-model="objform.name" />
+          <a-input placeholder="请填写网页名" v-model="objform.textName" />
+        </a-form-item>
+        <a-form-item
+          label="路由名称"
+          :label-col="{ span: 5 }"
+          :wrapper-col="{ span: 12 }"
+        >
+          <a-input placeholder="路由只能是数字与英文" v-model="objform.name" />
         </a-form-item>
         <a-form-item
           label="项目描述"
           :label-col="{ span: 5 }"
           :wrapper-col="{ span: 12 }"
         >
-          <a-input type="textarea" v-model="objform.disp" />
+          <a-input
+            placeholder="项目的一些描述信息"
+            type="textarea"
+            v-model="objform.disp"
+          />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -83,7 +94,8 @@ export default {
       Objectvisible: false,
       confirmLoading: false,
       objform: {
-        name: '',
+        textName: '',  // 中文名称
+        name: '', // 路由名称
         disp: ''
       }
     }
@@ -96,8 +108,8 @@ export default {
       // 创建项目基类
       let data = {
         ...this.objform,
-        height: core.state.commHeight,
-        background: 'white'
+        height: core.state.commHeight, // 页面高度默认667
+        background: 'white' // 页面背景色默认白色
       }
       setObject(data).then(res => {
         if (res.data.code == 200) {
