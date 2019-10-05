@@ -2,7 +2,7 @@
   <div
     class="edit"
     :style="styles"
-    @mousedown="mousedown"
+    @mousedown.prevent="mousedown"
     @keyup.delete="deleteItem"
     @click.right="mouseRight"
   >
@@ -61,12 +61,45 @@ export default {
     }
   },
   mounted() {
-    // window.addEventListener('mousedown', (e) => {
-    //   this.mousedown(e)
-    // })
+    // 这里的监听还存在问题
+    document.onkeydown = (e) => {
+      var key = window.event.keyCode
+      if (key == 37 && this.id) { // 左
+        console.log(this.id);
+        this.$store.commit('core/updatePos', {
+          id: this.id,
+          x: -1,
+          y: 0
+        })
+      }
+      if (key == 38 && this.id) { // 上
+        e.preventDefault();
+        this.$store.commit('core/updatePos', {
+          id: this.id,
+          x: 0,
+          y: -1
+        })
+      }
+      if (key == 39 && this.id) { // 右
+        this.$store.commit('core/updatePos', {
+          id: this.id,
+          x: 1,
+          y: 0
+        })
+      }
+      if (key == 40 && this.id) { // 下
+        e.preventDefault();
+        this.$store.commit('core/updatePos', {
+          id: this.id,
+          x: 0,
+          y: 1
+        })
+      }
+    }
     window.addEventListener('mouseup', (e) => {
       this.mouseup(e)
-    })
+    }, true)
+    // true 为在捕获阶段执行 这样就不会影响 操作点阻止冒泡了
     window.addEventListener('mousemove', (e) => {
       if (this.down) {
         this.mousemove(e)
@@ -74,7 +107,7 @@ export default {
       if (this.roundDown) {
         this.Zoom(e)
       }
-    })
+    }, true)
   },
   destroyed() {
     // window.removeEventListener('mouseup')
@@ -83,7 +116,7 @@ export default {
   },
   methods: {
     mousedown(e) {
-      console.log('鼠标按下');
+      // console.log('鼠标按下');
       this.down = true
     },
     mouseup() {
@@ -105,7 +138,7 @@ export default {
       this.roundDownState = state
     },
     roundMounseup() {
-      console.log('坐标元素松开');
+      // console.log('坐标元素松开');
       this.roundDown = false
     },
     topTop(e) {

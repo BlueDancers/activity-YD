@@ -52,6 +52,7 @@ const core = {
     },
     // 更新元素大小
     updateZoom(state, data) {
+      console.log(data);
       let list = state.template;
       let { type } = data;
       if (type == 1) {

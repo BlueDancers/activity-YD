@@ -1,5 +1,6 @@
 <template>
-  <div class="base_img" @mouseover="toggleEdit" @mouseleave="clearEdit">
+  <!-- <div class="base_img" @mouseover="toggleEdit" > -->
+  <div class="btn_con" @click="toggleEdit">
     <edit v-show="editStatus" :styles="style" :id="id">
       <img @mousedown="mousedown" class="inline_img" :src="text" alt="" />
     </edit>
@@ -47,9 +48,6 @@ export default {
     },
     mousedown(e) {
       e.preventDefault()
-    },
-    clearEdit() {
-      // this.$store.commit('core/clear_template')
     }
   }
 }
