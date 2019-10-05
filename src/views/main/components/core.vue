@@ -2,7 +2,8 @@
   <div
     class="core"
     :style="{
-      height: `${commHeight}px`
+      height: `${commHeight}px`,
+      background: background
     }"
   >
     <canvas id="canvas"></canvas>
@@ -43,7 +44,11 @@ export default {
       return core.state.template
     },
     commHeight() {
+      this.initBack()
       return core.state.commHeight
+    },
+    background() {
+      return core.state.background
     }
   },
   methods: {

@@ -1,12 +1,13 @@
-import { saveActivity, getActivity, updateObjHeight } from "../../api/index";
+import { saveActivity, getActivity, updateObj } from "../../api/index";
 import { commHeight, commWidth } from "../../config/index";
 const core = {
   namespaced: true,
   state: {
-    commWidth: commWidth,
-    commHeight: commHeight,
-    parentName: "",
-    template: []
+    commWidth: commWidth, // 页面宽度
+    commHeight: commHeight, // 页面高度
+    background: "white", // 页面背景色1
+    parentName: "", // 项目名
+    template: [] // 组件
   },
   mutations: {
     // 保存当前项目名
@@ -152,6 +153,10 @@ const core = {
     // 修改页面高度
     updateCommHeigth(state, heigth) {
       state.commHeight = heigth;
+    },
+    // 修改页面背景色
+    updateBackground(state, color) {
+      state.background = color;
     }
   },
   actions: {
@@ -160,11 +165,13 @@ const core = {
       if (state.template.length == 0) {
         return Promise.reject("请不要保存空页面");
       }
-      let { parentName, commHeight, template } = state;
+      let { parentName, commHeight, template, background } = state;
       let saveActivityapi = saveActivity(parentName, template).then(e => e);
-      let updateObjHeightapi = updateObjHeight(parentName, commHeight).then(
-        e => e
-      );
+      let updateObjHeightapi = updateObj(
+        parentName,
+        commHeight,
+        background
+      ).then(e => e);
       const objandSave = await Promise.all([
         updateObjHeightapi,
         saveActivityapi
@@ -184,6 +191,7 @@ const core = {
             });
             state.template = template;
             state.commHeight = e.data.data.objHeight;
+            state.background = e.data.data.background;
             resolve("数据查询完成");
           }
         });

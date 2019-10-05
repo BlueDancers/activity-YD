@@ -252,13 +252,7 @@ export default {
     }
   }
   .arrt_list {
-    height: 600px;
-  }
-  .attributes_form {
-    height: 600px;
-    .attr_input {
-      width: 200px;
-    }
+    height: 700px;
   }
 }
 .m-colorPicker {

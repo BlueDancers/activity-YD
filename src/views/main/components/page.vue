@@ -12,6 +12,14 @@
           </div>
           <span class="item_other">667为移动端100%高度</span>
         </div>
+        <div class="page_form_item">
+          <div class="item_left">
+            页面背景色:
+          </div>
+          <div class="item_right">
+            <colorPicker v-model="background"></colorPicker>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -19,7 +27,11 @@
 
 <script>
 import core from '../../../store/modules/core';
+import colorPicker from '../../../components/color-picker'
 export default {
+  components: {
+    colorPicker
+  },
   computed: {
     height: {
       get() {
@@ -28,6 +40,14 @@ export default {
       set(newValue) {
         this.$store.commit('core/updateCommHeigth', newValue)
       }
+    },
+    background: {
+      get() {
+        return core.state.background
+      },
+      set(newColor) {
+        this.$store.commit('core/updateBackground', newColor)
+      }
     }
   }
 }
@@ -35,6 +55,7 @@ export default {
 
 <style lang="less" scoped>
 .page {
+  height: 700px;
   .page_item {
     margin-left: 20px;
     .page_title {
@@ -42,6 +63,7 @@ export default {
     }
     .page_form {
       .page_form_item {
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
         .item_left {

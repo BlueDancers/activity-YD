@@ -93,7 +93,13 @@ export default {
       this.Objectvisible = true
     },
     objSuccess() {
-      setObject({ ...this.objform, height: core.state.commHeight }).then(res => {
+      // 创建项目基类
+      let data = {
+        ...this.objform,
+        height: core.state.commHeight,
+        background: 'white'
+      }
+      setObject(data).then(res => {
         if (res.data.code == 200) {
           this.$router.push({ name: 'main', params: { objectName: res.data.data } })
         } else {

@@ -53,14 +53,16 @@ export function getActivity(name) {
  * 更新单个项目的高度
  * @param {String} objectName
  * @param {Number} height
+ * @param {String} background
  */
-export function updateObjHeight(objectName, height) {
+export function updateObj(objectName, height, background) {
   return request({
-    url: "/updateObjHeight",
+    url: "/updateObj",
     method: "POST",
     data: {
       objectName,
-      height
+      height,
+      background
     }
   });
 }
