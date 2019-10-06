@@ -85,6 +85,7 @@ export function baseInput() {
     inputName: "default",
     editStatus: false,
     name: "base-input",
+    placeholder: "",
     text: "",
     css: {
       top: 100 + dynamic,

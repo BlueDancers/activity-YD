@@ -34,6 +34,17 @@
           />
         </div>
       </div>
+      <!-- placeholder 只有文本框才有 -->
+      <div class="attr_item" v-if="core.name == 'base-input'">
+        <div class="attr_list_left">占位文字:</div>
+        <div class="attr_list_right">
+          <a-input
+            class="attr_textarea"
+            placeholder="请输入文字"
+            v-model="core.placeholder"
+          />
+        </div>
+      </div>
       <div class="attr_item">
         <div class="attr_list_left">层级:</div>
         <div class="attr_list_right">
@@ -253,8 +264,11 @@ export default {
 <style lang="less" scoped>
 .attributes {
   .fast_attr {
+    margin-left: 30px;
+    margin-bottom: 10px;
     .fast_btn {
-      margin: 5px 10px;
+      margin: 5px 0px;
+      margin-left: 20px;
     }
   }
   .attr_item {
