@@ -180,7 +180,7 @@
     <div class="fast_attr" v-if="coreType == 2">
       <a-button class="fast_btn" @click="mallfastSet(1)">靠左对齐</a-button>
       <a-button class="fast_btn" @click="mallfastSet(4)">靠下对齐</a-button>
-      <br>
+      <br />
       <a-button class="fast_btn" @click="mallfastSet(2)">横向对齐</a-button>
       <a-button class="fast_btn" @click="mallfastSet(3)">竖向对齐</a-button>
       <!-- <a-button class="fast_btn" @click="mallfastSet(5)">等距分配 </a-button> -->

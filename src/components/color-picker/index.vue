@@ -2,26 +2,26 @@
   <div class="m-colorPicker" ref="colorPicker" v-on:click="event => { event.stopPropagation() }">
     <!-- 颜色显示小方块 -->
     <div class="colorBtn_con">
-<div class="colorBtn"
-      v-bind:style="`background-color: ${showColor}`"
-      v-on:click="openStatus = !disabled"
-      v-bind:class="{ disabled: disabled }"
-    ></div>
+      <div class="colorBtn"
+        v-bind:style="`background-color: ${showColor}`"
+        v-on:click="openStatus = !openStatus"
+        v-bind:class="{ disabled: disabled }"
+      ></div>
     </div>
     <!-- 用以激活HTML5颜色面板 -->
-    <input type="color"
+    <!-- <input type="color"
       ref="html5Color"
       v-model="html5Color"
-      v-on:change="updataValue(html5Color)">
+      v-on:change="updataValue(html5Color)"> -->
     <!-- 颜色色盘 -->
     <div class="box" v-bind:class="{ open: openStatus }">
       <div class="hd">
         <div class="colorView" v-bind:style="`background-color: ${showPanelColor}`"></div>
-        <div class="defaultColor"
+        <!-- <div class="defaultColor"
           v-on:click="handleDefaultColor"
           v-on:mouseover="hoveColor = defaultColor"
           v-on:mouseout="hoveColor = null"
-        >默认</div>
+        >默认</div> -->
       </div>
       <div class="bd">
         <h3>主题颜色</h3>
@@ -49,7 +49,7 @@
             </ul>
           </li>
         </ul>
-        <h3>标准颜色</h3>
+        <!-- <h3>标准颜色</h3>
         <ul class="tColor">
           <li
             v-for="(color, index) of bColor"
@@ -59,8 +59,10 @@
             v-on:mouseout="hoveColor = null"
             v-on:click="updataValue(color)"
           ></li>
-        </ul>
-        <h3 v-on:click="triggerHtml5Color">更多颜色...</h3>
+        </ul> -->
+        <h3>手动填写</h3>
+        <input @input="updateInputValue" v-model="inputValue" />
+        <!-- <h3 v-on:click="triggerHtml5Color">更多颜色...</h3> -->
       </div>
     </div>
   </div>
@@ -86,6 +88,12 @@ export default {
       default: false
     }
   },
+  mounted() {
+    // 点击页面上其他地方，关闭弹窗
+    document.onclick = () => {
+      this.openStatus = false
+    }
+  },
   data() {
     return {
       // 面板打开状态
@@ -93,7 +101,7 @@ export default {
       // 鼠标经过的颜色块
       hoveColor: null,
       // 主题颜色
-      tColor: ['#000000', '#ffffff', '#eeece1', '#1e497b', '#4e81bb', '#e2534d', '#9aba60', '#8165a0', '#47acc5', '#f9974c'],
+      tColor: ['#000000', '#ffffff', '#eeece1', '#1e497b', '#4e81bb', '#e2534d', '#9aba60', '#8165a0', '#47acc5', '#f9974c', 'rgba(255,255,255,0)'],
       // 颜色面板
       colorConfig: [
         ['#7f7f7f', '#f2f2f2'],
@@ -101,15 +109,19 @@ export default {
         ['#1c1a10', '#ddd8c3'],
         ['#0e243d', '#c6d9f0'],
         ['#233f5e', '#dae5f0'],
-        ['#632623', '#f2dbdb'],
         ['#4d602c', '#eaf1de'],
-        ['#3f3150', '#e6e0ec'],
         ['#1e5867', '#d9eef3'],
         ['#99490f', '#fee9da']
       ],
       // 标准颜色
       bColor: ['#c21401', '#ff1e02', '#ffc12a', '#ffff3a', '#90cf5b', '#00af57', '#00afee', '#0071be', '#00215f', '#72349d'],
-      html5Color: this.value
+      html5Color: this.value,
+      inputValue: ''
+    }
+  },
+  watch: {
+    openStatus() {
+      this.inputValue = this.value
     }
   },
   computed: {
@@ -147,6 +159,12 @@ export default {
       this.$emit('input', value)
       this.$emit('change', value)
       this.openStatus = false
+    },
+    // 更新颜色
+    updateInputValue(e) {
+      console.log(this.inputValue);
+      this.$emit('input', this.inputValue)
+      this.$emit('change', this.inputValue)
     },
     // 设置默认颜色
     handleDefaultColor() {
@@ -190,12 +208,6 @@ export default {
       }
       return gradientColorArr
     }
-  },
-  mounted() {
-    // 点击页面上其他地方，关闭弹窗
-    document.onclick = () => {
-      this.openStatus = false
-    }
   }
 }
 </script>
@@ -213,9 +225,9 @@ export default {
     margin: 0;
     padding: 0;
   }
-  input {
-    display: none;
-  }
+  // input {
+  //   display: none;
+  // }
   .colorBtn_con {
     background-color: rgb(224, 224, 224);
     padding: 5px;
@@ -259,7 +271,7 @@ export default {
     overflow: hidden;
     line-height: 29px;
     .colorView {
-      width: 100px;
+      width: 100%;
       height: 30px;
       float: left;
       transition: background-color 0.3s ease;
