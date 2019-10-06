@@ -37,14 +37,16 @@ export default {
       type: Object,
       default: {}
     },
-    editStatus: {
-      type: Boolean,
-      default: false
+    activeTemplate: {
+      type: Array,
     }
   },
   computed: {
     style() {
       return handleStyle(this.option)
+    },
+    editStatus() {
+      return this.activeTemplate.includes(this.id)
     }
   },
   methods: {

@@ -8,12 +8,19 @@
       <!-- 左侧为操作栏 -->
       <div class="right_header">
         <a-button
-          @click="saveObject"
+          @click="saveObject(2)"
+          v-if="ismain"
+          type="primary"
+          class="right_header_item"
+          >发布</a-button
+        >
+        <a-button
+          @click="saveObject(1)"
           v-if="ismain"
           type="primary"
           icon="cloud"
           class="right_header_item"
-          >发布</a-button
+          >发布并预览</a-button
         >
         <span>github</span>
       </div>
@@ -58,12 +65,16 @@ export default {
         this.$router.push({ name: 'home' })
       }
     },
-    saveObject() {
+    saveObject(type) {
       // 保存当前页面的配置
       this.$store.dispatch('core/saveObject').then(res => {
         if (res.data.code == 200) {
           this.objUrl = mobileUrl + res.data.data
-          this.succModal = true
+          if (type == 1) {
+            this.succModal = true
+          } else {
+            this.$message.success('发布成功')
+          }
         } else {
           this.$message.error(res.data.data)
         }

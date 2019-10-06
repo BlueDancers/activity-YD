@@ -14,7 +14,7 @@
       :id="item.id"
       :option="item.css"
       :text="item.text"
-      :editStatus="item.editStatus"
+      :activeTemplate="activeTemplate"
     ></component>
   </div>
 </template>
@@ -42,6 +42,9 @@ export default {
   computed: {
     template() {
       return core.state.template
+    },
+    activeTemplate() {
+      return core.state.activeTemplate
     },
     commHeight() {
       this.initBack()

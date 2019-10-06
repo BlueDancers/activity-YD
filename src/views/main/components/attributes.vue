@@ -1,14 +1,14 @@
 <template>
   <div class="attributes">
     <!-- 快捷配置 -->
-    <div class="fast_attr" v-if="JSON.stringify(core) !== '{}'">
+    <div class="fast_attr" v-if="coreType == 1">
       <a-button class="fast_btn" @click="fastSet(1)">左右居中</a-button>
       <a-button class="fast_btn" @click="fastSet(2)">左右铺满</a-button>
       <a-button class="fast_btn" @click="fastSet(3)">贴紧上方</a-button>
       <a-button class="fast_btn" @click="fastSet(4)">贴紧下方</a-button>
     </div>
-
-    <div class="arrt_list" v-if="JSON.stringify(core) !== '{}'">
+    <!-- 组件个性化配置 -->
+    <div class="arrt_list" v-if="coreType == 1">
       <!-- 当是按钮/图片的时候 文字都是必须存在的特殊配置 -->
       <!-- 通用的(文本框不存在) -->
       <div class="attr_item" v-show="core.name !== 'base-input'">
@@ -122,13 +122,13 @@
           />
         </div>
       </div>
-      <div class="attr_item"  v-if="core.name == 'base-buttom' && core.btnType == 2">
+      <div
+        class="attr_item"
+        v-if="core.name == 'base-buttom' && core.btnType == 2"
+      >
         <div class="attr_list_left">提交方式:</div>
         <div class="attr_list_right">
-          <a-radio-group
-            name="radioGroup"
-            v-model="core.urlMethod"
-          >
+          <a-radio-group name="radioGroup" v-model="core.urlMethod">
             <a-radio :value="'get'">get</a-radio>
             <a-radio :value="'post'">post</a-radio>
           </a-radio-group>
@@ -176,6 +176,19 @@
         </div>
       </div>
     </div>
+    <!-- 多组件配置 -->
+    <div class="fast_attr" v-if="coreType == 2">
+      <a-button class="fast_btn" @click="mallfastSet(1)">靠左对齐</a-button>
+      <a-button class="fast_btn" @click="mallfastSet(4)">靠下对齐</a-button>
+      <br>
+      <a-button class="fast_btn" @click="mallfastSet(2)">横向对齐</a-button>
+      <a-button class="fast_btn" @click="mallfastSet(3)">竖向对齐</a-button>
+      <!-- <a-button class="fast_btn" @click="mallfastSet(5)">等距分配 </a-button> -->
+    </div>
+    <!-- 无组件 -->
+    <div v-if="coreType == 3" class="attr_showtext">
+      当前无可操作组件
+    </div>
   </div>
 </template>
 
@@ -187,9 +200,27 @@ export default {
     colorPicker
   },
   computed: {
+    // 可能是单组件 可能是多组件 可能无组件
     core() {
-      let form = core.state.template.filter(e => e.editStatus)[0] || {}
-      return form
+      let activeCore = core.state.activeTemplate
+      if (activeCore.length == 1) {
+        let form = core.state.template.filter(e => activeCore.includes(e.id))[0]
+        return form
+      } else if (activeCore.length > 1) {
+        return core.state.template.filter(e => activeCore.includes(e.id))
+      }
+      return {}
+    },
+    // 1 单组件 2 是多组件 3 无组件
+    coreType() {
+      console.log(this.core);
+      if (JSON.stringify(this.core) !== '{}' && Object.prototype.toString.call(this.core) !== '[object Array]') {
+        return 1
+      } else if (Object.prototype.toString.call(this.core) == '[object Array]') {
+        return 2
+      } else if (JSON.stringify(this.core) == '{}') {
+        return 3
+      }
     },
     refInputList() {
       return core.state.template.filter(e => e.name == 'base-input')
@@ -197,19 +228,10 @@ export default {
   },
   methods: {
     fastSet(type) {
-      if (type == 1) {
-        // 左右居中
-        this.$store.commit('core/centerLR', { id: this.core.id })
-      } else if (type == 2) {
-        // 左右铺满
-        this.$store.commit('core/fullLR', { id: this.core.id })
-      } else if (type == 3) {
-        // 紧贴上方
-        this.$store.commit('core/pasteTop', { id: this.core.id })
-      } else if (type == 4) {
-        // 紧贴下方
-        this.$store.commit('core/pastebottom', { id: this.core.id })
-      }
+      this.$store.commit('core/fastOnlySet', { type })
+    },
+    mallfastSet(type) {
+      this.$store.commit('core/mallfastSet', { type })
     },
     handleChange(e) {
       console.log(e);

@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { initKeyDown } from '../../utils/index'
 export default {
   props: {
     id: {
@@ -53,49 +54,8 @@ export default {
       default: {}
     }
   },
-  data() {
-    return {
-      down: false, // 移动元素
-      roundDown: false, // 缩放元素
-      roundDownState: false // 1 2 3 4 5 6 对应每个节点
-    }
-  },
   mounted() {
     // 这里的监听还存在问题
-    document.onkeydown = (e) => {
-      var key = window.event.keyCode
-      if (key == 37 && this.id) { // 左
-        console.log(this.id);
-        this.$store.commit('core/updatePos', {
-          id: this.id,
-          x: -1,
-          y: 0
-        })
-      }
-      if (key == 38 && this.id) { // 上
-        e.preventDefault();
-        this.$store.commit('core/updatePos', {
-          id: this.id,
-          x: 0,
-          y: -1
-        })
-      }
-      if (key == 39 && this.id) { // 右
-        this.$store.commit('core/updatePos', {
-          id: this.id,
-          x: 1,
-          y: 0
-        })
-      }
-      if (key == 40 && this.id) { // 下
-        e.preventDefault();
-        this.$store.commit('core/updatePos', {
-          id: this.id,
-          x: 0,
-          y: 1
-        })
-      }
-    }
     window.addEventListener('mouseup', (e) => {
       this.mouseup(e)
     }, true)
@@ -109,10 +69,25 @@ export default {
       }
     }, true)
   },
-  destroyed() {
-    // window.removeEventListener('mouseup')
-    // window.removeEventListener('mouseleave')
-    // window.removeEventListener('mousemove')
+  data() {
+    return {
+      down: false, // 移动元素
+      roundDown: false, // 缩放元素
+      roundDownState: false // 1 2 3 4 5 6 对应每个节点
+    }
+  },
+  watch: {
+    activeTemplate: {
+      handler(newV, oldV) {
+        initKeyDown()
+      },
+      deep: true
+    }
+  },
+  computed: {
+    activeTemplate() {
+      return this.$store.state.core.activeTemplate
+    }
   },
   methods: {
     mousedown(e) {
@@ -120,15 +95,17 @@ export default {
       this.down = true
     },
     mouseup() {
-      console.log('鼠标松开');
+      // console.log('鼠标松开');
       this.down = false
       this.roundDown = false
     },
     mousemove(e) {
       let moveX = e.movementX
       let moveY = e.movementY
+      this.updatePos(moveX, moveY)
+    },
+    updatePos(moveX, moveY) {
       this.$store.commit('core/updatePos', {
-        id: this.id,
         x: moveX,
         y: moveY
       })
@@ -147,7 +124,6 @@ export default {
     Zoom(e) {
       // 对接缩放元素的偏移坐标
       const data = {
-        id: this.id,
         x: e.movementX,
         y: e.movementY,
         type: this.roundDownState
@@ -172,8 +148,33 @@ export default {
       }
       this.$store.commit('core/deleteCompLate', data)
       console.log('鼠标右击');
+    },
+    initKeyDown() {
+      console.log(document.onkeydown);
+      document.onkeydown = (e) => {
+        var key = window.event.keyCode
+        if (key == 37) { // 左
+          this.updatePos(-1, 0)
+        }
+        if (key == 38) { // 上
+          this.updatePos(0, -1)
+          e.preventDefault();
+        }
+        if (key == 39) { // 右
+          this.updatePos(1, 0)
+        }
+        if (key == 40) { // 下
+          this.updatePos(0, 1)
+          e.preventDefault();
+        }
+      }
     }
-  }
+  },
+  destroyed() {
+    // window.removeEventListener('mouseup')
+    // window.removeEventListener('mouseleave')
+    // window.removeEventListener('mousemove')
+  },
 }
 </script>
 
