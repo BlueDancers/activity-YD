@@ -23,6 +23,19 @@ export function setObject(form) {
 }
 
 /**
+ * 删除项目
+ * @export
+ * @param {String} name 项目名称
+ * @returns
+ */
+export function deleteObj(name) {
+  return request({
+    url: `/deleteObj/${name}`,
+    method: "post"
+  });
+}
+
+/**
  *
  * @param {string} parentName 项目名
  * @param {Array} template 项目模板信息

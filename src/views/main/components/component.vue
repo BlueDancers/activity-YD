@@ -6,29 +6,39 @@
       :key="item.name"
       @click="setComponent(index)"
     >
-      <img class="item_img" :src="item.img" alt="" />
-      <p class="item_name">{{ item.name }}</p>
+      <div v-if="index == 0">
+        <a-upload
+          class="item_file"
+          name="image"
+          :multiple="true"
+          :showUploadList="false"
+          :action="imageUpUrl"
+          :headers="headers"
+          @change="handleChange"
+        >
+          <!-- <a-button> <a-icon type="upload" /> Click to Upload </a-button> -->
+          <img class="item_img" :src="item.img" alt="" />
+          <p class="item_name">{{ item.name }}</p>
+        </a-upload>
+      </div>
+      <div v-else>
+        <img class="item_img" :src="item.img" alt="" />
+        <p class="item_name">{{ item.name }}</p>
+      </div>
     </div>
-    <a-modal
-      title="增加图片"
-      cancelText="取消"
-      okText="确认"
-      :visible="ImgStatus"
-      @ok="ImgSuccess"
-      @cancel="ImgCancel"
-    >
-      <a-input placeholder="请输入url地址" v-model="baseCancelImg" />
-    </a-modal>
   </div>
 </template>
 
 <script>
 import { baseButtom, baseImg, baseText, baseInput } from '../../../utils/baseReact';
+import { imageUpUrl } from '../../../config/index'
 export default {
   data() {
     return {
-      ImgStatus: false,
-      baseCancelImg: 'http://www.vkcyan.top/FsqXr4-T7Z6fU4ukTnKKTW5viyys.png',
+      headers: {
+        authorization: 'authorization-text',
+      },
+      imageUpUrl: imageUpUrl,
       reactList: [
         {
           name: '图片',
@@ -52,8 +62,6 @@ export default {
   methods: {
     setComponent(index) {
       if (index == 0) {
-        this.ImgStatus = true
-        // 弹窗代码 this.ImgSuccess
       } else if (index == 1) {
         this.$store.commit('core/set_tempLate', baseText())
       } else if (index == 2) {
@@ -62,13 +70,16 @@ export default {
         this.$store.commit('core/set_tempLate', baseInput())
       }
     },
-    ImgSuccess() {
-      this.$store.commit('core/set_tempLate', baseImg(this.baseCancelImg))
-      this.ImgStatus = false
+    handleChange(info) {
+      // if (info.file.status !== 'uploading') {
+      //   console.log(info.file, info.fileList);
+      // }
+      if (info.file.status === 'done') {
+        this.$store.commit('core/set_tempLate', baseImg(info.file.response.data.data))
+      } else if (info.file.status === 'error') {
+        this.$message.error(`${info.file.name} 上传失败.`);
+      }
     },
-    ImgCancel() {
-      this.ImgStatus = false
-    }
   }
 }
 </script>
@@ -88,6 +99,7 @@ export default {
     background-color: rgb(247, 247, 247);
     width: 120px;
     text-align: center;
+
     .item_img {
       width: 20px;
       height: 20px;
@@ -95,8 +107,15 @@ export default {
     .item_name {
       margin: 0;
       margin-top: 10px;
-     
     }
+  }
+}
+</style>
+<style lang="less">
+.item_file {
+  .ant-upload {
+    width: 110px;
+    height: 52px;
   }
 }
 </style>

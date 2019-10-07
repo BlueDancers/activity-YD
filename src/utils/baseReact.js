@@ -82,7 +82,7 @@ export function baseInput() {
   let dynamic = core.state.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
-    inputName: "default",
+    inputName: `default${core.state.template.length}`,
     editStatus: false,
     name: "base-input",
     placeholder: "",

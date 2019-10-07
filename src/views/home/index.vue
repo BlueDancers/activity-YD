@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="item" @click="createObject">
+    <div class="item pointer" @click="createObject">
       <div class="base_img">
         <img src="../../assets/add.png" alt="" />
       </div>
@@ -8,12 +8,7 @@
         新建项目
       </div>
     </div>
-    <div
-      class="item"
-      v-for="item in mainList"
-      :key="item.id"
-      @click="gotoObject(item.name)"
-    >
+    <div class="item" v-for="item in mainList" :key="item.id">
       <!--初始化项目 -->
       <div class="item_img">
         <img src="../../assets/logo.png" alt="" />
@@ -30,7 +25,21 @@
         </p>
       </div>
       <div class="active">
-        后期开发
+        <a-popover title="页面链接" trigger="click">
+          <template slot="content">
+            <qriously :value="onShowUrlCode" :size="140" />
+          </template>
+          <span @click="showObject(item.name)">查看项目</span>
+        </a-popover>
+        <span @click="gotoObject(item.name)">编辑项目</span>
+        <a-popconfirm
+          title="确定删除项目吗"
+          @confirm="deleteObj(item.name)"
+          okText="确定"
+          cancelText="取消"
+        >
+          <span>删除项目</span>
+        </a-popconfirm>
       </div>
     </div>
     <!-- 增加弹窗 -->
@@ -75,18 +84,12 @@
 </template>
 
 <script>
-import { getObject, setObject } from '../../api/index';
-import { commHeight } from '../../config/index';
+import { getObject, setObject, deleteObj } from '../../api/index';
+import { commHeight, mobileUrl } from '../../config/index';
 import core from '../../store/modules/core';
 export default {
   mounted() {
-    getObject().then(e => {
-      console.log(e);
-      this.mainList = e.data.data
-    })
-      .catch(err => {
-        console.log('错误', err);
-      })
+    this.getObject()
   },
   data() {
     return {
@@ -97,10 +100,20 @@ export default {
         textName: '',  // 中文名称
         name: '', // 路由名称
         disp: ''
-      }
+      },
+      onShowUrlCode: ''
     }
   },
   methods: {
+    getObject() {
+      getObject().then(e => {
+        console.log(e);
+        this.mainList = e.data.data
+      })
+        .catch(err => {
+          console.log('错误', err);
+        })
+    },
     createObject() {
       this.Objectvisible = true
     },
@@ -112,11 +125,7 @@ export default {
         background: 'white' // 页面背景色默认白色
       }
       setObject(data).then(res => {
-        if (res.data.code == 200) {
-          this.$router.push({ name: 'main', params: { objectName: res.data.data } })
-        } else {
-          this.$message.error(res.data.data)
-        }
+        this.$router.push({ name: 'main', params: { objectName: res.data.data } })
       })
     },
     obFall() {
@@ -124,6 +133,15 @@ export default {
     },
     gotoObject(name) {
       this.$router.push({ name: 'main', params: { objectName: name } })
+    },
+    showObject(name) {
+      this.onShowUrlCode = mobileUrl + name
+    },
+    deleteObj(name) {
+      deleteObj(name).then((result) => {
+        this.$message.success(result.data.data)
+        this.getObject()
+      })
     }
   }
 }
@@ -184,9 +202,12 @@ export default {
       background-color: #fafafa;
     }
     .active {
+      display: flex;
+      cursor: pointer;
+      justify-content: space-around;
       border-top: 1px solid #e8e8ea;
       line-height: 40px;
-      font-size: 15px;
+      font-size: 13px;
       position: absolute;
       bottom: 0px;
       left: 0px;
@@ -194,6 +215,9 @@ export default {
       text-align: center;
       background-color: #fafafa;
     }
+  }
+  .pointer {
+    cursor: pointer;
   }
   .base_item {
     position: relative;
@@ -205,13 +229,13 @@ export default {
     margin: 0 1%;
     margin-top: 20px;
     background-color: white;
-    cursor: pointer;
+
     border-radius: 5px;
     transition: all 0.3s;
     &:hover {
       transition: all 0.3s;
       box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-      margin-top: 10px;
+      margin-top: 17px;
     }
     .item_default {
     }

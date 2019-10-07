@@ -1,4 +1,6 @@
 export const mobileUrl = "http://192.168.1.13:8080/index/"; // 前台域名
+export const baseURL = "http://192.168.1.13:7001"; // 后台地址
+export const imageUpUrl = `${baseURL}/upimage`; // 上传图片地址
 
 /**
  * 默认页面高度
