@@ -1,7 +1,6 @@
 <template>
   <div class="page">
     <div class="page_item">
-      <div class="page_title">基本设置</div>
       <div class="page_form">
         <div class="page_form_item">
           <div class="item_left">
@@ -57,6 +56,7 @@ export default {
 .page {
   height: 700px;
   .page_item {
+    margin-top: 20px;
     margin-left: 20px;
     .page_title {
       font-weight: bold;
