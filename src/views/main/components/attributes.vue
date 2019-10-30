@@ -204,8 +204,8 @@
 </template>
 
 <script>
-import core from '../../../store/modules/core';
-import colorPicker from '../../../components/color-picker/index';
+import core from "../../../store/modules/core";
+import colorPicker from "../../../components/color-picker/index";
 export default {
   components: {
     colorPicker
@@ -213,56 +213,64 @@ export default {
   computed: {
     // 可能是单组件 可能是多组件 可能无组件
     core() {
-      let activeCore = core.state.activeTemplate
+      let activeCore = core.state.activeTemplate;
       if (activeCore.length == 1) {
-        let form = core.state.template.filter(e => activeCore.includes(e.id))[0]
-        return form
+        let form = core.state.template.filter(e =>
+          activeCore.includes(e.id)
+        )[0];
+        return form;
       } else if (activeCore.length > 1) {
-        return core.state.template.filter(e => activeCore.includes(e.id))
+        return core.state.template.filter(e => activeCore.includes(e.id));
       }
-      return {}
+      return {};
     },
     // 1 单组件 2 是多组件 3 无组件
     coreType() {
-      console.log(this.core);
-      if (JSON.stringify(this.core) !== '{}' && Object.prototype.toString.call(this.core) !== '[object Array]') {
-        return 1
-      } else if (Object.prototype.toString.call(this.core) == '[object Array]') {
-        return 2
-      } else if (JSON.stringify(this.core) == '{}') {
-        return 3
+      if (
+        JSON.stringify(this.core) !== "{}" &&
+        Object.prototype.toString.call(this.core) !== "[object Array]"
+      ) {
+        return 1;
+      } else if (
+        Object.prototype.toString.call(this.core) == "[object Array]"
+      ) {
+        return 2;
+      } else if (JSON.stringify(this.core) == "{}") {
+        return 3;
       }
+      return 3;
     },
     refInputList() {
-      return core.state.template.filter(e => e.name == 'base-input')
+      return core.state.template.filter(e => e.name == "base-input");
     }
   },
   methods: {
     fastSet(type) {
-      this.$store.commit('core/fastOnlySet', { type })
+      this.$store.commit("core/fastOnlySet", { type });
     },
     mallfastSet(type) {
-      this.$store.commit('core/mallfastSet', { type })
+      this.$store.commit("core/mallfastSet", { type });
     },
     handleChange(e) {
       console.log(e);
     },
     btnTypeChange(item) {
       if (item.bthType == 0) {
-        item.link = ''
-        item.refInput = []
+        item.link = "";
+        item.refInput = [];
       } else if (item.bthType == 1) {
-        item.refInput = []
+        item.refInput = [];
       } else if (item.bthType == 2) {
-        item.link = ''
+        item.link = "";
       }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
 .attributes {
+  width: 400px;
   .fast_attr {
     margin-left: 30px;
     margin-bottom: 10px;

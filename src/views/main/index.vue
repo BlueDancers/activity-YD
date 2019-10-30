@@ -26,18 +26,34 @@
       <div class="left_menu_board">
         <component-page v-show="activeLeftMenu == 1"></component-page>
         <page v-show="activeLeftMenu == 2"></page>
+        <templatePage v-show="activeLeftMenu == 3"></templatePage>
       </div>
     </div>
     <div class="index_center">
-      <core></core>
+      <core
+        :style="{
+          transform: 'scale(' + scale + ',' + scale + ')',
+          'transform-origin': 'center top'
+        }"
+      ></core>
     </div>
     <div class="index_right">
       <div class="right_setting">
-        <div class="setting_item" v-for="item in setting" :key="item.text">
-          {{ item.text }}
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-xxx"></use>
-          </svg>
+        <div
+          class="setting_item"
+          v-for="item in setting"
+          :key="item.id"
+          @click="coreSetting(item.id)"
+        >
+          <a-popover placement="left">
+            <template slot="content">
+              <p>{{ coreScale }}</p>
+            </template>
+            <div class="item">
+              <img class="settion_item_icon" :src="item.icon" alt="" />
+              <span class="settion_item_text">{{ item.text }}</span>
+            </div>
+          </a-popover>
         </div>
       </div>
       <a-tabs defaultActiveKey="1" @change="callback">
@@ -50,11 +66,11 @@
 </template>
 
 <script>
-import componentPage from './components/component';
-import attributesPage from './components/attributes';
-import page from './components/page';
-import templatePage from './components/template';
-import core from './components/core';
+import componentPage from "./components/component";
+import attributesPage from "./components/attributes";
+import page from "./components/page";
+import templatePage from "./components/template";
+import core from "./components/core";
 export default {
   components: {
     componentPage,
@@ -64,50 +80,74 @@ export default {
     core
   },
   mounted() {
-    let objName = this.$route.params.objectName
-    this.$store.commit('core/set_objectName', objName)
-    this.$store.dispatch('core/getActivity', { name: objName }).then((result) => {
-      // this.$message.success(result)
-    }).catch((err) => {
-      this.$message.error(err)
-    });
+    let objName = this.$route.params.objectName;
+    this.$store.commit("core/set_objectName", objName);
+    this.$store
+      .dispatch("core/getActivity", { name: objName })
+      .then(result => {
+        this.$message.success(result);
+      })
+      .catch(err => {
+        this.$message.error(err);
+      });
   },
   data() {
     return {
+      scale: 1, // 缩放
       leftMenu: [
         {
-          title: '组件列表',
+          title: "组件列表",
           key: 1
         },
         {
-          title: '页面设置',
+          title: "页面设置",
           key: 2
         },
+        {
+          title: "模板设置",
+          key: 3
+        }
       ],
       setting: [
         {
-          icon: '',
-          text: '放大'
+          icon: require("../../assets/zoom.png"),
+          text: "放大",
+          id: 1
         },
         {
-          icon: '',
-          text: '缩小'
+          icon: require("../../assets/zoomout.png"),
+          text: "缩小",
+          id: 2
         },
         {
-          icon: '',
-          text: '撤销'
-        },
+          icon: require("../../assets/cancel.png"),
+          text: "撤销",
+          id: 3
+        }
       ],
       activeLeftMenu: 1
+    };
+  },
+  computed: {
+    coreScale() {
+      return Number((this.scale * 100).toFixed(1)) + "%";
     }
   },
   methods: {
-    callback() { },
+    callback() {},
     toggleLeftMenu(index) {
-      this.activeLeftMenu = index
+      this.activeLeftMenu = index;
+    },
+    coreSetting(id) {
+      if (id === 1) {
+        // this.scale = (this.scale + 0.1).toFixed(1);
+        this.scale += 0.1;
+      } else if (id === 2) {
+        this.scale -= 0.1;
+      }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -162,13 +202,29 @@ export default {
       width: 40px;
       border-right: 1px solid #f6f6f6;
       .setting_item {
+        width: 100%;
+        height: 50px;
+        user-select: none;
         cursor: pointer;
-        height: 40px;
-        line-height: 40px;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:hover {
-          background: #1890ff;
-          color: white;
+          background: #f8f8f8;
+        }
+        .item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          .settion_item_icon {
+            width: 15px;
+          }
+          .settion_item_text {
+            font-size: 10px;
+            line-height: 18px;
+          }
         }
       }
     }
