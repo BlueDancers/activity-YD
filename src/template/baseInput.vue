@@ -19,42 +19,42 @@
 </template>
 
 <script>
-import { handleStyle } from '../utils/index';
-import edit from '../components/edit/index';
+import { handleStyle } from "../utils/index";
+import edit from "../components/edit/index";
 export default {
   components: {
     edit
   },
   props: {
     id: {
-      type: String,
+      type: String
     },
     text: {
       type: String,
-      default: '按钮'
+      default: "按钮"
     },
     option: {
       type: Object,
-      default: {}
+      default: () => {}
     },
     activeTemplate: {
-      type: Array,
+      type: Array
     }
   },
   computed: {
     style() {
-      return handleStyle(this.option)
+      return handleStyle(this.option);
     },
     editStatus() {
-      return this.activeTemplate.includes(this.id)
+      return this.activeTemplate.includes(this.id);
     }
   },
   methods: {
     toggleEdit() {
-      this.$store.commit('core/toggle_temp_status', this.id)
+      this.$store.commit("core/toggle_temp_status", this.id);
     }
   }
-} 
+};
 </script>
 
 <style lang="less" scoped>

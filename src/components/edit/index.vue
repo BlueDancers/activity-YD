@@ -1,7 +1,7 @@
 <template>
   <div
     class="edit"
-    :style="styles"
+    :style="stylesPush"
     @mousedown.prevent="mousedown"
     @keyup.delete="deleteItem"
     @click.right="mouseRight"
@@ -95,6 +95,15 @@ export default {
   computed: {
     activeTemplate() {
       return this.$store.state.core.activeTemplate;
+    },
+    stylesPush() {
+      // 对组件的style进行处理,只获取z-index的信息
+      let style = {
+        zIndex: this.styles.zIndex,
+        left: this.styles.left,
+        top: this.styles.top
+      };
+      return style;
     }
   },
   methods: {
@@ -192,7 +201,7 @@ export default {
 <style lang="less" scoped>
 .edit {
   position: absolute;
-  border: 1px rgb(167, 167, 167) dashed;
+  outline: 1px rgb(167, 167, 167) dashed;
   .inline_btn {
     width: 100%;
     height: 100%;

@@ -19,16 +19,14 @@
   </div>
 </template>
 
-
 <script>
 // 数据源
-import core from '../../../store/modules/core';
+import core from "../../../store/modules/core";
 // 组件源
-import baseButtom from '../../../template/baseButtom';
-import baseImg from '../../../template/baseImg';
-import baseText from '../../../template/baseText';
-import baseInput from '../../../template/baseInput'
-import { commHeight } from '../../../config/index';
+import baseButtom from "../../../template/baseButtom";
+import baseImg from "../../../template/baseImg";
+import baseText from "../../../template/baseText";
+import baseInput from "../../../template/baseInput";
 export default {
   components: {
     baseButtom,
@@ -37,30 +35,30 @@ export default {
     baseInput
   },
   mounted() {
-    this.initBack()
+    this.initBack();
   },
   computed: {
     template() {
-      return core.state.template
+      return core.state.template;
     },
     activeTemplate() {
-      return core.state.activeTemplate
+      return core.state.activeTemplate;
     },
     commHeight() {
-      this.initBack()
-      return core.state.commHeight
+      this.initBack();
+      return core.state.commHeight;
     },
     background() {
-      return core.state.background
+      return core.state.background;
     }
   },
   methods: {
     initBack() {
       this.$nextTick(() => {
-        let back = document.querySelector('#canvas')
-        let core = document.querySelector('.core')
-        back.width = core.clientWidth
-        back.height = core.clientHeight
+        let back = document.querySelector("#canvas");
+        let core = document.querySelector(".core");
+        back.width = core.clientWidth;
+        back.height = core.clientHeight;
         var context = back.getContext("2d");
         let height = 1;
         while (height <= this.commHeight) {
@@ -71,12 +69,12 @@ export default {
           context.setLineDash([2, 13]);
           context.stroke();
           context.beginPath();
-          height = height + 20
+          height = height + 20;
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

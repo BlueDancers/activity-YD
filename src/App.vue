@@ -6,24 +6,21 @@
   </div>
 </template>
 
-
 <script>
-import baseHeader from './components/header/index';
-import baseFooter from './components/footer/index';
+import baseHeader from "./components/header/index";
+import baseFooter from "./components/footer/index";
 export default {
   name: "App",
   components: {
     baseHeader,
     baseFooter
-  },
+  }
 };
 </script>
-
 
 <style lang="less">
 body {
   background-color: #f1f2f6;
-  
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -44,5 +41,6 @@ body {
 }
 .baseComplate {
   position: absolute;
+  user-select: none;
 }
 </style>

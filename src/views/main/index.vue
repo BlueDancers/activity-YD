@@ -29,7 +29,7 @@
         <templatePage v-show="activeLeftMenu == 3"></templatePage>
       </div>
     </div>
-    <div class="index_center">
+    <div class="index_center" @click="cancelActive">
       <core
         :style="{
           transform: 'scale(' + scale + ',' + scale + ')',
@@ -137,6 +137,12 @@ export default {
     callback() {},
     toggleLeftMenu(index) {
       this.activeLeftMenu = index;
+    },
+    cancelActive(e) {
+      if (e.target.getAttribute("class") == "index_center") {
+        console.log("取消选中");
+        this.$store.commit("core/clear_template");
+      }
     },
     coreSetting(id) {
       if (id === 1) {

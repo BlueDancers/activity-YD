@@ -26,10 +26,10 @@ const core = {
       let list = JSON.parse(JSON.stringify(state.template));
       let activeTemplate = [];
       // 如果点击了已经选中的就取消选择
-      if (state.activeTemplate.includes(id)) {
-        state.activeTemplate = [];
-        return false;
-      }
+      // if (state.activeTemplate.includes(id)) {
+      //   state.activeTemplate = [];
+      //   return false;
+      // }
       list.map(item => {
         if (item.id == id) {
           if (state.isLongDown) {
