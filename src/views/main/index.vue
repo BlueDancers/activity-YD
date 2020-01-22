@@ -32,20 +32,21 @@
     <div class="index_center" @click="cancelActive">
       <core
         :style="{
-          transform: 'scale(' + scale + ',' + scale + ')',
-          'transform-origin': 'center top'
+          transform: `scale(${scale},${scale})`,
+          'transform-origin': `center top`
         }"
-      ></core>
+      >
+      </core>
     </div>
     <div class="index_right">
       <div class="right_setting">
         <div
           class="setting_item"
-          v-for="item in setting"
+          v-for="(item, index) in setting"
           :key="item.id"
           @click="coreSetting(item.id)"
         >
-          <a-popover placement="left">
+          <a-popover v-if="index <= 1" placement="left">
             <template slot="content">
               <p>{{ coreScale }}</p>
             </template>
@@ -54,6 +55,10 @@
               <span class="settion_item_text">{{ item.text }}</span>
             </div>
           </a-popover>
+          <div v-else class="item">
+            <img class="settion_item_icon" :src="item.icon" alt="" />
+            <span class="settion_item_text">{{ item.text }}</span>
+          </div>
         </div>
       </div>
       <a-tabs defaultActiveKey="1" @change="callback">
@@ -68,6 +73,7 @@
 <script>
 import componentPage from "./components/component";
 import attributesPage from "./components/attributes";
+import History from "../../store/plugins/todo/History.js";
 import page from "./components/page";
 import templatePage from "./components/template";
 import core from "./components/core";
@@ -82,14 +88,6 @@ export default {
   mounted() {
     let objName = this.$route.params.objectName;
     this.$store.commit("core/set_objectName", objName);
-    this.$store
-      .dispatch("core/getActivity", { name: objName })
-      .then(result => {
-        this.$message.success(result);
-      })
-      .catch(err => {
-        this.$message.error(err);
-      });
   },
   data() {
     return {
@@ -150,6 +148,8 @@ export default {
         this.scale += 0.1;
       } else if (id === 2) {
         this.scale -= 0.1;
+      } else if (id == 3) {
+        History.undo();
       }
     }
   }

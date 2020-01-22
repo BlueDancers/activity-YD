@@ -46,6 +46,7 @@ const core = {
         }
       });
       state.activeTemplate = activeTemplate;
+      console.log(state);
     },
     // 更新是否为多选状态
     toggle_isLongDown(state, status) {

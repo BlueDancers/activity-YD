@@ -55,7 +55,6 @@ export default {
     }
   },
   mounted() {
-    // 这里的监听还存在问题
     window.addEventListener(
       "mouseup",
       e => {
@@ -108,7 +107,7 @@ export default {
   },
   methods: {
     mousedown() {
-      // console.log('鼠标按下');
+      console.log("鼠标按下");
       this.down = true;
     },
     mouseup() {
