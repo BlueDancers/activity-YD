@@ -1,17 +1,6 @@
 <template>
   <div class="index">
     <div class="index_left">
-      <!-- <a-tabs defaultActiveKey="1" @change="callback">
-        <a-tab-pane tab="组件列表" key="1">
-          
-        </a-tab-pane>
-        <a-tab-pane tab="页面管理" key="2">
-          
-        </a-tab-pane>
-        <a-tab-pane tab="使用模板" key="3">
-          使用模板-暂时未在开发计划内
-        </a-tab-pane>
-      </a-tabs> -->
       <div class="left_menu_active">
         <div
           class="left_menu_item"
@@ -88,6 +77,14 @@ export default {
   mounted() {
     let objName = this.$route.params.objectName;
     this.$store.commit("core/set_objectName", objName);
+    this.$store
+      .dispatch("core/getActivity", { name: objName })
+      .then(result => {
+        this.$message.success(result);
+      })
+      .catch(err => {
+        this.$message.error(err);
+      });
   },
   data() {
     return {

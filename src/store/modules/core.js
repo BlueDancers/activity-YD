@@ -1,5 +1,7 @@
 import { saveActivity, getActivity, updateObj } from "../../api/index";
 import { commHeight, commWidth } from "../../config/index";
+import { debounce } from "../../utils/utils";
+
 const core = {
   namespaced: true,
   state: {
@@ -9,7 +11,11 @@ const core = {
     parentName: "", // 项目名
     template: [], // 组件
     activeTemplate: [], // 选中的数组
-    isLongDown: false // 当前是否处于多选状态
+    isLongDown: false, // 当前是否处于多选状态
+    marking: {
+      x: [], // x对齐标线
+      y: [] // y对齐标线
+    }
   },
   mutations: {
     // 保存当前项目名
@@ -58,7 +64,7 @@ const core = {
     },
     // 更新元素位置
     updatePos(state, data) {
-      let list = JSON.parse(JSON.stringify(state.template));
+      let list = JSON.parse(JSON.stringify(state.template)); // 元素总体
       list.map(item => {
         if (state.activeTemplate.includes(item.id)) {
           item.css.left = item.css.left + data.x;
@@ -119,6 +125,7 @@ const core = {
       }
       state.template = list;
     },
+    // 移除某个组件
     deleteCompLate(state, data) {
       let list = JSON.parse(JSON.stringify(state.template));
       let subscript = null;
@@ -130,6 +137,12 @@ const core = {
       list.splice(subscript, 1);
       state.template = list;
       state.activeTemplate = [];
+    },
+    // 存储当前标线位置
+    setMarking(state) {
+      // let xPoint = []; // x轴上面该出现标线的
+      // let yPoint = []; // y轴上面该出现标线的
+      console.log(state);
     },
     // 单组件快捷配置
     fastOnlySet(state, data) {
@@ -275,6 +288,14 @@ const core = {
           }
         });
       });
+    },
+    // 更新元素位置
+    updatePosition({ commit }, data) {
+      commit("updatePos", data);
+      debounce(() => {
+        console.log("获取标线数据");
+        commit("setMarking");
+      }, 500);
     }
   }
 };

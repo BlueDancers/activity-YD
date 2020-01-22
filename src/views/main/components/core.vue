@@ -16,6 +16,8 @@
       :text="item.text"
       :activeTemplate="activeTemplate"
     ></component>
+    <!-- 标线 -->
+    <div class="marking"></div>
   </div>
 </template>
 
@@ -84,6 +86,14 @@ export default {
   background-color: white;
   #canvas {
     position: absolute;
+  }
+  .marking {
+    position: absolute;
+    top: 0;
+    left: 31px;
+    width: 1px;
+    height: 100%;
+    background-color: rgb(24, 144, 255);
   }
 }
 </style>

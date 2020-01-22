@@ -70,4 +70,5 @@ function _updatePos(moveX, moveY) {
     y: moveY
   });
 }
+
 export { handleStyle, initKeyDown };

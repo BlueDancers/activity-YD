@@ -121,7 +121,7 @@ export default {
       this.updatePos(moveX, moveY);
     },
     updatePos(moveX, moveY) {
-      this.$store.commit("core/updatePos", {
+      this.$store.dispatch("core/updatePosition", {
         x: moveX,
         y: moveY
       });
