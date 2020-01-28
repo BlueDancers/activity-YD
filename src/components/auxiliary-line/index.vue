@@ -1,0 +1,49 @@
+<template>
+  <!-- 标线 -->
+  <div :class="auxiliary"></div>
+</template>
+
+<script>
+import core from "../../store/modules/core";
+export default {
+  computed: {
+    auxiliary() {
+      let auxiliary = core.state.auxiliary;
+      if (auxiliary == "top") {
+        return `marking-vertical`;
+      } else if (auxiliary == "left") {
+        return `marking-horizontal`;
+      } else if (auxiliary == "none") {
+        return `marking-none`;
+      }
+      return `marking-none`;
+    },
+    marking() {
+      return core.state.marking;
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.marking-horizontal {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgb(24, 144, 255);
+}
+.marking-none {
+  position: absolute;
+  display: none;
+}
+.marking-vertical {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  width: 1px;
+  height: 100%;
+  background-color: rgb(24, 144, 255);
+}
+</style>

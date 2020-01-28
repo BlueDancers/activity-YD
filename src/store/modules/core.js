@@ -12,6 +12,7 @@ const core = {
     template: [], // 组件
     activeTemplate: [], // 选中的数组
     isLongDown: false, // 当前是否处于多选状态
+    auxiliary: "none", // top 竖向 left 横向
     marking: {
       x: [], // x对齐标线
       y: [] // y对齐标线
@@ -31,6 +32,7 @@ const core = {
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template));
       let activeTemplate = [];
+      let marking = state.marking;
       // 如果点击了已经选中的就取消选择
       // if (state.activeTemplate.includes(id)) {
       //   state.activeTemplate = [];
@@ -51,8 +53,25 @@ const core = {
           }
         }
       });
+      state.template.map(res => {
+        if (activeTemplate.includes(res.id)) {
+          console.log('上面', res.css.top, '下面', res.css.top + res.css.height);
+          console.log('左边', res.css.left, '右边', res.css.left + res.css.width);
+          state.marking.x.map((x, index) => {
+            if (x == res.left || x == res.css.left + res.css.width) {
+              marking.x.splice(index, x);
+            }
+          });
+          state.marking.y.map((y, index) => {
+            if (y == res.top || y == res.css.top + res.css.height) {
+              marking.y.splice(index, y);
+            }
+          });
+        }
+      });
+      console.log(marking);
       state.activeTemplate = activeTemplate;
-      console.log(state);
+      state.marking = marking;
     },
     // 更新是否为多选状态
     toggle_isLongDown(state, status) {
@@ -69,6 +88,16 @@ const core = {
         if (state.activeTemplate.includes(item.id)) {
           item.css.left = item.css.left + data.x;
           item.css.top = item.css.top + data.y;
+        }
+      });
+      // 判断是否存在辅助线
+      list.map(res => {
+        if (state.marking.x.includes(res.css.top)) {
+          state.auxiliary = "left";
+        } else if (state.marking.y.includes(res.css.left)) {
+          state.auxiliary = "top";
+        } else {
+          state.auxiliary = "none";
         }
       });
       state.template = list;
@@ -140,9 +169,25 @@ const core = {
     },
     // 存储当前标线位置
     setMarking(state) {
-      // let xPoint = []; // x轴上面该出现标线的
-      // let yPoint = []; // y轴上面该出现标线的
-      console.log(state);
+      let marking = {
+        x: [], // x轴上面该出现标线的
+        y: [] // y轴上面该出现标线的
+      };
+      state.template.map(res => {
+        if (res.css.left > 0) {
+          marking.x.push(res.css.left);
+        }
+        if (res.css.top > 0) {
+          marking.y.push(res.css.top);
+        }
+        marking.x.push(res.css.left + res.css.width);
+        marking.y.push(res.css.top + res.css.height);
+      });
+      console.log(state.marking);
+      state.marking = {
+        x: Array.from(new Set(marking.x)),
+        y: Array.from(new Set(marking.y))
+      };
     },
     // 单组件快捷配置
     fastOnlySet(state, data) {
@@ -271,7 +316,7 @@ const core = {
       return objandSave[1];
     },
     // 获取当前配置
-    getActivity({ state }, data) {
+    getActivity({ state, commit }, data) {
       return new Promise((resolve, reject) => {
         getActivity(data.name).then(e => {
           if (e.data.code !== 200) {
@@ -284,6 +329,7 @@ const core = {
             state.template = template;
             state.commHeight = e.data.data.objHeight;
             state.background = e.data.data.background;
+            commit("setMarking");
             resolve("数据查询完成");
           }
         });
@@ -291,9 +337,9 @@ const core = {
     },
     // 更新元素位置
     updatePosition({ commit }, data) {
+      // 更新组件数据
       commit("updatePos", data);
       debounce(() => {
-        console.log("获取标线数据");
         commit("setMarking");
       }, 500);
     }

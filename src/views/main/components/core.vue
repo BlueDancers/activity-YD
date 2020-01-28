@@ -7,6 +7,7 @@
     }"
   >
     <canvas id="canvas"></canvas>
+    <auxiliary-line></auxiliary-line>
     <component
       v-for="(item, index) in template"
       :key="index"
@@ -16,8 +17,6 @@
       :text="item.text"
       :activeTemplate="activeTemplate"
     ></component>
-    <!-- 标线 -->
-    <div class="marking"></div>
   </div>
 </template>
 
@@ -29,12 +28,14 @@ import baseButtom from "../../../template/baseButtom";
 import baseImg from "../../../template/baseImg";
 import baseText from "../../../template/baseText";
 import baseInput from "../../../template/baseInput";
+import auxiliaryLine from "../../../components/auxiliary-line";
 export default {
   components: {
     baseButtom,
     baseImg,
     baseText,
-    baseInput
+    baseInput,
+    auxiliaryLine
   },
   mounted() {
     this.initBack();
@@ -86,14 +87,6 @@ export default {
   background-color: white;
   #canvas {
     position: absolute;
-  }
-  .marking {
-    position: absolute;
-    top: 0;
-    left: 31px;
-    width: 1px;
-    height: 100%;
-    background-color: rgb(24, 144, 255);
   }
 }
 </style>

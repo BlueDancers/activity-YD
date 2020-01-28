@@ -107,7 +107,6 @@ export default {
   },
   methods: {
     mousedown() {
-      console.log("鼠标按下");
       this.down = true;
     },
     mouseup() {
