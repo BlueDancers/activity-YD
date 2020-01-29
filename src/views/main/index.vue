@@ -6,26 +6,38 @@
       <left />
       <!-- 中控台 -->
       <div class="index_center" @click="cancelActive">
-        <core :style="{ transform: `scale(${scale},${scale})` }" class="core" />
+        <core
+          :style="{ transform: `scale(${scale},${scale})` }"
+          class="core"
+          ref="core"
+        />
       </div>
       <!-- 右侧菜单栏 -->
       <right :coreScale="coreScale" @coreSetting="coreSetting" />
     </div>
+    <!-- 发布预览框 -->
+    <upload-modal ref="uploadModal" :objUrl="objUrl" />
   </div>
 </template>
 
 <script>
-import baseHeader from '../../components/header/index';
-import History from "../../store/plugins/todo/History.js";
+import History from "@/store/plugins/todo/History.js";
+import baseHeader from '@/components/header/index';
 import core from "./center/core";
 import left from './left/index';
 import right from './right/index';
+import uploadModal from './components/uploadModal';
+import { mobileUrl } from "@/config/index";
+import html2canvas from 'html2canvas';
+import { base64ToBlob } from '@/utils/index';
+import { uploadImg } from '@/api/index';
 export default {
   components: {
     baseHeader,
-    core,
     left,
-    right
+    core,
+    right,
+    uploadModal
   },
   mounted() {
     let objName = this.$route.params.objectName;
@@ -42,6 +54,7 @@ export default {
   data() {
     return {
       scale: 1, // 缩放
+      objUrl: '', // 当前项目的url
     };
   },
   computed: {
@@ -69,8 +82,35 @@ export default {
       }
     },
     // 保存项目
-    saveObject() {
-      console.log('保存项目');
+    saveObject(type) {
+      html2canvas(document.querySelector(".core"), {
+        backgroundColor: null,
+        async: true,
+        scale: 1
+      }).then(canvas => {
+        let dataURL = canvas.toDataURL("image/png");
+        uploadImg(dataURL).then(res => {
+          console.log(res);
+        })
+      })
+      // 保存当前页面的配置
+      // this.$store.dispatch("core/saveObject")
+      //   .then(res => {
+      //     if (res.data.code == 200) {
+      //       if (type == 1) {
+      //         console.log('打开弹窗');
+      //         this.objUrl = mobileUrl + res.data.data;
+      //         this.$refs['uploadModal'].openModal()
+      //       } else {
+      //         this.$message.success("发布成功");
+      //       }
+      //     } else {
+      //       this.$message.error(res.data.data);
+      //     }
+      //   })
+      //   .catch(err => {
+      //     this.$message.error('错误' + err);
+      //   });
     }
   }
 };

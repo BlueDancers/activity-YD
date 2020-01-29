@@ -16,6 +16,5 @@ module.exports = {
     open: true
   },
   chainWebpack: config => {
-    config.resolve.alias.set("@", resolve("src"))
-  },
+  }
 };

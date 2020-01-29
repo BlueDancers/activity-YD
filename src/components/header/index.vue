@@ -25,58 +25,19 @@
         <span>github</span>
       </div>
     </div>
-    <!-- 成功的模态框 -->
-    <a-modal
-      title="发布成功"
-      v-model="succModal"
-      @ok="hideModal"
-      okText="确认"
-      cancelText="取消"
-    >
-      <div class="success_modal">
-        <qriously :value="objUrl" :size="200" />
-      </div>
-    </a-modal>
   </div>
 </template>
 
 <script>
 // 主页面头部组件
-import { mobileUrl } from "../../config/index";
 export default {
-  data() {
-    return {
-      succModal: false, // 发布项目完成的提示框
-      objUrl: "" // 生成的二维码
-    }
-  },
   methods: {
     gotoHome() {
       this.$router.push({ name: "home" })
     },
     saveObject(type) {
-      console.log(this.$refs["core"]);
-      // 保存当前页面的配置
-      // this.$store.dispatch("core/saveObject")
-      //   .then(res => {
-      //     if (res.data.code == 200) {
-      //       this.objUrl = mobileUrl + res.data.data;
-      //       if (type == 1) {
-      //         this.succModal = true;
-      //       } else {
-      //         this.$message.success("发布成功");
-      //       }
-      //     } else {
-      //       this.$message.error(res.data.data);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.$message.error(err);
-      //   });
+      this.$emit('saveObject', type)
     },
-    hideModal() {
-      this.succModal = false;
-    }
   }
 }
 </script>

@@ -79,3 +79,16 @@ export function updateObj(objectName, height, background) {
     }
   });
 }
+
+export function uploadImg(image){
+  return request({
+    url: "/upimage",
+    method: "POST",
+    header: {
+      // 上传文件请求头
+    },
+    data:{
+      image
+    }
+  });
+}
