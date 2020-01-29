@@ -43,6 +43,7 @@
 </template>
 
 <script>
+// 全局拖拽组件
 import { initKeyDown } from "../../utils/index";
 export default {
   props: {
@@ -51,7 +52,7 @@ export default {
     },
     styles: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
   mounted() {
@@ -133,7 +134,7 @@ export default {
       // console.log('坐标元素松开');
       this.roundDown = false;
     },
-    topTop() {},
+    topTop() { },
     // 缩放元素
     Zoom(e) {
       // 对接缩放元素的偏移坐标

@@ -9,19 +9,19 @@
       <div class="right_header">
         <a-button
           @click="saveObject(2)"
-          v-if="ismain"
           type="primary"
           class="right_header_item"
-          >发布</a-button
         >
+          发布
+        </a-button>
         <a-button
           @click="saveObject(1)"
-          v-if="ismain"
           type="primary"
           icon="cloud"
           class="right_header_item"
-          >发布并预览</a-button
         >
+          发布并预览
+        </a-button>
         <span>github</span>
       </div>
     </div>
@@ -41,49 +41,42 @@
 </template>
 
 <script>
-import { mobileUrl } from '../../config/index'
+// 主页面头部组件
+import { mobileUrl } from "../../config/index";
 export default {
   data() {
     return {
-      ismain: false,
-      succModal: false,
-      objUrl: ''
-    }
-  },
-  watch: {
-    $route(to, form) {
-      if (to.name == 'main') {
-        this.ismain = true
-      } else {
-        this.ismain = false
-      }
+      succModal: false, // 发布项目完成的提示框
+      objUrl: "" // 生成的二维码
     }
   },
   methods: {
     gotoHome() {
-      if (this.ismain) {
-        this.$router.push({ name: 'home' })
-      }
+      this.$router.push({ name: "home" })
     },
     saveObject(type) {
+      console.log(this.$refs["core"]);
       // 保存当前页面的配置
-      this.$store.dispatch('core/saveObject').then(res => {
-        if (res.data.code == 200) {
-          this.objUrl = mobileUrl + res.data.data
-          if (type == 1) {
-            this.succModal = true
-          } else {
-            this.$message.success('发布成功')
-          }
-        } else {
-          this.$message.error(res.data.data)
-        }
-      })
-        .catch(err => {
-          this.$message.error(err)
-        })
+      // this.$store.dispatch("core/saveObject")
+      //   .then(res => {
+      //     if (res.data.code == 200) {
+      //       this.objUrl = mobileUrl + res.data.data;
+      //       if (type == 1) {
+      //         this.succModal = true;
+      //       } else {
+      //         this.$message.success("发布成功");
+      //       }
+      //     } else {
+      //       this.$message.error(res.data.data);
+      //     }
+      //   })
+      //   .catch(err => {
+      //     this.$message.error(err);
+      //   });
     },
-    hideModal() { }
+    hideModal() {
+      this.succModal = false;
+    }
   }
 }
 </script>

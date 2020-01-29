@@ -14,5 +14,8 @@ module.exports = {
   devServer: {
     port: 8888,
     open: true
-  }
+  },
+  chainWebpack: config => {
+    config.resolve.alias.set("@", resolve("src"))
+  },
 };

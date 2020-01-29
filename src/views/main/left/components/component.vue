@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import { baseButtom, baseImg, baseText, baseInput } from '../../../utils/baseReact';
-import { imageUpUrl } from '../../../config/index'
+import { baseButtom, baseImg, baseText, baseInput } from '@/utils/baseReact';
+import { imageUpUrl } from '@/config/index'
 export default {
   data() {
     return {
@@ -42,19 +42,19 @@ export default {
       reactList: [
         {
           name: '图片',
-          img: require('../../../assets/img.png')
+          img: require('@/assets/img.png')
         },
         {
           name: '文本',
-          img: require('../../../assets/showtext.png')
+          img: require('@/assets/showtext.png')
         },
         {
           name: '按钮',
-          img: require('../../../assets/buttom.png')
+          img: require('@/assets/buttom.png')
         },
         {
           name: '输入框',
-          img: require('../../../assets/text.png')
+          img: require('@/assets/text.png')
         },
       ]
     }

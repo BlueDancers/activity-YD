@@ -4,6 +4,7 @@
 </template>
 
 <script>
+// 全局辅助线组件
 import core from "../../store/modules/core";
 export default {
   computed: {

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+// 全局底部组件(弃用)
 export default {
   mounted() {
     this.init()

@@ -69,6 +69,7 @@
 </template>
 
 <script>
+// 全局颜色组件
 export default {
   name: 'colorPicker',
   props: {

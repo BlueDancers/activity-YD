@@ -1,78 +1,31 @@
 <template>
   <div class="index">
-    <div class="index_left">
-      <div class="left_menu_active">
-        <div
-          class="left_menu_item"
-          :class="{ item_active: item.key == activeLeftMenu }"
-          v-for="item in leftMenu"
-          :key="item.title"
-          @click="toggleLeftMenu(item.key)"
-        >
-          {{ item.title }}
-        </div>
+    <base-header @saveObject="saveObject"></base-header>
+    <div class="index_main">
+      <!-- 左侧菜单栏 -->
+      <left />
+      <!-- 中控台 -->
+      <div class="index_center" @click="cancelActive">
+        <core :style="{ transform: `scale(${scale},${scale})` }" class="core" />
       </div>
-      <div class="left_menu_board">
-        <component-page v-show="activeLeftMenu == 1"></component-page>
-        <page v-show="activeLeftMenu == 2"></page>
-        <templatePage v-show="activeLeftMenu == 3"></templatePage>
-      </div>
-    </div>
-    <div class="index_center" @click="cancelActive">
-      <core
-        :style="{
-          transform: `scale(${scale},${scale})`,
-          'transform-origin': `center top`
-        }"
-      >
-      </core>
-    </div>
-    <div class="index_right">
-      <div class="right_setting">
-        <div
-          class="setting_item"
-          v-for="(item, index) in setting"
-          :key="item.id"
-          @click="coreSetting(item.id)"
-        >
-          <a-popover v-if="index <= 1" placement="left">
-            <template slot="content">
-              <p>{{ coreScale }}</p>
-            </template>
-            <div class="item">
-              <img class="settion_item_icon" :src="item.icon" alt="" />
-              <span class="settion_item_text">{{ item.text }}</span>
-            </div>
-          </a-popover>
-          <div v-else class="item">
-            <img class="settion_item_icon" :src="item.icon" alt="" />
-            <span class="settion_item_text">{{ item.text }}</span>
-          </div>
-        </div>
-      </div>
-      <a-tabs defaultActiveKey="1" @change="callback">
-        <a-tab-pane tab="属性" key="1">
-          <attributesPage></attributesPage>
-        </a-tab-pane>
-      </a-tabs>
+      <!-- 右侧菜单栏 -->
+      <right :coreScale="coreScale" @coreSetting="coreSetting" />
     </div>
   </div>
 </template>
 
 <script>
-import componentPage from "./components/component";
-import attributesPage from "./components/attributes";
+import baseHeader from '../../components/header/index';
 import History from "../../store/plugins/todo/History.js";
-import page from "./components/page";
-import templatePage from "./components/template";
-import core from "./components/core";
+import core from "./center/core";
+import left from './left/index';
+import right from './right/index';
 export default {
   components: {
-    componentPage,
-    attributesPage,
-    page,
-    templatePage,
-    core
+    baseHeader,
+    core,
+    left,
+    right
   },
   mounted() {
     let objName = this.$route.params.objectName;
@@ -89,38 +42,6 @@ export default {
   data() {
     return {
       scale: 1, // 缩放
-      leftMenu: [
-        {
-          title: "组件列表",
-          key: 1
-        },
-        {
-          title: "页面设置",
-          key: 2
-        },
-        {
-          title: "模板设置",
-          key: 3
-        }
-      ],
-      setting: [
-        {
-          icon: require("../../assets/zoom.png"),
-          text: "放大",
-          id: 1
-        },
-        {
-          icon: require("../../assets/zoomout.png"),
-          text: "缩小",
-          id: 2
-        },
-        {
-          icon: require("../../assets/cancel.png"),
-          text: "撤销",
-          id: 3
-        }
-      ],
-      activeLeftMenu: 1
     };
   },
   computed: {
@@ -129,25 +50,27 @@ export default {
     }
   },
   methods: {
-    callback() {},
-    toggleLeftMenu(index) {
-      this.activeLeftMenu = index;
-    },
+    // 点击屏幕外侧取消选中
     cancelActive(e) {
       if (e.target.getAttribute("class") == "index_center") {
         console.log("取消选中");
         this.$store.commit("core/clear_template");
       }
     },
+    // 放大缩小
     coreSetting(id) {
       if (id === 1) {
-        // this.scale = (this.scale + 0.1).toFixed(1);
         this.scale += 0.1;
       } else if (id === 2) {
         this.scale -= 0.1;
       } else if (id == 3) {
+        // vuex撤销功能未完成
         History.undo();
       }
+    },
+    // 保存项目
+    saveObject() {
+      console.log('保存项目');
     }
   }
 };
@@ -155,80 +78,20 @@ export default {
 
 <style lang="less" scoped>
 .index {
-  height: 94%;
-  display: flex;
-  justify-content: space-between;
-  .index_left {
-    position: relative;
-    background-color: #ffffff;
-    width: 420px;
-    height: 100%;
+  height: 100%;
+  .index_main {
+    height: 94%;
     display: flex;
-    .left_menu_active {
-      width: 100px;
-      border-right: 1px solid rgb(216, 216, 216);
-      .left_menu_item {
-        cursor: pointer;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        transition: all 0.2s;
-        &:hover {
-          background: #1890ff;
-          color: white;
-        }
-      }
-      .item_active {
-        background: #1890ff;
-        color: white;
-      }
-    }
-    .left_menu_board {
-      width: 320px;
-    }
-  }
-  .index_center {
-    padding: 20px 0;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    overflow-x: hidden;
-  }
-  .index_right {
-    position: relative;
-    background-color: white;
-    width: 440px;
-    height: 100%;
-    display: flex;
-    .right_setting {
-      width: 40px;
-      border-right: 1px solid #f6f6f6;
-      .setting_item {
-        width: 100%;
-        height: 50px;
-        user-select: none;
-        cursor: pointer;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        &:hover {
-          background: #f8f8f8;
-        }
-        .item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          .settion_item_icon {
-            width: 15px;
-          }
-          .settion_item_text {
-            font-size: 10px;
-            line-height: 18px;
-          }
-        }
+    justify-content: space-between;
+    .index_center {
+      padding: 20px 0;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      overflow-x: hidden;
+      .core {
+        transform-origin: "center top";
       }
     }
   }

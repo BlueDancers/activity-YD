@@ -1,20 +1,12 @@
 <template>
   <div id="app">
-    <baseHeader />
     <router-view />
-    <!-- <baseFooter /> -->
   </div>
 </template>
 
 <script>
-import baseHeader from "./components/header/index";
-import baseFooter from "./components/footer/index";
 export default {
   name: "App",
-  components: {
-    baseHeader,
-    baseFooter
-  }
 };
 </script>
 

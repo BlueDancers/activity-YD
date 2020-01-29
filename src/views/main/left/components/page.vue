@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import core from '../../../store/modules/core';
-import colorPicker from '../../../components/color-picker'
+import core from '@/store/modules/core';
+import colorPicker from '@/components/color-picker'
 export default {
   components: {
     colorPicker
