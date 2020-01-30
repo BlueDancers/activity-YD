@@ -29,7 +29,7 @@ import right from './right/index';
 import uploadModal from './components/uploadModal';
 import { mobileUrl } from "@/config/index";
 import html2canvas from 'html2canvas';
-import { base64ToBlob } from '@/utils/index';
+import { base64ToBlob, BlobToImgFile } from '@/utils/index';
 import { uploadImg } from '@/api/index';
 export default {
   components: {
@@ -84,33 +84,34 @@ export default {
     // 保存项目
     saveObject(type) {
       html2canvas(document.querySelector(".core"), {
-        backgroundColor: null,
+        // backgroundColor: null,
+        useCORS: true,
         async: true,
         scale: 1
       }).then(canvas => {
-        let dataURL = canvas.toDataURL("image/png");
-        uploadImg(dataURL).then(res => {
-          console.log(res);
-        })
+        let dataURL = canvas.toDataURL("image/jpeg");
+        const data = new FormData();
+        data.append('image', BlobToImgFile(base64ToBlob(dataURL), "image/jpeg"));
+        return uploadImg(data)
+      }).then((res) => {
+        // 保存当前页面的配置
+        return this.$store.dispatch("core/saveObject", res.data.data.data)
+      }).then(res => {
+        if (res.data.code == 200) {
+          if (type == 1) {
+            console.log('打开弹窗');
+            this.objUrl = mobileUrl + res.data.data;
+            this.$refs['uploadModal'].openModal()
+          } else {
+            this.$message.success("发布成功");
+          }
+        } else {
+          this.$message.error(res.data.data);
+        }
       })
-      // 保存当前页面的配置
-      // this.$store.dispatch("core/saveObject")
-      //   .then(res => {
-      //     if (res.data.code == 200) {
-      //       if (type == 1) {
-      //         console.log('打开弹窗');
-      //         this.objUrl = mobileUrl + res.data.data;
-      //         this.$refs['uploadModal'].openModal()
-      //       } else {
-      //         this.$message.success("发布成功");
-      //       }
-      //     } else {
-      //       this.$message.error(res.data.data);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.$message.error('错误' + err);
-      //   });
+        .catch(err => {
+          this.$message.error('错误' + err);
+        });
     }
   }
 };

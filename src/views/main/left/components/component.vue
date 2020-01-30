@@ -15,6 +15,7 @@
           :action="imageUpUrl"
           :headers="headers"
           @change="handleChange"
+          :before-upload="beforeAvatarUpload"
         >
           <!-- <a-button> <a-icon type="upload" /> Click to Upload </a-button> -->
           <img class="item_img" :src="item.img" alt="" />
@@ -69,6 +70,9 @@ export default {
       } else if (index == 3) {
         this.$store.commit('core/set_tempLate', baseInput())
       }
+    },
+    beforeAvatarUpload(file) {
+      // console.log(file);
     },
     handleChange(info) {
       // if (info.file.status !== 'uploading') {

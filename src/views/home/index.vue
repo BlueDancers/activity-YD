@@ -11,7 +11,13 @@
     <div class="item" v-for="item in mainList" :key="item.id">
       <!--初始化项目 -->
       <div class="item_img">
-        <img src="../../assets/logo.png" alt="" />
+        <img
+          class="img"
+          v-if="!item.titlePage"
+          src="../../assets/logo.png"
+          alt=""
+        />
+        <img class="img" v-if="item.titlePage" :src="item.titlePage" alt="" />
       </div>
       <div class="item_disp">
         <p class="name_con">
@@ -86,6 +92,7 @@
 <script>
 import { getObject, setObject, deleteObj } from '../../api/index';
 import { commHeight, mobileUrl } from '../../config/index';
+import { parseTime } from '@/utils/index';
 import core from '../../store/modules/core';
 export default {
   mounted() {
@@ -107,7 +114,10 @@ export default {
   methods: {
     getObject() {
       getObject().then(e => {
-        console.log(e);
+        console.log(e.data.data);
+        e.data.data.map(e => {
+          e.time = parseTime(e.time)
+        })
         this.mainList = e.data.data
       })
         .catch(err => {
@@ -158,6 +168,9 @@ export default {
       height: 200px;
       text-align: center;
       line-height: 200px;
+      .img {
+        height: 180px;
+      }
     }
     .base_img {
       height: 300px;
@@ -236,8 +249,6 @@ export default {
       transition: all 0.3s;
       box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
       margin-top: 17px;
-    }
-    .item_default {
     }
   }
 }

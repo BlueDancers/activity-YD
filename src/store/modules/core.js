@@ -298,16 +298,18 @@ const core = {
   },
   actions: {
     // 保存当前项目数据
-    async saveObject({ state }) {
+    async saveObject({ state }, titlePage) {
       if (state.template.length == 0) {
         return Promise.reject("请不要保存空页面");
       }
       let { parentName, commHeight, template, background } = state;
       let saveActivityapi = saveActivity(parentName, template).then(e => e);
+      console.log(titlePage)
       let updateObjHeightapi = updateObj(
         parentName,
         commHeight,
-        background
+        background,
+        titlePage
       ).then(e => e);
       const objandSave = await Promise.all([
         updateObjHeightapi,

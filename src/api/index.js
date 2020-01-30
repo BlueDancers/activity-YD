@@ -63,32 +63,32 @@ export function getActivity(name) {
 }
 
 /**
- * 更新单个项目的高度
+ * 更新单个项目的相关配置
  * @param {String} objectName
  * @param {Number} height
  * @param {String} background
+ * @param {String} titlePage
  */
-export function updateObj(objectName, height, background) {
+export function updateObj(objectName, height, background, titlePage) {
   return request({
     url: "/updateObj",
     method: "POST",
     data: {
       objectName,
       height,
-      background
+      background,
+      titlePage
     }
   });
 }
 
-export function uploadImg(image){
+export function uploadImg(data) {
   return request({
     url: "/upimage",
     method: "POST",
-    header: {
-      // 上传文件请求头
+    headers: {
+      'Content-Type': 'multipart/form-data',
     },
-    data:{
-      image
-    }
+    data
   });
 }
