@@ -39,13 +39,18 @@
       @mouseup.stop="roundMounseup"
     ></div>
     <slot></slot>
+    <right-menu ref="rightMenu" />
   </div>
 </template>
 
 <script>
 // 全局拖拽组件
 import { initKeyDown } from "../../utils/index";
+import rightMenu from '../rightMenu/index';
 export default {
+  components: {
+    rightMenu
+  },
   props: {
     id: {
       type: String
@@ -87,7 +92,10 @@ export default {
   watch: {
     activeTemplate: {
       handler() {
+        // 更新键盘事件
         initKeyDown();
+        // 关闭右击弹窗
+        this.$refs.rightMenu.close()
       },
       deep: true
     }
@@ -111,7 +119,6 @@ export default {
       this.down = true;
     },
     mouseup() {
-      // console.log('鼠标松开');
       this.down = false;
       this.roundDown = false;
     },
@@ -157,12 +164,8 @@ export default {
       this.$store.commit("core/deleteCompLate", data);
     },
     mouseRight(e) {
+      this.$refs.rightMenu.open(this.id, e.layerX, e.layerY)
       e.preventDefault();
-      const data = {
-        id: this.id
-      };
-      this.$store.commit("core/deleteCompLate", data);
-      console.log("鼠标右击");
     },
     initKeyDown() {
       console.log(document.onkeydown);
