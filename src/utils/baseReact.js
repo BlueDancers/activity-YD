@@ -1,11 +1,34 @@
-import core from "../store/modules/core";
 // 虚拟元素的映射
+
 
 /**
  * 按钮的vuex数据映射关系
  */
-export function baseButtom() {
-  let dynamic = core.state.template.length * 10;
+export function baseDiv(store) {
+  let dynamic = store.template.length * 10;
+  return {
+    id: String(new Date().getTime()), // 暂定
+    editStatus: false,
+    name: "base-div",
+    text: "",
+    css: {
+      top: 100 + dynamic,
+      left: 100 + dynamic,
+      width: 100,
+      height: 100,
+      zIndex: store.template.length + 1,
+      background: "rgb(242, 242, 242)",
+      border: "none",
+      "border-radius": 0
+    }
+  };
+}
+
+/**
+ * 按钮的vuex数据映射关系
+ */
+export function baseButtom(store) {
+  let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
     editStatus: false,
@@ -21,7 +44,7 @@ export function baseButtom() {
       left: 100 + dynamic,
       width: 100,
       height: 50,
-      zIndex: core.state.template.length + 1,
+      zIndex: store.template.length + 1,
       background: "rgb(242, 242, 242)",
       border: "none",
       color: "black",
@@ -34,8 +57,8 @@ export function baseButtom() {
 /**
  * 图片的vuex数据映射关系
  */
-export function baseImg(img) {
-  let dynamic = core.state.template.length * 10;
+export function baseImg(store, img) {
+  let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
     editStatus: false,
@@ -46,7 +69,7 @@ export function baseImg(img) {
       left: 100 + dynamic,
       width: 100,
       height: 50,
-      zIndex: core.state.template.length + 1
+      zIndex: store.template.length + 1
     }
   };
 }
@@ -54,8 +77,8 @@ export function baseImg(img) {
 /**
  * 文本的vuex数据映射关系
  */
-export function baseText() {
-  let dynamic = core.state.template.length * 10;
+export function baseText(store) {
+  let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
     editStatus: false,
@@ -66,7 +89,7 @@ export function baseText() {
       left: 100 + dynamic,
       width: 100,
       height: 50,
-      zIndex: core.state.template.length + 1,
+      zIndex: store.template.length + 1,
       background: "rgb(242, 242, 242)",
       border: "none",
       color: "black",
@@ -78,11 +101,11 @@ export function baseText() {
 /**
  * 输入框的vuex数据映射关系
  */
-export function baseInput() {
-  let dynamic = core.state.template.length * 10;
+export function baseInput(store) {
+  let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
-    inputName: `default${core.state.template.length}`,
+    inputName: `default${store.template.length}`,
     editStatus: false,
     name: "base-input",
     placeholder: "",
@@ -92,7 +115,7 @@ export function baseInput() {
       left: 100 + dynamic,
       width: 150,
       height: 30,
-      zIndex: core.state.template.length + 1,
+      zIndex: store.template.length + 1,
       background: "white",
       color: "black",
       "border-color": "black",

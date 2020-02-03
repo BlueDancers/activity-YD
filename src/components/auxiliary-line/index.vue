@@ -5,11 +5,10 @@
 
 <script>
 // 全局辅助线组件
-import core from "../../store/modules/core";
 export default {
   computed: {
     auxiliary() {
-      let auxiliary = core.state.auxiliary;
+      let auxiliary = this.$store.state.core.auxiliary;
       if (auxiliary == "top") {
         return `marking-vertical`;
       } else if (auxiliary == "left") {
@@ -20,7 +19,7 @@ export default {
       return `marking-none`;
     },
     marking() {
-      return core.state.marking;
+      return this.$store.state.core.marking;
     }
   }
 }

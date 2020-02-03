@@ -21,38 +21,38 @@
 </template>
 
 <script>
-// 数据源
-import core from "../../../store/modules/core";
 // 组件源
-import baseButtom from "../../../template/baseButtom";
-import baseImg from "../../../template/baseImg";
-import baseText from "../../../template/baseText";
-import baseInput from "../../../template/baseInput";
-import auxiliaryLine from "../../../components/auxiliary-line";
+import baseButtom from "@/template/baseButtom";
+import baseImg from "@/template/baseImg";
+import baseText from "@/template/baseText";
+import baseInput from "@/template/baseInput";
+import baseDiv from '@/template/baseDiv';
+import auxiliaryLine from "@/components/auxiliary-line";
 export default {
   components: {
     baseButtom,
     baseImg,
     baseText,
     baseInput,
-    auxiliaryLine
+    auxiliaryLine,
+    baseDiv
   },
   mounted() {
     this.initBack();
   },
   computed: {
     template() {
-      return core.state.template;
+      return this.$store.state.core.template;
     },
     activeTemplate() {
-      return core.state.activeTemplate;
+      return this.$store.state.core.activeTemplate;
     },
     commHeight() {
       this.initBack();
-      return core.state.commHeight;
+      return this.$store.state.core.commHeight;
     },
     background() {
-      return core.state.background;
+      return this.$store.state.core.background;
     }
   },
   methods: {

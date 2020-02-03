@@ -55,8 +55,8 @@ const core = {
       });
       state.template.map(res => {
         if (activeTemplate.includes(res.id)) {
-          console.log('上面', res.css.top, '下面', res.css.top + res.css.height);
-          console.log('左边', res.css.left, '右边', res.css.left + res.css.width);
+          // console.log('上面', res.css.top, '下面', res.css.top + res.css.height);
+          // console.log('左边', res.css.left, '右边', res.css.left + res.css.width);
           state.marking.x.map((x, index) => {
             if (x == res.left || x == res.css.left + res.css.width) {
               marking.x.splice(index, x);
@@ -69,7 +69,7 @@ const core = {
           });
         }
       });
-      console.log(marking);
+      // console.log(marking);
       state.activeTemplate = activeTemplate;
       state.marking = marking;
     },

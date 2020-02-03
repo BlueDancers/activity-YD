@@ -6,7 +6,7 @@
       :key="item.name"
       @click="setComponent(index)"
     >
-      <div v-if="index == 0">
+      <div v-if="index == 1">
         <a-upload
           class="item_file"
           name="image"
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { baseButtom, baseImg, baseText, baseInput } from '@/utils/baseReact';
+import { baseButtom, baseImg, baseText, baseInput, baseDiv } from '@/utils/baseReact';
 import { imageUpUrl } from '@/config/index'
 export default {
   data() {
@@ -41,6 +41,10 @@ export default {
       },
       imageUpUrl: imageUpUrl,
       reactList: [
+        {
+          name: '块级元素',
+          img: require('@/assets/img.png')
+        },
         {
           name: '图片',
           img: require('@/assets/img.png')
@@ -63,12 +67,14 @@ export default {
   methods: {
     setComponent(index) {
       if (index == 0) {
+        this.$store.commit('core/set_tempLate', baseDiv(this.$store.state.core))
       } else if (index == 1) {
-        this.$store.commit('core/set_tempLate', baseText())
       } else if (index == 2) {
-        this.$store.commit('core/set_tempLate', baseButtom())
+        this.$store.commit('core/set_tempLate', baseText(this.$store.state.core))
       } else if (index == 3) {
-        this.$store.commit('core/set_tempLate', baseInput())
+        this.$store.commit('core/set_tempLate', baseButtom(this.$store.state.core))
+      } else if (index == 4) {
+        this.$store.commit('core/set_tempLate', baseInput(this.$store.state.core))
       }
     },
     beforeAvatarUpload(file) {
@@ -79,7 +85,7 @@ export default {
       //   console.log(info.file, info.fileList);
       // }
       if (info.file.status === 'done') {
-        this.$store.commit('core/set_tempLate', baseImg(info.file.response.data.data))
+        this.$store.commit('core/set_tempLate', baseImg(this.$store.state.core, info.file.response.data.data))
       } else if (info.file.status === 'error') {
         this.$message.error(`${info.file.name} 上传失败.`);
       }

@@ -11,7 +11,7 @@
     <div class="arrt_list" v-if="coreType == 1">
       <!-- 当是按钮/图片的时候 文字都是必须存在的特殊配置 -->
       <!-- 通用的(文本框不存在) -->
-      <div class="attr_item" v-show="core.name !== 'base-input'">
+      <div class="attr_item" v-show="showText(core)">
         <div class="attr_list_left">
           {{ core.name !== "base-img" ? "文本:" : "链接:" }}
         </div>
@@ -24,7 +24,7 @@
           />
         </div>
       </div>
-      <div class="attr_item">
+      <div class="attr_item" v-if="showElementName(core)">
         <div class="attr_list_left">名称:</div>
         <div class="attr_list_right">
           <a-input
@@ -35,7 +35,7 @@
         </div>
       </div>
       <!-- placeholder 只有文本框才有 -->
-      <div class="attr_item" v-if="core.name == 'base-input'">
+      <div class="attr_item" v-if="showInputPlace(core)">
         <div class="attr_list_left">占位文字:</div>
         <div class="attr_list_right">
           <a-input
@@ -56,19 +56,19 @@
         </div>
       </div>
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
-      <div class="attr_item" v-if="core.name !== 'base-img'">
+      <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
         <div class="attr_list_right">
           <color-picker v-model="core.css['background']" />
         </div>
       </div>
-      <div class="attr_item" v-if="core.name !== 'base-img'">
+      <div class="attr_item" v-if="showFontColor(core)">
         <div class="attr_list_left">字体颜色:</div>
         <div class="attr_list_right">
           <color-picker v-model="core.css['color']" />
         </div>
       </div>
-      <div class="attr_item" v-if="core.name !== 'base-img'">
+      <div class="attr_item" v-if="showFontsize(core)">
         <div class="attr_list_left">字体大小:</div>
         <div class="attr_list_right">
           <a-input-number
@@ -79,10 +79,7 @@
         </div>
       </div>
       <!-- 一些共有属性 -->
-      <div
-        class="attr_item"
-        v-if="core.name == 'base-buttom' || core.name == 'base-input'"
-      >
+      <div class="attr_item" v-if="showBorderRadius(core)">
         <div class="attr_list_left">圆角:</div>
         <div class="attr_list_right">
           <a-input-number
@@ -93,7 +90,7 @@
         </div>
       </div>
       <!-- 按钮独有的属性 -->
-      <div class="attr_item" v-if="core.name == 'base-buttom'">
+      <div class="attr_item" v-if="showButtom(core)">
         <div class="attr_list_left">按钮事件:</div>
         <div class="attr_list_right">
           <a-radio-group
@@ -107,10 +104,7 @@
           </a-radio-group>
         </div>
       </div>
-      <div
-        class="attr_item"
-        v-if="core.name == 'base-buttom' && core.btnType == 1"
-      >
+      <div class="attr_item" v-if="showButtom(core) && core.btnType == 1">
         <div class="attr_list_left">按钮链接:</div>
         <div class="attr_list_right">
           <a-input
@@ -120,10 +114,7 @@
           />
         </div>
       </div>
-      <div
-        class="attr_item"
-        v-if="core.name == 'base-buttom' && core.btnType == 2"
-      >
+      <div class="attr_item" v-if="showButtom(core) && core.btnType == 2">
         <div class="attr_list_left">提交地址:</div>
         <div class="attr_list_right">
           <a-input
@@ -133,10 +124,7 @@
           />
         </div>
       </div>
-      <div
-        class="attr_item"
-        v-if="core.name == 'base-buttom' && core.btnType == 2"
-      >
+      <div class="attr_item" v-if="showButtom(core) && core.btnType == 2">
         <div class="attr_list_left">提交方式:</div>
         <div class="attr_list_right">
           <a-radio-group name="radioGroup" v-model="core.urlMethod">
@@ -145,10 +133,7 @@
           </a-radio-group>
         </div>
       </div>
-      <div
-        class="attr_item"
-        v-if="core.name == 'base-buttom' && core.btnType == 2"
-      >
+      <div class="attr_item" v-if="showButtom(core) && core.btnType == 2">
         <div class="attr_list_left">提交输入框:</div>
         <div class="attr_list_right">
           <a-select
@@ -170,13 +155,13 @@
       </div>
 
       <!-- 文本框独有的属性 -->
-      <div class="attr_item" v-if="core.name == 'base-input'">
+      <div class="attr_item" v-if="showBorder(core)">
         <div class="attr_list_left">边框颜色:</div>
         <div class="attr_list_right">
           <color-picker v-model="core.css['border-color']" />
         </div>
       </div>
-      <div class="attr_item" v-if="core.name !== 'base-buttom'">
+      <div class="attr_item" v-if="showBorder(core)">
         <div class="attr_list_left">边框宽度:</div>
         <div class="attr_list_right">
           <a-input-number
@@ -204,7 +189,6 @@
 </template>
 
 <script>
-import core from "@/store/modules/core";
 import colorPicker from "@/components/color-picker/index";
 export default {
   components: {
@@ -213,14 +197,14 @@ export default {
   computed: {
     // 可能是单组件 可能是多组件 可能无组件
     core() {
-      let activeCore = core.state.activeTemplate;
+      let activeCore = this.$store.state.core.activeTemplate;
       if (activeCore.length == 1) {
-        let form = core.state.template.filter(e =>
+        let form = this.$store.state.core.template.filter(e =>
           activeCore.includes(e.id)
         )[0];
         return form;
       } else if (activeCore.length > 1) {
-        return core.state.template.filter(e => activeCore.includes(e.id));
+        return this.$store.state.core.template.filter(e => activeCore.includes(e.id));
       }
       return {};
     },
@@ -241,19 +225,22 @@ export default {
       return 3;
     },
     refInputList() {
-      return core.state.template.filter(e => e.name == "base-input");
+      return this.$store.state.core.template.filter(e => e.name == "base-input");
     }
   },
   methods: {
+    // 便捷设置
     fastSet(type) {
       this.$store.commit("core/fastOnlySet", { type });
     },
+    // 多组件快捷设置
     mallfastSet(type) {
       this.$store.commit("core/mallfastSet", { type });
     },
     handleChange(e) {
       console.log(e);
     },
+    // 监听按钮提交input选项
     btnTypeChange(item) {
       if (item.bthType == 0) {
         item.link = "";
@@ -262,6 +249,78 @@ export default {
         item.refInput = [];
       } else if (item.bthType == 2) {
         item.link = "";
+      }
+    },
+    // 是否显示文本
+    showText(core) {
+      if (core.name == 'base-input' || core.name == 'base-div') {
+        return false
+      } else {
+        return true
+      }
+    },
+    // 判断是否显示名称
+    showElementName(core) {
+      if (core.name == 'base-input') {
+        return true
+      } else {
+        return false
+      }
+    },
+    // 判断是否显示placehloder
+    showInputPlace(core) {
+      if (core.name == 'base-input') {
+        return true
+      } else {
+        return false
+      }
+    },
+    // 是否显示背景颜色
+    showBackground(core) {
+      if (core.name == 'base-img') {
+        return false
+      } else {
+        return true
+      }
+    },
+    // 是否显示文字颜色
+    showFontColor(core) {
+      if (core.name == 'base-img' || core.name == 'base-div') {
+        return false
+      } else {
+        return true
+      }
+    },
+    // 是否显示文字大小
+    showFontsize(core) {
+      if (core.name == 'base-img' || core.name == 'base-div') {
+        return false
+      } else {
+        return true
+      }
+    },
+    // 判断是否显示圆角
+    showBorderRadius(core) {
+      if (core.name == 'base-buttom' || core.name == 'base-input' || core.name == 'base-div') {
+        return true
+      } else {
+        return false
+      }
+    },
+    // 判断是否显示按钮事件
+    showButtom(core) {
+      if (core.name == 'base-buttom') {
+        return true
+      } else {
+        return false
+      }
+    },
+    // 判断是否显示边框
+    showBorder(core) {
+      if (core.name == 'base-input') {
+        return true
+      } else {
+        return false
       }
     }
   }

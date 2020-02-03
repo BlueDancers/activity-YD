@@ -93,7 +93,6 @@
 import { getObject, setObject, deleteObj } from '../../api/index';
 import { commHeight, mobileUrl } from '../../config/index';
 import { parseTime } from '@/utils/index';
-import core from '../../store/modules/core';
 export default {
   mounted() {
     this.getObject()
@@ -131,7 +130,7 @@ export default {
       // 创建项目基类
       let data = {
         ...this.objform,
-        height: core.state.commHeight, // 页面高度默认667
+        height: this.$store.state.core.commHeight, // 页面高度默认667
         background: 'white' // 页面背景色默认白色
       }
       setObject(data).then(res => {

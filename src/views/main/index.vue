@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import History from "@/store/plugins/todo/History.js";
+import { cancelHistory, unCancelHistory } from "@/store/plugins/cancelPlugins";
 import baseHeader from '@/components/header/index';
 import core from "./center/core";
 import left from './left/index';
@@ -77,8 +77,11 @@ export default {
       } else if (id === 2) {
         this.scale -= 0.1;
       } else if (id == 3) {
-        // vuex撤销功能未完成
-        History.undo();
+        // 撤销
+        cancelHistory();
+      } else if (id == 4) {
+        // 反撤销
+        unCancelHistory()
       }
     },
     // 保存项目

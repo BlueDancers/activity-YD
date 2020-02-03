@@ -59,6 +59,11 @@ export default {
           icon: require("@/assets/cancel.png"),
           text: "撤销",
           id: 3
+        },
+        {
+          icon: require("@/assets/cancel.png"),
+          text: "反撤销",
+          id: 4
         }
       ],
     }

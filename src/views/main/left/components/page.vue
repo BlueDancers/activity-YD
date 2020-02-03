@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import core from '@/store/modules/core';
 import colorPicker from '@/components/color-picker'
 export default {
   components: {
@@ -34,7 +33,7 @@ export default {
   computed: {
     height: {
       get() {
-        return core.state.commHeight
+        return this.$store.state.core.commHeight
       },
       set(newValue) {
         this.$store.commit('core/updateCommHeigth', newValue)
@@ -42,7 +41,7 @@ export default {
     },
     background: {
       get() {
-        return core.state.background
+        return this.$store.state.core.background
       },
       set(newColor) {
         this.$store.commit('core/updateBackground', newColor)
