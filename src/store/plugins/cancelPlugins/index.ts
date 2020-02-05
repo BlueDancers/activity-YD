@@ -20,7 +20,7 @@ const filterMutation = [
  */
 export default function index(store) {
   // 保存vuex的实例
-  history.init(store);
+  history.init(store, 20);
   // 保存初始状态
   history.setState(cloneDeep(store.state))
   store.subscribe((mutation, state) => {
@@ -43,4 +43,11 @@ export function cancelHistory() {
  */
 export function unCancelHistory() {
   history.unReplaceState()
+}
+
+/**
+ * 初始化快照记录
+ */
+export function resetState() {
+  history.resetState()
 }
