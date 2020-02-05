@@ -1,4 +1,4 @@
-import { saveActivity, getActivity, updateObj } from "../../api/index";
+import { saveActivity, getActivity, updateObj } from "@/api/index";
 import { commHeight, commWidth } from "../../config/index";
 import { debounce } from "../../utils/utils";
 
@@ -31,7 +31,7 @@ const core = {
     // 更新元素可编辑状态
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template));
-      let activeTemplate = [];
+      let activeTemplate: any[] = [];
       let marking = state.marking;
       // 如果点击了已经选中的就取消选择
       // if (state.activeTemplate.includes(id)) {
@@ -169,11 +169,11 @@ const core = {
     },
     // 存储当前标线位置
     setMarking(state) {
-      let marking = {
+      let marking: any = {
         x: [], // x轴上面该出现标线的
         y: [] // y轴上面该出现标线的
       };
-      state.template.map(res => {
+      state.template.map((res: any) => {
         if (res.css.left > 0) {
           marking.x.push(res.css.left);
         }
@@ -324,7 +324,7 @@ const core = {
           if (e.data.code !== 200) {
             reject(e.data.data);
           } else {
-            let template = [];
+            let template: any[] = [];
             e.data.data.data.map(e => {
               template.push({ ...e, editStatus: false });
             });

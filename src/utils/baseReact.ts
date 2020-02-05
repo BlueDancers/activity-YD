@@ -1,10 +1,9 @@
 // 虚拟元素的映射
 
-
 /**
  * 按钮的vuex数据映射关系
  */
-export function baseDiv(store) {
+export function baseDiv(store: any) {
   let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
@@ -27,7 +26,7 @@ export function baseDiv(store) {
 /**
  * 按钮的vuex数据映射关系
  */
-export function baseButtom(store) {
+export function baseButtom(store: any) {
   let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
@@ -57,7 +56,7 @@ export function baseButtom(store) {
 /**
  * 图片的vuex数据映射关系
  */
-export function baseImg(store, img) {
+export function baseImg(store: any, img: string) {
   let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
@@ -77,7 +76,7 @@ export function baseImg(store, img) {
 /**
  * 文本的vuex数据映射关系
  */
-export function baseText(store) {
+export function baseText(store: any) {
   let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定
@@ -101,7 +100,7 @@ export function baseText(store) {
 /**
  * 输入框的vuex数据映射关系
  */
-export function baseInput(store) {
+export function baseInput(store: any) {
   let dynamic = store.template.length * 10;
   return {
     id: String(new Date().getTime()), // 暂定

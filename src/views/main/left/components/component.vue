@@ -69,6 +69,7 @@ export default {
       if (index == 0) {
         this.$store.commit('core/set_tempLate', baseDiv(this.$store.state.core))
       } else if (index == 1) {
+        console.log('添加图片')
       } else if (index == 2) {
         this.$store.commit('core/set_tempLate', baseText(this.$store.state.core))
       } else if (index == 3) {

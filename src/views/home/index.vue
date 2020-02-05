@@ -90,8 +90,8 @@
 </template>
 
 <script>
-import { getObject, setObject, deleteObj } from '../../api/index';
-import { commHeight, mobileUrl } from '../../config/index';
+import { getObject, setObject, deleteObj } from '@/api/index';
+import { commHeight, mobileUrl } from '@/config/index';
 import { parseTime } from '@/utils/index';
 export default {
   mounted() {

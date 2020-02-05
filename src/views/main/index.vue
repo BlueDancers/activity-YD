@@ -22,11 +22,11 @@
 
 <script>
 import { cancelHistory, unCancelHistory } from "@/store/plugins/cancelPlugins";
-import baseHeader from '@/components/header/index';
-import core from "./center/core";
-import left from './left/index';
-import right from './right/index';
-import uploadModal from './components/uploadModal';
+import baseHeader from '@/components/header/index.vue';
+import core from "./center/core.vue";
+import left from './left/index.vue';
+import right from './right/index.vue';
+import uploadModal from './components/uploadModal.vue';
 import { mobileUrl } from "@/config/index";
 import html2canvas from 'html2canvas';
 import { base64ToBlob, BlobToImgFile } from '@/utils/index';
