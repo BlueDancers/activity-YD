@@ -35,7 +35,6 @@ export default {
   },
   computed: {
     style() {
-      console.log(handleStyle(this.option));
       return handleStyle(this.option);
     },
     editStatus() {

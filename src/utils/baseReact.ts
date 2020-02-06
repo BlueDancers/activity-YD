@@ -37,6 +37,8 @@ export function baseButtom(store: any) {
     refInput: [], // 提交的input表单
     inputFromUrl: "", // 数据提交的地址
     urlMethod: "get", // 提交格式
+    QQNum: '', // qq客服
+    PhoneNum: '', // 电话客福
     link: "", // 按钮点击跳转地址
     css: {
       top: 100 + dynamic,

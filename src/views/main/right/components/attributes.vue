@@ -93,15 +93,18 @@
       <div class="attr_item" v-if="showButtom(core)">
         <div class="attr_list_left">按钮事件:</div>
         <div class="attr_list_right">
-          <a-radio-group
-            name="radioGroup"
+          <a-select
+            defaultValue="lucy"
+            style="width: 120px"
             v-model="core.btnType"
             @change="btnTypeChange(core)"
           >
-            <a-radio :value="0">无事件</a-radio>
-            <a-radio :value="1">外部链接</a-radio>
-            <a-radio :value="2">提交表单</a-radio>
-          </a-radio-group>
+            <a-select-option :value="0">无事件</a-select-option>
+            <a-select-option :value="1">外部链接</a-select-option>
+            <a-select-option :value="2">提交表单</a-select-option>
+            <a-select-option :value="3">QQ客服</a-select-option>
+            <a-select-option :value="4">电话客服</a-select-option>
+          </a-select>
         </div>
       </div>
       <div class="attr_item" v-if="showButtom(core) && core.btnType == 1">
@@ -153,7 +156,26 @@
           </a-select>
         </div>
       </div>
-
+      <div class="attr_item" v-if="showButtom(core) && core.btnType == 3">
+        <div class="attr_list_left">客服QQ:</div>
+        <div class="attr_list_right">
+          <a-input
+            class="attr_textarea"
+            placeholder="请输入客服QQ号"
+            v-model="core.QQNum"
+          />
+        </div>
+      </div>
+      <div class="attr_item" v-if="showButtom(core) && core.btnType == 4">
+        <div class="attr_list_left">电话客服:</div>
+        <div class="attr_list_right">
+          <a-input
+            class="attr_textarea"
+            placeholder="请输入客服电话号码"
+            v-model="core.PhoneNum"
+          />
+        </div>
+      </div>
       <!-- 文本框独有的属性 -->
       <div class="attr_item" v-if="showBorder(core)">
         <div class="attr_list_left">边框颜色:</div>
@@ -242,6 +264,7 @@ export default {
     },
     // 监听按钮提交input选项
     btnTypeChange(item) {
+      console.log(item);
       if (item.bthType == 0) {
         item.link = "";
         item.refInput = [];
