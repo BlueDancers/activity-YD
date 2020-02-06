@@ -2,10 +2,10 @@
   <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
   <div class="btn_con" @click="toggleEdit">
     <edit v-show="editStatus" :styles="style" :id="id">
-      <p :style="style" class="inline_btn" v-html="text"></p>
+      <div :style="style" class="inline_btn" v-html="text"></div>
     </edit>
     <div v-show="!editStatus" class="baseComplate" :style="style">
-      <p v-html="text"></p>
+      <div v-html="text"></div>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
     },
     option: {
       type: Object,
-      default: () => {}
+      default: () => { }
     },
     activeTemplate: {
       type: Array
@@ -35,6 +35,7 @@ export default {
   },
   computed: {
     style() {
+      console.log(handleStyle(this.option));
       return handleStyle(this.option);
     },
     editStatus() {

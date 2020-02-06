@@ -86,8 +86,8 @@ export default {
     },
     // 保存项目
     saveObject(type) {
+      this.$showLoading()
       html2canvas(document.querySelector(".core"), {
-        // backgroundColor: null,
         useCORS: true,
         async: true,
         scale: 1
@@ -100,6 +100,7 @@ export default {
         // 保存当前页面的配置
         return this.$store.dispatch("core/saveObject", res.data.data.data)
       }).then(res => {
+        this.$hideLoading()
         if (res.data.code == 200) {
           if (type == 1) {
             console.log('打开弹窗');

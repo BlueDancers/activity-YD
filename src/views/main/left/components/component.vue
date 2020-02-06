@@ -43,7 +43,7 @@ export default {
       reactList: [
         {
           name: '块级元素',
-          img: require('@/assets/img.png')
+          img: require('@/assets/div.png')
         },
         {
           name: '图片',

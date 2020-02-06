@@ -5,6 +5,7 @@
       <img
         :style="style"
         @mousedown="mousedown"
+        @error="loadImg"
         class="inline_img"
         :src="text"
         alt=""
@@ -15,6 +16,7 @@
       ondragstart="return false;"
       v-show="!editStatus"
       :src="text"
+      @error="loadImg"
       alt=""
       :style="style"
     />
@@ -57,6 +59,9 @@ export default {
     },
     mousedown(e) {
       e.preventDefault();
+    },
+    loadImg(e) {
+      console.log(e)
     }
   }
 };

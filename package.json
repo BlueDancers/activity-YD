@@ -15,6 +15,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "lodash": "^4.17.15",
     "vue": "^2.6.10",
+    "vue-cap-ame": "0.0.2",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0",
     "vue-qriously": "^1.1.1",

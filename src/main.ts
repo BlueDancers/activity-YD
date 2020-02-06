@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueQriously from "vue-qriously";
+import { showLoading, hideLoading } from 'vue-cap-ame';
+import 'vue-cap-ame/lib/Vue-cap-ame.css';
+Vue.prototype.$showLoading = showLoading;
+Vue.prototype.$hideLoading = hideLoading;
 import {
   Button,
   Tabs,

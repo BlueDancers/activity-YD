@@ -24,7 +24,6 @@ export default function index(store) {
   // 保存初始状态
   history.setState(cloneDeep(store.state))
   store.subscribe((mutation, state) => {
-    console.log(mutation)
     if (!filterMutation.includes(mutation.type)) {
       history.setState(cloneDeep(state))
     }

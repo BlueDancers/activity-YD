@@ -87,7 +87,7 @@ export function baseText(store: any) {
       top: 100 + dynamic,
       left: 100 + dynamic,
       width: 100,
-      height: 50,
+      height: 100,
       zIndex: store.template.length + 1,
       background: "rgb(242, 242, 242)",
       border: "none",
@@ -110,6 +110,7 @@ export function baseInput(store: any) {
     placeholder: "",
     text: "",
     css: {
+      'box-sizing': 'border-box',
       top: 100 + dynamic,
       left: 100 + dynamic,
       width: 150,
