@@ -14,14 +14,14 @@ const routes = [
     component: Home
   },
   {
-    path: "/main/:objectName",
+    path: "/object/:objectName",
     name: "main",
     component: () => import("@/views/main/index.vue")
   }
 ]
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   base: '/docs/',
   routes
 })
