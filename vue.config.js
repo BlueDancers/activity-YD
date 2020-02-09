@@ -2,7 +2,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const path = require('path')
 module.exports = {
   //关闭eslint
-  publicPath: "/htdocs/",
+  publicPath: "./",
   lintOnSave: false,
   productionSourceMap: false,
   css: {
