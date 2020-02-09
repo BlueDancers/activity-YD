@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "report": "vue-cli-service build --report",
+    "analyzer": "use_analyzer=true npm run serve",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -36,7 +36,6 @@
     "lodash-webpack-plugin": "^0.11.5",
     "typescript": "~3.5.3",
     "vue-class-component": "^7.0.2",
-    "vue-cli-plugin-webpack-bundle-analyzer": "~2.0.0",
     "vue-property-decorator": "^8.3.0",
     "vue-template-compiler": "^2.6.10"
   }

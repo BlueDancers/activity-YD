@@ -1,4 +1,4 @@
-export const mobileUrl = "http://192.168.43.96:8080/index/"; // 前台域名
+export const mobileUrl = "http://121.36.37.117:8080/index/"; // 前台域名
 export const baseURL = "http://127.0.0.1:7001"; // 后台地址
 export const imageUpUrl = `${baseURL}/upimage`; // 上传图片地址
 
