@@ -28,9 +28,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // 主页面头部组件
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   methods: {
     gotoHome() {
       this.$router.push({ name: "home" })
@@ -39,7 +40,7 @@ export default {
       this.$emit('saveObject', type)
     },
   }
-}
+})
 </script>
 
 <style lang="less" scoped>

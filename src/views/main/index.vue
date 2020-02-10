@@ -20,18 +20,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { cancelHistory, unCancelHistory } from "@/store/plugins/cancelPlugins";
-import baseHeader from '@/components/header/index.vue';
+import baseHeader from "@/components/header/index.vue";
 import core from "./center/core.vue";
-import left from './left/index.vue';
-import right from './right/index.vue';
-import uploadModal from './components/uploadModal.vue';
+import left from "./left/index.vue";
+import right from "./right/index.vue";
+import uploadModal from "./components/uploadModal.vue";
 import { mobileUrl } from "@/config/index";
-import html2canvas from 'html2canvas';
-import { base64ToBlob, BlobToImgFile } from '@/utils/index';
-import { uploadImg } from '@/api/index';
-export default {
+import html2canvas from "html2canvas";
+import { base64ToBlob, BlobToImgFile } from "@/utils/index";
+import { uploadImg } from "@/api/index";
+import Vue from "vue";
+export default Vue.extend({
   components: {
     baseHeader,
     left,
@@ -54,12 +55,13 @@ export default {
   data() {
     return {
       scale: 1, // 缩放
-      objUrl: '', // 当前项目的url
+      objUrl: "" // 当前项目的url
     };
   },
   computed: {
     coreScale() {
-      return Number((this.scale * 100).toFixed(1)) + "%";
+      let scale:any = this.scale
+      return Number(((scale) * 100).toFixed(1)) + "%";
     }
   },
   methods: {
@@ -81,44 +83,53 @@ export default {
         cancelHistory();
       } else if (id == 4) {
         // 反撤销
-        unCancelHistory()
+        unCancelHistory();
       }
     },
     // 保存项目
     saveObject(type) {
-      this.$showLoading()
-      html2canvas(document.querySelector(".core"), {
-        useCORS: true,
-        async: true,
-        scale: 1
-      }).then(canvas => {
-        let dataURL = canvas.toDataURL("image/jpeg");
-        const data = new FormData();
-        data.append('image', BlobToImgFile(base64ToBlob(dataURL), "image/jpeg"));
-        return uploadImg(data)
-      }).then((res) => {
-        // 保存当前页面的配置
-        return this.$store.dispatch("core/saveObject", res.data.data.data)
-      }).then(res => {
-        this.$hideLoading()
-        if (res.data.code == 200) {
-          if (type == 1) {
-            console.log('打开弹窗');
-            this.objUrl = mobileUrl + res.data.data;
-            this.$refs['uploadModal'].openModal()
+      this.$showLoading();
+      html2canvas(
+        document.querySelector(".core") as any,
+        {
+          async: true,
+          useCORS: true,
+          scale: 1
+        } as any
+      )
+        .then(canvas => {
+          let dataURL = canvas.toDataURL("image/jpeg");
+          const data = new FormData();
+          data.append(
+            "image",
+            BlobToImgFile(base64ToBlob(dataURL), "image/jpeg")
+          );
+          return uploadImg(data);
+        })
+        .then(res => {
+          // 保存当前页面的配置
+          return this.$store.dispatch("core/saveObject", res.data.data.data);
+        })
+        .then(res => {
+          this.$hideLoading();
+          if (res.data.code == 200) {
+            if (type == 1) {
+              console.log("打开弹窗");
+              this.objUrl = mobileUrl + res.data.data;
+              (this.$refs["uploadModal"] as any).openModal();
+            } else {
+              this.$message.success("发布成功");
+            }
           } else {
-            this.$message.success("发布成功");
+            this.$message.error(res.data.data);
           }
-        } else {
-          this.$message.error(res.data.data);
-        }
-      })
+        })
         .catch(err => {
-          this.$message.error('错误' + err);
+          this.$message.error("错误" + err);
         });
     }
   }
-};
+});
 </script>
 
 <style lang="less" scoped>

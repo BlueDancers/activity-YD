@@ -105,7 +105,7 @@ export function BlobToImgFile(blob: Blob, type: string) {
  * @param {any} time
  * @param {string} cFormat
  */
-export function parseTime(time: any, cFormat: string) {
+export function parseTime(time: any, cFormat?: string) {
   if (arguments.length === 0) {
     return null;
   }

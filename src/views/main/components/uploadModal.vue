@@ -12,9 +12,10 @@
   </a-modal>
 </template>
 
-<script>
+<script lang="ts">
 // 发布项目成功弹窗
-export default {
+import Vue from "vue";
+export default Vue.extend({
   props: {
     objUrl: {
       type: String,
@@ -33,8 +34,5 @@ export default {
       this.succModal = false
     }
   }
-}
+})
 </script>
-
-<style lang="less" scoped>
-</style>

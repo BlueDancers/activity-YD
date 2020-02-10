@@ -19,15 +19,16 @@
   </div>
 </template>
 
-<script>
-import componentPage from "./components/component";
-import page from "./components/page";
-import templatePage from "./components/template";
-export default {
+<script lang="ts">
+import componentPage from "./components/component.vue";
+import page from "./components/page.vue";
+import templatePage from "./components/template.vue";
+import Vue from "vue";
+export default Vue.extend({
   components: {
     componentPage,
     page,
-    templatePage,
+    templatePage
   },
   data() {
     return {
@@ -45,16 +46,16 @@ export default {
           title: "模板设置",
           key: 3
         }
-      ],
-    }
+      ]
+    };
   },
   methods: {
     // 切换左侧菜单
     toggleLeftMenu(index) {
       this.activeLeftMenu = index;
-    },
+    }
   }
-}
+});
 </script>
 
 <style lang="less" scoped>

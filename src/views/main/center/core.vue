@@ -20,15 +20,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // 组件源
-import baseButtom from "@/template/baseButtom";
-import baseImg from "@/template/baseImg";
-import baseText from "@/template/baseText";
-import baseInput from "@/template/baseInput";
-import baseDiv from '@/template/baseDiv';
-import auxiliaryLine from "@/components/auxiliary-line";
-export default {
+import Vue from "vue";
+import baseButtom from "@/template/baseButtom.vue";
+import baseImg from "@/template/baseImg.vue";
+import baseText from "@/template/baseText.vue";
+import baseInput from "@/template/baseInput.vue";
+import baseDiv from "@/template/baseDiv.vue";
+import auxiliaryLine from "@/components/auxiliary-line/index.vue";
+export default Vue.extend({
   components: {
     baseButtom,
     baseImg,
@@ -38,7 +39,7 @@ export default {
     baseDiv
   },
   mounted() {
-    this.initBack();
+    (this as any).init();
   },
   computed: {
     template() {
@@ -48,7 +49,7 @@ export default {
       return this.$store.state.core.activeTemplate;
     },
     commHeight() {
-      this.initBack();
+      (this as any).init();
       return this.$store.state.core.commHeight;
     },
     background() {
@@ -56,15 +57,15 @@ export default {
     }
   },
   methods: {
-    initBack() {
+    init() {
       this.$nextTick(() => {
-        let back = document.querySelector("#canvas");
-        let core = document.querySelector(".core");
+        let back: any = document.querySelector("#canvas");
+        let core: any = document.querySelector(".core");
         back.width = core.clientWidth;
         back.height = core.clientHeight;
         var context = back.getContext("2d");
         let height = 1;
-        while (height <= this.commHeight) {
+        while (height <= (this as any).commHeight) {
           context.moveTo(0, height);
           context.lineTo(back.width, height);
           context.strokeStyle = "rgb(168, 168, 168)";
@@ -77,7 +78,7 @@ export default {
       });
     }
   }
-};
+});
 </script>
 
 <style lang="less" scoped>

@@ -30,16 +30,17 @@
   </div>
 </template>
 
-<script>
-import attributesPage from "./components/attributes";
-export default {
+<script lang="ts">
+import attributesPage from "./components/attributes.vue";
+import Vue from "vue";
+export default Vue.extend({
   components: {
     attributesPage
   },
   props: {
     coreScale: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   data() {
@@ -65,18 +66,18 @@ export default {
           text: "反撤销",
           id: 4
         }
-      ],
-    }
+      ]
+    };
   },
   methods: {
     callback() {
       // 暂无右侧切换
     },
     coreSetting(index) {
-      this.$emit('coreSetting', index)
+      this.$emit("coreSetting", index);
     }
   }
-}
+});
 </script>
 
 <style lang="less" scoped>

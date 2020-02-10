@@ -43,11 +43,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 // 全局拖拽组件
 import { initKeyDown } from "../../utils/index";
-import rightMenu from '../rightMenu/index';
-export default {
+import rightMenu from "../rightMenu/index.vue";
+import Vue from "vue";
+export default Vue.extend({
   components: {
     rightMenu
   },
@@ -57,7 +58,7 @@ export default {
     },
     styles: {
       type: Object,
-      default: () => { }
+      default: () => {}
     }
   },
   mounted() {
@@ -95,7 +96,7 @@ export default {
         // 更新键盘事件
         initKeyDown();
         // 关闭右击弹窗
-        this.$refs.rightMenu.close()
+        (this.$refs.rightMenu as any).close();
       },
       deep: true
     }
@@ -141,7 +142,7 @@ export default {
       // console.log('坐标元素松开');
       this.roundDown = false;
     },
-    topTop() { },
+    topTop() {},
     // 缩放元素
     Zoom(e) {
       // 对接缩放元素的偏移坐标
@@ -164,13 +165,13 @@ export default {
       this.$store.commit("core/deleteCompLate", data);
     },
     mouseRight(e) {
-      this.$refs.rightMenu.open(this.id, e.layerX, e.layerY)
+      (this.$refs.rightMenu as any).open(this.id, e.layerX, e.layerY);
       e.preventDefault();
     },
     initKeyDown() {
       console.log(document.onkeydown);
       document.onkeydown = e => {
-        var key = window.event.keyCode;
+        var key = (window.event as any).keyCode;
         if (key == 37) {
           // 左
           this.updatePos(-1, 0);
@@ -197,7 +198,7 @@ export default {
     // window.removeEventListener('mouseleave')
     // window.removeEventListener('mousemove')
   }
-};
+});
 </script>
 
 <style lang="less" scoped>

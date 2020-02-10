@@ -1,4 +1,12 @@
-// declare module 'ant-design-vue' {
-//   const Ant: any
-//   export default Ant;
-// }
+import Vue from 'vue'
+
+/**
+ * 增加自定义对象和
+ */
+declare module 'vue/types/vue' {
+  interface Vue {
+    $showLoading: any,
+    $hideLoading: any,
+    [name: string]: any
+  }
+}

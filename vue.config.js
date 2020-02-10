@@ -1,7 +1,6 @@
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const path = require('path')
 module.exports = {
-  //关闭eslint
   publicPath: "/docs/",
   lintOnSave: false,
   productionSourceMap: false,
@@ -26,6 +25,6 @@ module.exports = {
   },
   chainWebpack(config) {
     config.plugin("loadshReplace")
-      .use(new LodashModuleReplacementPlugin());//优化lodash
+      .use(new LodashModuleReplacementPlugin()); //优化lodash
   }
 };

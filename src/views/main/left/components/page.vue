@@ -24,31 +24,32 @@
   </div>
 </template>
 
-<script>
-import colorPicker from '@/components/color-picker'
-export default {
+<script lang="ts">
+import colorPicker from "@/components/color-picker/index.vue";
+import Vue from "vue";
+export default Vue.extend({
   components: {
     colorPicker
   },
   computed: {
     height: {
       get() {
-        return this.$store.state.core.commHeight
+        return (this as any).$store.state.core.commHeight;
       },
       set(newValue) {
-        this.$store.commit('core/updateCommHeigth', newValue)
+        (this as any).$store.commit("core/updateCommHeigth", newValue);
       }
     },
     background: {
       get() {
-        return this.$store.state.core.background
+        return (this as any).$store.state.core.background;
       },
       set(newColor) {
-        this.$store.commit('core/updateBackground', newColor)
+        (this as any).$store.commit("core/updateBackground", newColor);
       }
     }
   }
-}
+});
 </script>
 
 <style lang="less" scoped>

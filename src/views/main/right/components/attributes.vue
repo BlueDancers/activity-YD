@@ -210,9 +210,10 @@
   </div>
 </template>
 
-<script>
-import colorPicker from "@/components/color-picker/index";
-export default {
+<script lang="ts">
+import colorPicker from "@/components/color-picker/index.vue";
+import Vue, { ComputedOptions } from "vue";
+export default Vue.extend({
   components: {
     colorPicker
   },
@@ -226,28 +227,31 @@ export default {
         )[0];
         return form;
       } else if (activeCore.length > 1) {
-        return this.$store.state.core.template.filter(e => activeCore.includes(e.id));
+        return this.$store.state.core.template.filter(e =>
+          activeCore.includes(e.id)
+        );
       }
       return {};
     },
     // 1 单组件 2 是多组件 3 无组件
     coreType() {
+      let core = (this as any).core;
       if (
-        JSON.stringify(this.core) !== "{}" &&
-        Object.prototype.toString.call(this.core) !== "[object Array]"
+        JSON.stringify(core) !== "{}" &&
+        Object.prototype.toString.call(core) !== "[object Array]"
       ) {
         return 1;
-      } else if (
-        Object.prototype.toString.call(this.core) == "[object Array]"
-      ) {
+      } else if (Object.prototype.toString.call(core) == "[object Array]") {
         return 2;
-      } else if (JSON.stringify(this.core) == "{}") {
+      } else if (JSON.stringify(core) == "{}") {
         return 3;
       }
       return 3;
     },
     refInputList() {
-      return this.$store.state.core.template.filter(e => e.name == "base-input");
+      return this.$store.state.core.template.filter(
+        e => e.name == "base-input"
+      );
     }
   },
   methods: {
@@ -276,78 +280,82 @@ export default {
     },
     // 是否显示文本
     showText(core) {
-      if (core.name == 'base-input' || core.name == 'base-div') {
-        return false
+      if (core.name == "base-input" || core.name == "base-div") {
+        return false;
       } else {
-        return true
+        return true;
       }
     },
     // 判断是否显示名称
     showElementName(core) {
-      if (core.name == 'base-input') {
-        return true
+      if (core.name == "base-input") {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     // 判断是否显示placehloder
     showInputPlace(core) {
-      if (core.name == 'base-input') {
-        return true
+      if (core.name == "base-input") {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     // 是否显示背景颜色
     showBackground(core) {
-      if (core.name == 'base-img') {
-        return false
+      if (core.name == "base-img") {
+        return false;
       } else {
-        return true
+        return true;
       }
     },
     // 是否显示文字颜色
     showFontColor(core) {
-      if (core.name == 'base-img' || core.name == 'base-div') {
-        return false
+      if (core.name == "base-img" || core.name == "base-div") {
+        return false;
       } else {
-        return true
+        return true;
       }
     },
     // 是否显示文字大小
     showFontsize(core) {
-      if (core.name == 'base-img' || core.name == 'base-div') {
-        return false
+      if (core.name == "base-img" || core.name == "base-div") {
+        return false;
       } else {
-        return true
+        return true;
       }
     },
     // 判断是否显示圆角
     showBorderRadius(core) {
-      if (core.name == 'base-buttom' || core.name == 'base-input' || core.name == 'base-div') {
-        return true
+      if (
+        core.name == "base-buttom" ||
+        core.name == "base-input" ||
+        core.name == "base-div"
+      ) {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     // 判断是否显示按钮事件
     showButtom(core) {
-      if (core.name == 'base-buttom') {
-        return true
+      if (core.name == "base-buttom") {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     // 判断是否显示边框
     showBorder(core) {
-      if (core.name == 'base-input') {
-        return true
+      if (core.name == "base-input") {
+        return true;
       } else {
-        return false
+        return false;
       }
     }
   }
-};
+});
 </script>
 
 <style lang="less" scoped>

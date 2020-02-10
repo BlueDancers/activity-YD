@@ -89,13 +89,14 @@
   </div>
 </template>
 
-<script>
-import { getObject, setObject, deleteObj } from '@/api/index';
-import { commHeight, mobileUrl } from '@/config/index';
-import { parseTime } from '@/utils/index';
-export default {
+<script lang="ts">
+import { getObject, setObject, deleteObj } from "@/api/index";
+import { commHeight, mobileUrl } from "@/config/index";
+import { parseTime } from "@/utils/index";
+import Vue from "vue";
+export default Vue.extend({
   mounted() {
-    this.getObject()
+    this.getObject();
   },
   data() {
     return {
@@ -103,57 +104,60 @@ export default {
       Objectvisible: false,
       confirmLoading: false,
       objform: {
-        textName: '',  // 中文名称
-        name: '', // 路由名称
-        disp: ''
+        textName: "", // 中文名称
+        name: "", // 路由名称
+        disp: ""
       },
-      onShowUrlCode: ''
-    }
+      onShowUrlCode: ""
+    };
   },
   methods: {
     getObject() {
-      getObject().then(e => {
-        console.log(e.data.data);
-        e.data.data.map(e => {
-          e.time = parseTime(e.time)
+      getObject()
+        .then(e => {
+          e.data.data.map((e: any) => {
+            e.time = parseTime(e.time);
+          });
+          this.mainList = e.data.data;
         })
-        this.mainList = e.data.data
-      })
         .catch(err => {
-          console.log('错误', err);
-        })
+          console.log("错误", err);
+        });
     },
     createObject() {
-      this.Objectvisible = true
+      this.Objectvisible = true;
     },
     objSuccess() {
       // 创建项目基类
       let data = {
         ...this.objform,
         height: this.$store.state.core.commHeight, // 页面高度默认667
-        background: 'white' // 页面背景色默认白色
-      }
+        background: "white" // 页面背景色默认白色
+      };
       setObject(data).then(res => {
-        this.$router.push({ name: 'main', params: { objectName: res.data.data } })
-      })
+        this.$router.push({
+          name: "main",
+          params: { objectName: res.data.data }
+        });
+      });
     },
     obFall() {
-      this.Objectvisible = false
+      this.Objectvisible = false;
     },
     gotoObject(name) {
-      this.$router.push({ name: 'main', params: { objectName: name } })
+      this.$router.push({ name: "main", params: { objectName: name } });
     },
     showObject(name) {
-      this.onShowUrlCode = mobileUrl + name
+      this.onShowUrlCode = mobileUrl + name;
     },
     deleteObj(name) {
-      deleteObj(name).then((result) => {
-        this.$message.success(result.data.data)
-        this.getObject()
-      })
+      deleteObj(name).then(result => {
+        this.$message.success(result.data.data);
+        this.getObject();
+      });
     }
   }
-}
+});
 </script>
 
 <style lang="less" scoped>

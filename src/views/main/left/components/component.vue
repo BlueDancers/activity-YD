@@ -30,10 +30,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { baseButtom, baseImg, baseText, baseInput, baseDiv } from '@/utils/baseReact';
 import { imageUpUrl } from '@/config/index'
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   data() {
     return {
       headers: {
@@ -92,7 +93,7 @@ export default {
       }
     },
   }
-}
+})
 </script>
 
 <style lang="less" scoped>
