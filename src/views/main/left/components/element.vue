@@ -100,18 +100,19 @@ export default Vue.extend({
 .component {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   .item {
     user-select: none;
     cursor: pointer;
     padding: 10px 5px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
     border-radius: 5px;
     background-color: rgb(247, 247, 247);
-    width: 120px;
+    width: 130px;
     text-align: center;
-
     .item_img {
       width: 20px;
       height: 20px;

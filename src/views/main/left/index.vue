@@ -12,23 +12,26 @@
       </div>
     </div>
     <div class="left_menu_board">
-      <component-page v-show="activeLeftMenu == 1"></component-page>
+      <element-page v-show="activeLeftMenu == 1"></element-page>
       <page v-show="activeLeftMenu == 2"></page>
-      <templatePage v-show="activeLeftMenu == 3"></templatePage>
+      <template-page v-show="activeLeftMenu == 3"></template-page>
+      <custom-component v-show="activeLeftMenu == 4"></custom-component>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import componentPage from "./components/component.vue";
+import elementPage from "./components/element.vue";
 import page from "./components/page.vue";
 import templatePage from "./components/template.vue";
+import customComponent from "./components/customComponent.vue";
 import Vue from "vue";
 export default Vue.extend({
   components: {
-    componentPage,
+    elementPage,
     page,
-    templatePage
+    templatePage,
+    customComponent
   },
   data() {
     return {
@@ -43,8 +46,12 @@ export default Vue.extend({
           key: 2
         },
         {
-          title: "模板设置",
+          title: "模板市场",
           key: 3
+        },
+        {
+          title: "组件市场",
+          key: 4
         }
       ]
     };

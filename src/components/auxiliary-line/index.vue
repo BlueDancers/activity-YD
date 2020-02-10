@@ -1,12 +1,23 @@
 <template>
   <!-- 标线 -->
-  <div :class="auxiliary"></div>
+  <div
+    :class="auxiliary"
+    :style="{
+      left: auxiliary == 'marking-vertical' ? offsetvalue + 'px' : 0,
+      top: auxiliary == 'marking-horizontal' ? offsetvalue + 'px' : 0
+    }"
+  >
+    {{ offsetvalue }}
+  </div>
 </template>
 
 <script>
 // 全局辅助线组件
 export default {
   computed: {
+    offsetvalue() {
+      return this.$store.state.core.offsetvalue;
+    },
     auxiliary() {
       let auxiliary = this.$store.state.core.auxiliary;
       if (auxiliary == "top") {

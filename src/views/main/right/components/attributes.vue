@@ -79,6 +79,22 @@
         </div>
       </div>
       <!-- 一些共有属性 -->
+      <div class="attr_item" v-if="showBorder(core)">
+        <div class="attr_list_left">边框颜色:</div>
+        <div class="attr_list_right">
+          <color-picker v-model="core.css['border-color']" />
+        </div>
+      </div>
+      <div class="attr_item" v-if="showBorder(core)">
+        <div class="attr_list_left">边框宽度:</div>
+        <div class="attr_list_right">
+          <a-input-number
+            class="attr_textarea"
+            placeholder="请输入文字"
+            v-model="core.css['border-width']"
+          />
+        </div>
+      </div>
       <div class="attr_item" v-if="showBorderRadius(core)">
         <div class="attr_list_left">圆角:</div>
         <div class="attr_list_right">
@@ -173,23 +189,6 @@
             class="attr_textarea"
             placeholder="请输入客服电话号码"
             v-model="core.PhoneNum"
-          />
-        </div>
-      </div>
-      <!-- 文本框独有的属性 -->
-      <div class="attr_item" v-if="showBorder(core)">
-        <div class="attr_list_left">边框颜色:</div>
-        <div class="attr_list_right">
-          <color-picker v-model="core.css['border-color']" />
-        </div>
-      </div>
-      <div class="attr_item" v-if="showBorder(core)">
-        <div class="attr_list_left">边框宽度:</div>
-        <div class="attr_list_right">
-          <a-input-number
-            class="attr_textarea"
-            placeholder="请输入文字"
-            v-model="core.css['border-width']"
           />
         </div>
       </div>
@@ -348,7 +347,11 @@ export default Vue.extend({
     },
     // 判断是否显示边框
     showBorder(core) {
-      if (core.name == "base-input") {
+      if (
+        core.name == "base-buttom" ||
+        core.name == "base-input" ||
+        core.name == "base-div"
+      ) {
         return true;
       } else {
         return false;

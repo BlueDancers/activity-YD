@@ -11,8 +11,11 @@ const core = {
     parentName: "", // 项目名
     template: [], // 组件
     activeTemplate: [], // 选中的数组
+    isDown: false, // 当前是否按住元素(移动)
+    roundDown: false, // 当前是否按住元素边角(缩放)
     isLongDown: false, // 当前是否处于多选状态
     auxiliary: "none", // top 竖向 left 横向
+    offsetvalue: 0, // 辅助线位置配合变量auxiliary确定具体位置
     marking: {
       x: [], // x对齐标线
       y: [] // y对齐标线
@@ -28,11 +31,19 @@ const core = {
       // 增加页面上的元素
       state.template.push(template);
     },
+    // 更新当前是否处于鼠标按下状态
+    set_isDown(state, status) {
+      state.isDown = status
+    },
+    // 更新当前是否处于鼠标按下边角状态
+    set_roundDown(state, status) {
+      state.roundDown = status
+    },
     // 更新元素可编辑状态
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template));
       let activeTemplate: any[] = [];
-      let marking = state.marking;
+      // let marking = state.marking;
       // 如果点击了已经选中的就取消选择
       // if (state.activeTemplate.includes(id)) {
       //   state.activeTemplate = [];
@@ -53,25 +64,30 @@ const core = {
           }
         }
       });
+      // 点击的
+      state.activeTemplate = activeTemplate;
+      let marking = { ...state.marking }
       state.template.map(res => {
         if (activeTemplate.includes(res.id)) {
-          // console.log('上面', res.css.top, '下面', res.css.top + res.css.height);
-          // console.log('左边', res.css.left, '右边', res.css.left + res.css.width);
-          state.marking.x.map((x, index) => {
-            if (x == res.left || x == res.css.left + res.css.width) {
-              marking.x.splice(index, x);
+          console.log(marking);
+          let x: any[] = [] // 过滤后的x
+          let y: any[] = [] // 过滤后的y
+          state.marking.x.map((res_x, index) => {
+            let left = [res_x - 3, res_x - 2, res_x - 1, res_x, res_x + 1, res_x + 2, res_x + 3]
+            if (!left.includes(res.left) && !left.includes(res.css.left + res.css.width)) {
+              x.push(res_x)
             }
           });
-          state.marking.y.map((y, index) => {
-            if (y == res.top || y == res.css.top + res.css.height) {
-              marking.y.splice(index, y);
+          state.marking.y.map((res_y, index) => {
+            let top = [res_y - 3, res_y - 2, res_y - 1, res_y, res_y + 1, res_y + 2, res_y + 3]
+            if (!top.includes(res.top) && !top.includes(res.css.top + res.css.height)) {
+              y.push(res_y)
             }
           });
+          console.log(x, y);
         }
       });
-      // console.log(marking);
-      state.activeTemplate = activeTemplate;
-      state.marking = marking;
+      // state.marking = marking;
     },
     // 更新是否为多选状态
     toggle_isLongDown(state, status) {
@@ -90,12 +106,18 @@ const core = {
           item.css.top = item.css.top + data.y;
         }
       });
+      // 判断绝对值
+      // 自动偏移到最近的上面
       // 判断是否存在辅助线
       list.map(res => {
-        if (state.marking.x.includes(res.css.top)) {
+        // console.log(res.css.top);
+        // console.log(state.marking.x);
+        if (state.marking.x.indexOf(res.css.top) != -1) {
           state.auxiliary = "left";
-        } else if (state.marking.y.includes(res.css.left)) {
+          state.offsetvalue = state.marking.x[state.marking.x.indexOf(res.css.top)]
+        } else if (state.marking.y.indexOf(res.css.left) != -1) {
           state.auxiliary = "top";
+          state.offsetvalue = state.marking.y[state.marking.y.indexOf(res.css.left)]
         } else {
           state.auxiliary = "none";
         }
@@ -173,21 +195,55 @@ const core = {
         x: [], // x轴上面该出现标线的
         y: [] // y轴上面该出现标线的
       };
+      console.log(state.template);
       state.template.map((res: any) => {
+        // 偏移绝对值
+        let offset: any[] = [1, 2, 3];
+        let right: number = res.css.left + res.css.width
+        let bottom: number = res.css.top + res.css.height
         if (res.css.left > 0) {
-          marking.x.push(res.css.left);
+          marking.x.push(res.css.left)
+          offset.map((index) => {
+            marking.x.push(res.css.left - index);
+          })
+          offset.map((index) => {
+            marking.x.push(res.css.left + index);
+          })
+        }
+        if (right > 0) {
+          marking.x.push(right)
+          offset.map((index) => {
+            marking.x.push(right - index);
+          })
+          offset.map((index) => {
+            marking.x.push(right + index);
+          })
         }
         if (res.css.top > 0) {
-          marking.y.push(res.css.top);
+          marking.y.push(res.css.top)
+          offset.map((index) => {
+            marking.y.push(res.css.top - index);
+          })
+          offset.map((index) => {
+            marking.y.push(res.css.top + index);
+          })
         }
-        marking.x.push(res.css.left + res.css.width);
-        marking.y.push(res.css.top + res.css.height);
+        if (bottom > 0) {
+          marking.y.push(bottom)
+          offset.map((index) => {
+            marking.y.push(bottom - index);
+          })
+          offset.map((index) => {
+            marking.y.push(bottom + index);
+          })
+        }
       });
-      console.log(state.marking);
       state.marking = {
         x: Array.from(new Set(marking.x)),
         y: Array.from(new Set(marking.y))
       };
+      // console.log(marking);
+      console.log(state.marking);
     },
     // 单组件快捷配置
     fastOnlySet(state, data) {

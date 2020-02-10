@@ -1,6 +1,6 @@
 <template>
   <div>
-    模板设置
+    自定义组件
   </div>
 </template>
 
@@ -11,6 +11,6 @@
   })
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 
 </style>

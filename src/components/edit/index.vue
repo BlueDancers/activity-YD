@@ -85,8 +85,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      down: false, // 移动元素
-      roundDown: false, // 缩放元素
       roundDownState: false // 1 2 3 4 5 6 对应每个节点
     };
   },
@@ -113,15 +111,21 @@ export default Vue.extend({
         top: this.styles.top
       };
       return style;
+    },
+    down() {
+      return this.$store.state.core.isDown;
+    },
+    roundDown() {
+      return this.$store.state.core.roundDown;
     }
   },
   methods: {
     mousedown() {
-      this.down = true;
+      this.$store.commit("core/set_isDown", true);
     },
     mouseup() {
-      this.down = false;
-      this.roundDown = false;
+      this.$store.commit("core/set_isDown", false);
+      this.$store.commit("core/set_roundDown", false);
     },
     mousemove(e) {
       let moveX = e.movementX;
@@ -135,12 +139,12 @@ export default Vue.extend({
       });
     },
     roundMousedown(state) {
-      this.roundDown = true;
+      this.$store.commit("core/set_roundDown", true);
       this.roundDownState = state;
     },
     roundMounseup() {
       // console.log('坐标元素松开');
-      this.roundDown = false;
+      this.$store.commit("core/set_roundDown", false);
     },
     topTop() {},
     // 缩放元素

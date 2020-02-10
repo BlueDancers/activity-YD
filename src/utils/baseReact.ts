@@ -17,7 +17,9 @@ export function baseDiv(store: any) {
       height: 100,
       zIndex: store.template.length + 1,
       background: "rgb(242, 242, 242)",
-      border: "none",
+      "border-color": "black",
+      "border-style": "solid",
+      "border-width": 0,
       "border-radius": 0
     }
   };
@@ -47,9 +49,11 @@ export function baseButtom(store: any) {
       height: 50,
       zIndex: store.template.length + 1,
       background: "rgb(242, 242, 242)",
-      border: "none",
       color: "black",
       "font-size": 18,
+      "border-color": "black",
+      "border-style": "solid",
+      "border-width": 0,
       "border-radius": 0
     }
   };
