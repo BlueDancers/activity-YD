@@ -12,10 +12,10 @@ const core = {
     template: [], // 组件
     activeTemplate: [], // 选中的数组
     isDown: false, // 当前是否按住元素(移动)
-    roundDown: false, // 当前是否按住元素边角(缩放)
+    // roundDown: false, // 当前是否按住元素边角(缩放)
     isLongDown: false, // 当前是否处于多选状态
-    auxiliary: "none", // top 竖向 left 横向
-    offsetvalue: 0, // 辅助线位置配合变量auxiliary确定具体位置
+    offsetvalueX: 0, // 辅助线位置配合变量auxiliary确定具体位置
+    offsetvalueY: 0, // 辅助线位置配合变量auxiliary确定具体位置
     marking: {
       x: [], // x对齐标线
       y: [] // y对齐标线
@@ -34,10 +34,6 @@ const core = {
     // 更新当前是否处于鼠标按下状态
     set_isDown(state, status) {
       state.isDown = status
-    },
-    // 更新当前是否处于鼠标按下边角状态
-    set_roundDown(state, status) {
-      state.roundDown = status
     },
     // 更新元素可编辑状态
     toggle_temp_status(state, id) {
@@ -64,30 +60,7 @@ const core = {
           }
         }
       });
-      // 点击的
       state.activeTemplate = activeTemplate;
-      let marking = { ...state.marking }
-      state.template.map(res => {
-        if (activeTemplate.includes(res.id)) {
-          console.log(marking);
-          let x: any[] = [] // 过滤后的x
-          let y: any[] = [] // 过滤后的y
-          state.marking.x.map((res_x, index) => {
-            let left = [res_x - 3, res_x - 2, res_x - 1, res_x, res_x + 1, res_x + 2, res_x + 3]
-            if (!left.includes(res.left) && !left.includes(res.css.left + res.css.width)) {
-              x.push(res_x)
-            }
-          });
-          state.marking.y.map((res_y, index) => {
-            let top = [res_y - 3, res_y - 2, res_y - 1, res_y, res_y + 1, res_y + 2, res_y + 3]
-            if (!top.includes(res.top) && !top.includes(res.css.top + res.css.height)) {
-              y.push(res_y)
-            }
-          });
-          console.log(x, y);
-        }
-      });
-      // state.marking = marking;
     },
     // 更新是否为多选状态
     toggle_isLongDown(state, status) {
@@ -110,16 +83,41 @@ const core = {
       // 自动偏移到最近的上面
       // 判断是否存在辅助线
       list.map(res => {
-        // console.log(res.css.top);
-        // console.log(state.marking.x);
-        if (state.marking.x.indexOf(res.css.top) != -1) {
-          state.auxiliary = "left";
-          state.offsetvalue = state.marking.x[state.marking.x.indexOf(res.css.top)]
-        } else if (state.marking.y.indexOf(res.css.left) != -1) {
-          state.auxiliary = "top";
-          state.offsetvalue = state.marking.y[state.marking.y.indexOf(res.css.left)]
-        } else {
-          state.auxiliary = "none";
+        if (state.activeTemplate.includes(res.id)) {
+          // 针对选中的组件进行匹配
+          console.log(state.offsetvalueX);
+            for (let index = 0; index < state.marking.x.length; index++) {
+              // 组件下侧
+              const item = state.marking.x[index];
+              if (item.includes(res.css.top + res.css.height)) {
+                state.offsetvalueX = res.css.top + res.css.height
+                res.css.top = item[0] - res.css.height
+                console.log(state.offsetvalueX);
+                break;
+              }
+              // 组件上侧
+              if (item.includes(res.css.top)) {
+                state.offsetvalueX = res.css.top
+                res.css.top = item[0]
+                break;
+              }
+              state.offsetvalueX = 0
+            }
+            // 组件左侧
+            for (let index = 0; index < state.marking.y.length; index++) {
+              const item = state.marking.y[index];
+              if (item.includes(res.css.left + res.css.width)) {
+                state.offsetvalueY = res.css.left + res.css.width
+                res.css.left = item[0] - res.css.width
+                break;
+              }
+              if (item.includes(res.css.left)) {
+                state.offsetvalueY = res.css.left
+                res.css.left = item[0]
+                break;
+              }
+              state.offsetvalueY = 0
+            }
         }
       });
       state.template = list;
@@ -195,55 +193,62 @@ const core = {
         x: [], // x轴上面该出现标线的
         y: [] // y轴上面该出现标线的
       };
-      console.log(state.template);
+      let offset: any[] = [1, 2];
       state.template.map((res: any) => {
-        // 偏移绝对值
-        let offset: any[] = [1, 2, 3];
-        let right: number = res.css.left + res.css.width
-        let bottom: number = res.css.top + res.css.height
-        if (res.css.left > 0) {
-          marking.x.push(res.css.left)
-          offset.map((index) => {
-            marking.x.push(res.css.left - index);
-          })
-          offset.map((index) => {
-            marking.x.push(res.css.left + index);
-          })
-        }
-        if (right > 0) {
-          marking.x.push(right)
-          offset.map((index) => {
-            marking.x.push(right - index);
-          })
-          offset.map((index) => {
-            marking.x.push(right + index);
-          })
-        }
-        if (res.css.top > 0) {
-          marking.y.push(res.css.top)
-          offset.map((index) => {
-            marking.y.push(res.css.top - index);
-          })
-          offset.map((index) => {
-            marking.y.push(res.css.top + index);
-          })
-        }
-        if (bottom > 0) {
-          marking.y.push(bottom)
-          offset.map((index) => {
-            marking.y.push(bottom - index);
-          })
-          offset.map((index) => {
-            marking.y.push(bottom + index);
-          })
+        if (!state.activeTemplate.includes(res.id)) {
+          // 偏移绝对值
+          let left_x: any[] = [] // 单个元素x轴
+          let right_x: any[] = [] // 单个元素x轴
+          let left_y: any[] = [] // 多个元素y轴
+          let right_y: any[] = [] // 多个元素y轴
+          let right: number = res.css.left + res.css.width
+          let bottom: number = res.css.top + res.css.height
+          if (res.css.left > 0) {
+            left_x.push(res.css.left)
+            offset.map((index) => {
+              left_x.push(res.css.left - index);
+            })
+            offset.map((index) => {
+              left_x.push(res.css.left + index);
+            })
+          }
+          if (right > 0) {
+            right_x.push(right)
+            offset.map((index) => {
+              right_x.push(right - index);
+            })
+            offset.map((index) => {
+              right_x.push(right + index);
+            })
+          }
+          if (res.css.top > 0) {
+            left_y.push(res.css.top)
+            offset.map((index) => {
+              left_y.push(res.css.top - index);
+            })
+            offset.map((index) => {
+              left_y.push(res.css.top + index);
+            })
+          }
+          if (bottom > 0) {
+            right_y.push(bottom)
+            offset.map((index) => {
+              right_y.push(bottom - index);
+            })
+            offset.map((index) => {
+              right_y.push(bottom + index);
+            })
+          }
+          marking.x.push(left_x)
+          marking.x.push(right_x)
+          marking.y.push(left_y)
+          marking.y.push(right_y)
         }
       });
       state.marking = {
-        x: Array.from(new Set(marking.x)),
-        y: Array.from(new Set(marking.y))
+        x: Array.from(new Set(marking.y)),
+        y: Array.from(new Set(marking.x))
       };
-      // console.log(marking);
-      console.log(state.marking);
     },
     // 单组件快捷配置
     fastOnlySet(state, data) {
@@ -397,9 +402,15 @@ const core = {
     updatePosition({ commit }, data) {
       // 更新组件数据
       commit("updatePos", data);
-      debounce(() => {
-        commit("setMarking");
-      }, 500);
+    },
+    // 鼠标按下
+    updateisDown({ commit }, data) {
+      // 更新鼠标状态
+      commit('set_isDown', data)
+      if (data) {
+        // 更新辅助线坐标
+        commit('setMarking')
+      }
     }
   }
 };

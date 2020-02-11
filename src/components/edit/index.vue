@@ -65,7 +65,9 @@ export default Vue.extend({
     window.addEventListener(
       "mouseup",
       e => {
-        this.mouseup(e);
+        if (this.down || this.roundDown) {
+          this.mouseup(e);
+        }
       },
       true
     );
@@ -83,8 +85,11 @@ export default Vue.extend({
       true
     );
   },
+  // 组件内部的是否移动属性由组件最新管理,全局仅仅监听状态
   data() {
     return {
+      down: false, // 当前是否按住元素(移动)
+      roundDown: false, // 当前是否按住元素边角(缩放)
       roundDownState: false // 1 2 3 4 5 6 对应每个节点
     };
   },
@@ -111,21 +116,17 @@ export default Vue.extend({
         top: this.styles.top
       };
       return style;
-    },
-    down() {
-      return this.$store.state.core.isDown;
-    },
-    roundDown() {
-      return this.$store.state.core.roundDown;
     }
   },
   methods: {
     mousedown() {
-      this.$store.commit("core/set_isDown", true);
+      this.down = true;
+      this.$store.dispatch("core/updateisDown", true);
     },
     mouseup() {
-      this.$store.commit("core/set_isDown", false);
-      this.$store.commit("core/set_roundDown", false);
+      this.down = false;
+      this.roundDown = false;
+      this.$store.dispatch("core/updateisDown", false);
     },
     mousemove(e) {
       let moveX = e.movementX;
@@ -139,12 +140,12 @@ export default Vue.extend({
       });
     },
     roundMousedown(state) {
-      this.$store.commit("core/set_roundDown", true);
+      this.roundDown = true;
       this.roundDownState = state;
     },
     roundMounseup() {
       // console.log('坐标元素松开');
-      this.$store.commit("core/set_roundDown", false);
+      this.roundDown = false;
     },
     topTop() {},
     // 缩放元素

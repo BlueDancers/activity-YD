@@ -1,13 +1,22 @@
 <template>
   <!-- 标线 -->
-  <div
-    :class="auxiliary"
-    :style="{
-      left: auxiliary == 'marking-vertical' ? offsetvalue + 'px' : 0,
-      top: auxiliary == 'marking-horizontal' ? offsetvalue + 'px' : 0
-    }"
-  >
-    {{ offsetvalue }}
+  <div v-show="isDown">
+    <div
+      :class="offsetvalueX ? 'marking-horizontal' : 'marking-none'"
+      :style="{
+        top: offsetvalueX + 'px'
+      }"
+    >
+      {{ offsetvalueX }}
+    </div>
+    <div
+      :class="offsetvalueY ? 'marking-vertical' : 'marking-none'"
+      :style="{
+        left: offsetvalueY + 'px'
+      }"
+    >
+      {{ offsetvalueY }}
+    </div>
   </div>
 </template>
 
@@ -15,22 +24,17 @@
 // 全局辅助线组件
 export default {
   computed: {
-    offsetvalue() {
-      return this.$store.state.core.offsetvalue;
+    offsetvalueX() {
+      return this.$store.state.core.offsetvalueX;
     },
-    auxiliary() {
-      let auxiliary = this.$store.state.core.auxiliary;
-      if (auxiliary == "top") {
-        return `marking-vertical`;
-      } else if (auxiliary == "left") {
-        return `marking-horizontal`;
-      } else if (auxiliary == "none") {
-        return `marking-none`;
-      }
-      return `marking-none`;
+    offsetvalueY() {
+      return this.$store.state.core.offsetvalueY;
     },
     marking() {
       return this.$store.state.core.marking;
+    },
+    isDown() {
+      return this.$store.state.core.isDown;
     }
   }
 }
