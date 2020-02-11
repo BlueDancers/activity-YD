@@ -7,9 +7,19 @@
             页面高度:
           </div>
           <div class="item_right">
+            <a-slider
+              v-model="sliderHight"
+              :tipFormatter="formatter"
+              @change="sliderChange"
+              :step="0.1"
+              :min="1"
+              :max="5"
+            ></a-slider>
+          </div>
+          <!-- <div class="item_right">
             <a-input-number placeholder="" v-model="height" />
           </div>
-          <span class="item_other">667为移动端100%高度</span>
+          <span class="item_other">667为移动端100%高度</span> -->
         </div>
         <div class="page_form_item">
           <div class="item_left">
@@ -26,19 +36,25 @@
 
 <script lang="ts">
 import colorPicker from "@/components/color-picker/index.vue";
+import { commHeight } from "@/config";
 import Vue from "vue";
 export default Vue.extend({
   components: {
     colorPicker
   },
+  data() {
+    return {
+      sliderHight: 1
+    };
+  },
+  watch: {
+    height(value) {
+      this.sliderHight = Number((value / commHeight));
+    }
+  },
   computed: {
-    height: {
-      get() {
-        return (this as any).$store.state.core.commHeight;
-      },
-      set(newValue) {
-        (this as any).$store.commit("core/updateCommHeigth", newValue);
-      }
+    height() {
+      return (this as any).$store.state.core.commHeight;
     },
     background: {
       get() {
@@ -47,6 +63,17 @@ export default Vue.extend({
       set(newColor) {
         (this as any).$store.commit("core/updateBackground", newColor);
       }
+    }
+  },
+  methods: {
+    formatter(value) {
+      return `${value}屏`;
+    },
+    sliderChange(value) {
+      this.$store.commit(
+        "core/updateCommHeigth",
+        (Number(value) * commHeight).toFixed(0)
+      );
     }
   }
 });
@@ -68,6 +95,9 @@ export default Vue.extend({
         align-items: center;
         .item_left {
           margin-right: 10px;
+        }
+        .item_right {
+          width: 200px;
         }
         .item_other {
           margin-left: 10px;

@@ -7,7 +7,7 @@
         top: offsetvalueX + 'px'
       }"
     >
-      {{ offsetvalueX }}
+      <!-- {{ offsetvalueX }} -->
     </div>
     <div
       :class="offsetvalueY ? 'marking-vertical' : 'marking-none'"
@@ -15,7 +15,7 @@
         left: offsetvalueY + 'px'
       }"
     >
-      {{ offsetvalueY }}
+      <!-- {{ offsetvalueY }} -->
     </div>
   </div>
 </template>

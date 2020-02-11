@@ -13,13 +13,14 @@ import {
   Input,
   InputNumber,
   Modal,
-  message,
+  Message,
   Form,
   Select,
   Radio,
   Popover,
   Popconfirm,
-  Upload
+  Upload,
+  Slider
 } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Tabs);
@@ -32,7 +33,8 @@ Vue.use(Radio);
 Vue.use(Popover);
 Vue.use(Popconfirm);
 Vue.use(Upload);
-Vue.prototype.$message = message;
+Vue.use(Slider)
+Vue.prototype.$message = Message;
 Vue.config.productionTip = false
 Vue.use(VueQriously);
 new Vue({

@@ -1,5 +1,6 @@
-import { saveActivity, getActivity, updateObj } from "@/api/index";
+import { saveActivity, getActivity, updateObj, saveSingleComplate } from "@/api/index";
 import { commHeight, commWidth } from "../../config/index";
+import { Message } from 'ant-design-vue';
 import { debounce } from "../../utils/utils";
 
 const core = {
@@ -53,7 +54,6 @@ const core = {
             if (!activeTemplate.includes(id)) {
               activeTemplate.push(id);
             }
-            console.log(activeTemplate);
           } else {
             // 单选状态
             activeTemplate.push(id);
@@ -85,39 +85,37 @@ const core = {
       list.map(res => {
         if (state.activeTemplate.includes(res.id)) {
           // 针对选中的组件进行匹配
-          console.log(state.offsetvalueX);
-            for (let index = 0; index < state.marking.x.length; index++) {
-              // 组件下侧
-              const item = state.marking.x[index];
-              if (item.includes(res.css.top + res.css.height)) {
-                state.offsetvalueX = res.css.top + res.css.height
-                res.css.top = item[0] - res.css.height
-                console.log(state.offsetvalueX);
-                break;
-              }
-              // 组件上侧
-              if (item.includes(res.css.top)) {
-                state.offsetvalueX = res.css.top
-                res.css.top = item[0]
-                break;
-              }
-              state.offsetvalueX = 0
+          for (let index = 0; index < state.marking.x.length; index++) {
+            // 组件下侧
+            const item = state.marking.x[index];
+            if (item.includes(res.css.top + res.css.height)) {
+              state.offsetvalueX = res.css.top + res.css.height
+              res.css.top = item[0] - res.css.height
+              break;
             }
-            // 组件左侧
-            for (let index = 0; index < state.marking.y.length; index++) {
-              const item = state.marking.y[index];
-              if (item.includes(res.css.left + res.css.width)) {
-                state.offsetvalueY = res.css.left + res.css.width
-                res.css.left = item[0] - res.css.width
-                break;
-              }
-              if (item.includes(res.css.left)) {
-                state.offsetvalueY = res.css.left
-                res.css.left = item[0]
-                break;
-              }
-              state.offsetvalueY = 0
+            // 组件上侧
+            if (item.includes(res.css.top)) {
+              state.offsetvalueX = res.css.top
+              res.css.top = item[0]
+              break;
             }
+            state.offsetvalueX = 0
+          }
+          // 组件左侧
+          for (let index = 0; index < state.marking.y.length; index++) {
+            const item = state.marking.y[index];
+            if (item.includes(res.css.left + res.css.width)) {
+              state.offsetvalueY = res.css.left + res.css.width
+              res.css.left = item[0] - res.css.width
+              break;
+            }
+            if (item.includes(res.css.left)) {
+              state.offsetvalueY = res.css.left
+              res.css.left = item[0]
+              break;
+            }
+            state.offsetvalueY = 0
+          }
         }
       });
       state.template = list;
@@ -392,11 +390,19 @@ const core = {
             state.template = template;
             state.commHeight = e.data.data.objHeight;
             state.background = e.data.data.background;
-            commit("setMarking");
             resolve("数据查询完成");
           }
         });
       });
+    },
+    // 保存单个元素
+    saveComplate({ state }) {
+      if (state.activeTemplate.length <= 1) {
+        let activeData = state.template.filter((e: any) => e.id == state.activeTemplate[0])[0]
+        saveSingleComplate(activeData)
+      } else {
+        Message.error('请选择单个元素保存')
+      }
     },
     // 更新元素位置
     updatePosition({ commit }, data) {

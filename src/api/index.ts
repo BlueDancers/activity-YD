@@ -82,6 +82,10 @@ export function updateObj(objectName, height, background, titlePage) {
   });
 }
 
+/**
+ * 上传图片接口
+ * @param data File 图片资源
+ */
 export function uploadImg(data) {
   return request({
     url: "/upimage",
@@ -90,5 +94,19 @@ export function uploadImg(data) {
       'Content-Type': 'multipart/form-data',
     },
     data
+  });
+}
+
+/**
+ * 保存单个组件信息
+ * @param obj 组件信息
+ */
+export function saveSingleComplate(obj: object) {
+  return request({
+    url: "/saveSingleComplate",
+    method: "POST",
+    data: {
+      complate: obj
+    }
   });
 }

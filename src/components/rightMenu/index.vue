@@ -6,6 +6,7 @@
     @click.right.stop="clickRight"
   >
     <div class="menu_item" @click="deleteItem">删除</div>
+    <div class="menu_item" @click="saveItem">保存组件</div>
   </div>
 </template>
 
@@ -40,6 +41,11 @@ export default Vue.extend({
         id: this.id
       };
       this.$store.commit("core/deleteCompLate", data);
+    },
+    // 保存组件为模板
+    saveItem() {
+      console.log('请求后台');
+      this.$store.dispatch('core/saveComplate')
     }
   }
 })
