@@ -1,4 +1,5 @@
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path')
 module.exports = {
   publicPath: "/docs/",
@@ -21,7 +22,10 @@ module.exports = {
       alias: {
         "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.ts")
       }
-    }
+    },
+    plugins: [
+      new CopyWebpackPlugin([{ from: "./src/static", to: "./" }])
+    ]
   },
   chainWebpack(config) {
     config.plugin("loadshReplace")
