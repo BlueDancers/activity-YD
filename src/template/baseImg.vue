@@ -12,7 +12,7 @@
       />
     </edit>
     <img
-      class="baseComplate"
+      :class="absolute ? 'baseComplate' : ''"
       ondragstart="return false;"
       v-show="!editStatus"
       :src="text"
@@ -43,6 +43,9 @@ export default {
     },
     activeTemplate: {
       type: Array
+    },
+    absolute: {
+      type: Boolean
     }
   },
   computed: {

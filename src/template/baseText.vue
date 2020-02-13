@@ -4,7 +4,11 @@
     <edit v-show="editStatus" :styles="style" :id="id">
       <div :style="style" class="inline_btn" v-html="text"></div>
     </edit>
-    <div v-show="!editStatus" class="baseComplate" :style="style">
+    <div
+      v-show="!editStatus"
+      :class="absolute ? 'baseComplate' : ''"
+      :style="style"
+    >
       <div v-html="text"></div>
     </div>
   </div>
@@ -31,6 +35,9 @@ export default {
     },
     activeTemplate: {
       type: Array
+    },
+    absolute: {
+      type: Boolean
     }
   },
   computed: {

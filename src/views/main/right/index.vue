@@ -1,27 +1,21 @@
 <template>
   <div class="index_right">
+    <!-- 侧边快捷操作栏 -->
     <div class="right_setting">
       <div
         class="setting_item"
-        v-for="(item, index) in setting"
+        v-for="item in setting"
         :key="item.id"
         @click="coreSetting(item.id)"
       >
-        <a-popover v-if="index <= 1" placement="left">
-          <template slot="content">
-            <p>{{ coreScale }}</p>
-          </template>
-          <div class="item">
-            <img class="settion_item_icon" :src="item.icon" alt="" />
-            <span class="settion_item_text">{{ item.text }}</span>
-          </div>
-        </a-popover>
-        <div v-else class="item">
+        <div class="item">
           <img class="settion_item_icon" :src="item.icon" alt="" />
           <span class="settion_item_text">{{ item.text }}</span>
         </div>
       </div>
+      <p class="scale">{{ coreScale }}</p>
     </div>
+    <!-- 组件设置 -->
     <a-tabs defaultActiveKey="1" @change="callback">
       <a-tab-pane tab="属性" key="1">
         <attributes-page />
@@ -47,16 +41,6 @@ export default Vue.extend({
     return {
       setting: [
         {
-          icon: require("@/assets/zoom.png"),
-          text: "放大",
-          id: 1
-        },
-        {
-          icon: require("@/assets/zoomout.png"),
-          text: "缩小",
-          id: 2
-        },
-        {
           icon: require("@/assets/cancel.png"),
           text: "撤销",
           id: 3
@@ -65,6 +49,16 @@ export default Vue.extend({
           icon: require("@/assets/uncancel.png"),
           text: "反撤销",
           id: 4
+        },
+        {
+          icon: require("@/assets/zoom.png"),
+          text: "放大",
+          id: 1
+        },
+        {
+          icon: require("@/assets/zoomout.png"),
+          text: "缩小",
+          id: 2
         }
       ]
     };
@@ -84,7 +78,7 @@ export default Vue.extend({
 .index_right {
   position: relative;
   background-color: white;
-  width: 440px;
+  width: 490px;
   height: 100%;
   display: flex;
   .right_setting {
@@ -115,6 +109,9 @@ export default Vue.extend({
           line-height: 18px;
         }
       }
+    }
+    .scale {
+      text-align: center;
     }
   }
 }

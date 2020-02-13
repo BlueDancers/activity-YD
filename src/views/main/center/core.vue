@@ -16,6 +16,7 @@
       :option="item.css"
       :text="item.text"
       :activeTemplate="activeTemplate"
+      :absolute="true"
     ></component>
   </div>
 </template>

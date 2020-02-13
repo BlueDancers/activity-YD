@@ -110,3 +110,13 @@ export function saveSingleComplate(obj: object) {
     }
   });
 }
+
+/**
+ * 获取组件模板数据
+ */
+export function getSingleComplate() {
+  return request({
+    url: "/getSingleComplate",
+    method: "get",
+  });
+}

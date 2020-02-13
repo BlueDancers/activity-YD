@@ -48,8 +48,15 @@
       <div class="attr_item">
         <div class="attr_list_left">层级:</div>
         <div class="attr_list_right">
+          <a-slider
+            class="attr_slider"
+            v-model="core.css['zIndex']"
+            :tipFormatter="formatter"
+            :min="1"
+            :max="100"
+          ></a-slider>
           <a-input-number
-            class="attr_textarea"
+            class="attr_mintextarea"
             placeholder="请输入文字"
             v-model="core.css['zIndex']"
           />
@@ -71,8 +78,15 @@
       <div class="attr_item" v-if="showFontsize(core)">
         <div class="attr_list_left">字体大小:</div>
         <div class="attr_list_right">
+          <a-slider
+            class="attr_slider"
+            v-model="core.css['font-size']"
+            :tipFormatter="formatter"
+            :min="1"
+            :max="100"
+          ></a-slider>
           <a-input-number
-            class="attr_textarea"
+            class="attr_mintextarea"
             placeholder="请输入文字"
             v-model="core.css['font-size']"
           />
@@ -88,8 +102,15 @@
       <div class="attr_item" v-if="showBorder(core)">
         <div class="attr_list_left">边框宽度:</div>
         <div class="attr_list_right">
+          <a-slider
+            class="attr_slider"
+            v-model="core.css['border-width']"
+            :tipFormatter="formatter"
+            :min="1"
+            :max="20"
+          ></a-slider>
           <a-input-number
-            class="attr_textarea"
+            class="attr_mintextarea"
             placeholder="请输入文字"
             v-model="core.css['border-width']"
           />
@@ -98,8 +119,15 @@
       <div class="attr_item" v-if="showBorderRadius(core)">
         <div class="attr_list_left">圆角:</div>
         <div class="attr_list_right">
+          <a-slider
+            class="attr_slider"
+            v-model="core.css['border-radius']"
+            :tipFormatter="formatter"
+            :min="1"
+            :max="100"
+          ></a-slider>
           <a-input-number
-            class="attr_textarea"
+            class="attr_mintextarea"
             placeholder="请输入文字"
             v-model="core.css['border-radius']"
           />
@@ -213,6 +241,7 @@
 import colorPicker from "@/components/color-picker/index.vue";
 import Vue, { ComputedOptions } from "vue";
 export default Vue.extend({
+  name: "attributes",
   components: {
     colorPicker
   },
@@ -264,6 +293,10 @@ export default Vue.extend({
     },
     handleChange(e) {
       console.log(e);
+    },
+    // 拖动条显示文字
+    formatter(value) {
+      return `${value}px`;
     },
     // 监听按钮提交input选项
     btnTypeChange(item) {
@@ -363,7 +396,7 @@ export default Vue.extend({
 
 <style lang="less" scoped>
 .attributes {
-  width: 400px;
+  width: 450px;
   .fast_attr {
     margin-left: 30px;
     margin-bottom: 10px;
@@ -382,7 +415,17 @@ export default Vue.extend({
       margin-left: 20px;
     }
     .attr_list_right {
+      width: 300px;
       margin-left: 20px;
+      display: flex;
+      align-items: center;
+      .attr_slider {
+        width: 200px;
+      }
+      .attr_mintextarea {
+        margin-left: 10px;
+        width: 70px;
+      }
       .attr_textarea {
         width: 200px;
       }

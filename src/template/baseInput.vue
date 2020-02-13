@@ -11,7 +11,7 @@
     </edit>
     <input
       v-show="!editStatus"
-      class="baseComplate"
+      :class="absolute ? 'baseComplate' : ''"
       type="text"
       :style="style"
     />
@@ -39,6 +39,9 @@ export default {
     },
     activeTemplate: {
       type: Array
+    },
+    absolute: {
+      type: Boolean
     }
   },
   computed: {

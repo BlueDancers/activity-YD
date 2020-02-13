@@ -20,7 +20,8 @@ import {
   Popover,
   Popconfirm,
   Upload,
-  Slider
+  Slider,
+  List,
 } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Tabs);
@@ -34,6 +35,7 @@ Vue.use(Popover);
 Vue.use(Popconfirm);
 Vue.use(Upload);
 Vue.use(Slider)
+Vue.use(List)
 Vue.prototype.$message = Message;
 Vue.config.productionTip = false
 Vue.use(VueQriously);

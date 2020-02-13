@@ -6,12 +6,23 @@
     @click.right.stop="clickRight"
   >
     <div class="menu_item" @click="deleteItem">删除</div>
-    <div class="menu_item" @click="saveItem">保存组件</div>
+    <a-popconfirm
+      placement="right"
+      okText="保存"
+      cancelText="取消"
+      @confirm.stop="confirm"
+    >
+      <div slot="title">
+        <a-input ref="saveInput" placeholder="请输入保存组件名" />
+      </div>
+      <div class="menu_item" @click.stop="saveItem">保存组件</div>
+    </a-popconfirm>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import { saveSingleComplate } from '@/api/index';
 export default Vue.extend({
   data() {
     return {
@@ -19,6 +30,15 @@ export default Vue.extend({
       id: '', // 组件id
       x: 0, // 横坐标位置
       y: 0 // 竖坐标位置
+    }
+  },
+  computed: {
+    activeTemplate() {
+      console.log(this.$store);
+      return this.$store.state.core.activeTemplate
+    },
+    templates() {
+      return this.$store.state.core.template
     }
   },
   methods: {
@@ -44,8 +64,26 @@ export default Vue.extend({
     },
     // 保存组件为模板
     saveItem() {
-      console.log('请求后台');
-      this.$store.dispatch('core/saveComplate')
+
+    },
+    confirm() {
+
+      if (this.activeTemplate.length <= 1) {
+        let activeData = this.templates.filter(e => e.id == this.id)[0]
+        activeData.compName = this.$refs['saveInput'].stateValue
+        delete activeData.css.top
+        delete activeData.css.left
+        delete activeData.css.zIndex
+        saveSingleComplate(activeData).then(res => {
+          if (res.data.code == 200) {
+            this.menuShow = false
+            this.$message.success(res.data.data)
+          }
+        })
+      } else {
+        this.$message.error('请选择单个元素保存')
+      }
+      console.log();
     }
   }
 })

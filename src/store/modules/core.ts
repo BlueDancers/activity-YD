@@ -1,4 +1,4 @@
-import { saveActivity, getActivity, updateObj, saveSingleComplate } from "@/api/index";
+import { saveActivity, getActivity, updateObj } from "@/api/index";
 import { commHeight, commWidth } from "../../config/index";
 import { Message } from 'ant-design-vue';
 import { debounce } from "../../utils/utils";
@@ -394,15 +394,6 @@ const core = {
           }
         });
       });
-    },
-    // 保存单个元素
-    saveComplate({ state }) {
-      if (state.activeTemplate.length <= 1) {
-        let activeData = state.template.filter((e: any) => e.id == state.activeTemplate[0])[0]
-        saveSingleComplate(activeData)
-      } else {
-        Message.error('请选择单个元素保存')
-      }
     },
     // 更新元素位置
     updatePosition({ commit }, data) {

@@ -5,7 +5,7 @@
       <div :style="style" @mousedown="mousedown" class="inline_div" />
     </edit>
     <div
-      class="baseComplate"
+      :class="absolute ? 'baseComplate' : ''"
       ondragstart="return false;"
       v-show="!editStatus"
       :style="style"
@@ -33,6 +33,9 @@ export default {
     },
     activeTemplate: {
       type: Array
+    },
+    absolute: {
+      type: Boolean
     }
   },
   computed: {
