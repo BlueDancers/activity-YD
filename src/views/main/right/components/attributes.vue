@@ -237,10 +237,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import colorPicker from "@/components/color-picker/index.vue";
-import Vue, { ComputedOptions } from "vue";
-export default Vue.extend({
+<script>
+import colorPicker from "@/components/color-picker/index";
+export default {
   name: "attributes",
   components: {
     colorPicker
@@ -263,7 +262,7 @@ export default Vue.extend({
     },
     // 1 单组件 2 是多组件 3 无组件
     coreType() {
-      let core = (this as any).core;
+      let core = this.core;
       if (
         JSON.stringify(core) !== "{}" &&
         Object.prototype.toString.call(core) !== "[object Array]"
@@ -391,7 +390,7 @@ export default Vue.extend({
       }
     }
   }
-});
+};
 </script>
 
 <style lang="less" scoped>

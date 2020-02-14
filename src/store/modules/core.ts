@@ -1,7 +1,5 @@
 import { saveActivity, getActivity, updateObj } from "@/api/index";
 import { commHeight, commWidth } from "../../config/index";
-import { Message } from 'ant-design-vue';
-import { debounce } from "../../utils/utils";
 
 const core = {
   namespaced: true,

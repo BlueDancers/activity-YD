@@ -61,22 +61,26 @@
       <a-form :form="objform">
         <a-form-item
           label="网页名称"
-          :label-col="{ span: 5 }"
-          :wrapper-col="{ span: 12 }"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          :validate-status="textNameStatus ? '' : 'error'"
+          help="必填 浏览器头部显示的名字"
         >
-          <a-input placeholder="请填写网页名" v-model="objform.textName" />
+          <a-input placeholder="请填写网页名称" v-model="objform.textName" />
         </a-form-item>
         <a-form-item
           label="路由名称"
-          :label-col="{ span: 5 }"
-          :wrapper-col="{ span: 12 }"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          :validate-status="nameStatus ? '' : 'error'"
+          help="必填 活动页网址信息"
         >
           <a-input placeholder="路由只能是数字与英文" v-model="objform.name" />
         </a-form-item>
         <a-form-item
           label="项目描述"
-          :label-col="{ span: 5 }"
-          :wrapper-col="{ span: 12 }"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
         >
           <a-input
             placeholder="项目的一些描述信息"
@@ -100,6 +104,12 @@ export default Vue.extend({
   },
   data() {
     return {
+      formTailLayout: {
+        labelCol: { span: 5 },
+        wrapperCol: { span: 12 }
+      },
+      textNameStatus: true,
+      nameStatus: true,
       mainList: [],
       Objectvisible: false,
       confirmLoading: false,
@@ -129,20 +139,34 @@ export default Vue.extend({
     },
     objSuccess() {
       // 创建项目基类
-      let data = {
-        ...this.objform,
-        height: this.$store.state.core.commHeight, // 页面高度默认667
-        background: "white" // 页面背景色默认白色
-      };
-      setObject(data).then(res => {
-        this.$router.push({
-          name: "main",
-          params: { objectName: res.data.data }
+      if (this.objform.textName == "") {
+        this.textNameStatus = false;
+      } else {
+        this.textNameStatus = true;
+      }
+      if (this.objform.name == "") {
+        this.nameStatus = false;
+      } else {
+        this.nameStatus = true;
+      }
+      if (this.textNameStatus && this.nameStatus) {
+        let data = {
+          ...this.objform,
+          height: this.$store.state.core.commHeight, // 页面高度默认667
+          background: "white" // 页面背景色默认白色
+        };
+        setObject(data).then(res => {
+          this.$router.push({
+            name: "main",
+            params: { objectName: res.data.data }
+          });
         });
-      });
+      }
     },
     obFall() {
       this.Objectvisible = false;
+      this.textNameStatus = true;
+      this.nameStatus = true;
     },
     gotoObject(name) {
       this.$router.push({ name: "main", params: { objectName: name } });

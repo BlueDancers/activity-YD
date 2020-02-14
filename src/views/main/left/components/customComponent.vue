@@ -17,7 +17,9 @@
               :absolute="false"
             ></component>
           </template>
-          <div class="comp_item">{{ item.compName }}</div>
+          <div class="comp_item" @click="addUserComp(item)">
+            {{ item.compName }}
+          </div>
         </a-popover>
       </a-list-item>
     </a-list>
@@ -51,6 +53,24 @@ export default Vue.extend({
       compList: [] as any[], // 组件信息
       currrentPage: 1 // 当前页码
     };
+  },
+  // computed: {
+  //   template() {
+  //     return this.$store.state.core.template;
+  //   }
+  // },
+  methods: {
+    addUserComp(data) {
+      // console.log(this.template);
+      console.log(data);
+      // data.css.top = this.template.length + 100;
+      // data.css.left = this.template.length + 100;
+      // data.css.zIndex = this.template.length + 1;
+      // data.editStatus = false;
+      // data.refInput = []
+      // data.id = data._id
+      // 明天再写
+    }
   }
 });
 </script>

@@ -13,7 +13,7 @@ import {
   Input,
   InputNumber,
   Modal,
-  Message,
+  message,
   Form,
   Select,
   Radio,
@@ -36,7 +36,7 @@ Vue.use(Popconfirm);
 Vue.use(Upload);
 Vue.use(Slider)
 Vue.use(List)
-Vue.prototype.$message = Message;
+Vue.prototype.$message = message;
 Vue.config.productionTip = false
 Vue.use(VueQriously);
 new Vue({

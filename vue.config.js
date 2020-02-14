@@ -20,7 +20,7 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.ts")
+        // "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.ts")
       }
     },
     plugins: [

@@ -34,11 +34,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import colorPicker from "@/components/color-picker/index.vue";
+<script>
+import colorPicker from "@/components/color-picker/index";
 import { commHeight } from "@/config";
-import Vue from "vue";
-export default Vue.extend({
+export default {
   components: {
     colorPicker
   },
@@ -54,14 +53,14 @@ export default Vue.extend({
   },
   computed: {
     height() {
-      return (this as any).$store.state.core.commHeight;
+      return this.$store.state.core.commHeight;
     },
     background: {
       get() {
-        return (this as any).$store.state.core.background;
+        return this.$store.state.core.background;
       },
       set(newColor) {
-        (this as any).$store.commit("core/updateBackground", newColor);
+        this.$store.commit("core/updateBackground", newColor);
       }
     }
   },
@@ -76,7 +75,7 @@ export default Vue.extend({
       );
     }
   }
-});
+};
 </script>
 
 <style lang="less" scoped>

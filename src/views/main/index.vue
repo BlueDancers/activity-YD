@@ -128,6 +128,9 @@ export default Vue.extend({
           this.$message.error("错误" + err);
         });
     }
+  },
+  destroyed() {
+    console.log('销毁组件');
   }
 });
 </script>

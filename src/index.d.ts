@@ -7,6 +7,5 @@ declare module 'vue/types/vue' {
   interface Vue {
     $showLoading: any,
     $hideLoading: any,
-    [name: string]: any
   }
 }
