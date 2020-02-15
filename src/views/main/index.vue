@@ -130,7 +130,7 @@ export default Vue.extend({
     }
   },
   destroyed() {
-    console.log('销毁组件');
+    this.$store.commit('core/destroyedTemplate')
   }
 });
 </script>

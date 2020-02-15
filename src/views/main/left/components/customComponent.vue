@@ -34,6 +34,8 @@ import baseText from "@/template/baseText.vue";
 import baseInput from "@/template/baseInput.vue";
 import baseDiv from "@/template/baseDiv.vue";
 import { getSingleComplate } from "@/api/index";
+import { baseComplate } from "@/utils/baseReact";
+import { cloneDeep } from "lodash";
 export default Vue.extend({
   components: {
     baseButtom,
@@ -45,7 +47,6 @@ export default Vue.extend({
   mounted() {
     getSingleComplate().then(res => {
       this.compList = res.data.data;
-      console.log(this.compList);
     });
   },
   data() {
@@ -61,15 +62,10 @@ export default Vue.extend({
   // },
   methods: {
     addUserComp(data) {
-      // console.log(this.template);
-      console.log(data);
-      // data.css.top = this.template.length + 100;
-      // data.css.left = this.template.length + 100;
-      // data.css.zIndex = this.template.length + 1;
-      // data.editStatus = false;
-      // data.refInput = []
-      // data.id = data._id
-      // 明天再写
+      this.$store.commit(
+        "core/set_tempLate",
+        cloneDeep(baseComplate(this.$store.state.core, data))
+      );
     }
   }
 });

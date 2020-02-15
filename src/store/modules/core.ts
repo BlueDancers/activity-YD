@@ -351,6 +351,23 @@ const core = {
     // 修改页面背景色
     updateBackground(state, color) {
       state.background = color;
+    },
+    // vuex数据初始化
+    destroyedTemplate(state) {
+      state.commWidth = commWidth
+      state.commHeight = commHeight
+      state.background = "white"
+      state.parentName = ""
+      state.template = []
+      state.activeTemplate = []
+      state.isDown = false
+      state.isLongDown = false
+      state.offsetvalueX = 0
+      state.offsetvalueY = 0
+      state.marking = {
+        x: [],
+        y: []
+      }
     }
   },
   actions: {

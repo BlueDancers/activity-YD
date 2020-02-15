@@ -1,6 +1,6 @@
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const path = require('path')
+const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = {
   publicPath: "/docs/",
   lintOnSave: false,
@@ -20,10 +20,18 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        // "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.ts")
       }
     },
     plugins: [
+      // 压缩代码
+      // if () {
+        
+      // }
+      new CompressionPlugin({
+        test: /\.js$|\.html$|.\css$/, // 匹配文件名
+        threshold: 10240, // 对超过10k的数据压缩
+        deleteOriginalAssets: false // 不删除源文件
+      }),
       new CopyWebpackPlugin([{ from: "./src/static", to: "./" }])
     ]
   },

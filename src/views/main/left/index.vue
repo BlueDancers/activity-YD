@@ -15,7 +15,7 @@
       <element-page v-show="activeLeftMenu == 1"></element-page>
       <page v-show="activeLeftMenu == 2"></page>
       <template-page v-show="activeLeftMenu == 3"></template-page>
-      <custom-component v-show="activeLeftMenu == 4"></custom-component>
+      <custom-component v-if="activeLeftMenu == 4"></custom-component>
     </div>
   </div>
 </template>

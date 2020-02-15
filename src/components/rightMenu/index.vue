@@ -12,6 +12,8 @@
       cancelText="取消"
       @confirm.stop="confirm"
     >
+      <!--取消图标的显示 -->
+      <span slot="icon" />
       <div slot="title">
         <a-input ref="saveInput" placeholder="请输入保存组件名" />
       </div>
@@ -67,23 +69,22 @@ export default Vue.extend({
 
     },
     confirm() {
-
       if (this.activeTemplate.length <= 1) {
         let activeData = this.templates.filter(e => e.id == this.id)[0]
         activeData.compName = this.$refs['saveInput'].stateValue
-        delete activeData.css.top
-        delete activeData.css.left
-        delete activeData.css.zIndex
-        saveSingleComplate(activeData).then(res => {
-          if (res.data.code == 200) {
-            this.menuShow = false
-            this.$message.success(res.data.data)
-          }
+        saveSingleComplate({
+          name: activeData.name,
+          text: activeData.text,
+          css: activeData.css,
+          compName: activeData.compName,
+          placeholder: activeData.placeholder || ''
+        }).then(res => {
+          this.menuShow = false
+          this.$message.success(res.data.data)
         })
       } else {
         this.$message.error('请选择单个元素保存')
       }
-      console.log();
     }
   }
 })

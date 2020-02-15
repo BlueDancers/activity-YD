@@ -134,3 +134,46 @@ export function baseInput(store: any) {
     }
   };
 }
+
+
+/**
+ * 将后台插件数据转换为页面数据
+ * @param store vuex实例
+ * @param data 常见市场数据
+ */
+export function baseComplate(store: any, data: any) {
+  let dynamic: number = store.template.length * 10;
+  // 重置css位置
+  data.css.top = 100 + dynamic
+  data.css.left = 100 + dynamic
+  let compData: any = {
+    id: String(new Date().getTime()), // 暂定
+    inputName: `default${store.template.length}`,
+    editStatus: false,
+    name: data.name,
+    css: data.css
+  }
+  if (data.name == 'base-input') {
+    compData = { ...compData, placeholder: data.placeholder }
+  }
+  if (data.name == 'base-div') {
+    compData
+  }
+  if (data.name == 'base-text') {
+    compData = { ...compData, text: data.text }
+  }
+  if (data.name == 'base-buttom') {
+    compData = {
+      ...compData,
+      text: data.text,
+      btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3
+      refInput: [], // 提交的input表单
+      inputFromUrl: "", // 数据提交的地址
+      urlMethod: "get", // 提交格式
+      QQNum: '', // qq客服
+      PhoneNum: '', // 电话客福
+      link: "", // 按钮点击跳转地址 }
+    }
+  }
+  return compData
+}
