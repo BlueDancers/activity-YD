@@ -22,6 +22,7 @@ import {
   Upload,
   Slider,
   List,
+  Icon
 } from "ant-design-vue";
 Vue.use(Button);
 Vue.use(Tabs);
@@ -36,6 +37,7 @@ Vue.use(Popconfirm);
 Vue.use(Upload);
 Vue.use(Slider)
 Vue.use(List)
+Vue.use(Icon)
 Vue.prototype.$message = message;
 Vue.config.productionTip = false
 Vue.use(VueQriously);

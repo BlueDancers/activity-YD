@@ -36,7 +36,6 @@ export default Vue.extend({
   },
   computed: {
     activeTemplate() {
-      console.log(this.$store);
       return this.$store.state.core.activeTemplate
     },
     templates() {
@@ -72,15 +71,9 @@ export default Vue.extend({
       if (this.activeTemplate.length <= 1) {
         let activeData = this.templates.filter(e => e.id == this.id)[0]
         activeData.compName = this.$refs['saveInput'].stateValue
-        saveSingleComplate({
-          name: activeData.name,
-          text: activeData.text,
-          css: activeData.css,
-          compName: activeData.compName,
-          placeholder: activeData.placeholder || ''
-        }).then(res => {
-          this.menuShow = false
-          this.$message.success(res.data.data)
+        this.$store.dispatch('complate/setSingList', activeData).then((res) => {
+          this.menuShow = false;
+          this.$message.success(res.data.data);
         })
       } else {
         this.$message.error('请选择单个元素保存')

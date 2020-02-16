@@ -8,9 +8,9 @@
           </template>
           <template slot="content">
             <component
-              :key="item.id"
+              :key="item._id"
               :is="item.name"
-              :id="item.id"
+              :id="item._id"
               :option="item.css"
               :text="item.text"
               :activeTemplate="[]"
@@ -18,7 +18,39 @@
             ></component>
           </template>
           <div class="comp_item" @click="addUserComp(item)">
-            {{ item.compName }}
+            <div class="item_name" v-if="isEditid != item._id">
+              {{ item.compName }}
+            </div>
+            <a-input
+              class="item_input"
+              v-if="isEditid == item._id"
+              placeholder="请输入组件名"
+              ref="newName"
+            />
+            <div class="item_icon" v-if="isEditid != item._id">
+              <a-icon
+                type="form"
+                class="icon"
+                @click.stop="updateCompName(item._id)"
+              />
+              <a-icon
+                type="close-circle"
+                class="icon"
+                @click.stop="deleteCompName(item._id)"
+              />
+            </div>
+            <div v-if="isEditid == item._id" class="item_icon">
+              <a-button
+                class="icon_btn"
+                type="primary"
+                @click.stop="updateNewName"
+              >
+                确认
+              </a-button>
+              <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">
+                取消
+              </a-button>
+            </div>
           </div>
         </a-popover>
       </a-list-item>
@@ -33,7 +65,6 @@ import baseImg from "@/template/baseImg.vue";
 import baseText from "@/template/baseText.vue";
 import baseInput from "@/template/baseInput.vue";
 import baseDiv from "@/template/baseDiv.vue";
-import { getSingleComplate } from "@/api/index";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default Vue.extend({
@@ -45,41 +76,79 @@ export default Vue.extend({
     baseDiv
   },
   mounted() {
-    getSingleComplate().then(res => {
-      this.compList = res.data.data;
-    });
+    this.$store.dispatch("complate/getSingList");
   },
   data() {
     return {
-      compList: [] as any[], // 组件信息
-      currrentPage: 1 // 当前页码
+      currrentPage: 1, // 当前页码
+      isEditid: 0 // 改名的组件的id
     };
   },
-  // computed: {
-  //   template() {
-  //     return this.$store.state.core.template;
-  //   }
-  // },
+  computed: {
+    compList() {
+      return this.$store.state.complate.compList;
+    }
+  },
   methods: {
     addUserComp(data) {
-      this.$store.commit(
-        "core/set_tempLate",
-        cloneDeep(baseComplate(this.$store.state.core, data))
-      );
+      if (this.isEditid == 0) {
+        this.$store.commit(
+          "core/set_tempLate",
+          cloneDeep(baseComplate(this.$store.state.core, data))
+        );
+      }
+    },
+    updateCompName(id) {
+      this.isEditid = id;
+    },
+    deleteCompName(id) {
+      this.$store.dispatch("complate/deleteCompName", id);
+    },
+    cancelEdit() {
+      this.isEditid = 0;
+    },
+    updateNewName() {
+      this.$store.dispatch("complate/updateCompName", {
+        id: this.isEditid,
+        newName: (this.$refs["newName"] as any).stateValue
+      }).then(() => {
+        this.isEditid = 0
+      })
     }
   }
 });
 </script>
 
 <style lang="less" scoped>
-.ant-list-item {
-  padding: 10px;
-}
 .comp_list {
   .comp_item {
     width: 320px;
     height: 30px;
     line-height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    .item_name {
+      font-size: 16px;
+    }
+    &:hover {
+      .item_icon {
+        display: flex;
+      }
+    }
+    .item_input {
+      width: 150px;
+    }
+    .item_icon {
+      display: none;
+      .icon_btn {
+        margin-left: 10px;
+      }
+    }
+    .icon {
+      padding: 10px;
+    }
   }
 }
 </style>

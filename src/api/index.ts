@@ -120,3 +120,33 @@ export function getSingleComplate() {
     method: "get",
   });
 }
+
+/**
+ * 更新组件市场的组件名
+ * @param id 组件id
+ * @param compName  组件新名字
+ */
+export function updateSingComp(id: string, compName: string) {
+  return request({
+    url: '/updateSingComp',
+    method: "POST",
+    data: {
+      id,
+      compName
+    }
+  })
+}
+
+/**
+ * 删除组件市场的组件
+ * @param id 组件id
+ */
+export function deleteSingComp(id: string) {
+  return request({
+    url: '/deleteSingComp',
+    method: "POST",
+    data: {
+      id
+    }
+  })
+}

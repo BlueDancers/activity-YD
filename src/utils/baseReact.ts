@@ -146,6 +146,7 @@ export function baseComplate(store: any, data: any) {
   // 重置css位置
   data.css.top = 100 + dynamic
   data.css.left = 100 + dynamic
+  data.css.zIndex = store.template.length + 1
   let compData: any = {
     id: String(new Date().getTime()), // 暂定
     inputName: `default${store.template.length}`,
@@ -175,5 +176,6 @@ export function baseComplate(store: any, data: any) {
       link: "", // 按钮点击跳转地址 }
     }
   }
+  console.log(compData);
   return compData
 }
