@@ -11,7 +11,7 @@ const core = {
     template: [], // 组件
     activeTemplate: [], // 选中的数组
     isDown: false, // 当前是否按住元素(移动)
-    // roundDown: false, // 当前是否按住元素边角(缩放)
+    roundDown: false, // 当前是否按住元素边角(缩放)
     isLongDown: false, // 当前是否处于多选状态
     offsetvalueX: 0, // 辅助线位置配合变量auxiliary确定具体位置
     offsetvalueY: 0, // 辅助线位置配合变量auxiliary确定具体位置
@@ -38,7 +38,6 @@ const core = {
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template));
       let activeTemplate: any[] = [];
-      // let marking = state.marking;
       // 如果点击了已经选中的就取消选择
       // if (state.activeTemplate.includes(id)) {
       //   state.activeTemplate = [];
@@ -61,8 +60,12 @@ const core = {
       state.activeTemplate = activeTemplate;
     },
     // 更新是否为多选状态
-    toggle_isLongDown(state, status) {
+    toggle_isLongDown(state, status: boolean) {
       state.isLongDown = status;
+    },
+    // 当前是否按住元素边角
+    toggle_roundDown(state, status: boolean) {
+      state.roundDown = status
     },
     // 去除选择状态
     clear_template(state) {

@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
-  <div class="btn_con" @click="toggleEdit">
-    <edit v-show="editStatus" :styles="style" :id="id">
+  <div class="btn_con" @mouseover="toggleEdit" @mouseleave="test">
+    <edit v-show="editStatus" :styles="constyle" :id="id">
       <button :style="style" class="inline_btn">{{ text }}</button>
     </edit>
     <button
@@ -36,7 +36,7 @@ export default {
     activeTemplate: {
       type: Array
     },
-    absolute: {
+    absolute: { // 是否为组件市场
       type: Boolean
     }
   },
@@ -44,13 +44,36 @@ export default {
     style() {
       return handleStyle(this.option);
     },
+    constyle() {
+      let style = handleStyle(this.option)
+      return {
+        top: style.top,
+        left: style.left,
+        width: style.width,
+        height: style.height,
+        zIndex: style.zIndex
+      }
+    },
     editStatus() {
       return this.activeTemplate.includes(this.id);
+    },
+    isDown() {
+      return this.$store.state.core.isDown
+    },
+    roundDown() {
+      return this.$store.state.core.roundDown
     }
   },
   methods: {
     toggleEdit() {
-      this.$store.commit("core/toggle_temp_status", this.id);
+      if (!this.isDown) {
+        this.$store.commit("core/toggle_temp_status", this.id);
+      }
+    },
+    test() {
+      if (!(this.isDown || this.roundDown)) {
+        this.$store.commit('core/clear_template')
+      }
     }
   }
 };

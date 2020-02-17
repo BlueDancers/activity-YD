@@ -23,9 +23,8 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { saveSingleComplate } from '@/api/index';
-export default Vue.extend({
+export default{
   data() {
     return {
       menuShow: false, // 是否显示
@@ -80,7 +79,7 @@ export default Vue.extend({
       }
     }
   }
-})
+}
 </script>
 
 <style lang="less" scoped>

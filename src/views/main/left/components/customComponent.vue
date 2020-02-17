@@ -40,6 +40,7 @@
               />
             </div>
             <div v-if="isEditid == item._id" class="item_icon">
+              <a-button-group>
               <a-button
                 class="icon_btn"
                 type="primary"
@@ -50,6 +51,7 @@
               <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">
                 取消
               </a-button>
+              </a-button-group>
             </div>
           </div>
         </a-popover>
@@ -58,8 +60,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script>
 import baseButtom from "@/template/baseButtom.vue";
 import baseImg from "@/template/baseImg.vue";
 import baseText from "@/template/baseText.vue";
@@ -67,7 +68,7 @@ import baseInput from "@/template/baseInput.vue";
 import baseDiv from "@/template/baseDiv.vue";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
-export default Vue.extend({
+export default {
   components: {
     baseButtom,
     baseImg,
@@ -110,13 +111,13 @@ export default Vue.extend({
     updateNewName() {
       this.$store.dispatch("complate/updateCompName", {
         id: this.isEditid,
-        newName: (this.$refs["newName"] as any).stateValue
+        newName: this.$refs["newName"].stateValue
       }).then(() => {
         this.isEditid = 0
       })
     }
   }
-});
+}
 </script>
 
 <style lang="less" scoped>
@@ -132,18 +133,12 @@ export default Vue.extend({
     .item_name {
       font-size: 16px;
     }
-    &:hover {
-      .item_icon {
-        display: flex;
-      }
-    }
     .item_input {
       width: 150px;
     }
     .item_icon {
-      display: none;
+      display: flex;
       .icon_btn {
-        margin-left: 10px;
       }
     }
     .icon {

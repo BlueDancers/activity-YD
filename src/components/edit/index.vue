@@ -61,6 +61,8 @@ export default {
     }
   },
   mounted() {
+    // 更新键盘事件
+    initKeyDown();
     window.addEventListener(
       "mouseup",
       e => {
@@ -95,10 +97,11 @@ export default {
   watch: {
     activeTemplate: {
       handler() {
-        // 更新键盘事件
-        initKeyDown();
         // 关闭右击弹窗
-        (this.$refs.rightMenu).close();
+        if (this.activeTemplate.lenth == 0) {
+          this.$store.commit('core/toggle_roundDown', false)
+        }
+        this.$refs.rightMenu.close();
       },
       deep: true
     }
@@ -141,6 +144,7 @@ export default {
     roundMousedown(state) {
       this.roundDown = true;
       this.roundDownState = state;
+      this.$store.commit('core/toggle_roundDown', true)
     },
     roundMounseup() {
       // console.log('坐标元素松开');
