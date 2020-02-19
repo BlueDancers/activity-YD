@@ -10,8 +10,9 @@ const core = {
     parentName: "", // 项目名
     template: [], // 组件
     activeTemplate: [], // 选中的数组
+    hoverTemplate: '', // 显示鼠标划过的组件提示
     isDown: false, // 当前是否按住元素(移动)
-    roundDown: false, // 当前是否按住元素边角(缩放)
+    roundDown: 0, //  1 2 3 4 5 6 对应每个节点
     isLongDown: false, // 当前是否处于多选状态
     offsetvalueX: 0, // 辅助线位置配合变量auxiliary确定具体位置
     offsetvalueY: 0, // 辅助线位置配合变量auxiliary确定具体位置
@@ -58,6 +59,10 @@ const core = {
         }
       });
       state.activeTemplate = activeTemplate;
+    },
+    // 更新组件的鼠标活动状态
+    set_hoverTemplate(state, id: string) {
+      state.hoverTemplate = id
     },
     // 更新是否为多选状态
     toggle_isLongDown(state, status: boolean) {
@@ -124,8 +129,7 @@ const core = {
     // 更新元素大小
     updateZoom(state, data) {
       let list = JSON.parse(JSON.stringify(state.template));
-      let { type } = data;
-      if (type == 1) {
+      if (state.roundDown == 1) {
         list.map(item => {
           if (state.activeTemplate.includes(item.id)) {
             item.css.left = Number(item.css.left) + data.x;
@@ -134,14 +138,14 @@ const core = {
             item.css.height = item.css.height - data.y;
           }
         });
-      } else if (type == 2) {
+      } else if (state.roundDown == 2) {
         list.map(item => {
           if (state.activeTemplate.includes(item.id)) {
             item.css.top = Number(item.css.top) + data.y;
             item.css.height = item.css.height - data.y;
           }
         });
-      } else if (type == 3) {
+      } else if (state.roundDown == 3) {
         list.map(item => {
           if (state.activeTemplate.includes(item.id)) {
             item.css.top = Number(item.css.top) + data.y;
@@ -149,7 +153,7 @@ const core = {
             item.css.height = item.css.height - data.y;
           }
         });
-      } else if (type == 4) {
+      } else if (state.roundDown == 4) {
         list.map(item => {
           if (state.activeTemplate.includes(item.id)) {
             item.css.left = Number(item.css.left) + data.x;
@@ -157,13 +161,13 @@ const core = {
             item.css.height = Number(item.css.height) + data.y;
           }
         });
-      } else if (type == 5) {
+      } else if (state.roundDown == 5) {
         list.map(item => {
           if (state.activeTemplate.includes(item.id)) {
             item.css.height = Number(item.css.height) + data.y;
           }
         });
-      } else if (type == 6) {
+      } else if (state.roundDown == 6) {
         list.map(item => {
           if (state.activeTemplate.includes(item.id)) {
             item.css.width = Number(item.css.width) + data.x;
@@ -192,7 +196,7 @@ const core = {
         x: [], // x轴上面该出现标线的
         y: [] // y轴上面该出现标线的
       };
-      let offset: any[] = [1, 2];
+      let offset: any[] = [1];
       state.template.map((res: any) => {
         if (!state.activeTemplate.includes(res.id)) {
           // 偏移绝对值

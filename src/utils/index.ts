@@ -26,6 +26,60 @@ export function handleStyle(css: any) {
   return cssUsable;
 }
 
+let indexCenter: any = null
+/**
+ * 全局鼠标动作监听
+ */
+export function initMouse() {
+  indexCenter = document.querySelector('.index_center')
+  let state: any = index.state.core
+  indexCenter.addEventListener(
+    "mouseup",
+    () => {
+      if (state.isDown || state.roundDown) {
+        index.dispatch("core/updateisDown", false);
+        index.commit("core/toggle_roundDown", 0);
+      }
+    },
+    true
+  );
+  // true 为在捕获阶段执行 这样就不会影响 操作点阻止冒泡了
+  indexCenter.addEventListener(
+    "mousemove",
+    e => {
+      if (state.isDown) {
+        let moveX = e.movementX;
+        let moveY = e.movementY;
+        index.dispatch("core/updatePosition", {
+          x: moveX,
+          y: moveY
+        });
+      }
+      if (state.roundDown) {
+        // 对接缩放元素的偏移坐标
+        const data = {
+          x: e.movementX,
+          y: e.movementY,
+          // type: this.roundDownState
+        };
+        // 拖拽子元素分为两种情况
+        // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
+        index.commit("core/updateZoom", data);
+        // 2. 上方中间 上方右边 下方左边
+      }
+    },
+    true
+  );
+}
+
+/**
+ * 卸载监听
+ */
+export function uninitMouse() {
+  indexCenter.removeEventListener('mouseup', () => { })
+  indexCenter.removeEventListener('mousemove', () => { })
+}
+
 /**
  *监听键盘的上下左右按键
  */

@@ -1,11 +1,26 @@
 <template>
   <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
-  <div class="btn_con" @mouseover="toggleEdit" @mouseleave="test">
+  <div
+    class="btn_con"
+    @mousedown="toggleEdit"
+    @mouseenter="mouseenter"
+    @mouseleave="mouseleave"
+  >
+    <!-- 编辑状态 -->
     <edit v-show="editStatus" :styles="constyle" :id="id">
       <button :style="style" class="inline_btn">{{ text }}</button>
     </edit>
+    <!-- 鼠标进入状态 -->
+    <div
+      v-show="hoverStatus && !editStatus"
+      :style="constyle"
+      :class="hoverStatus ? ' hoverTemplate' : ''"
+    >
+      <button :style="style" class="inline_btn">{{ text }}</button>
+    </div>
+    <!-- 未选中状态 -->
     <button
-      v-show="!editStatus"
+      v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       :style="style"
     >
@@ -33,9 +48,6 @@ export default {
       type: Object,
       default: () => { }
     },
-    activeTemplate: {
-      type: Array
-    },
     absolute: { // 是否为组件市场
       type: Boolean
     }
@@ -55,25 +67,22 @@ export default {
       }
     },
     editStatus() {
-      return this.activeTemplate.includes(this.id);
+      return this.$store.state.core.activeTemplate.includes(this.id);
     },
-    isDown() {
-      return this.$store.state.core.isDown
-    },
-    roundDown() {
-      return this.$store.state.core.roundDown
+    hoverStatus() {
+      return this.$store.state.core.hoverTemplate == this.id;
     }
   },
   methods: {
     toggleEdit() {
-      if (!this.isDown) {
-        this.$store.commit("core/toggle_temp_status", this.id);
-      }
+      this.$store.commit("core/toggle_temp_status", this.id);
+      this.$store.dispatch("core/updateisDown", true);
     },
-    test() {
-      if (!(this.isDown || this.roundDown)) {
-        this.$store.commit('core/clear_template')
-      }
+    mouseenter() {
+      this.$store.commit('core/set_hoverTemplate', this.id)
+    },
+    mouseleave() {
+      this.$store.commit('core/set_hoverTemplate', '')
     }
   }
 };

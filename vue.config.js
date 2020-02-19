@@ -2,7 +2,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = {
-  publicPath: "/docs/",
+  publicPath: '/docs/',
   lintOnSave: false,
   productionSourceMap: false,
   css: {
@@ -12,7 +12,7 @@ module.exports = {
       }
     }
   },
-  outputDir: "docs",
+  outputDir: 'docs',
   devServer: {
     port: 8888,
     open: true
@@ -25,7 +25,7 @@ module.exports = {
     plugins: [
       // 压缩代码
       // if () {
-        
+
       // }
       new CompressionPlugin({
         test: /\.js$|\.html$|.\css$/, // 匹配文件名

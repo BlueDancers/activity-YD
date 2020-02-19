@@ -6,8 +6,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-export default Vue.extend({
-});
+export default Vue.extend({});
 </script>
 
 <style lang="less">
@@ -34,5 +33,10 @@ body {
 .baseComplate {
   position: absolute;
   user-select: none;
+}
+.hoverTemplate {
+  position: absolute;
+  user-select: none;
+  outline: 1px solid #1890ff;
 }
 </style>

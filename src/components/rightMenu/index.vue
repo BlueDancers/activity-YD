@@ -5,7 +5,7 @@
     :style="{ top: `${y}px`, left: `${x}px` }"
     @click.right.stop="clickRight"
   >
-    <div class="menu_item" @click="deleteItem">删除</div>
+    <div class="menu_item" @click.stop="deleteItem">删除</div>
     <a-popconfirm
       placement="right"
       okText="保存"
@@ -15,7 +15,11 @@
       <!--取消图标的显示 -->
       <span slot="icon" />
       <div slot="title">
-        <a-input ref="saveInput" placeholder="请输入保存组件名" />
+        <a-input
+          @click.stop="clickStop"
+          ref="saveInput"
+          placeholder="请输入保存组件名"
+        />
       </div>
       <div class="menu_item" @click.stop="saveItem">保存组件</div>
     </a-popconfirm>
@@ -24,7 +28,7 @@
 
 <script>
 import { saveSingleComplate } from '@/api/index';
-export default{
+export default {
   data() {
     return {
       menuShow: false, // 是否显示
@@ -32,6 +36,13 @@ export default{
       x: 0, // 横坐标位置
       y: 0 // 竖坐标位置
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      document.addEventListener('click', (e) => {
+        if (!this.$el.contains(e.target)) this.menuShow = false
+      })
+    })
   },
   computed: {
     activeTemplate() {
@@ -43,13 +54,13 @@ export default{
   },
   methods: {
     open(id, x, y) {
-      console.log(x, y);
       this.menuShow = true
       this.id = id
       this.x = x + 10
       this.y = y + 10
     },
     close() {
+      console.log('关闭');
       this.menuShow = false
       this.x = 0
       this.y = 0
@@ -57,15 +68,15 @@ export default{
     clickRight() { },
     // 删除
     deleteItem() {
+      console.log('删除');
       const data = {
         id: this.id
       };
       this.$store.commit("core/deleteCompLate", data);
     },
     // 保存组件为模板
-    saveItem() {
-
-    },
+    saveItem() { },
+    clickStop() { },
     confirm() {
       if (this.activeTemplate.length <= 1) {
         let activeData = this.templates.filter(e => e.id == this.id)[0]

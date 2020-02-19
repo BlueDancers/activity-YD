@@ -1,13 +1,27 @@
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
-  <div class="btn_con" @click="toggleEdit">
-    <edit v-show="editStatus" :id="id" :styles="style">
+  <div
+    class="btn_con"
+    @mousedown="toggleEdit"
+    @mouseenter="mouseenter"
+    @mouseleave="mouseleave"
+  >
+    <edit v-show="editStatus" :id="id" :styles="constyle">
       <div :style="style" @mousedown="mousedown" class="inline_div" />
     </edit>
+    <!-- 鼠标进入状态 -->
     <div
+      v-show="hoverStatus && !editStatus"
+      :style="constyle"
+      :class="hoverStatus ? ' hoverTemplate' : ''"
+    >
+      <div :style="style" @mousedown="mousedown" class="inline_div" />
+    </div>
+    <!-- 未选中状态 -->
+    <div
+      v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       ondragstart="return false;"
-      v-show="!editStatus"
       :style="style"
     />
   </div>
@@ -31,9 +45,6 @@ export default {
       type: Object,
       default: () => { }
     },
-    activeTemplate: {
-      type: Array
-    },
     absolute: {
       type: Boolean
     }
@@ -42,16 +53,36 @@ export default {
     style() {
       return handleStyle(this.option);
     },
+    constyle() {
+      let style = handleStyle(this.option)
+      return {
+        top: style.top,
+        left: style.left,
+        width: style.width,
+        height: style.height,
+        zIndex: style.zIndex
+      }
+    },
     editStatus() {
-      return this.activeTemplate.includes(this.id);
+      return this.$store.state.core.activeTemplate.includes(this.id);
+    },
+    hoverStatus() {
+      return this.$store.state.core.hoverTemplate == this.id;
     }
   },
   methods: {
     toggleEdit() {
       this.$store.commit("core/toggle_temp_status", this.id);
+      this.$store.dispatch("core/updateisDown", true);
     },
     mousedown(e) {
       e.preventDefault();
+    },
+    mouseenter() {
+      this.$store.commit('core/set_hoverTemplate', this.id)
+    },
+    mouseleave() {
+      this.$store.commit('core/set_hoverTemplate', '')
     }
   }
 };

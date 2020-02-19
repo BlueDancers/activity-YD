@@ -2,42 +2,15 @@
   <div
     class="edit"
     :style="stylesPush"
-    @mousedown.prevent="mousedown"
     @keyup.delete="deleteItem"
     @click.right="mouseRight"
   >
-    <div
-      class="top_left"
-      @mousemove.stop="topTop"
-      @mousedown.stop="roundMousedown(1)"
-      @mouseup.stop="roundMounseup"
-    ></div>
-    <div
-      class="top_top"
-      @mousemove.stop="topTop"
-      @mousedown.stop="roundMousedown(2)"
-      @mouseup.stop="roundMounseup"
-    ></div>
-    <div
-      class="top_right"
-      @mousedown.stop="roundMousedown(3)"
-      @mouseup.stop="roundMounseup"
-    ></div>
-    <div
-      class="bottom_left"
-      @mousedown.stop="roundMousedown(4)"
-      @mouseup.stop="roundMounseup"
-    ></div>
-    <div
-      class="bottom_bottom"
-      @mousedown.stop="roundMousedown(5)"
-      @mouseup.stop="roundMounseup"
-    ></div>
-    <div
-      class="bottom_right"
-      @mousedown.stop="roundMousedown(6)"
-      @mouseup.stop="roundMounseup"
-    ></div>
+    <div class="top_left" @mousedown.stop="roundMousedown(1)"></div>
+    <div class="top_top" @mousedown.stop="roundMousedown(2)"></div>
+    <div class="top_right" @mousedown.stop="roundMousedown(3)"></div>
+    <div class="bottom_left" @mousedown.stop="roundMousedown(4)"></div>
+    <div class="bottom_bottom" @mousedown.stop="roundMousedown(5)"></div>
+    <div class="bottom_right" @mousedown.stop="roundMousedown(6)"></div>
     <slot></slot>
     <right-menu ref="rightMenu" />
   </div>
@@ -60,56 +33,7 @@ export default {
       default: () => { }
     }
   },
-  mounted() {
-    // 更新键盘事件
-    initKeyDown();
-    window.addEventListener(
-      "mouseup",
-      e => {
-        if (this.down || this.roundDown) {
-          this.mouseup(e);
-        }
-      },
-      true
-    );
-    // true 为在捕获阶段执行 这样就不会影响 操作点阻止冒泡了
-    window.addEventListener(
-      "mousemove",
-      e => {
-        if (this.down) {
-          this.mousemove(e);
-        }
-        if (this.roundDown) {
-          this.Zoom(e);
-        }
-      },
-      true
-    );
-  },
-  // 组件内部的是否移动属性由组件最新管理,全局仅仅监听状态
-  data() {
-    return {
-      down: false, // 当前是否按住元素(移动)
-      roundDown: false, // 当前是否按住元素边角(缩放)
-      roundDownState: false // 1 2 3 4 5 6 对应每个节点
-    };
-  },
-  watch: {
-    activeTemplate: {
-      handler() {
-        // 关闭右击弹窗
-        if (this.activeTemplate.lenth == 0) {
-          this.$store.commit('core/toggle_roundDown', false)
-        }
-        this.$refs.rightMenu.close();
-      },
-      deep: true
-    }
-  },
   computed: {
-    activeTemplate() {
-      return this.$store.state.core.activeTemplate;
-    },
     stylesPush() {
       // 对组件的style进行处理,只获取z-index的信息
       let style = {
@@ -122,12 +46,9 @@ export default {
   },
   methods: {
     mousedown() {
-      this.down = true;
       this.$store.dispatch("core/updateisDown", true);
     },
     mouseup() {
-      this.down = false;
-      this.roundDown = false;
       this.$store.dispatch("core/updateisDown", false);
     },
     mousemove(e) {
@@ -142,35 +63,12 @@ export default {
       });
     },
     roundMousedown(state) {
-      this.roundDown = true;
-      this.roundDownState = state;
-      this.$store.commit('core/toggle_roundDown', true)
-    },
-    roundMounseup() {
-      // console.log('坐标元素松开');
-      this.roundDown = false;
-    },
-    topTop() { },
-    // 缩放元素
-    Zoom(e) {
-      // 对接缩放元素的偏移坐标
-      const data = {
-        x: e.movementX,
-        y: e.movementY,
-        type: this.roundDownState
-      };
-      // 拖拽子元素分为两种情况
-      // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
-      this.$store.commit("core/updateZoom", data);
-      // 2. 上方中间 上方右边 下方左边
+      this.$store.commit('core/toggle_roundDown', state)
     },
     // 删除元素
     deleteItem() {
-      console.log("删除元素");
-      const data = {
-        id: this.id
-      };
-      this.$store.commit("core/deleteCompLate", data);
+      console.log(this.id);
+      this.$store.commit("core/deleteCompLate", { id: this.id });
     },
     mouseRight(e) {
       (this.$refs.rightMenu).open(this.id, e.layerX, e.layerY);

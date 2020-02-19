@@ -1,11 +1,24 @@
 <template>
   <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
-  <div class="btn_con" @click="toggleEdit">
-    <edit v-show="editStatus" :styles="style" :id="id">
+  <div
+    class="btn_con"
+    @mousedown="toggleEdit"
+    @mouseenter="mouseenter"
+    @mouseleave="mouseleave"
+  >
+    <edit v-show="editStatus" :styles="constyle" :id="id">
       <div :style="style" class="inline_btn" v-html="text"></div>
     </edit>
+    <!-- 鼠标进入状态 -->
     <div
-      v-show="!editStatus"
+      v-show="hoverStatus && !editStatus"
+      :style="constyle"
+      :class="hoverStatus ? ' hoverTemplate' : ''"
+    >
+      <div :style="style" class="inline_btn" v-html="text"></div>
+    </div>
+    <div
+      v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       :style="style"
     >
@@ -33,9 +46,6 @@ export default {
       type: Object,
       default: () => { }
     },
-    activeTemplate: {
-      type: Array
-    },
     absolute: {
       type: Boolean
     }
@@ -44,13 +54,33 @@ export default {
     style() {
       return handleStyle(this.option);
     },
+    constyle() {
+      let style = handleStyle(this.option)
+      return {
+        top: style.top,
+        left: style.left,
+        width: style.width,
+        height: style.height,
+        zIndex: style.zIndex
+      }
+    },
     editStatus() {
-      return this.activeTemplate.includes(this.id);
+      return this.$store.state.core.activeTemplate.includes(this.id);
+    },
+    hoverStatus() {
+      return this.$store.state.core.hoverTemplate == this.id;
     }
   },
   methods: {
     toggleEdit() {
       this.$store.commit("core/toggle_temp_status", this.id);
+      this.$store.dispatch("core/updateisDown", true);
+    },
+    mouseenter() {
+      this.$store.commit('core/set_hoverTemplate', this.id)
+    },
+    mouseleave() {
+      this.$store.commit('core/set_hoverTemplate', '')
     }
   }
 };

@@ -29,7 +29,13 @@ import right from "./right/index.vue";
 import uploadModal from "./components/uploadModal.vue";
 import { mobileUrl } from "@/config/index";
 import html2canvas from "html2canvas";
-import { base64ToBlob, BlobToImgFile } from "@/utils/index";
+import {
+  base64ToBlob,
+  BlobToImgFile,
+  initMouse,
+  uninitMouse,
+  initKeyDown
+} from "@/utils/index";
 import { uploadImg } from "@/api/index";
 import Vue from "vue";
 export default Vue.extend({
@@ -41,6 +47,10 @@ export default Vue.extend({
     uploadModal
   },
   mounted() {
+    this.$nextTick(() => {
+      initMouse();
+      initKeyDown();
+    });
     let objName = this.$route.params.objectName;
     this.$store.commit("core/set_objectName", objName);
     this.$store
@@ -60,8 +70,8 @@ export default Vue.extend({
   },
   computed: {
     coreScale() {
-      let scale:any = this.scale
-      return Number(((scale) * 100).toFixed(1)) + "%";
+      let scale: any = this.scale;
+      return Number((scale * 100).toFixed(1)) + "%";
     }
   },
   methods: {
@@ -130,7 +140,10 @@ export default Vue.extend({
     }
   },
   destroyed() {
-    this.$store.commit('core/destroyedTemplate')
+    // 清空vuex
+    this.$store.commit("core/destroyedTemplate");
+    // 写在鼠标监听
+    uninitMouse();
   }
 });
 </script>
