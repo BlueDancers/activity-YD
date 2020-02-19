@@ -12,7 +12,7 @@
       :style="{ border: 'none', padding: '0px' }"
       :id="id"
     >
-      <input type="text" :style="style" />
+      <input :placeholder="baseplaceholder" type="text" :style="style" />
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -20,9 +20,10 @@
       :style="constyle"
       :class="hoverStatus ? ' hoverTemplate' : ''"
     >
-      <input type="text" :style="style" />
+      <input :placeholder="baseplaceholder" type="text" :style="style" />
     </div>
     <input
+      :placeholder="baseplaceholder"
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       type="text"
@@ -49,6 +50,10 @@ export default {
     option: {
       type: Object,
       default: () => { }
+    },
+    baseplaceholder: {
+      type: String,
+      default: ""
     },
     absolute: {
       type: Boolean

@@ -82,7 +82,7 @@
             class="attr_slider"
             v-model="core.css['font-size']"
             :tipFormatter="formatter"
-            :min="1"
+            :min="0"
             :max="100"
           ></a-slider>
           <a-input-number
@@ -106,7 +106,7 @@
             class="attr_slider"
             v-model="core.css['border-width']"
             :tipFormatter="formatter"
-            :min="1"
+            :min="0"
             :max="20"
           ></a-slider>
           <a-input-number
@@ -123,7 +123,7 @@
             class="attr_slider"
             v-model="core.css['border-radius']"
             :tipFormatter="formatter"
-            :min="1"
+            :min="0"
             :max="100"
           ></a-slider>
           <a-input-number

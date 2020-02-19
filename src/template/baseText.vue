@@ -7,7 +7,11 @@
     @mouseleave="mouseleave"
   >
     <edit v-show="editStatus" :styles="constyle" :id="id">
-      <div :style="style" class="inline_btn" v-html="text"></div>
+      <p
+        :style="style"
+        class="inline_btn"
+        v-html="text.replace(/\n|\r\n/g, '<br>')"
+      ></p>
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -15,14 +19,18 @@
       :style="constyle"
       :class="hoverStatus ? ' hoverTemplate' : ''"
     >
-      <div :style="style" class="inline_btn" v-html="text"></div>
+      <p
+        :style="style"
+        class="inline_btn"
+        v-html="text.replace(/\n|\r\n/g, '<br>')"
+      ></p>
     </div>
     <div
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       :style="style"
     >
-      <div v-html="text"></div>
+      <p v-html="text.replace(/\n|\r\n/g, '<br>')"></p>
     </div>
   </div>
 </template>
@@ -40,7 +48,7 @@ export default {
     },
     text: {
       type: String,
-      default: "按钮"
+      default: ""
     },
     option: {
       type: Object,

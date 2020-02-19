@@ -2,7 +2,6 @@
   <div
     class="edit"
     :style="stylesPush"
-    @keyup.delete="deleteItem"
     @click.right="mouseRight"
   >
     <div class="top_left" @mousedown.stop="roundMousedown(1)"></div>
@@ -73,36 +72,7 @@ export default {
     mouseRight(e) {
       (this.$refs.rightMenu).open(this.id, e.layerX, e.layerY);
       e.preventDefault();
-    },
-    initKeyDown() {
-      console.log(document.onkeydown);
-      document.onkeydown = e => {
-        var key = (window.event).keyCode;
-        if (key == 37) {
-          // 左
-          this.updatePos(-1, 0);
-        }
-        if (key == 38) {
-          // 上
-          this.updatePos(0, -1);
-          e.preventDefault();
-        }
-        if (key == 39) {
-          // 右
-          this.updatePos(1, 0);
-        }
-        if (key == 40) {
-          // 下
-          this.updatePos(0, 1);
-          e.preventDefault();
-        }
-      };
     }
-  },
-  destroyed() {
-    // window.removeEventListener('mouseup')
-    // window.removeEventListener('mouseleave')
-    // window.removeEventListener('mousemove')
   }
 };
 </script>
@@ -112,8 +82,7 @@ export default {
   position: absolute;
   outline: 1px rgb(167, 167, 167) dashed;
   .inline_btn {
-    width: 100%;
-    height: 100%;
+    margin: 0px;
   }
   .top_left {
     .base_circle();

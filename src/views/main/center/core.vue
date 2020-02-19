@@ -14,6 +14,7 @@
       :is="item.name"
       :id="item.id"
       :option="item.css"
+      :baseplaceholder="item.placeholder"
       :text="item.text"
       :activeTemplate="activeTemplate"
       :absolute="true"

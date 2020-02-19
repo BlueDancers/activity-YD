@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="menuShow"
+    v-show="menuShow"
     class="right_menu"
     :style="{ top: `${y}px`, left: `${x}px` }"
     @click.right.stop="clickRight"
@@ -39,7 +39,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      document.addEventListener('click', (e) => {
+      document.querySelector('.right_menu').addEventListener('click', (e) => {
         if (!this.$el.contains(e.target)) this.menuShow = false
       })
     })

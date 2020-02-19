@@ -92,13 +92,13 @@ export function baseText(store: any) {
     css: {
       top: 100 + dynamic,
       left: 100 + dynamic,
-      width: 100,
-      height: 100,
+      width: 300,
+      height: 50,
       zIndex: store.template.length + 1,
-      background: "rgb(242, 242, 242)",
+      background: "rgb(242, 242, 242,0)",
       border: "none",
       color: "black",
-      "font-size": 12
+      "font-size": 24
     }
   };
 }
