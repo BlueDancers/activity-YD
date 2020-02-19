@@ -4,9 +4,20 @@
     <div class="right_setting">
       <div
         class="setting_item"
-        v-for="item in setting"
-        :key="item.id"
-        @click="coreSetting(item.id)"
+        v-for="(item, index) in userinfo"
+        :key="index"
+        @click="userSetting(index)"
+      >
+        <div class="item">
+          <img class="settion_item_icon" :src="item.icon" alt="" />
+          <span class="settion_item_text">{{ item.text }}</span>
+        </div>
+      </div>
+      <div
+        class="setting_item"
+        v-for="(item, index) in setting"
+        :key="item.text"
+        @click="coreSetting(index)"
       >
         <div class="item">
           <img class="settion_item_icon" :src="item.icon" alt="" />
@@ -39,26 +50,36 @@ export default Vue.extend({
   },
   data() {
     return {
-      setting: [
+      userinfo: [
         {
           icon: require("@/assets/cancel.png"),
-          text: "撤销",
-          id: 3
+          text: "撤销"
         },
         {
           icon: require("@/assets/uncancel.png"),
-          text: "反撤销",
-          id: 4
+          text: "反撤销"
         },
         {
+          icon: require("@/assets/copy.png"),
+          text: "复制"
+        },
+        {
+          icon: require("@/assets/paste.png"),
+          text: "粘贴"
+        },
+        {
+          icon: require("@/assets/delete.png"),
+          text: "删除"
+        }
+      ],
+      setting: [
+        {
           icon: require("@/assets/zoom.png"),
-          text: "放大",
-          id: 1
+          text: "放大"
         },
         {
           icon: require("@/assets/zoomout.png"),
-          text: "缩小",
-          id: 2
+          text: "缩小"
         }
       ]
     };
@@ -67,6 +88,23 @@ export default Vue.extend({
     callback() {
       // 暂无右侧切换
     },
+    //
+    userSetting(index) {
+      if (index == 0) {
+        // 撤销
+        this.$emit("coreSetting", 3);
+      } else if (index == 1) {
+        // 反撤销
+        this.$emit("coreSetting", 4);
+      } else if(index == 2) {
+        console.log('复制');
+      } else if(index == 3) {
+        console.log('粘贴');
+      } else if(index == 4){
+        console.log('删除');
+      }
+    },
+    // 放大 缩小
     coreSetting(index) {
       this.$emit("coreSetting", index);
     }

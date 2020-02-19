@@ -34,15 +34,9 @@ export default {
       menuShow: false, // 是否显示
       id: '', // 组件id
       x: 0, // 横坐标位置
-      y: 0 // 竖坐标位置
+      y: 0, // 竖坐标位置
+      isLoad: false
     }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      document.querySelector('.right_menu').addEventListener('click', (e) => {
-        if (!this.$el.contains(e.target)) this.menuShow = false
-      })
-    })
   },
   computed: {
     activeTemplate() {
@@ -60,7 +54,6 @@ export default {
       this.y = y + 10
     },
     close() {
-      console.log('关闭');
       this.menuShow = false
       this.x = 0
       this.y = 0

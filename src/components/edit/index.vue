@@ -3,6 +3,7 @@
     class="edit"
     :style="stylesPush"
     @click.right="mouseRight"
+    @click="mouseLeft"
   >
     <div class="top_left" @mousedown.stop="roundMousedown(1)"></div>
     <div class="top_top" @mousedown.stop="roundMousedown(2)"></div>
@@ -17,7 +18,6 @@
 
 <script>
 // 全局拖拽组件
-import { initKeyDown } from "../../utils/index";
 import rightMenu from "../rightMenu/index";
 export default {
   components: {
@@ -44,12 +44,6 @@ export default {
     }
   },
   methods: {
-    mousedown() {
-      this.$store.dispatch("core/updateisDown", true);
-    },
-    mouseup() {
-      this.$store.dispatch("core/updateisDown", false);
-    },
     mousemove(e) {
       let moveX = e.movementX;
       let moveY = e.movementY;
@@ -69,8 +63,11 @@ export default {
       console.log(this.id);
       this.$store.commit("core/deleteCompLate", { id: this.id });
     },
+    mouseLeft(){
+      this.$refs.rightMenu.close();
+    },
     mouseRight(e) {
-      (this.$refs.rightMenu).open(this.id, e.layerX, e.layerY);
+      this.$refs.rightMenu.open(this.id, e.layerX, e.layerY);
       e.preventDefault();
     }
   }

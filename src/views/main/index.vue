@@ -48,8 +48,8 @@ export default Vue.extend({
   },
   mounted() {
     this.$nextTick(() => {
-      initMouse();
-      initKeyDown();
+      initMouse(this.core);
+      initKeyDown(this.core);
     });
     let objName = this.$route.params.objectName;
     this.$store.commit("core/set_objectName", objName);
@@ -62,6 +62,7 @@ export default Vue.extend({
         this.$message.error(err);
       });
   },
+  
   data() {
     return {
       scale: 1, // 缩放
@@ -72,6 +73,10 @@ export default Vue.extend({
     coreScale() {
       let scale: any = this.scale;
       return Number((scale * 100).toFixed(1)) + "%";
+    },
+    core(){
+      console.log('更新');
+      return this.$store.state.core
     }
   },
   methods: {
@@ -82,15 +87,22 @@ export default Vue.extend({
         this.$store.commit("core/clear_template");
       }
     },
+    init(){
+      initMouse(this.core);
+      initKeyDown(this.core);
+      this.$store.commit("core/clear_template");
+    },
     // 放大缩小
     coreSetting(id) {
-      if (id === 1) {
+      if (id === 0) {
         this.scale += 0.1;
-      } else if (id === 2) {
+      } else if (id === 1) {
         this.scale -= 0.1;
       } else if (id == 3) {
         // 撤销
         cancelHistory();
+        this.init()
+   
       } else if (id == 4) {
         // 反撤销
         unCancelHistory();

@@ -423,7 +423,7 @@ const core = {
       commit("updatePos", data);
     },
     // 鼠标按下
-    updateisDown({ commit }, data) {
+    updateisDown({ commit, state }, data) {
       // 更新鼠标状态
       commit('set_isDown', data)
       if (data) {

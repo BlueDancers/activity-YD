@@ -1,4 +1,5 @@
 import index from "../store/index";
+import { cloneDeep } from 'lodash';
 /**
  * 对css进行格式化处理
  * @param {object} css 未经处理的css
@@ -28,48 +29,56 @@ export function handleStyle(css: any) {
 
 let indexCenter: any = null
 /**
- * 全局鼠标动作监听
+ * 全局鼠标动作监听 
  */
-export function initMouse() {
+export function initMouse(state) {
   indexCenter = document.querySelector('.index_center')
-  let state: any = index.state.core
-  indexCenter.addEventListener(
-    "mouseup",
-    () => {
-      if (state.isDown || state.roundDown) {
-        index.dispatch("core/updateisDown", false);
-        index.commit("core/toggle_roundDown", 0);
-      }
-    },
-    true
-  );
-  // true 为在捕获阶段执行 这样就不会影响 操作点阻止冒泡了
-  indexCenter.addEventListener(
-    "mousemove",
-    e => {
-      if (state.isDown) {
-        let moveX = e.movementX;
-        let moveY = e.movementY;
-        index.dispatch("core/updatePosition", {
-          x: moveX,
-          y: moveY
-        });
-      }
-      if (state.roundDown) {
-        // 对接缩放元素的偏移坐标
-        const data = {
-          x: e.movementX,
-          y: e.movementY,
-          // type: this.roundDownState
-        };
-        // 拖拽子元素分为两种情况
-        // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
-        index.commit("core/updateZoom", data);
-        // 2. 上方中间 上方右边 下方左边
-      }
-    },
-    true
-  );
+  indexCenter.onmouseup = () => {
+    if (state.isDown || state.roundDown) {
+      index.dispatch("core/updateisDown", false);
+      index.commit("core/toggle_roundDown", 0);
+    }
+  }
+  indexCenter.onmousemove = (e) => {
+    if (state.isDown) {
+      let moveX = e.movementX;
+      let moveY = e.movementY;
+      index.dispatch("core/updatePosition", {
+        x: moveX,
+        y: moveY
+      });
+    }
+    if (state.roundDown) {
+      // 对接缩放元素的偏移坐标
+      const data = {
+        x: e.movementX,
+        y: e.movementY,
+        // type: this.roundDownState
+      };
+      // 拖拽子元素分为两种情况
+      // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
+      index.commit("core/updateZoom", data);
+      // 2. 上方中间 上方右边 下方左边
+    }
+  }
+  // indexCenter.addEventListener(
+  //   "mouseup",
+  //   () => {
+  //     if (state.isDown || state.roundDown) {
+  //       index.dispatch("core/updateisDown", false);
+  //       index.commit("core/toggle_roundDown", 0);
+  //     }
+  //   },
+  //   true
+  // );
+  // indexCenter.addEventListener(
+  //   "mousemove",
+  //   e => { 
+  //     console.log("拖拽", cloneDeep(state));
+
+  //   },
+  //   true
+  // );
 }
 
 /**
@@ -83,11 +92,10 @@ export function uninitMouse() {
 /**
  *监听键盘的上下左右按键
  */
-export function initKeyDown() {
+export function initKeyDown(state) {
   document.onkeydown = e => {
     var key: any = (window.event as any).keyCode;
-    let state: any = index.state
-    if (key == 17) {
+    if (key == 17) {  
       if (!state.core.isLongDown) {
         index.commit("core/toggle_isLongDown", true);
       }

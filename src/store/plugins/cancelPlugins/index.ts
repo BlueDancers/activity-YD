@@ -12,7 +12,12 @@ const filterMutation = [
   "core/clear_template",
   "core/updatePos",
   "core/updateZoom",
-  "core/toggle_temp_status"
+  "core/toggle_temp_status",
+  "core/set_isDown",
+  "core/set_hoverTemplate",
+  "core/toggle_isLongDown",
+  "core/toggle_roundDown",
+  "core/clear_template"
 ]
 /**
  *  监听vuex的行为
