@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { cancelHistory, unCancelHistory } from "@/store/plugins/cancelPlugins";
 import baseHeader from "@/components/header/index.vue";
 import core from "./center/core.vue";
@@ -37,8 +37,7 @@ import {
   initKeyDown
 } from "@/utils/index";
 import { uploadImg } from "@/api/index";
-import Vue from "vue";
-export default Vue.extend({
+export default {
   components: {
     baseHeader,
     left,
@@ -62,7 +61,7 @@ export default Vue.extend({
         this.$message.error(err);
       });
   },
-  
+
   data() {
     return {
       scale: 1, // 缩放
@@ -71,10 +70,10 @@ export default Vue.extend({
   },
   computed: {
     coreScale() {
-      let scale: any = this.scale;
+      let scale = this.scale;
       return Number((scale * 100).toFixed(1)) + "%";
     },
-    core(){
+    core() {
       console.log('更新');
       return this.$store.state.core
     }
@@ -87,7 +86,7 @@ export default Vue.extend({
         this.$store.commit("core/clear_template");
       }
     },
-    init(){
+    init() {
       initMouse(this.core);
       initKeyDown(this.core);
       this.$store.commit("core/clear_template");
@@ -102,7 +101,7 @@ export default Vue.extend({
         // 撤销
         cancelHistory();
         this.init()
-   
+
       } else if (id == 4) {
         // 反撤销
         unCancelHistory();
@@ -111,14 +110,11 @@ export default Vue.extend({
     // 保存项目
     saveObject(type) {
       this.$showLoading();
-      html2canvas(
-        document.querySelector(".core") as any,
-        {
-          async: true,
-          useCORS: true,
-          scale: 1
-        } as any
-      )
+      html2canvas(document.querySelector(".core"), {
+        async: true,
+        useCORS: true,
+        scale: 1
+      })
         .then(canvas => {
           let dataURL = canvas.toDataURL("image/jpeg");
           const data = new FormData();
@@ -138,7 +134,7 @@ export default Vue.extend({
             if (type == 1) {
               console.log("打开弹窗");
               this.objUrl = mobileUrl + res.data.data;
-              (this.$refs["uploadModal"] as any).openModal();
+              this.$refs["uploadModal"].openModal();
             } else {
               this.$message.success("发布成功");
             }
@@ -157,7 +153,7 @@ export default Vue.extend({
     // 写在鼠标监听
     uninitMouse();
   }
-});
+}
 </script>
 
 <style lang="less" scoped>
