@@ -123,7 +123,6 @@ export default {
     position: absolute;
     width: 6px;
     height: 6px;
-    border-radius: 100%;
     border: 2px solid #1890ff;
   }
 }

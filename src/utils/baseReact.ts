@@ -20,7 +20,7 @@ export function baseDiv(store: any) {
       "border-color": "black",
       "border-style": "solid",
       "border-width": 0,
-      "border-radius": 0
+      "border-radius": 20
     }
   };
 }

@@ -8,7 +8,7 @@
         :key="index"
         @click="userSetting(index)"
       >
-        <div class="item">
+        <div :class="item.click ? 'item' : 'test item'">
           <img class="settion_item_icon" :src="item.icon" alt="" />
           <span class="settion_item_text">{{ item.text }}</span>
         </div>
@@ -35,10 +35,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import attributesPage from "./components/attributes.vue";
-import Vue from "vue";
-export default Vue.extend({
+<script>
+import attributesPage from "./components/attributes";
+import { baseComplate } from '@/utils/baseReact';
+import { cloneDeep } from "lodash";
+export default {
   components: {
     attributesPage
   },
@@ -53,23 +54,28 @@ export default Vue.extend({
       userinfo: [
         {
           icon: require("@/assets/cancel.png"),
-          text: "撤销"
+          text: "撤销",
+          click: true
         },
         {
           icon: require("@/assets/uncancel.png"),
-          text: "反撤销"
+          text: "反撤销",
+          click: true
         },
         {
           icon: require("@/assets/copy.png"),
-          text: "复制"
+          text: "复制",
+          click: false
         },
         {
           icon: require("@/assets/paste.png"),
-          text: "粘贴"
+          text: "粘贴",
+          click: false
         },
         {
           icon: require("@/assets/delete.png"),
-          text: "删除"
+          text: "删除",
+          click: false
         }
       ],
       setting: [
@@ -84,6 +90,34 @@ export default Vue.extend({
       ]
     };
   },
+  computed: {
+    activeTemplate() {
+      return this.$store.state.core.activeTemplate;
+    },
+    template() {
+      return this.$store.state.core.template;
+    },
+    copyTemplate() {
+      return this.$store.state.utils.copyTemplate;
+    }
+  },
+  watch: {
+    activeTemplate() {
+      if (this.activeTemplate.length > 0) {
+        this.userinfo[2].click = true
+        this.userinfo[4].click = true
+      } else {
+        this.userinfo[2].click = false
+        this.userinfo[4].click = false
+      }
+    },
+    copyTemplate() {
+      console.log('变化', this.copyTemplate);
+      if (this.copyTemplate.id != null) {
+        this.userinfo[3].click = true
+      }
+    }
+  },
   methods: {
     callback() {
       // 暂无右侧切换
@@ -96,12 +130,13 @@ export default Vue.extend({
       } else if (index == 1) {
         // 反撤销
         this.$emit("coreSetting", 4);
-      } else if(index == 2) {
-        console.log('复制');
-      } else if(index == 3) {
-        console.log('粘贴');
-      } else if(index == 4){
-        console.log('删除');
+      } else if (index == 2) {
+        this.$store.commit('utils/set_copy', cloneDeep(this.template.filter(e => e.id == this.activeTemplate)[0]))
+      } else if (index == 3) {
+        console.log(cloneDeep(baseComplate(this.$store.state.core, this.copyTemplate)));
+        this.$store.commit('core/set_tempLate', cloneDeep(baseComplate(this.$store.state.core, this.copyTemplate)))
+      } else if (index == 4) {
+        this.$store.commit('core/deleteCompLate', this.activeTemplate[0])
       }
     },
     // 放大 缩小
@@ -109,7 +144,7 @@ export default Vue.extend({
       this.$emit("coreSetting", index);
     }
   }
-});
+};
 </script>
 
 <style lang="less" scoped>
@@ -131,9 +166,9 @@ export default Vue.extend({
       display: flex;
       align-items: center;
       justify-content: center;
-      &:hover {
-        background: #f8f8f8;
-      }
+      // &:hover {
+      //   background: #f8f8f8;
+      // }
       .item {
         display: flex;
         flex-direction: column;
@@ -146,6 +181,10 @@ export default Vue.extend({
           font-size: 10px;
           line-height: 18px;
         }
+      }
+      .test {
+        opacity: 0.2;
+        cursor: not-allowed;
       }
     }
     .scale {

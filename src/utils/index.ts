@@ -1,5 +1,4 @@
 import index from "../store/index";
-import { cloneDeep } from 'lodash';
 /**
  * 对css进行格式化处理
  * @param {object} css 未经处理的css
@@ -61,24 +60,6 @@ export function initMouse(state) {
       // 2. 上方中间 上方右边 下方左边
     }
   }
-  // indexCenter.addEventListener(
-  //   "mouseup",
-  //   () => {
-  //     if (state.isDown || state.roundDown) {
-  //       index.dispatch("core/updateisDown", false);
-  //       index.commit("core/toggle_roundDown", 0);
-  //     }
-  //   },
-  //   true
-  // );
-  // indexCenter.addEventListener(
-  //   "mousemove",
-  //   e => { 
-  //     console.log("拖拽", cloneDeep(state));
-
-  //   },
-  //   true
-  // );
 }
 
 /**
@@ -95,25 +76,25 @@ export function uninitMouse() {
 export function initKeyDown(state) {
   document.onkeydown = e => {
     var key: any = (window.event as any).keyCode;
-    if (key == 17) {  
-      if (!state.core.isLongDown) {
+    if (key == 17) {
+      if (!state.isLongDown) {
         index.commit("core/toggle_isLongDown", true);
       }
     }
-    if (key == 37 && state.core.isLongDown) {
+    if (key == 37 && state.isLongDown) {
       // 左
       _updatePos(-1, 0);
     }
-    if (key == 38 && state.core.isLongDown) {
+    if (key == 38 && state.isLongDown) {
       // 上
       _updatePos(0, -1);
       e.preventDefault();
     }
-    if (key == 39 && state.core.isLongDown) {
+    if (key == 39 && state.isLongDown) {
       // 右
       _updatePos(1, 0);
     }
-    if (key == 40 && state.core.isLongDown) {
+    if (key == 40 && state.isLongDown) {
       // 下
       _updatePos(0, 1);
       e.preventDefault();
