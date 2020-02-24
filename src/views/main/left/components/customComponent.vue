@@ -62,11 +62,11 @@
 </template>
 
 <script>
-import baseButtom from "@/template/baseButtom.vue";
-import baseImg from "@/template/baseImg.vue";
-import baseText from "@/template/baseText.vue";
-import baseInput from "@/template/baseInput.vue";
-import baseDiv from "@/template/baseDiv.vue";
+import baseButtom from "@/template/dev/baseButtom.vue";
+import baseImg from "@/template/dev/baseImg.vue";
+import baseText from "@/template/dev/baseText.vue";
+import baseInput from "@/template/dev/baseInput.vue";
+import baseDiv from "@/template/dev/baseDiv.vue";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {

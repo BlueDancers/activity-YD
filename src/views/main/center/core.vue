@@ -16,7 +16,6 @@
       :option="item.css"
       :baseplaceholder="item.placeholder"
       :text="item.text"
-      :activeTemplate="activeTemplate"
       :absolute="true"
     ></component>
   </div>
@@ -25,11 +24,11 @@
 <script lang="ts">
 // 组件源
 import Vue from "vue";
-import baseButtom from "@/template/baseButtom.vue";
-import baseImg from "@/template/baseImg.vue";
-import baseText from "@/template/baseText.vue";
-import baseInput from "@/template/baseInput.vue";
-import baseDiv from "@/template/baseDiv.vue";
+import baseButtom from "@/template/dev/baseButtom.vue";
+import baseImg from "@/template/dev/baseImg.vue";
+import baseText from "@/template/dev/baseText.vue";
+import baseInput from "@/template/dev/baseInput.vue";
+import baseDiv from "@/template/dev/baseDiv.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 export default Vue.extend({
   components: {
@@ -46,9 +45,6 @@ export default Vue.extend({
   computed: {
     template() {
       return this.$store.state.core.template;
-    },
-    activeTemplate() {
-      return this.$store.state.core.activeTemplate;
     },
     commHeight() {
       (this as any).init();

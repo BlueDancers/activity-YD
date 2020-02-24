@@ -1,17 +1,13 @@
 <template>
-  <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
+  <!-- <div class="base_img" @mouseover="toggleEdit" > -->
   <div
     class="btn_con"
     @mousedown="toggleEdit"
     @mouseenter="mouseenter"
     @mouseleave="mouseleave"
   >
-    <edit v-show="editStatus" :styles="constyle" :id="id">
-      <p
-        :style="style"
-        class="inline_btn"
-        v-html="text.replace(/\n|\r\n/g, '<br>')"
-      ></p>
+    <edit v-show="editStatus" :id="id" :styles="constyle">
+      <div :style="style" @mousedown="mousedown" class="inline_div" />
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -19,25 +15,21 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <p
-        :style="style"
-        class="inline_btn"
-        v-html="text.replace(/\n|\r\n/g, '<br>')"
-      ></p>
+      <div :style="style" @mousedown="mousedown" class="inline_div" />
     </div>
+    <!-- 未选中状态 -->
     <div
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
+      ondragstart="return false;"
       :style="style"
-    >
-      <p v-html="text.replace(/\n|\r\n/g, '<br>')"></p>
-    </div>
+    />
   </div>
 </template>
 
 <script>
-import { handleStyle } from "../utils/index";
-import edit from "../components/edit/index";
+import { handleStyle } from "@/utils/index";
+import edit from "@/components/edit/index";
 export default {
   components: {
     edit
@@ -47,8 +39,7 @@ export default {
       type: String
     },
     text: {
-      type: String,
-      default: ""
+      type: String
     },
     option: {
       type: Object,
@@ -84,6 +75,9 @@ export default {
       this.$store.commit("core/toggle_temp_status", this.id);
       this.$store.dispatch("core/updateisDown", true);
     },
+    mousedown(e) {
+      e.preventDefault();
+    },
     mouseenter() {
       this.$store.commit('core/set_hoverTemplate', this.id)
     },
@@ -95,7 +89,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.btn_con {
+.inline_div {
   user-select: none;
+  border-style: none;
+  width: 100%;
+  height: 100%;
 }
 </style>

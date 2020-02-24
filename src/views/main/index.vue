@@ -6,11 +6,22 @@
       <left />
       <!-- 中控台 -->
       <div class="index_center" @click="cancelActive">
-        <core
-          :style="{ transform: `scale(${scale},${scale})` }"
-          class="core"
-          ref="core"
-        />
+        <div class="index_center_header">
+          <div
+            :class="mode == 'dev'?'active':'unactive'"
+            class="header_dev"
+            @click="toggleMode('dev')"
+          >开发模式</div>
+          <div
+            :class="mode == 'prod'?'active':'unactive'"
+            class="header_prod"
+            @click="toggleMode('prod')"
+          >预览模式</div>
+        </div>
+        <!-- 开发模式 -->
+        <core v-if="mode == 'dev'" :style="{ transform: `scale(${scale},${scale})` }" class="core" ref="core" />
+        <!-- 测试查看模式 -->
+        <show-core v-if="mode == 'prod'"></show-core>
       </div>
       <!-- 右侧菜单栏 -->
       <right :coreScale="coreScale" @coreSetting="coreSetting" />
@@ -24,6 +35,7 @@
 import { cancelHistory, unCancelHistory } from "@/store/plugins/cancelPlugins";
 import baseHeader from "@/components/header/index.vue";
 import core from "./center/core.vue";
+import showCore from "./center/showCore.vue";
 import left from "./left/index.vue";
 import right from "./right/index.vue";
 import uploadModal from "./components/uploadModal.vue";
@@ -43,7 +55,8 @@ export default {
     left,
     core,
     right,
-    uploadModal
+    uploadModal,
+    showCore
   },
   mounted() {
     this.$nextTick(() => {
@@ -65,6 +78,7 @@ export default {
   data() {
     return {
       scale: 1, // 缩放
+      mode: "dev", // dev 为开发模式 prod 为线上测试模式
       objUrl: "" // 当前项目的url
     };
   },
@@ -74,8 +88,8 @@ export default {
       return Number((scale * 100).toFixed(1)) + "%";
     },
     core() {
-      console.log('更新');
-      return this.$store.state.core
+      console.log("更新");
+      return this.$store.state.core;
     }
   },
   methods: {
@@ -91,6 +105,9 @@ export default {
       initKeyDown(this.core);
       this.$store.commit("core/clear_template");
     },
+    toggleMode(mode) {
+      this.mode = mode;
+    },
     // 放大缩小
     coreSetting(id) {
       if (id === 0) {
@@ -100,8 +117,7 @@ export default {
       } else if (id == 3) {
         // 撤销
         cancelHistory();
-        this.init()
-
+        this.init();
       } else if (id == 4) {
         // 反撤销
         unCancelHistory();
@@ -153,7 +169,7 @@ export default {
     // 写在鼠标监听
     uninitMouse();
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -166,12 +182,43 @@ export default {
     .index_center {
       padding: 20px 0;
       position: relative;
-      display: flex;
-      justify-content: center;
+      display: -webkit-box;
       flex: 1;
+      flex-direction: column;
+      align-items: center;
       overflow-x: hidden;
+      overflow-y: scroll;
       .core {
+        margin-top: 20px;
         transform-origin: "center top";
+      }
+      .index_center_header {
+        display: flex;
+        justify-content: center;
+        border: 1px solid #1890ff;
+        font-size: 10px;
+        line-height: 20px;
+        height: 26px;
+        box-sizing: border-box;
+        cursor: pointer;
+        user-select: none;
+        .active {
+          color: white;
+          background-color: #1890ff;
+        }
+        .unactive {
+          background-color: white;
+          color: #1890ff;
+        }
+        .header_dev {
+          text-align: center;
+          padding: 3px 5px;
+          border-right: 1px solid #1890ff;
+        }
+        .header_prod {
+          text-align: center;
+          padding: 3px 5px;
+        }
       }
     }
   }

@@ -1,13 +1,20 @@
 <template>
+  <!-- <div class="base_img" @mouseover="toggleEdit" > -->
   <div
     class="btn_con"
     @mousedown="toggleEdit"
     @mouseenter="mouseenter"
     @mouseleave="mouseleave"
   >
-    <!-- 编辑状态 -->
-    <edit v-show="editStatus" :styles="constyle" :id="id">
-      <button :style="style" class="inline_btn">{{ text }}</button>
+    <edit v-show="editStatus" :id="id" :styles="constyle">
+      <img
+        :style="style"
+        @mousedown="mousedown"
+        @error="loadImg"
+        class="inline_img"
+        :src="text"
+        alt=""
+      />
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -15,22 +22,30 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <button :style="style" class="inline_btn">{{ text }}</button>
+      <img
+        :style="style"
+        @mousedown="mousedown"
+        @error="loadImg"
+        class="inline_img"
+        :src="text"
+        alt=""
+      />
     </div>
-    <!-- 未选中状态 -->
-    <button
+    <img
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
+      ondragstart="return false;"
+      :src="text"
+      @error="loadImg"
+      alt=""
       :style="style"
-    >
-      {{ text }}
-    </button>
+    />
   </div>
 </template>
 
 <script>
-import { handleStyle } from "../utils/index";
-import edit from "../components/edit/index";
+import { handleStyle } from "@/utils/index";
+import edit from "@/components/edit/index";
 export default {
   components: {
     edit
@@ -40,14 +55,13 @@ export default {
       type: String
     },
     text: {
-      type: String,
-      default: "按钮"
+      type: String
     },
     option: {
       type: Object,
       default: () => { }
     },
-    absolute: { // 是否为组件市场
+    absolute: {
       type: Boolean
     }
   },
@@ -82,13 +96,22 @@ export default {
     },
     mouseleave() {
       this.$store.commit('core/set_hoverTemplate', '')
+    },
+    mousedown(e) {
+      e.preventDefault();
+    },
+    loadImg(e) {
+      console.log(e)
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.btn_con {
+.inline_img {
   user-select: none;
+  border-style: none;
+  width: 100%;
+  height: 100%;
 }
 </style>
