@@ -28,6 +28,7 @@
 
 <script>
 import { saveSingleComplate } from '@/api/index';
+import { commHeight, commWidth } from '@/config/index';
 export default {
   data() {
     return {
@@ -73,6 +74,15 @@ export default {
     confirm() {
       if (this.activeTemplate.length <= 1) {
         let activeData = this.templates.filter(e => e.id == this.id)[0]
+        console.log(activeData.css);
+        if (activeData.css.width > commWidth) {
+          this.$message.warning('保存超过屏幕宽度,无法保存')
+          return false
+        }
+        if (activeData.css.height > commHeight) {
+          this.$message.warning('保存超过屏幕长度,无法保存')
+          return false
+        }
         activeData.compName = this.$refs['saveInput'].stateValue
         this.$store.dispatch('complate/setSingList', activeData).then((res) => {
           this.menuShow = false;

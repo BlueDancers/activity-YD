@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
   <div
     class="btn_con"
     @mousedown="toggleEdit"
@@ -14,7 +13,7 @@
     <div
       v-show="hoverStatus && !editStatus"
       :style="constyle"
-      :class="hoverStatus ? ' hoverTemplate' : ''"
+      :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
       <button :style="style" class="inline_btn">{{ text }}</button>
     </div>

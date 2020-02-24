@@ -11,8 +11,8 @@ export function baseDiv(store: any) {
     name: "base-div",
     text: "",
     css: {
-      top: 100 + dynamic,
-      left: 100 + dynamic,
+      top: 10 + dynamic,
+      left: 10 + dynamic,
       width: 100,
       height: 100,
       zIndex: store.template.length + 1,
@@ -43,8 +43,8 @@ export function baseButtom(store: any) {
     PhoneNum: '', // 电话客福
     link: "", // 按钮点击跳转地址
     css: {
-      top: 100 + dynamic,
-      left: 100 + dynamic,
+      top: 10 + dynamic,
+      left: 10 + dynamic,
       width: 100,
       height: 50,
       zIndex: store.template.length + 1,
@@ -70,8 +70,8 @@ export function baseImg(store: any, img: string) {
     name: "base-img",
     text: img,
     css: {
-      top: 100 + dynamic,
-      left: 100 + dynamic,
+      top: 10 + dynamic,
+      left: 10 + dynamic,
       width: 100,
       height: 50,
       zIndex: store.template.length + 1
@@ -90,8 +90,8 @@ export function baseText(store: any) {
     name: "base-text",
     text: "请修改此处的文字",
     css: {
-      top: 100 + dynamic,
-      left: 100 + dynamic,
+      top: 10 + dynamic,
+      left: 10 + dynamic,
       width: 300,
       height: 50,
       zIndex: store.template.length + 1,
@@ -117,8 +117,8 @@ export function baseInput(store: any) {
     text: "",
     css: {
       'box-sizing': 'border-box',
-      top: 100 + dynamic,
-      left: 100 + dynamic,
+      top: 10 + dynamic,
+      left: 10 + dynamic,
       width: 150,
       height: 30,
       zIndex: store.template.length + 1,
@@ -144,8 +144,8 @@ export function baseInput(store: any) {
 export function baseComplate(store: any, data: any) {
   let dynamic: number = store.template.length * 10;
   // 重置css位置
-  data.css.top = 100 + dynamic
-  data.css.left = 100 + dynamic
+  data.css.top = 10 + dynamic
+  data.css.left = 10 + dynamic
   data.css.zIndex = store.template.length + 1
   let compData: any = {
     id: String(new Date().getTime()), // 暂定
@@ -176,6 +176,5 @@ export function baseComplate(store: any, data: any) {
       link: "", // 按钮点击跳转地址 }
     }
   }
-  console.log(compData);
   return compData
 }

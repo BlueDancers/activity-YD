@@ -132,8 +132,8 @@ export default {
         this.$emit("coreSetting", 4);
       } else if (index == 2) {
         this.$store.commit('utils/set_copy', cloneDeep(this.template.filter(e => e.id == this.activeTemplate)[0]))
+        this.$message.success('已复制到粘贴板')
       } else if (index == 3) {
-        console.log(cloneDeep(baseComplate(this.$store.state.core, this.copyTemplate)));
         this.$store.commit('core/set_tempLate', cloneDeep(baseComplate(this.$store.state.core, this.copyTemplate)))
       } else if (index == 4) {
         this.$store.commit('core/deleteCompLate', this.activeTemplate[0])

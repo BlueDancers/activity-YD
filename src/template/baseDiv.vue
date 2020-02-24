@@ -13,7 +13,7 @@
     <div
       v-show="hoverStatus && !editStatus"
       :style="constyle"
-      :class="hoverStatus ? ' hoverTemplate' : ''"
+      :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
       <div :style="style" @mousedown="mousedown" class="inline_div" />
     </div>

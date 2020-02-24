@@ -1,4 +1,5 @@
 export const url = process.env.NODE_ENV == "development" ? "http://127.0.0.1" : "http://121.36.37.117"
+// export const url = "http://121.36.37.117"
 export const mobileUrl = `${url}/mobile/index/`; // 前台域名
 export const baseURL = `${url}:7001`; // 后台地址
 export const imageUpUrl = `${baseURL}/upimage`; // 上传图片地址

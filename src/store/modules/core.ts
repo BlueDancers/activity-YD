@@ -1,7 +1,27 @@
 import { saveActivity, getActivity, updateObj } from "@/api/index";
 import { commHeight, commWidth } from "../../config/index";
+import { Module } from 'vuex';
 
-const core = {
+interface CoreInter {
+  commWidth: number; // 页面宽度
+  commHeight: number; // 页面高度
+  background: string; // 页面背景色1
+  parentName: string; // 项目名
+  template: string[]; // 组件
+  activeTemplate: string[]; // 选中的数组
+  hoverTemplate: string; // 显示鼠标划过的组件提示
+  isDown: boolean; // 当前是否按住元素(移动)
+  roundDown: number; //  1 2 3 4 5 6 对应每个节点
+  isLongDown: boolean; // 当前是否处于多选状态
+  offsetvalueX: number; // 辅助线位置配合变量auxiliary确定具体位置
+  offsetvalueY: number; // 辅助线位置配合变量auxiliary确定具体位置
+  marking: {
+    x: any[], // x对齐标线
+    y: any[] // y对齐标线
+  }
+}
+
+const core: Module<CoreInter, any> = {
   namespaced: true,
   state: {
     commWidth: commWidth, // 页面宽度
@@ -69,7 +89,7 @@ const core = {
       state.isLongDown = status;
     },
     // 当前是否按住元素边角
-    toggle_roundDown(state, status: boolean) {
+    toggle_roundDown(state, status: number) {
       state.roundDown = status
     },
     // 去除选择状态
@@ -179,15 +199,14 @@ const core = {
     },
     // 移除某个组件
     deleteCompLate(state, data) {
-      let list = JSON.parse(JSON.stringify(state.template));
-      let subscript = null;
-      list.map((e, index) => {
-        if (e.id == data.id) {
-          subscript = index;
+      let list: any[] = JSON.parse(JSON.stringify(state.template));
+      state.template = list.reduce((value, item) => {
+        if (item.id == data) {
+          return value
+        } else {
+          return value.concat(item)
         }
-      });
-      list.splice(subscript, 1);
-      state.template = list;
+      }, [])
       state.activeTemplate = [];
     },
     // 存储当前标线位置

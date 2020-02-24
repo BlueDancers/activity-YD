@@ -18,7 +18,7 @@
     <div
       v-show="hoverStatus && !editStatus"
       :style="constyle"
-      :class="hoverStatus ? ' hoverTemplate' : ''"
+      :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
       <input :placeholder="baseplaceholder" type="text" :style="style" />
     </div>

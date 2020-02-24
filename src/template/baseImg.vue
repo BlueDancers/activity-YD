@@ -20,7 +20,7 @@
     <div
       v-show="hoverStatus && !editStatus"
       :style="constyle"
-      :class="hoverStatus ? ' hoverTemplate' : ''"
+      :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
       <img
         :style="style"

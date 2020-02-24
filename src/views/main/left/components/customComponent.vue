@@ -2,24 +2,10 @@
   <div class="comp_list">
     <a-list :dataSource="compList">
       <a-list-item slot="renderItem" slot-scope="item">
-        <a-popover placement="right">
-          <template slot="title">
-            <span>{{ item.compName }}</span>
-          </template>
-          <template slot="content">
-            <component
-              :key="item._id"
-              :is="item.name"
-              :id="item._id"
-              :option="item.css"
-              :text="item.text"
-              :activeTemplate="[]"
-              :absolute="false"
-            ></component>
-          </template>
-          <div class="comp_item" @click="addUserComp(item)">
+        <div class="comp_item" @click="addUserComp(item)">
+          <div class="item_header">
             <div class="item_name" v-if="isEditid != item._id">
-              {{ item.compName }}
+              组件名: {{ item.compName }}
             </div>
             <a-input
               class="item_input"
@@ -41,20 +27,35 @@
             </div>
             <div v-if="isEditid == item._id" class="item_icon">
               <a-button-group>
-              <a-button
-                class="icon_btn"
-                type="primary"
-                @click.stop="updateNewName"
-              >
-                确认
-              </a-button>
-              <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">
-                取消
-              </a-button>
+                <a-button
+                  class="icon_btn"
+                  type="primary"
+                  @click.stop="updateNewName"
+                >
+                  确认
+                </a-button>
+                <a-button
+                  class="icon_btn"
+                  type="danger"
+                  @click.stop="cancelEdit"
+                >
+                  取消
+                </a-button>
               </a-button-group>
             </div>
           </div>
-        </a-popover>
+          <div class="item_main">
+            <component
+              :key="item._id"
+              :is="item.name"
+              :id="item._id"
+              :option="item.css"
+              :text="item.text"
+              :activeTemplate="[]"
+              :absolute="false"
+            ></component>
+          </div>
+        </div>
       </a-list-item>
     </a-list>
   </div>
@@ -109,12 +110,16 @@ export default {
       this.isEditid = 0;
     },
     updateNewName() {
-      this.$store.dispatch("complate/updateCompName", {
-        id: this.isEditid,
-        newName: this.$refs["newName"].stateValue
-      }).then(() => {
-        this.isEditid = 0
-      })
+      if (this.$refs["newName"].stateValue !== '') {
+        this.$store.dispatch("complate/updateCompName", {
+          id: this.isEditid,
+          newName: this.$refs["newName"].stateValue
+        }).then(() => {
+          this.isEditid = 0
+        })
+      } else {
+        this.$message.warning('请输入修改后的组件名')
+      }
     }
   }
 }
@@ -122,14 +127,20 @@ export default {
 
 <style lang="less" scoped>
 .comp_list {
+  overflow-y: scroll;
+  height: 100%;
   .comp_item {
     width: 320px;
-    height: 30px;
     line-height: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px;
+    .item_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item_main {
+      margin-top: 20px;
+    }
     .item_name {
       font-size: 16px;
     }
