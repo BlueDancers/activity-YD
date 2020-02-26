@@ -91,4 +91,7 @@ export default {
 .btn_con {
   user-select: none;
 }
+.inline_btn {
+  outline: none;
+}
 </style>

@@ -4,23 +4,17 @@
     <div class="right_setting">
       <div
         class="setting_item"
-        v-for="(item, index) in userinfo"
+        v-for="(item, index) in coreInfo"
         :key="index"
         @click="userSetting(index)"
       >
-        <div :class="item.click ? 'item' : 'test item'">
-          <img class="settion_item_icon" :src="item.icon" alt="" />
+        <div v-if="item.text != '背景线'" :class="item.click ? 'item' : 'test item'">
+          <img class="settion_item_icon" :src="item.icon" alt />
           <span class="settion_item_text">{{ item.text }}</span>
         </div>
-      </div>
-      <div
-        class="setting_item"
-        v-for="(item, index) in setting"
-        :key="item.text"
-        @click="coreSetting(index)"
-      >
-        <div class="item">
-          <img class="settion_item_icon" :src="item.icon" alt="" />
+        <div v-if="item.text == '背景线'" :class="item.click ? 'item' : 'test item'">
+          <img v-if="backgroundLine" class="settion_item_icon" :src="item.openIcon" alt />
+          <img v-if="!backgroundLine" class="settion_item_icon" :src="item.icon" alt />
           <span class="settion_item_text">{{ item.text }}</span>
         </div>
       </div>
@@ -37,60 +31,25 @@
 
 <script>
 import attributesPage from "./components/attributes";
-import { baseComplate } from '@/utils/baseReact';
+import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
   components: {
     attributesPage
   },
-  props: {
-    coreScale: {
-      type: String,
-      default: ""
-    }
-  },
   data() {
-    return {
-      userinfo: [
-        {
-          icon: require("@/assets/cancel.png"),
-          text: "撤销",
-          click: true
-        },
-        {
-          icon: require("@/assets/uncancel.png"),
-          text: "反撤销",
-          click: true
-        },
-        {
-          icon: require("@/assets/copy.png"),
-          text: "复制",
-          click: false
-        },
-        {
-          icon: require("@/assets/paste.png"),
-          text: "粘贴",
-          click: false
-        },
-        {
-          icon: require("@/assets/delete.png"),
-          text: "删除",
-          click: false
-        }
-      ],
-      setting: [
-        {
-          icon: require("@/assets/zoom.png"),
-          text: "放大"
-        },
-        {
-          icon: require("@/assets/zoomout.png"),
-          text: "缩小"
-        }
-      ]
-    };
+    return {};
   },
   computed: {
+    coreScale() {
+      return Number((this.$store.state.setting.scale * 100).toFixed(1)) + "%";
+    },
+    backgroundLine() {
+      return this.$store.state.setting.backgroundLine;
+    },
+    coreInfo() {
+      return this.$store.state.setting.coreinfo;
+    },
     activeTemplate() {
       return this.$store.state.core.activeTemplate;
     },
@@ -98,23 +57,37 @@ export default {
       return this.$store.state.core.template;
     },
     copyTemplate() {
-      return this.$store.state.utils.copyTemplate;
+      return this.$store.state.setting.copyTemplate;
     }
   },
   watch: {
     activeTemplate() {
       if (this.activeTemplate.length > 0) {
-        this.userinfo[2].click = true
-        this.userinfo[4].click = true
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 2,
+          status: true
+        });
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 4,
+          status: true
+        });
       } else {
-        this.userinfo[2].click = false
-        this.userinfo[4].click = false
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 2,
+          status: false
+        });
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 4,
+          status: false
+        });
       }
     },
     copyTemplate() {
-      console.log('变化', this.copyTemplate);
       if (this.copyTemplate.id != null) {
-        this.userinfo[3].click = true
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 3,
+          status: true
+        });
       }
     }
   },
@@ -131,17 +104,25 @@ export default {
         // 反撤销
         this.$emit("coreSetting", 4);
       } else if (index == 2) {
-        this.$store.commit('utils/set_copy', cloneDeep(this.template.filter(e => e.id == this.activeTemplate)[0]))
-        this.$message.success('已复制到粘贴板')
+        this.$store.commit(
+          "setting/set_copy",
+          cloneDeep(this.template.filter(e => e.id == this.activeTemplate)[0])
+        );
+        this.$message.success("已复制到粘贴板");
       } else if (index == 3) {
-        this.$store.commit('core/set_tempLate', cloneDeep(baseComplate(this.$store.state.core, this.copyTemplate)))
+        this.$store.commit(
+          "core/set_tempLate",
+          cloneDeep(baseComplate(this.$store.state.core, this.copyTemplate))
+        );
       } else if (index == 4) {
-        this.$store.commit('core/deleteCompLate', this.activeTemplate[0])
+        this.$store.commit("core/deleteCompLate", this.activeTemplate[0]);
+      } else if (index == 5) {
+        this.$store.commit("setting/toggle_backgroundLine");
+      } else if (index == 6) {
+        this.$store.commit("setting/set_scale", 0.1);
+      } else if (index == 7) {
+        this.$store.commit("setting/set_scale", -0.1);
       }
-    },
-    // 放大 缩小
-    coreSetting(index) {
-      this.$emit("coreSetting", index);
     }
   }
 };

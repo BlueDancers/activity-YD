@@ -19,12 +19,17 @@
           >预览模式</div>
         </div>
         <!-- 开发模式 -->
-        <core v-if="mode == 'dev'" :style="{ transform: `scale(${scale},${scale})` }" class="core" ref="core" />
+        <core
+          v-if="mode == 'dev'"
+          :style="{ transform: `scale(${scale},${scale})` }"
+          class="core"
+          ref="core"
+        />
         <!-- 测试查看模式 -->
         <show-core v-if="mode == 'prod'"></show-core>
       </div>
       <!-- 右侧菜单栏 -->
-      <right :coreScale="coreScale" @coreSetting="coreSetting" />
+      <right @coreSetting="coreSetting" />
     </div>
     <!-- 发布预览框 -->
     <upload-modal ref="uploadModal" :objUrl="objUrl" />
@@ -77,18 +82,18 @@ export default {
 
   data() {
     return {
-      scale: 1, // 缩放
       mode: "dev", // dev 为开发模式 prod 为线上测试模式
       objUrl: "" // 当前项目的url
     };
   },
   computed: {
+    scale(){
+      return this.$store.state.setting.scale;
+    },
     coreScale() {
-      let scale = this.scale;
-      return Number((scale * 100).toFixed(1)) + "%";
+      return Number((this.scale * 100).toFixed(1)) + "%";
     },
     core() {
-      console.log("更新");
       return this.$store.state.core;
     }
   },
@@ -96,7 +101,6 @@ export default {
     // 点击屏幕外侧取消选中
     cancelActive(e) {
       if (e.target.getAttribute("class") == "index_center") {
-        console.log("取消选中");
         this.$store.commit("core/clear_template");
       }
     },
@@ -110,11 +114,7 @@ export default {
     },
     // 放大缩小
     coreSetting(id) {
-      if (id === 0) {
-        this.scale += 0.1;
-      } else if (id === 1) {
-        this.scale -= 0.1;
-      } else if (id == 3) {
+      if (id == 3) {
         // 撤销
         cancelHistory();
         this.init();

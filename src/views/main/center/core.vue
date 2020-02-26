@@ -1,12 +1,9 @@
 <template>
-  <div
-    class="core"
-    :style="{
+  <div class="core" :style="{
       height: `${commHeight}px`,
       background: background
-    }"
-  >
-    <canvas id="canvas"></canvas>
+    }">
+    <canvas id="canvas" v-show="backgroundLine"></canvas>
     <auxiliary-line></auxiliary-line>
     <component
       v-for="(item, index) in template"
@@ -43,6 +40,9 @@ export default Vue.extend({
     (this as any).init();
   },
   computed: {
+    backgroundLine() {
+      return this.$store.state.setting.backgroundLine;
+    },
     template() {
       return this.$store.state.core.template;
     },
@@ -68,7 +68,7 @@ export default Vue.extend({
           context.lineTo(back.width, height);
           context.strokeStyle = "rgb(168, 168, 168)";
           context.lineWidth = 1;
-          context.setLineDash([2, 13]);
+          context.setLineDash([1, 13]);
           context.stroke();
           context.beginPath();
           height = height + 20;
