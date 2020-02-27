@@ -167,7 +167,7 @@ export function baseComplate(store: any, data: any) {
     compData = {
       ...compData,
       text: data.text,
-      btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3
+      btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3 qq客服 4 电话客服
       refInput: [], // 提交的input表单
       inputFromUrl: "", // 数据提交的地址
       urlMethod: "get", // 提交格式

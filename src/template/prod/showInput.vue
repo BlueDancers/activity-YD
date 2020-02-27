@@ -4,6 +4,7 @@
     class="baseComplate"
     type="text"
     :style="style"
+    :ref="item.inputName"
   />
 </template>
 
@@ -22,6 +23,9 @@ export default {
     baseplaceholder: {
       type: String,
       default: ""
+    },
+    item: {
+      type: Object
     }
   },
   computed: {

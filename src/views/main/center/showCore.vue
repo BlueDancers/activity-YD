@@ -1,18 +1,18 @@
 <template>
-  <div
-    class="core"
-    :style="{
+  <div class="core" :style="{
       height: `${commHeight}px`,
       background: background
-    }"
-  >
+    }">
     <component
       v-for="(item, index) in template"
+      :item="item"
       :key="index"
       :is="item.name"
       :option="item.css"
       :baseplaceholder="item.placeholder"
       :text="item.text"
+      :ref="item.inputName ? item.inputName : item.id"
+      @submitForm="submitForm"
     ></component>
   </div>
 </template>
@@ -20,6 +20,7 @@
 <script lang="ts">
 // 组件源
 import Vue from "vue";
+import axios from "axios";
 import baseButtom from "@/template/prod/showButtom.vue";
 import baseImg from "@/template/prod/showImg.vue";
 import baseText from "@/template/prod/showText.vue";
@@ -51,7 +52,45 @@ export default Vue.extend({
     }
   },
   methods: {
-    init() {
+    init() {},
+    submitForm(formList) {
+      let { refInput, inputFromUrl, urlMethod } = formList;
+      let formData = {};
+      refInput.map(e => {
+        formData[e] = this.$refs[e][0].$el.value;
+      });
+      for (const key in formData) {
+        if (formData[key] == "") {
+          this.$message.warning("请完善表单");
+          return false;
+        }
+      }
+      let request;
+      if (urlMethod == "get") {
+        request = {
+          url: inputFromUrl,
+          method: "get",
+          params: formData
+        };
+      } else {
+        request = {
+          url: inputFromUrl,
+          method: "post",
+          data: formData
+        };
+      }
+      axios
+        .request(request)
+        .then(e => {
+          if (e.data.code == 200) {
+            this.$message.success(e.data.data);
+          } else {
+            this.$message.error("接口出现错误");
+          }
+        })
+        .catch(err => {
+          this.$message.error("网络出了小差.....");
+        });
     }
   }
 });

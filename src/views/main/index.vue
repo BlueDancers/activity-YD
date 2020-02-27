@@ -87,7 +87,7 @@ export default {
     };
   },
   computed: {
-    scale(){
+    scale() {
       return this.$store.state.setting.scale;
     },
     coreScale() {
@@ -111,6 +111,7 @@ export default {
     },
     toggleMode(mode) {
       this.mode = mode;
+      this.$store.commit("core/clear_template");
     },
     // 放大缩小
     coreSetting(id) {
