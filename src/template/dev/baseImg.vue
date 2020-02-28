@@ -1,11 +1,6 @@
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
-  <div
-    class="btn_con"
-    @mousedown="toggleEdit"
-    @mouseenter="mouseenter"
-    @mouseleave="mouseleave"
-  >
+  <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :id="id" :styles="constyle">
       <img
         :style="style"
@@ -13,7 +8,7 @@
         @error="loadImg"
         class="inline_img"
         :src="text"
-        alt=""
+        alt
       />
     </edit>
     <!-- 鼠标进入状态 -->
@@ -28,7 +23,7 @@
         @error="loadImg"
         class="inline_img"
         :src="text"
-        alt=""
+        alt
       />
     </div>
     <img
@@ -37,7 +32,7 @@
       ondragstart="return false;"
       :src="text"
       @error="loadImg"
-      alt=""
+      alt
       :style="style"
     />
   </div>
@@ -57,9 +52,13 @@ export default {
     text: {
       type: String
     },
+    css: {
+      type: Object,
+      default: () => {}
+    },
     option: {
       type: Object,
-      default: () => { }
+      default: () => {}
     },
     absolute: {
       type: Boolean
@@ -67,17 +66,17 @@ export default {
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     },
     constyle() {
-      let style = handleStyle(this.option)
+      let style = handleStyle(this.css);
       return {
         top: style.top,
         left: style.left,
         width: style.width,
         height: style.height,
         zIndex: style.zIndex
-      }
+      };
     },
     editStatus() {
       return this.$store.state.core.activeTemplate.includes(this.id);
@@ -92,16 +91,16 @@ export default {
       this.$store.dispatch("core/updateisDown", true);
     },
     mouseenter() {
-      this.$store.commit('core/set_hoverTemplate', this.id)
+      this.$store.commit("core/set_hoverTemplate", this.id);
     },
     mouseleave() {
-      this.$store.commit('core/set_hoverTemplate', '')
+      this.$store.commit("core/set_hoverTemplate", "");
     },
     mousedown(e) {
       e.preventDefault();
     },
     loadImg(e) {
-      console.log(e)
+      console.log(e);
     }
   }
 };

@@ -12,37 +12,22 @@
       <!-- 当是按钮/图片的时候 文字都是必须存在的特殊配置 -->
       <!-- 通用的(文本框不存在) -->
       <div class="attr_item" v-show="showText(core)">
-        <div class="attr_list_left">
-          {{ core.name !== "base-img" ? "文本:" : "链接:" }}
-        </div>
+        <div class="attr_list_left">{{ core.name !== "base-img" ? "文本:" : "链接:" }}</div>
         <div class="attr_list_right">
-          <a-input
-            type="textarea"
-            class="attr_textarea"
-            placeholder="请输入文字"
-            v-model="core.text"
-          />
+          <a-input type="textarea" class="attr_textarea" placeholder="请输入文字" v-model="core.text" />
         </div>
       </div>
       <div class="attr_item" v-if="showElementName(core)">
         <div class="attr_list_left">名称:</div>
         <div class="attr_list_right">
-          <a-input
-            class="attr_textarea"
-            placeholder="请输入文字"
-            v-model="core.inputName"
-          />
+          <a-input class="attr_textarea" placeholder="请输入文字" v-model="core.option.inputName" />
         </div>
       </div>
       <!-- placeholder 只有文本框才有 -->
       <div class="attr_item" v-if="showInputPlace(core)">
         <div class="attr_list_left">占位文字:</div>
         <div class="attr_list_right">
-          <a-input
-            class="attr_textarea"
-            placeholder="请输入文字"
-            v-model="core.placeholder"
-          />
+          <a-input class="attr_textarea" placeholder="请输入文字" v-model="core.option.placeholder" />
         </div>
       </div>
       <div class="attr_item">
@@ -66,13 +51,13 @@
       <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
         <div class="attr_list_right">
-          <color-picker v-model="core.css['background']" />
+          <el-color-picker v-model="core.css['background']" show-alpha></el-color-picker>
         </div>
       </div>
       <div class="attr_item" v-if="showFontColor(core)">
         <div class="attr_list_left">字体颜色:</div>
         <div class="attr_list_right">
-          <color-picker v-model="core.css['color']" />
+          <el-color-picker v-model="core.css['color']" show-alpha></el-color-picker>
         </div>
       </div>
       <div class="attr_item" v-if="showFontsize(core)">
@@ -96,7 +81,7 @@
       <div class="attr_item" v-if="showBorder(core)">
         <div class="attr_list_left">边框颜色:</div>
         <div class="attr_list_right">
-          <color-picker v-model="core.css['border-color']" />
+          <el-color-picker v-model="core.css['border-color']" show-alpha></el-color-picker>
         </div>
       </div>
       <div class="attr_item" v-if="showBorder(core)">
@@ -140,7 +125,7 @@
           <a-select
             defaultValue="lucy"
             style="width: 120px"
-            v-model="core.btnType"
+            v-model="core.option.btnType"
             @change="btnTypeChange(core)"
           >
             <a-select-option :value="0">无事件</a-select-option>
@@ -151,41 +136,33 @@
           </a-select>
         </div>
       </div>
-      <div class="attr_item" v-if="showButtom(core) && core.btnType == 1">
+      <div class="attr_item" v-if="showButtom(core) && core.option.btnType == 1">
         <div class="attr_list_left">按钮链接:</div>
         <div class="attr_list_right">
-          <a-input
-            class="attr_textarea"
-            placeholder="请输入链接地址"
-            v-model="core.link"
-          />
+          <a-input class="attr_textarea" placeholder="请输入链接地址" v-model="core.option.link" />
         </div>
       </div>
-      <div class="attr_item" v-if="showButtom(core) && core.btnType == 2">
+      <div class="attr_item" v-if="showButtom(core) && core.option.btnType == 2">
         <div class="attr_list_left">提交地址:</div>
         <div class="attr_list_right">
-          <a-input
-            class="attr_textarea"
-            placeholder="请输入链接地址"
-            v-model="core.inputFromUrl"
-          />
+          <a-input class="attr_textarea" placeholder="请输入链接地址" v-model="core.option.inputFromUrl" />
         </div>
       </div>
-      <div class="attr_item" v-if="showButtom(core) && core.btnType == 2">
+      <div class="attr_item" v-if="showButtom(core) && core.option.btnType == 2">
         <div class="attr_list_left">提交方式:</div>
         <div class="attr_list_right">
-          <a-radio-group name="radioGroup" v-model="core.urlMethod">
+          <a-radio-group name="radioGroup" v-model="core.option.urlMethod">
             <a-radio :value="'get'">get</a-radio>
             <a-radio :value="'post'">post</a-radio>
           </a-radio-group>
         </div>
       </div>
-      <div class="attr_item" v-if="showButtom(core) && core.btnType == 2">
+      <div class="attr_item" v-if="showButtom(core) && core.option.btnType == 2">
         <div class="attr_list_left">提交输入框:</div>
         <div class="attr_list_right">
           <a-select
             mode="tags"
-            v-model="core.refInput"
+            v-model="core.option.refInput"
             placeholder="请选择需要提交的"
             style="width: 200px"
             @change="handleChange"
@@ -194,30 +171,20 @@
               v-for="inputItem in refInputList"
               :key="inputItem.id"
               :value="inputItem.inputName"
-            >
-              {{ inputItem.inputName }}
-            </a-select-option>
+            >{{ inputItem.inputName }}</a-select-option>
           </a-select>
         </div>
       </div>
-      <div class="attr_item" v-if="showButtom(core) && core.btnType == 3">
+      <div class="attr_item" v-if="showButtom(core) && core.option.btnType == 3">
         <div class="attr_list_left">客服QQ:</div>
         <div class="attr_list_right">
-          <a-input
-            class="attr_textarea"
-            placeholder="请输入客服QQ号"
-            v-model="core.QQNum"
-          />
+          <a-input class="attr_textarea" placeholder="请输入客服QQ号" v-model="core.option.QQNum" />
         </div>
       </div>
-      <div class="attr_item" v-if="showButtom(core) && core.btnType == 4">
+      <div class="attr_item" v-if="showButtom(core) && core.option.btnType == 4">
         <div class="attr_list_left">电话客服:</div>
         <div class="attr_list_right">
-          <a-input
-            class="attr_textarea"
-            placeholder="请输入客服电话号码"
-            v-model="core.PhoneNum"
-          />
+          <a-input class="attr_textarea" placeholder="请输入客服电话号码" v-model="core.option.PhoneNum" />
         </div>
       </div>
     </div>
@@ -231,9 +198,7 @@
       <!-- <a-button class="fast_btn" @click="mallfastSet(5)">等距分配 </a-button> -->
     </div>
     <!-- 无组件 -->
-    <div v-if="coreType == 3" class="attr_showtext">
-      当前无可操作组件
-    </div>
+    <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
   </div>
 </template>
 

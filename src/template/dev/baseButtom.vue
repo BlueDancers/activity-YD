@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="btn_con"
-    @mousedown="toggleEdit"
-    @mouseenter="mouseenter"
-    @mouseleave="mouseleave"
-  >
+  <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <!-- 编辑状态 -->
     <edit v-show="editStatus" :styles="constyle" :id="id">
       <button :style="style" class="inline_btn">{{ text }}</button>
@@ -22,9 +17,7 @@
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       :style="style"
-    >
-      {{ text }}
-    </button>
+    >{{ text }}</button>
   </div>
 </template>
 
@@ -43,27 +36,32 @@ export default {
       type: String,
       default: "按钮"
     },
+    css: {
+      type: Object,
+      default: () => {}
+    },
     option: {
       type: Object,
-      default: () => { }
+      default: () => {}
     },
-    absolute: { // 是否为组件市场
+    absolute: {
+      // 是否为组件市场
       type: Boolean
     }
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     },
     constyle() {
-      let style = handleStyle(this.option)
+      let style = handleStyle(this.css);
       return {
         top: style.top,
         left: style.left,
         width: style.width,
         height: style.height,
         zIndex: style.zIndex
-      }
+      };
     },
     editStatus() {
       return this.$store.state.core.activeTemplate.includes(this.id);
@@ -78,10 +76,10 @@ export default {
       this.$store.dispatch("core/updateisDown", true);
     },
     mouseenter() {
-      this.$store.commit('core/set_hoverTemplate', this.id)
+      this.$store.commit("core/set_hoverTemplate", this.id);
     },
     mouseleave() {
-      this.$store.commit('core/set_hoverTemplate', '')
+      this.$store.commit("core/set_hoverTemplate", "");
     }
   }
 };

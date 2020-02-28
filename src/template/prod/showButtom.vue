@@ -12,7 +12,7 @@ export default {
       type: String,
       default: "按钮"
     },
-    option: {
+    css: {
       type: Object,
       default: () => {}
     },
@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     }
   },
   methods: {

@@ -1,10 +1,6 @@
 <template>
   <div class="btn_con">
-    <div
-      class="baseComplate"
-      ondragstart="return false;"
-      :style="style"
-    />
+    <div class="baseComplate" ondragstart="return false;" :style="style" />
   </div>
 </template>
 
@@ -15,14 +11,14 @@ export default {
     text: {
       type: String
     },
-    option: {
+    css: {
       type: Object,
       default: () => {}
     }
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     }
   }
 };

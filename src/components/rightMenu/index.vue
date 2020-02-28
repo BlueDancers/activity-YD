@@ -6,20 +6,11 @@
     @click.right.stop="clickRight"
   >
     <div class="menu_item" @click.stop="deleteItem">删除</div>
-    <a-popconfirm
-      placement="right"
-      okText="保存"
-      cancelText="取消"
-      @confirm.stop="confirm"
-    >
+    <a-popconfirm placement="right" okText="保存" cancelText="取消" @confirm.stop="confirm">
       <!--取消图标的显示 -->
       <span slot="icon" />
       <div slot="title">
-        <a-input
-          @click.stop="clickStop"
-          ref="saveInput"
-          placeholder="请输入保存组件名"
-        />
+        <a-input @click.stop="clickStop" ref="saveInput" placeholder="请输入保存组件名" />
       </div>
       <div class="menu_item" @click.stop="saveItem">保存组件</div>
     </a-popconfirm>
@@ -27,73 +18,75 @@
 </template>
 
 <script>
-import { saveSingleComplate } from '@/api/index';
-import { commHeight, commWidth } from '@/config/index';
+import { saveSingleComplate } from "@/api/index";
+import { commHeight, commWidth } from "@/config/index";
 export default {
   data() {
     return {
       menuShow: false, // 是否显示
-      id: '', // 组件id
+      id: "", // 组件id
       x: 0, // 横坐标位置
       y: 0, // 竖坐标位置
       isLoad: false
-    }
+    };
   },
   computed: {
     activeTemplate() {
-      return this.$store.state.core.activeTemplate
+      return this.$store.state.core.activeTemplate;
     },
     templates() {
-      return this.$store.state.core.template
+      return this.$store.state.core.template;
+    }
+  },
+  watch: {
+    activeTemplate() {
+      // this.menuShow = false;
     }
   },
   methods: {
     open(id, x, y) {
-      this.menuShow = true
-      this.id = id
-      this.x = x + 10
-      this.y = y + 10
+      this.menuShow = true;
+      this.id = id;
+      this.x = x + 10;
+      this.y = y + 10;
     },
     close() {
-      this.menuShow = false
-      this.x = 0
-      this.y = 0
+      this.menuShow = false;
+      this.x = 0;
+      this.y = 0;
     },
-    clickRight() { },
+    clickRight() {},
     // 删除
     deleteItem() {
-      console.log('删除');
-      const data = {
-        id: this.id
-      };
-      this.$store.commit("core/deleteCompLate", data);
+      this.$store.commit("core/deleteCompLate", this.id);
+      this.menuShow = false;
     },
     // 保存组件为模板
-    saveItem() { },
-    clickStop() { },
+    saveItem() {},
+    clickStop() {},
     confirm() {
       if (this.activeTemplate.length <= 1) {
-        let activeData = this.templates.filter(e => e.id == this.id)[0]
+        let activeData = this.templates.filter(e => e.id == this.id)[0];
         console.log(activeData.css);
         if (activeData.css.width > commWidth) {
-          this.$message.warning('保存超过屏幕宽度,无法保存')
-          return false
+          this.$message.warning("保存超过屏幕宽度,无法保存");
+          return false;
         }
         if (activeData.css.height > commHeight) {
-          this.$message.warning('保存超过屏幕长度,无法保存')
-          return false
+          this.$message.warning("保存超过屏幕长度,无法保存");
+          return false;
         }
-        activeData.compName = this.$refs['saveInput'].stateValue
-        this.$store.dispatch('complate/setSingList', activeData).then((res) => {
+        activeData.compName = this.$refs["saveInput"].stateValue;
+        this.$store.dispatch("complate/setSingList", activeData).then(res => {
           this.menuShow = false;
           this.$message.success(res.data.data);
-        })
+        });
       } else {
-        this.$message.error('请选择单个元素保存')
+        this.$message.error("请选择单个元素保存");
       }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

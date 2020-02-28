@@ -10,8 +10,8 @@
       :key="index"
       :is="item.name"
       :id="item.id"
-      :option="item.css"
-      :baseplaceholder="item.placeholder"
+      :css="item.css"
+      :option="item.option"
       :text="item.text"
       :absolute="true"
     ></component>

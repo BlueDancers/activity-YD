@@ -10,14 +10,14 @@ export default {
       type: String,
       default: ""
     },
-    option: {
+    css: {
       type: Object,
       default: () => {}
     }
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     }
   }
 };

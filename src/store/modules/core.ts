@@ -1,7 +1,7 @@
 import { saveActivity, getActivity, updateObj } from '@/api/index'
 import { commHeight, commWidth } from '../../config/index'
 import { Module } from 'vuex'
-import { message } from 'ant-design-vue';
+import { message } from 'ant-design-vue'
 
 interface CoreInter {
   commWidth: number // 页面宽度
@@ -27,7 +27,7 @@ const core: Module<CoreInter, any> = {
   state: {
     commWidth: commWidth, // 页面宽度
     commHeight: commHeight, // 页面高度
-    background: 'white', // 页面背景色1
+    background: 'rgba(255, 255, 255, 1)', // 页面背景色1
     parentName: '', // 项目名
     template: [], // 组件
     activeTemplate: [], // 选中的数组
@@ -412,8 +412,8 @@ const core: Module<CoreInter, any> = {
         return Promise.reject('请不要保存空页面')
       }
       let { parentName, commHeight, template, background } = state
+      console.log(template)
       let saveActivityapi = saveActivity(parentName, template).then(e => e)
-      console.log(titlePage)
       let updateObjHeightapi = updateObj(
         parentName,
         commHeight,
@@ -421,8 +421,8 @@ const core: Module<CoreInter, any> = {
         titlePage
       ).then(e => e)
       const objandSave = await Promise.all([
-        updateObjHeightapi,
-        saveActivityapi
+        saveActivityapi,
+        updateObjHeightapi
       ])
       return objandSave[1]
     },

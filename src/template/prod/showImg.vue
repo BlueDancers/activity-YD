@@ -1,10 +1,5 @@
 <template>
-  <img
-    class="baseComplate"
-    ondragstart="return false;"
-    :src="text"
-    :style="style"
-  />
+  <img class="baseComplate" ondragstart="return false;" :src="text" :style="style" />
 </template>
 
 <script>
@@ -14,14 +9,14 @@ export default {
     text: {
       type: String
     },
-    option: {
+    css: {
       type: Object,
       default: () => {}
     }
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     }
   }
 };

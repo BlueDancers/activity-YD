@@ -1,11 +1,6 @@
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
-  <div
-    class="btn_con"
-    @mousedown="toggleEdit"
-    @mouseenter="mouseenter"
-    @mouseleave="mouseleave"
-  >
+  <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :id="id" :styles="constyle">
       <div :style="style" @mousedown="mousedown" class="inline_div" />
     </edit>
@@ -41,9 +36,13 @@ export default {
     text: {
       type: String
     },
+    css: {
+      type: Object,
+      default: () => {}
+    },
     option: {
       type: Object,
-      default: () => { }
+      default: () => {}
     },
     absolute: {
       type: Boolean
@@ -51,17 +50,17 @@ export default {
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     },
     constyle() {
-      let style = handleStyle(this.option)
+      let style = handleStyle(this.css);
       return {
         top: style.top,
         left: style.left,
         width: style.width,
         height: style.height,
         zIndex: style.zIndex
-      }
+      };
     },
     editStatus() {
       return this.$store.state.core.activeTemplate.includes(this.id);
@@ -79,10 +78,10 @@ export default {
       e.preventDefault();
     },
     mouseenter() {
-      this.$store.commit('core/set_hoverTemplate', this.id)
+      this.$store.commit("core/set_hoverTemplate", this.id);
     },
     mouseleave() {
-      this.$store.commit('core/set_hoverTemplate', '')
+      this.$store.commit("core/set_hoverTemplate", "");
     }
   }
 };

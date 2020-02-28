@@ -153,7 +153,7 @@ export default Vue.extend({
         let data = {
           ...this.objform,
           height: this.$store.state.core.commHeight, // 页面高度默认667
-          background: "white" // 页面背景色默认白色
+          background: "rgba(255, 255, 255, 1)" // 页面背景色默认白色
         };
         setObject(data).then(res => {
           this.$router.push({

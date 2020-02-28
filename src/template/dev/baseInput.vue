@@ -7,7 +7,7 @@
       :style="{ border: 'none', padding: '0px' }"
       :id="id"
     >
-      <input :placeholder="baseplaceholder" type="text" class="btn_con" :style="style" />
+      <input :placeholder="option.placeholder" type="text" class="btn_con" :style="style" />
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -15,10 +15,10 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <input :placeholder="baseplaceholder" type="text" :style="style" />
+      <input :placeholder="option.placeholder" type="text" :style="style" />
     </div>
     <input
-      :placeholder="baseplaceholder"
+      :placeholder="option.placeholder"
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       type="text"
@@ -42,13 +42,13 @@ export default {
       type: String,
       default: "按钮"
     },
-    option: {
+    css: {
       type: Object,
       default: () => {}
     },
-    baseplaceholder: {
-      type: String,
-      default: ""
+    option: {
+      type: Object,
+      default: () => {}
     },
     absolute: {
       type: Boolean
@@ -56,10 +56,10 @@ export default {
   },
   computed: {
     style() {
-      return handleStyle(this.option);
+      return handleStyle(this.css);
     },
     constyle() {
-      let style = handleStyle(this.option);
+      let style = handleStyle(this.css);
       return {
         top: style.top,
         left: style.left,

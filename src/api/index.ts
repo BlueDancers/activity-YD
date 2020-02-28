@@ -36,7 +36,7 @@ export function deleteObj(name) {
 }
 
 /**
- *
+ * 保存项目信息
  * @param {string} parentName 项目名
  * @param {Array} template 项目模板信息
  */

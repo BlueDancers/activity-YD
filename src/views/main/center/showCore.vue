@@ -8,10 +8,10 @@
       :item="item"
       :key="index"
       :is="item.name"
-      :option="item.css"
-      :baseplaceholder="item.placeholder"
+      :css="item.css"
+      :option="item.option"
       :text="item.text"
-      :ref="item.inputName ? item.inputName : item.id"
+      :ref="item.option.inputName ? item.option.inputName : item.id"
       @submitForm="submitForm"
     ></component>
   </div>

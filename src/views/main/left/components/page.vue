@@ -3,9 +3,7 @@
     <div class="page_item">
       <div class="page_form">
         <div class="page_form_item">
-          <div class="item_left">
-            页面高度:
-          </div>
+          <div class="item_left">页面高度:</div>
           <div class="item_right">
             <a-slider
               v-model="sliderHight"
@@ -19,14 +17,12 @@
           <!-- <div class="item_right">
             <a-input-number placeholder="" v-model="height" />
           </div>
-          <span class="item_other">667为移动端100%高度</span> -->
+          <span class="item_other">667为移动端100%高度</span>-->
         </div>
         <div class="page_form_item">
-          <div class="item_left">
-            页面背景色:
-          </div>
+          <div class="item_left">页面背景色:</div>
           <div class="item_right">
-            <colorPicker v-model="background"></colorPicker>
+            <el-color-picker v-model="background" show-alpha></el-color-picker>
           </div>
         </div>
       </div>
@@ -35,12 +31,8 @@
 </template>
 
 <script>
-import colorPicker from "@/components/color-picker/index";
 import { commHeight } from "@/config";
 export default {
-  components: {
-    colorPicker
-  },
   data() {
     return {
       sliderHight: 1
@@ -48,7 +40,7 @@ export default {
   },
   watch: {
     height(value) {
-      this.sliderHight = Number((value / commHeight));
+      this.sliderHight = Number(value / commHeight);
     }
   },
   computed: {
@@ -57,6 +49,8 @@ export default {
     },
     background: {
       get() {
+        console.log(this.$store.state.core.background);
+        
         return this.$store.state.core.background;
       },
       set(newColor) {
