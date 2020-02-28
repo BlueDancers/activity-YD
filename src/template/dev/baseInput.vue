@@ -1,18 +1,13 @@
 <template>
   <!-- <div class="btn_con" @mouseover="toggleEdit" > -->
-  <div
-    class="btn_con"
-    @mousedown="toggleEdit"
-    @mouseenter="mouseenter"
-    @mouseleave="mouseleave"
-  >
+  <div @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit
       v-show="editStatus"
       :styles="constyle"
       :style="{ border: 'none', padding: '0px' }"
       :id="id"
     >
-      <input :placeholder="baseplaceholder" type="text" :style="style" />
+      <input :placeholder="baseplaceholder" type="text" class="btn_con" :style="style" />
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -49,7 +44,7 @@ export default {
     },
     option: {
       type: Object,
-      default: () => { }
+      default: () => {}
     },
     baseplaceholder: {
       type: String,
@@ -64,14 +59,14 @@ export default {
       return handleStyle(this.option);
     },
     constyle() {
-      let style = handleStyle(this.option)
+      let style = handleStyle(this.option);
       return {
         top: style.top,
         left: style.left,
         width: style.width,
         height: style.height,
         zIndex: style.zIndex
-      }
+      };
     },
     editStatus() {
       return this.$store.state.core.activeTemplate.includes(this.id);
@@ -86,10 +81,10 @@ export default {
       this.$store.dispatch("core/updateisDown", true);
     },
     mouseenter() {
-      this.$store.commit('core/set_hoverTemplate', this.id)
+      this.$store.commit("core/set_hoverTemplate", this.id);
     },
     mouseleave() {
-      this.$store.commit('core/set_hoverTemplate', '')
+      this.$store.commit("core/set_hoverTemplate", "");
     }
   }
 };
@@ -98,5 +93,6 @@ export default {
 <style lang="less" scoped>
 .btn_con {
   user-select: none;
+  outline: none;
 }
 </style>

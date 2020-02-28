@@ -71,6 +71,15 @@ export default {
           index: 4,
           status: true
         });
+
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 6,
+          status: true
+        });
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 7,
+          status: true
+        });
       } else {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 2,
@@ -78,6 +87,14 @@ export default {
         });
         this.$store.commit("setting/set_coreinfoItem", {
           index: 4,
+          status: false
+        });
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 6,
+          status: false
+        });
+        this.$store.commit("setting/set_coreinfoItem", {
+          index: 7,
           status: false
         });
       }
@@ -119,8 +136,13 @@ export default {
       } else if (index == 5) {
         this.$store.commit("setting/toggle_backgroundLine");
       } else if (index == 6) {
-        this.$store.commit("setting/set_scale", 0.1);
+        console.log('加层级');
+        this.$store.commit("core/update_CompZindex", 1);
       } else if (index == 7) {
+        this.$store.commit("core/update_CompZindex", -1);
+      } else if (index == 8) {
+        this.$store.commit("setting/set_scale", 0.1);
+      } else if (index == 9) {
         this.$store.commit("setting/set_scale", -0.1);
       }
     }
@@ -132,7 +154,7 @@ export default {
 .index_right {
   position: relative;
   background-color: white;
-  width: 490px;
+  width: 360px;
   height: 100%;
   display: flex;
   .right_setting {

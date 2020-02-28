@@ -111,7 +111,7 @@ export default Vue.extend({
     margin-left: 20px;
     border-radius: 5px;
     background-color: rgb(247, 247, 247);
-    width: 130px;
+    width: 110px;
     text-align: center;
     .item_img {
       width: 20px;
@@ -127,7 +127,7 @@ export default Vue.extend({
 <style lang="less">
 .item_file {
   .ant-upload {
-    width: 110px;
+    width: 90px;
     height: 52px;
   }
 }

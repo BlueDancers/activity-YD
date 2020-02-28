@@ -82,8 +82,8 @@ export default {
 .page {
   height: 700px;
   .page_item {
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
     .page_title {
       font-weight: bold;
     }
@@ -96,7 +96,7 @@ export default {
           margin-right: 10px;
         }
         .item_right {
-          width: 200px;
+          width: 160px;
         }
         .item_other {
           margin-left: 10px;

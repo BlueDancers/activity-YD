@@ -127,10 +127,11 @@ export default {
 
 <style lang="less" scoped>
 .comp_list {
+  overflow-x: hidden;
   overflow-y: scroll;
   height: 100%;
   .comp_item {
-    width: 320px;
+    width: 290px;
     line-height: 30px;
     padding: 10px;
     .item_header {

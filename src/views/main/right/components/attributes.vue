@@ -395,7 +395,7 @@ export default {
 
 <style lang="less" scoped>
 .attributes {
-  width: 450px;
+  width: 350px;
   .fast_attr {
     margin-left: 30px;
     margin-bottom: 10px;
@@ -410,16 +410,16 @@ export default {
     align-items: center;
     .attr_list_left {
       text-align: right;
-      width: 80px;
-      margin-left: 20px;
+      width: 92px;
+      margin-left: 10px;
     }
     .attr_list_right {
       width: 300px;
-      margin-left: 20px;
+      margin-left: 10px;
       display: flex;
       align-items: center;
       .attr_slider {
-        width: 200px;
+        width: 110px;
       }
       .attr_mintextarea {
         margin-left: 10px;
