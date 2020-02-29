@@ -4,7 +4,7 @@
     class="baseComplate"
     type="text"
     :style="style"
-    :ref="item.inputName"
+    :ref="option.inputName"
   />
 </template>
 
@@ -24,8 +24,9 @@ export default {
       type: String,
       default: ""
     },
-    item: {
-      type: Object
+    option: {
+      type: Object,
+      default: () => {}
     }
   },
   computed: {

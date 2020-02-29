@@ -1,7 +1,7 @@
 // 虚拟元素的映射
 
 interface baseNode {
-  id: String
+  _id: String
   editStatus: false
   name: String
   text: String
@@ -15,7 +15,7 @@ interface baseNode {
 export function baseDiv(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    id: String(new Date().getTime()), // 暂定
+    _id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: 'base-div',
     text: '',
@@ -40,7 +40,7 @@ export function baseDiv(store: any): baseNode {
 export function baseButtom(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    id: String(new Date().getTime()), // 暂定
+    _id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: 'base-buttom',
     text: '按钮',
@@ -76,7 +76,7 @@ export function baseButtom(store: any): baseNode {
 export function baseImg(store: any, img: string): baseNode {
   let dynamic = store.template.length * 10
   return {
-    id: String(new Date().getTime()), // 暂定
+    _id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: 'base-img',
     text: img,
@@ -96,7 +96,7 @@ export function baseImg(store: any, img: string): baseNode {
 export function baseText(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    id: String(new Date().getTime()), // 暂定
+    _id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: 'base-text',
     text: '请修改此处的文字',
@@ -120,7 +120,7 @@ export function baseText(store: any): baseNode {
 export function baseInput(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    id: String(new Date().getTime()), // 暂定
+    _id: String(new Date().getTime()), // 暂定
     editStatus: false,
     name: 'base-input',
     text: '',
@@ -149,6 +149,39 @@ export function baseInput(store: any): baseNode {
 }
 
 /**
+ * 轮播图vuex数据映射关系
+ * @param store
+ */
+export function baseSwiper(store: any): baseNode {
+  let dynamic = store.template.length * 10
+  return {
+    _id: String(new Date().getTime()),
+    editStatus: false,
+    css: {
+      top: 10 + dynamic,
+      left: 10 + dynamic,
+      width: 260,
+      height: 150,
+      zIndex: store.template.length + 1
+    },
+    name: 'base-swiper',
+    text: '',
+    option: {
+      item: [
+        {
+          img: 'https://images.591wsh.com/2020/02/02/home5.png',
+          link: ''
+        },
+        {
+          img: require('@/assets/div.png'),
+          link: ''
+        }
+      ]
+    }
+  }
+}
+
+/**
  * 将后台插件数据转换为页面数据
  * @param store vuex实例
  * @param data 常见市场数据
@@ -160,7 +193,7 @@ export function baseComplate(store: any, data: any): baseNode {
   data.css.left = 10 + dynamic
   data.css.zIndex = store.template.length + 1
   let compData: any = {
-    id: String(new Date().getTime()),
+    _id: String(new Date().getTime()),
     editStatus: false,
     text: data.text,
     name: data.name,

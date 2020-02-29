@@ -9,7 +9,7 @@
       v-for="(item, index) in template"
       :key="index"
       :is="item.name"
-      :id="item.id"
+      :id="item._id"
       :css="item.css"
       :option="item.option"
       :text="item.text"
@@ -26,6 +26,7 @@ import baseImg from "@/template/dev/baseImg.vue";
 import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
+import baseSwiper from "@/template/dev/baseSwiper.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 export default Vue.extend({
   components: {
@@ -33,6 +34,7 @@ export default Vue.extend({
     baseImg,
     baseText,
     baseInput,
+    baseSwiper,
     auxiliaryLine,
     baseDiv
   },

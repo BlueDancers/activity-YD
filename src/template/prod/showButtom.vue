@@ -16,9 +16,9 @@ export default {
       type: Object,
       default: () => {}
     },
-    item: {
+    option: {
       type: Object,
-      default: {}
+      default: () => {}
     }
   },
   computed: {
@@ -28,20 +28,20 @@ export default {
   },
   methods: {
     clickBtn() {
-      if (this.item.btnType == 0) {
+      if (this.option.btnType == 0) {
         console.log("无事件");
-      } else if (this.item.btnType == 1) {
+      } else if (this.option.btnType == 1) {
         console.log("电话");
-        location.href = this.item.link;
-      } else if (this.item.btnType == 2) {
+        location.href = this.option.link;
+      } else if (this.option.btnType == 2) {
         // 提交表单
         console.log("请求");
-        this.$emit("submitForm", this.item);
-      } else if (this.item.btnType == 3) {
+        this.$emit("submitForm", this.option);
+      } else if (this.option.btnType == 3) {
         console.log("qq客服");
         window.location.href =
           "http://wpa.qq.com/msgrd?v=3&uin=2467230789&site=qq&menu=yes";
-      } else if (this.item.btnType == 4) {
+      } else if (this.option.btnType == 4) {
         console.log("电话客服");
         location.href = "tel:10086";
       }

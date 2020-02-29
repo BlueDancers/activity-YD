@@ -170,8 +170,8 @@
             <a-select-option
               v-for="inputItem in refInputList"
               :key="inputItem.id"
-              :value="inputItem.inputName"
-            >{{ inputItem.inputName }}</a-select-option>
+              :value="inputItem.option.inputName"
+            >{{ inputItem.option.inputName }}</a-select-option>
           </a-select>
         </div>
       </div>
@@ -203,24 +203,20 @@
 </template>
 
 <script>
-import colorPicker from "@/components/color-picker/index";
 export default {
   name: "attributes",
-  components: {
-    colorPicker
-  },
   computed: {
     // 可能是单组件 可能是多组件 可能无组件
     core() {
       let activeCore = this.$store.state.core.activeTemplate;
       if (activeCore.length == 1) {
         let form = this.$store.state.core.template.filter(e =>
-          activeCore.includes(e.id)
+          activeCore.includes(e._id)
         )[0];
         return form;
       } else if (activeCore.length > 1) {
         return this.$store.state.core.template.filter(e =>
-          activeCore.includes(e.id)
+          activeCore.includes(e._id)
         );
       }
       return {};

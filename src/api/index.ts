@@ -1,4 +1,4 @@
-import request from "../utils/request";
+import request from '../utils/request'
 
 /**
  * 获取所有项目
@@ -6,8 +6,8 @@ import request from "../utils/request";
 export function getObject() {
   return request({
     url: `/getObject`,
-    method: "get"
-  });
+    method: 'get'
+  })
 }
 
 /**
@@ -17,9 +17,9 @@ export function getObject() {
 export function setObject(form) {
   return request({
     url: `/setObject`,
-    method: "post",
+    method: 'post',
     data: form
-  });
+  })
 }
 
 /**
@@ -31,8 +31,8 @@ export function setObject(form) {
 export function deleteObj(name) {
   return request({
     url: `/deleteObj/${name}`,
-    method: "post"
-  });
+    method: 'post'
+  })
 }
 
 /**
@@ -43,12 +43,12 @@ export function deleteObj(name) {
 export function saveActivity(parentName, template) {
   return request({
     url: `/saveActivity`,
-    method: "post",
+    method: 'post',
     data: {
       parentName,
       template
     }
-  });
+  })
 }
 
 /**
@@ -58,8 +58,8 @@ export function saveActivity(parentName, template) {
 export function getActivity(name) {
   return request({
     url: `/getActivity/${name}`,
-    method: "post"
-  });
+    method: 'post'
+  })
 }
 
 /**
@@ -71,15 +71,15 @@ export function getActivity(name) {
  */
 export function updateObj(objectName, height, background, titlePage) {
   return request({
-    url: "/updateObj",
-    method: "POST",
+    url: '/updateObj',
+    method: 'POST',
     data: {
       objectName,
       height,
       background,
       titlePage
     }
-  });
+  })
 }
 
 /**
@@ -88,13 +88,13 @@ export function updateObj(objectName, height, background, titlePage) {
  */
 export function uploadImg(data) {
   return request({
-    url: "/upimage",
-    method: "POST",
+    url: '/upimage',
+    method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data'
     },
     data
-  });
+  })
 }
 
 /**
@@ -103,12 +103,12 @@ export function uploadImg(data) {
  */
 export function saveSingleComplate(obj: object) {
   return request({
-    url: "/saveSingleComplate",
-    method: "POST",
+    url: '/saveSingleComplate',
+    method: 'POST',
     data: {
       complate: obj
     }
-  });
+  })
 }
 
 /**
@@ -116,9 +116,9 @@ export function saveSingleComplate(obj: object) {
  */
 export function getSingleComplate() {
   return request({
-    url: "/getSingleComplate",
-    method: "get",
-  });
+    url: '/getSingleComplate',
+    method: 'get'
+  })
 }
 
 /**
@@ -129,7 +129,7 @@ export function getSingleComplate() {
 export function updateSingComp(id: string, compName: string) {
   return request({
     url: '/updateSingComp',
-    method: "POST",
+    method: 'POST',
     data: {
       id,
       compName
@@ -144,9 +144,19 @@ export function updateSingComp(id: string, compName: string) {
 export function deleteSingComp(id: string) {
   return request({
     url: '/deleteSingComp',
-    method: "POST",
+    method: 'POST',
     data: {
       id
     }
+  })
+}
+
+/**
+ * 获取所有上传的图片
+ */
+export function getUPloadImage() {
+  return request({
+    url: '/getImage',
+    method: 'GET'
   })
 }

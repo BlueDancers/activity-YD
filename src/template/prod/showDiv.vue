@@ -14,6 +14,10 @@ export default {
     css: {
       type: Object,
       default: () => {}
+    },
+    option: {
+      type: Object,
+      default: () => {}
     }
   },
   computed: {

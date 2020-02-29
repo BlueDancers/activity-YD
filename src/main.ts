@@ -43,6 +43,17 @@ Vue.use(Icon)
 Vue.use(Menu)
 Vue.use(LocaleProvider)
 Vue.prototype.$message = message
+
+import swipe from 'vant/lib/swipe'
+import 'vant/lib/swipe/style'
+import swipeItem from 'vant/lib/swipe-item'
+import 'vant/lib/swipe-item/style'
+import vanButton from 'vant/lib/button'
+import 'vant/lib/button/style'
+Vue.component('van-swipe', swipe)
+Vue.component('van-swipe-item', swipeItem)
+Vue.component('van-button', vanButton)
+
 import ElButton from 'element-ui/lib/button'
 import 'element-ui/lib/theme-chalk/button.css'
 import ColorPicker from 'element-ui/lib/color-picker'

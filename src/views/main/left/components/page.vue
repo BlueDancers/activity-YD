@@ -6,7 +6,7 @@
           <div class="item_left">页面高度:</div>
           <div class="item_right">
             <a-slider
-              v-model="sliderHight"
+              :value="sliderHight"
               :tipFormatter="formatter"
               @change="sliderChange"
               :step="0.1"
@@ -14,10 +14,6 @@
               :max="5"
             ></a-slider>
           </div>
-          <!-- <div class="item_right">
-            <a-input-number placeholder="" v-model="height" />
-          </div>
-          <span class="item_other">667为移动端100%高度</span>-->
         </div>
         <div class="page_form_item">
           <div class="item_left">页面背景色:</div>
@@ -33,24 +29,13 @@
 <script>
 import { commHeight } from "@/config";
 export default {
-  data() {
-    return {
-      sliderHight: 1
-    };
-  },
-  watch: {
-    height(value) {
-      this.sliderHight = Number(value / commHeight);
-    }
-  },
   computed: {
-    height() {
-      return this.$store.state.core.commHeight;
+    sliderHight() {
+      console.log(this.$store.state.core.commHeight);
+      return Number(this.$store.state.core.commHeight / commHeight);
     },
     background: {
       get() {
-        console.log(this.$store.state.core.background);
-        
         return this.$store.state.core.background;
       },
       set(newColor) {

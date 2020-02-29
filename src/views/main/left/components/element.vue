@@ -6,23 +6,7 @@
       :key="item.name"
       @click="setComponent(index)"
     >
-      <div v-if="index == 1">
-        <a-upload
-          class="item_file"
-          name="image"
-          :multiple="true"
-          :showUploadList="false"
-          :action="imageUpUrl"
-          :headers="headers"
-          @change="handleChange"
-          :before-upload="beforeAvatarUpload"
-        >
-          <!-- <a-button> <a-icon type="upload" /> Click to Upload </a-button> -->
-          <img class="item_img" :src="item.img" alt />
-          <p class="item_name">{{ item.name }}</p>
-        </a-upload>
-      </div>
-      <div v-else>
+      <div>
         <img class="item_img" :src="item.img" alt />
         <p class="item_name">{{ item.name }}</p>
       </div>
@@ -37,9 +21,9 @@ import {
   baseImg,
   baseText,
   baseInput,
-  baseDiv
+  baseDiv,
+  baseSwiper
 } from "@/utils/baseReact";
-import { imageUpUrl } from "@/config/index";
 import imgUpload from "@/components/imgUpload/index.vue";
 import Vue from "vue";
 export default Vue.extend({
@@ -48,10 +32,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      headers: {
-        authorization: "authorization-text"
-      },
-      imageUpUrl: imageUpUrl,
       reactList: [
         {
           name: "块级元素",
@@ -74,8 +54,16 @@ export default Vue.extend({
           img: require("@/assets/text.png")
         },
         {
-          name: "图库",
+          name: "单选表单",
           img: require("@/assets/text.png")
+        },
+        {
+          name: "多选表单",
+          img: require("@/assets/text.png")
+        },
+        {
+          name: "轮播图",
+          img: require("@/assets/swiper.png")
         }
       ]
     };
@@ -88,7 +76,7 @@ export default Vue.extend({
           baseDiv(this.$store.state.core)
         );
       } else if (index == 1) {
-        console.log("添加图片");
+        (this.$refs.imgUpload as any).open();
       } else if (index == 2) {
         this.$store.commit(
           "core/set_tempLate",
@@ -105,23 +93,12 @@ export default Vue.extend({
           baseInput(this.$store.state.core)
         );
       } else if (index == 5) {
-        (this.$refs.imgUpload as any).open();
-      }
-    },
-    beforeAvatarUpload(file) {
-      // console.log(file);
-    },
-    handleChange(info) {
-      // if (info.file.status !== 'uploading') {
-      //   console.log(info.file, info.fileList);
-      // }
-      if (info.file.status === "done") {
+      } else if (index == 6) {
+      } else if (index == 7) {
         this.$store.commit(
           "core/set_tempLate",
-          baseImg(this.$store.state.core, info.file.response.data.data)
+          baseSwiper(this.$store.state.core)
         );
-      } else if (info.file.status === "error") {
-        this.$message.error(`${info.file.name} 上传失败.`);
       }
     }
   }

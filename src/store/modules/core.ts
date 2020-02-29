@@ -61,7 +61,7 @@ const core: Module<CoreInter, any> = {
       let list = JSON.parse(JSON.stringify(state.template))
       let activeTemplate: any[] = []
       list.map(item => {
-        if (item.id == id) {
+        if (item._id == id) {
           if (state.isLongDown) {
             // 多选状态
             activeTemplate = [...state.activeTemplate]
@@ -95,7 +95,7 @@ const core: Module<CoreInter, any> = {
     update_CompZindex(state, num) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
       list.map(item => {
-        if (state.activeTemplate.includes(item.id)) {
+        if (state.activeTemplate.includes(item._id)) {
           if (item.css.zIndex <= 0) {
             message.warning('元素层级不可小于0')
           } else {
@@ -109,7 +109,7 @@ const core: Module<CoreInter, any> = {
     updatePos(state, data) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
       list.map(item => {
-        if (state.activeTemplate.includes(item.id)) {
+        if (state.activeTemplate.includes(item._id)) {
           item.css.left = item.css.left + data.x
           item.css.top = item.css.top + data.y
         }
@@ -118,7 +118,7 @@ const core: Module<CoreInter, any> = {
       // 自动偏移到最近的上面
       // 判断是否存在辅助线
       list.map(res => {
-        if (state.activeTemplate.includes(res.id)) {
+        if (state.activeTemplate.includes(res._id)) {
           // 针对选中的组件进行匹配
           for (let index = 0; index < state.marking.x.length; index++) {
             // 组件下侧
@@ -160,7 +160,7 @@ const core: Module<CoreInter, any> = {
       let list = JSON.parse(JSON.stringify(state.template))
       if (state.roundDown == 1) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.top = Number(item.css.top) + data.y
             item.css.width = item.css.width - data.x
@@ -169,14 +169,14 @@ const core: Module<CoreInter, any> = {
         })
       } else if (state.roundDown == 2) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.height = item.css.height - data.y
           }
         })
       } else if (state.roundDown == 3) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.width = Number(item.css.width) + data.x
             item.css.height = item.css.height - data.y
@@ -184,7 +184,7 @@ const core: Module<CoreInter, any> = {
         })
       } else if (state.roundDown == 4) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.width = item.css.width - data.x
             item.css.height = Number(item.css.height) + data.y
@@ -192,13 +192,13 @@ const core: Module<CoreInter, any> = {
         })
       } else if (state.roundDown == 5) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.height = Number(item.css.height) + data.y
           }
         })
       } else if (state.roundDown == 6) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.width = Number(item.css.width) + data.x
             item.css.height = Number(item.css.height) + data.y
           }
@@ -210,7 +210,7 @@ const core: Module<CoreInter, any> = {
     deleteCompLate(state, data) {
       let list: any[] = JSON.parse(JSON.stringify(state.template))
       state.template = list.reduce((value, item) => {
-        if (item.id == data) {
+        if (item._id == data) {
           return value
         } else {
           return value.concat(item)
@@ -226,7 +226,7 @@ const core: Module<CoreInter, any> = {
       }
       let offset: any[] = [1]
       state.template.map((res: any) => {
-        if (!state.activeTemplate.includes(res.id)) {
+        if (!state.activeTemplate.includes(res._id)) {
           // 偏移绝对值
           let left_x: any[] = [] // 单个元素x轴
           let right_x: any[] = [] // 单个元素x轴
@@ -286,26 +286,26 @@ const core: Module<CoreInter, any> = {
       let list = JSON.parse(JSON.stringify(state.template))
       if (data.type == 1) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.left = (state.commWidth - item.css.width) / 2
           }
         })
       } else if (data.type == 2) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.width = state.commWidth
             item.css.left = 0
           }
         })
       } else if (data.type == 3) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.top = 0
           }
         })
       } else if (data.type == 4) {
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.top = state.commHeight - item.css.height
           }
         })
@@ -319,12 +319,12 @@ const core: Module<CoreInter, any> = {
         // 靠左对齐(取最右边的值)
         let minLeft = state.commWidth
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             minLeft = item.css.left < minLeft ? item.css.left : minLeft
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.left = minLeft
           }
         })
@@ -333,7 +333,7 @@ const core: Module<CoreInter, any> = {
         let minTop = 0
         let minTopToHeigth = 0
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             if (item.css.top > minTop) {
               minTop = item.css.top
               minTopToHeigth = item.css.height
@@ -341,7 +341,7 @@ const core: Module<CoreInter, any> = {
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.top = minTop + (minTopToHeigth - item.css.height) / 2
           }
         })
@@ -350,7 +350,7 @@ const core: Module<CoreInter, any> = {
         let minLeft = state.commWidth
         let minLeftToWidth = 0
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             if (item.css.left < minLeft) {
               minLeft = item.css.left
               minLeftToWidth = item.css.width
@@ -358,7 +358,7 @@ const core: Module<CoreInter, any> = {
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.left = minLeft + (minLeftToWidth - item.css.width) / 2
           }
         })
@@ -366,13 +366,13 @@ const core: Module<CoreInter, any> = {
         // 靠下对齐
         let minTop = 0
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             let topOrHeight = item.css.height + item.css.top
             minTop = topOrHeight < minTop ? minTop : topOrHeight
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item.id)) {
+          if (state.activeTemplate.includes(item._id)) {
             item.css.top = minTop - item.css.height
           }
         })
