@@ -53,7 +53,7 @@ import {
   uninitMouse,
   initKeyDown
 } from "@/utils/index";
-import { uploadImg } from "@/api/index";
+import { upTitleImg } from "@/api/index";
 export default {
   components: {
     baseHeader,
@@ -139,7 +139,7 @@ export default {
             "image",
             BlobToImgFile(base64ToBlob(dataURL), "image/jpeg")
           );
-          return uploadImg(data);
+          return upTitleImg(data);
         })
         .then(res => {
           // 保存当前页面的配置

@@ -98,6 +98,21 @@ export function uploadImg(data) {
 }
 
 /**
+ * 上传首页图片
+ * @param data File 图片资源
+ */
+export function upTitleImg(data) {
+  return request({
+    url: '/uptitleimage',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    data
+  })
+}
+
+/**
  * 保存单个组件信息
  * @param obj 组件信息
  */

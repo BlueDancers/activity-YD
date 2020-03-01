@@ -437,7 +437,7 @@ const core: Module<CoreInter, any> = {
         return Promise.reject('请不要保存空页面')
       }
       let { parentName, commHeight, template, background } = state
-      console.log(template)
+      template = JSON.parse(JSON.stringify(template))
       template.map((e: any) => {
         delete e._id
       })

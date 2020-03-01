@@ -135,6 +135,7 @@ export default Vue.extend({
     }
   }
   .img_con {
+    overflow-y: scroll;
     height: 600px;
     margin-left: 20px;
     .img_list {

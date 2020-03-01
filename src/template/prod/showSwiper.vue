@@ -1,14 +1,16 @@
 <template>
-  <van-swipe :style="style" :autoplay="option.autoplay">
-    <van-swipe-item v-for="(item,index) in option.item" :key="index">
-      <img
-        :style="{'width':style.width,'height': style.height}"
-        :src="item.img"
-        alt
-        @click="link(item.link)"
-      />
-    </van-swipe-item>
-  </van-swipe>
+  <div class="btn_con baseComplate" :style="style">
+    <van-swipe :autoplay="option.autoplay">
+      <van-swipe-item v-for="(item,index) in option.item" :key="index">
+        <img
+          :style="{'width':style.width,'height': style.height}"
+          :src="item.img"
+          alt
+          @click="link(item.link)"
+        />
+      </van-swipe-item>
+    </van-swipe>
+  </div>
 </template>
 
 <script>
@@ -43,7 +45,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .btn_con {
   user-select: none;
 }

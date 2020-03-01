@@ -54,16 +54,16 @@ export default Vue.extend({
           img: require("@/assets/text.png")
         },
         {
+          name: "轮播图",
+          img: require("@/assets/swiper.png")
+        },
+        {
           name: "单选表单",
-          img: require("@/assets/text.png")
+          img: require("@/assets/radio.png")
         },
         {
           name: "多选表单",
-          img: require("@/assets/text.png")
-        },
-        {
-          name: "轮播图",
-          img: require("@/assets/swiper.png")
+          img: require("@/assets/checked.png")
         }
       ]
     };
@@ -76,7 +76,10 @@ export default Vue.extend({
           baseDiv(this.$store.state.core)
         );
       } else if (index == 1) {
-        (this.$refs.imgUpload as any).open();
+        (this.$refs.imgUpload as any).open({
+          type: "default",
+          index: 0
+        });
       } else if (index == 2) {
         this.$store.commit(
           "core/set_tempLate",
@@ -93,14 +96,14 @@ export default Vue.extend({
           baseInput(this.$store.state.core)
         );
       } else if (index == 5) {
-        this.$message.warn("组件升级中...");
-      } else if (index == 6) {
-        this.$message.warn("组件升级中...");
-      } else if (index == 7) {
         this.$store.commit(
           "core/set_tempLate",
           baseSwiper(this.$store.state.core)
         );
+      } else if (index == 6) {
+        this.$message.warn("组件升级中...");
+      } else if (index == 7) {
+        this.$message.warn("组件升级中...");
       }
     }
   }
