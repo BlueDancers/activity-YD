@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import VueQriously from 'vue-qriously'
 import { showLoading, hideLoading } from 'vue-cap-ame'
+
 import 'vue-cap-ame/lib/Vue-cap-ame.css'
 Vue.prototype.$showLoading = showLoading
 Vue.prototype.$hideLoading = hideLoading
@@ -24,7 +25,8 @@ import {
   List,
   Icon,
   LocaleProvider,
-  Menu
+  Menu,
+  Pagination
 } from 'ant-design-vue'
 Vue.use(Button)
 Vue.use(Tabs)
@@ -42,6 +44,7 @@ Vue.use(List)
 Vue.use(Icon)
 Vue.use(Menu)
 Vue.use(LocaleProvider)
+Vue.use(Pagination)
 Vue.prototype.$message = message
 
 import swipe from 'vant/lib/swipe'

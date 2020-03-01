@@ -120,6 +120,7 @@ export default {
     cursor: se-resize;
   }
   .base_circle {
+    z-index: 10;
     position: absolute;
     width: 6px;
     height: 6px;

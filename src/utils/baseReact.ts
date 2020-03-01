@@ -160,21 +160,22 @@ export function baseSwiper(store: any): baseNode {
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
-      width: 260,
-      height: 150,
+      width: 300,
+      height: 100,
       zIndex: store.template.length + 1
     },
     name: 'base-swiper',
     text: '',
     option: {
+      autoplay: '2000', // 轮播间隔
       item: [
         {
           img: 'https://images.591wsh.com/2020/02/02/home5.png',
-          link: ''
+          link: 'http://baidu.com'
         },
         {
-          img: require('@/assets/div.png'),
-          link: ''
+          img: 'https://images.591wsh.com/2020/02/02/home5.png',
+          link: 'http://baidu.com'
         }
       ]
     }

@@ -387,6 +387,31 @@ const core: Module<CoreInter, any> = {
     updateBackground(state, color) {
       state.background = color
     },
+    // 更新swiper的图片
+    update_swiperimg(state, { index, imgurl }) {
+      state.template.map((res: any) => {
+        if (res._id == state.activeTemplate) {
+          res.option.item[index].img = imgurl
+        }
+      })
+    },
+    add_swiper(state) {
+      state.template.map((res: any) => {
+        if (res._id == state.activeTemplate) {
+          res.option.item.push({
+            img: 'https://images.591wsh.com/2020/02/02/home5.png',
+            link: 'http://baidu.com'
+          })
+        }
+      })
+    },
+    less_swiper(state) {
+      state.template.map((res: any) => {
+        if (res._id == state.activeTemplate) {
+          res.option.item.pop()
+        }
+      })
+    },
     // vuex数据初始化
     destroyedTemplate(state) {
       state.commWidth = commWidth
@@ -413,6 +438,9 @@ const core: Module<CoreInter, any> = {
       }
       let { parentName, commHeight, template, background } = state
       console.log(template)
+      template.map((e: any) => {
+        delete e._id
+      })
       let saveActivityapi = saveActivity(parentName, template).then(e => e)
       let updateObjHeightapi = updateObj(
         parentName,

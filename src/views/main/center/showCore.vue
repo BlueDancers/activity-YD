@@ -26,6 +26,7 @@ import baseImg from "@/template/prod/showImg.vue";
 import baseText from "@/template/prod/showText.vue";
 import baseInput from "@/template/prod/showInput.vue";
 import baseDiv from "@/template/prod/showDiv.vue";
+import baseSwiper from "@/template/prod/showSwiper.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 export default Vue.extend({
   components: {
@@ -34,6 +35,7 @@ export default Vue.extend({
     baseText,
     baseInput,
     auxiliaryLine,
+    baseSwiper,
     baseDiv
   },
   mounted() {

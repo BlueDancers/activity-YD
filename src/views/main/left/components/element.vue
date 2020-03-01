@@ -93,7 +93,9 @@ export default Vue.extend({
           baseInput(this.$store.state.core)
         );
       } else if (index == 5) {
+        this.$message.warn("组件升级中...");
       } else if (index == 6) {
+        this.$message.warn("组件升级中...");
       } else if (index == 7) {
         this.$store.commit(
           "core/set_tempLate",

@@ -64,7 +64,9 @@ export default Vue.extend({
       imageUpUrl: imageUpUrl,
       headers: {
         authorization: "authorization-text"
-      }
+      },
+      type: "default", // swiper 为轮播图选择
+      swiperItem: 0 // 轮播图下标
     };
   },
   mounted() {
@@ -83,17 +85,27 @@ export default Vue.extend({
     handleCancel() {
       this.visible = false;
     },
-    open() {
+    open({ type, index }) {
       this.visible = true;
+      this.type = type || "default";
+      this.swiperItem = index || 0;
     },
     toggleMenu(value) {
       this.Menukey = value.keyPath;
     },
     addBaseImg(item) {
-      this.$store.commit(
-        "core/set_tempLate",
-        baseImg(this.$store.state.core, item)
-      );
+      if (this.type == "default") {
+        this.$store.commit(
+          "core/set_tempLate",
+          baseImg(this.$store.state.core, item)
+        );
+      } else {
+        this.$store.commit("core/update_swiperimg", {
+          index: this.swiperItem,
+          imgurl: item
+        });
+        console.log("更新图片");
+      }
       this.visible = false;
     },
     beforeAvatarUpload(file) {
