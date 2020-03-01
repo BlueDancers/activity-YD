@@ -1,7 +1,4 @@
 import { Module } from 'vuex'
-import { cancelHistory, unCancelHistory } from '../plugins/cancelPlugins/index'
-import { baseComplate } from '@/utils/baseReact'
-import { cloneDeep } from 'lodash'
 interface setting {
   copyTemplate: object // 复制暂时存储区
   coreinfo: {
@@ -19,7 +16,7 @@ const Setting: Module<setting, any> = {
   namespaced: true,
   state: {
     copyTemplate: {
-      id: null
+      _id: 0
     },
     coreinfo: [
       {
@@ -79,9 +76,12 @@ const Setting: Module<setting, any> = {
   },
   mutations: {
     set_copy(state, data) {
+      console.log(data);
+      
       state.copyTemplate = data
     },
     set_coreinfoItem(state, { index, status }) {
+      console.log(index, status)
       state.coreinfo[index].click = status
     },
     set_scale(state, number) {

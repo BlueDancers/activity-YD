@@ -100,7 +100,7 @@ export default {
       }
     },
     copyTemplate() {
-      if (this.copyTemplate.id != null) {
+      if (this.copyTemplate._id != null) {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 3,
           status: true
@@ -123,7 +123,7 @@ export default {
       } else if (index == 2) {
         this.$store.commit(
           "setting/set_copy",
-          cloneDeep(this.template.filter(e => e.id == this.activeTemplate)[0])
+          cloneDeep(this.template.filter(e => e._id == this.activeTemplate)[0])
         );
         this.$message.success("已复制到粘贴板");
       } else if (index == 3) {
@@ -136,7 +136,7 @@ export default {
       } else if (index == 5) {
         this.$store.commit("setting/toggle_backgroundLine");
       } else if (index == 6) {
-        console.log('加层级');
+        console.log("加层级");
         this.$store.commit("core/update_CompZindex", 1);
       } else if (index == 7) {
         this.$store.commit("core/update_CompZindex", -1);

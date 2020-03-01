@@ -227,5 +227,23 @@ export function baseComplate(store: any, data: any): baseNode {
       }
     }
   }
+  if (data.name == 'base-swiper') {
+    compData = {
+      ...compData,
+      option: {
+        autoplay: '2000', // 轮播间隔
+        item: [
+          {
+            img: 'https://images.591wsh.com/2020/02/02/home5.png',
+            link: 'http://baidu.com'
+          },
+          {
+            img: 'https://images.591wsh.com/2020/02/02/home5.png',
+            link: 'http://baidu.com'
+          }
+        ]
+      }
+    }
+  }
   return compData
 }
