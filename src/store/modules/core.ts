@@ -449,8 +449,8 @@ const core: Module<CoreInter, any> = {
         titlePage
       ).then(e => e)
       const objandSave = await Promise.all([
-        saveActivityapi,
-        updateObjHeightapi
+        updateObjHeightapi,
+        saveActivityapi
       ])
       return objandSave[1]
     },
