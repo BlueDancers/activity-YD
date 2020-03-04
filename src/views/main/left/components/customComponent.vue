@@ -4,9 +4,7 @@
       <a-list-item slot="renderItem" slot-scope="item">
         <div class="comp_item" @click="addUserComp(item)">
           <div class="item_header">
-            <div class="item_name" v-if="isEditid != item._id">
-              组件名: {{ item.compName }}
-            </div>
+            <div class="item_name" v-if="isEditid != item._id">组件名: {{ item.compName }}</div>
             <a-input
               class="item_input"
               v-if="isEditid == item._id"
@@ -14,33 +12,13 @@
               ref="newName"
             />
             <div class="item_icon" v-if="isEditid != item._id">
-              <a-icon
-                type="form"
-                class="icon"
-                @click.stop="updateCompName(item._id)"
-              />
-              <a-icon
-                type="close-circle"
-                class="icon"
-                @click.stop="deleteCompName(item._id)"
-              />
+              <a-icon type="form" class="icon" @click.stop="updateCompName(item._id)" />
+              <a-icon type="close-circle" class="icon" @click.stop="deleteCompName(item._id)" />
             </div>
             <div v-if="isEditid == item._id" class="item_icon">
               <a-button-group>
-                <a-button
-                  class="icon_btn"
-                  type="primary"
-                  @click.stop="updateNewName"
-                >
-                  确认
-                </a-button>
-                <a-button
-                  class="icon_btn"
-                  type="danger"
-                  @click.stop="cancelEdit"
-                >
-                  取消
-                </a-button>
+                <a-button class="icon_btn" type="primary" @click.stop="updateNewName">确认</a-button>
+                <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">取消</a-button>
               </a-button-group>
             </div>
           </div>
@@ -49,7 +27,8 @@
               :key="item._id"
               :is="item.name"
               :id="item._id"
-              :option="item.css"
+              :css="item.css"
+              :option="item.option"
               :text="item.text"
               :activeTemplate="[]"
               :absolute="false"
@@ -110,19 +89,21 @@ export default {
       this.isEditid = 0;
     },
     updateNewName() {
-      if (this.$refs["newName"].stateValue !== '') {
-        this.$store.dispatch("complate/updateCompName", {
-          id: this.isEditid,
-          newName: this.$refs["newName"].stateValue
-        }).then(() => {
-          this.isEditid = 0
-        })
+      if (this.$refs["newName"].stateValue !== "") {
+        this.$store
+          .dispatch("complate/updateCompName", {
+            id: this.isEditid,
+            newName: this.$refs["newName"].stateValue
+          })
+          .then(() => {
+            this.isEditid = 0;
+          });
       } else {
-        this.$message.warning('请输入修改后的组件名')
+        this.$message.warning("请输入修改后的组件名");
       }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

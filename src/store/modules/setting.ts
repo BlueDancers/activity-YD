@@ -76,20 +76,15 @@ const Setting: Module<setting, any> = {
   },
   mutations: {
     set_copy(state, data) {
-      console.log(data);
-      
       state.copyTemplate = data
     },
     set_coreinfoItem(state, { index, status }) {
-      console.log(index, status)
       state.coreinfo[index].click = status
     },
     set_scale(state, number) {
       state.scale = state.scale + number
     },
     toggle_backgroundLine(state) {
-      console.log(!state.backgroundLine)
-
       state.backgroundLine = !state.backgroundLine
     }
   },

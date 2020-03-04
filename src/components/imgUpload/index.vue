@@ -127,7 +127,7 @@ export default Vue.extend({
   display: flex;
   .img_menu {
     position: relative;
-    height: 600px;
+    height: 400px;
     border-right: 1px solid #e8e8e8;
     .item_file {
       position: absolute;
@@ -136,7 +136,7 @@ export default Vue.extend({
   }
   .img_con {
     overflow-y: scroll;
-    height: 600px;
+    height: 400px;
     margin-left: 20px;
     .img_list {
       display: flex;
@@ -145,7 +145,7 @@ export default Vue.extend({
       img {
         margin-left: 20px;
         margin-bottom: 30px;
-        width: 110px;
+        width: 90px;
         padding: 5px;
         &:hover {
           cursor: pointer;
