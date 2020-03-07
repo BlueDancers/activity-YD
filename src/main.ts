@@ -26,7 +26,8 @@ import {
   Icon,
   LocaleProvider,
   Menu,
-  Pagination
+  Pagination,
+  Tooltip
 } from 'ant-design-vue'
 Vue.use(Button)
 Vue.use(Tabs)
@@ -45,6 +46,7 @@ Vue.use(Icon)
 Vue.use(Menu)
 Vue.use(LocaleProvider)
 Vue.use(Pagination)
+Vue.use(Tooltip)
 Vue.prototype.$message = message
 
 import swipe from 'vant/lib/swipe'

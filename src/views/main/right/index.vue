@@ -25,6 +25,9 @@
       <a-tab-pane tab="属性" key="1">
         <attributes-page />
       </a-tab-pane>
+      <a-tab-pane tab="功能" key="2">
+        <attributes-page />
+      </a-tab-pane>
     </a-tabs>
   </div>
 </template>

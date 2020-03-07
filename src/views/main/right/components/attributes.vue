@@ -1,15 +1,37 @@
 <template>
   <div class="attributes">
-    <!-- 快捷配置 -->
-    <div class="fast_attr" v-if="coreType == 1">
-      <a-button class="fast_btn" @click="fastSet(1)">左右居中</a-button>
-      <a-button class="fast_btn" @click="fastSet(2)">左右铺满</a-button>
-      <a-button class="fast_btn" @click="fastSet(3)">贴紧上方</a-button>
-      <a-button class="fast_btn" @click="fastSet(4)">贴紧下方</a-button>
-    </div>
-
     <!-- 组件个性化配置 -->
     <div class="arrt_list" v-if="coreType == 1">
+      <!-- 快捷配置 -->
+      <div class="attr_item">
+        <div class="attr_list_left">位置:</div>
+        <div class="attr_list_right">
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span>居中</span>
+            </template>
+            <img class="postion_icon" @click="fastSet(1)" src="@/assets/juzhong.png" alt />
+          </a-tooltip>
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span>左右铺满</span>
+            </template>
+            <img class="postion_icon" @click="fastSet(2)" src="@/assets/kuandupuman.png" alt />
+          </a-tooltip>
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span>移至顶部</span>
+            </template>
+            <img class="postion_icon" @click="fastSet(3)" src="@/assets/xiangshang.png" alt />
+          </a-tooltip>
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span>移至底部</span>
+            </template>
+            <img class="postion_icon" @click="fastSet(4)" src="@/assets/xiangxia.png" alt />
+          </a-tooltip>
+        </div>
+      </div>
       <!-- 当是按钮/图片的时候 文字都是必须存在的特殊配置 -->
       <!-- 通用的(文本框不存在) -->
       <div class="attr_item" v-show="showText(core)">
@@ -484,6 +506,11 @@ export default {
       }
       .attr_textarea {
         width: 200px;
+      }
+      .postion_icon {
+        cursor: pointer;
+        margin-right: 15px;
+        width: 15px;
       }
     }
     .swiper_img {
