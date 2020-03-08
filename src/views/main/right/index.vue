@@ -26,7 +26,7 @@
         <attributes-page />
       </a-tab-pane>
       <a-tab-pane tab="功能" key="2">
-        <attributes-page />
+        <activedata-page />
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -34,11 +34,13 @@
 
 <script>
 import attributesPage from "./components/attributes";
+import activedataPage from './components/activedata.vue';
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
   components: {
-    attributesPage
+    attributesPage,
+    activedataPage
   },
   data() {
     return {};
@@ -161,7 +163,7 @@ export default {
   height: 100%;
   display: flex;
   .right_setting {
-    width: 40px;
+    width: 100px;
     border-right: 1px solid #f6f6f6;
     .setting_item {
       width: 100%;
