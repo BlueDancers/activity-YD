@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-07 17:55:07
- * @LastEditTime: 2020-03-08 17:30:12
+ * @LastEditTime: 2020-03-08 20:32:54
  * @LastEditors: Please set LastEditors
  * @Description: 组件功能关系
  * @FilePath: /activity_generate/src/views/main/right/components/activedata.vue
@@ -9,7 +9,7 @@
  
 <template>
   <div class="active_data">
-    <div class="active_list">
+    <div class="active_list" v-if="coreType == 1">
       <!-- 当是按钮/图片的时候 文字都是必须存在的特殊配置 -->
       <!-- 通用的(文本框不存在) -->
       <div class="active_item" v-show="showText(core)">
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="active_item" v-if="showButtom(core) && core.option.btnType == 2">
-        <div class="active_list_left">提交输入框:</div>
+        <div class="active_list_left">提交表单:</div>
         <div class="active_list_right">
           <a-select
             mode="tags"
@@ -150,6 +150,8 @@
         </div>
       </div>
     </div>
+    <!-- 无组件 -->
+    <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
     <img-upload ref="imgUpload"></img-upload>
   </div>
 </template>
@@ -186,15 +188,12 @@ export default {
     },
     // 1 单组件 2 是多组件 3 无组件
     coreType() {
-      let core = this.core;
-      if (
-        JSON.stringify(core) !== "{}" &&
-        Object.prototype.toString.call(core) !== "[object Array]"
-      ) {
+      let activeCore = this.$store.state.core.activeTemplate;
+      if (activeCore.length == 1) {
         return 1;
-      } else if (Object.prototype.toString.call(core) == "[object Array]") {
+      } else if (activeCore.length == 2) {
         return 2;
-      } else if (JSON.stringify(core) == "{}") {
+      } else if (activeCore.length == 0) {
         return 3;
       }
       return 3;
@@ -296,11 +295,11 @@ export default {
       align-items: center;
       .active_list_left {
         text-align: right;
-        width: 92px;
-        margin-left: 10px;
+        width: 70px;
+        margin-left: 5px;
       }
       .active_list_right {
-        width: 300px;
+        width: 260px;
         margin-left: 10px;
         display: flex;
         align-items: center;

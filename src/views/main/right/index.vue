@@ -28,19 +28,24 @@
       <a-tab-pane tab="功能" key="2">
         <activedata-page />
       </a-tab-pane>
+      <a-tab-pane tab="动画" key="3">
+        <animation-page />
+      </a-tab-pane>
     </a-tabs>
   </div>
 </template>
 
 <script>
 import attributesPage from "./components/attributes";
-import activedataPage from './components/activedata.vue';
+import activedataPage from "./components/activedata";
+import animationPage from "./components/animation";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
   components: {
     attributesPage,
-    activedataPage
+    activedataPage,
+    animationPage
   },
   data() {
     return {};
@@ -121,10 +126,10 @@ export default {
     userSetting(index) {
       if (index == 0) {
         // 撤销
-        this.$emit("coreSetting", 3);
+        this.$emit("coreSetting", "cancel");
       } else if (index == 1) {
         // 反撤销
-        this.$emit("coreSetting", 4);
+        this.$emit("coreSetting", "uncancel");
       } else if (index == 2) {
         this.$store.commit(
           "setting/set_copy",
@@ -141,7 +146,6 @@ export default {
       } else if (index == 5) {
         this.$store.commit("setting/toggle_backgroundLine");
       } else if (index == 6) {
-        console.log("加层级");
         this.$store.commit("core/update_CompZindex", 1);
       } else if (index == 7) {
         this.$store.commit("core/update_CompZindex", -1);
@@ -163,7 +167,7 @@ export default {
   height: 100%;
   display: flex;
   .right_setting {
-    width: 100px;
+    width: 45px;
     border-right: 1px solid #f6f6f6;
     .setting_item {
       width: 100%;
@@ -174,10 +178,11 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      // &:hover {
-      //   background: #f8f8f8;
-      // }
+      &:hover {
+        background: #f8f8f8;
+      }
       .item {
+        width: 325px;
         display: flex;
         flex-direction: column;
         align-items: center;

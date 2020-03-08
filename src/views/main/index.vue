@@ -6,7 +6,7 @@
       <left />
       <!-- 中控台 -->
       <div class="index_center" @click="cancelActive">
-        <div class="index_center_header">
+        <div class="index_center_header" v-if="scale == 1">
           <div
             :class="mode == 'dev'?'active':'unactive'"
             class="header_dev"
@@ -38,6 +38,7 @@
 
 <script>
 import { cancelHistory, unCancelHistory } from "@/store/plugins/cancelPlugins";
+import history from "@/store/plugins/cancelPlugins/History";
 import baseHeader from "@/components/header/index.vue";
 import core from "./center/core.vue";
 import showCore from "./center/showCore.vue";
@@ -114,14 +115,16 @@ export default {
       this.$store.commit("core/clear_template");
     },
     // 放大缩小
-    coreSetting(id) {
-      if (id == 3) {
+    coreSetting(type) {
+      if (type == 'cancel') {
         // 撤销
-        cancelHistory();
+        // cancelHistory();
+        history.replaceState()
         this.init();
-      } else if (id == 4) {
+      } else if (type == 'uncancel') {
         // 反撤销
-        unCancelHistory();
+        // unCancelHistory();
+        history.unReplaceState()
       }
     },
     // 保存项目
@@ -190,7 +193,7 @@ export default {
       overflow-x: hidden;
       overflow-y: scroll;
       .core {
-        margin-top: 20px;
+        margin-top: 50px;
         transform-origin: "center top";
       }
       .index_center_header {

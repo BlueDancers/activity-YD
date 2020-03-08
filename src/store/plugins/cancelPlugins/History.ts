@@ -1,9 +1,17 @@
-import { Store } from 'vuex';
-import { cloneDeep } from 'lodash';
+/*
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-08 21:04:46
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/store/plugins/cancelPlugins/History.ts
+ */
+import { Store } from 'vuex'
+import { cloneDeep } from 'lodash'
 class History {
-  private store: Store<any> | any = ''; // vuex实例
-  private state: any[] = []; // 历史状态
-  private index: number = 0; // 当前状态下标
+  private store: Store<any> | any = '' // vuex实例
+  private state: any[] = [] // 历史状态
+  private index: number = 0 // 当前状态下标
   private maxState: number = 20 // 最大保存状态个数 (防止爆栈)
   public init(store: any, maxState: number) {
     this.store = store
@@ -21,6 +29,7 @@ class History {
       }
       this.state.push(state)
       this.index = this.state.length - 1 // 方便下标的计算 都从0开始计算
+      console.log('最新下标', this.index)
     }, 100)
   }
   /**
@@ -58,16 +67,17 @@ class History {
   }
 }
 
-export default History;
+let history = new History()
 
+export default history
 
-let timeout: any = null;
+let timeout: any = null
 /**
  * 去抖函数封装体
  * @param {Fun} fn 执行函数
- * @param {Number} wait 触发时间 
+ * @param {Number} wait 触发时间
  */
 export function debounce(fn: Function, wait: number) {
-  if (timeout !== null) clearTimeout(timeout);
-  timeout = setTimeout(fn, wait);
+  if (timeout !== null) clearTimeout(timeout)
+  timeout = setTimeout(fn, wait)
 }

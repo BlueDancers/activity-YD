@@ -1,23 +1,28 @@
+/*
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-08 21:03:24
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/store/plugins/cancelPlugins/index.ts
+ */
 import { cloneDeep } from 'lodash';
-import History from './History';
+import history from './History';
 
-let history = new History()
 
 /**
  * 不需要记录的mutation
  */
 const filterMutation = [
   "core/set_objectName",
-  "core/toggle_isLongDown",
   "core/clear_template",
-  "core/updatePos",
-  "core/updateZoom",
   "core/toggle_temp_status",
+  "core/toggle_isLongDown",
   "core/set_isDown",
   "core/set_hoverTemplate",
-  "core/toggle_isLongDown",
   "core/toggle_roundDown",
-  "core/clear_template"
+  "core/clear_template",
+  "setting/set_coreinfoItem"
 ]
 /**
  *  监听vuex的行为
@@ -30,6 +35,8 @@ export default function index(store) {
   history.setState(cloneDeep(store.state))
   store.subscribe((mutation, state) => {
     if (!filterMutation.includes(mutation.type)) {
+      console.log(mutation.type);
+      
       history.setState(cloneDeep(state))
     }
   })
@@ -39,6 +46,7 @@ export default function index(store) {
  * 撤销
  */
 export function cancelHistory() {
+  console.log(history);
   history.replaceState()
 }
 

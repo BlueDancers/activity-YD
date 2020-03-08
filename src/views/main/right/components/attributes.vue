@@ -120,18 +120,18 @@
           />
         </div>
       </div>
-      <!-- 多组件配置 -->
-      <div class="fast_attr" v-if="coreType == 2">
-        <a-button class="fast_btn" @click="mallfastSet(1)">靠左对齐</a-button>
-        <a-button class="fast_btn" @click="mallfastSet(4)">靠下对齐</a-button>
-        <br />
-        <a-button class="fast_btn" @click="mallfastSet(2)">横向对齐</a-button>
-        <a-button class="fast_btn" @click="mallfastSet(3)">竖向对齐</a-button>
-        <!-- <a-button class="fast_btn" @click="mallfastSet(5)">等距分配 </a-button> -->
-      </div>
-      <!-- 无组件 -->
-      <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
     </div>
+    <!-- 多组件配置 -->
+    <div class="fast_attr" v-if="coreType == 2">
+      <a-button class="fast_btn" @click="mallfastSet(1)">靠左对齐</a-button>
+      <a-button class="fast_btn" @click="mallfastSet(4)">靠下对齐</a-button>
+      <br />
+      <a-button class="fast_btn" @click="mallfastSet(2)">横向对齐</a-button>
+      <a-button class="fast_btn" @click="mallfastSet(3)">竖向对齐</a-button>
+      <!-- <a-button class="fast_btn" @click="mallfastSet(5)">等距分配 </a-button> -->
+    </div>
+    <!-- 无组件 -->
+    <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
   </div>
 </template>
 
@@ -156,15 +156,12 @@ export default {
     },
     // 1 单组件 2 是多组件 3 无组件
     coreType() {
-      let core = this.core;
-      if (
-        JSON.stringify(core) !== "{}" &&
-        Object.prototype.toString.call(core) !== "[object Array]"
-      ) {
+      let activeCore = this.$store.state.core.activeTemplate;
+      if (activeCore.length == 1) {
         return 1;
-      } else if (Object.prototype.toString.call(core) == "[object Array]") {
+      } else if (activeCore.length == 2) {
         return 2;
-      } else if (JSON.stringify(core) == "{}") {
+      } else if (activeCore.length == 0) {
         return 3;
       }
       return 3;
@@ -265,12 +262,12 @@ export default {
     align-items: center;
     .attr_list_left {
       text-align: right;
-      width: 92px;
-      margin-left: 10px;
+      width: 70px;
+      margin-left: 5px;
     }
     .attr_list_right {
-      width: 300px;
-      margin-left: 10px;
+      width: 290px;
+      margin-left: 5px;
       display: flex;
       align-items: center;
       .attr_slider {
@@ -293,7 +290,6 @@ export default {
       height: 60px;
     }
   }
-
 }
 .m-colorPicker {
   .colorBtn {

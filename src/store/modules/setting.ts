@@ -1,4 +1,5 @@
 import { Module } from 'vuex'
+import { message } from 'ant-design-vue'
 interface setting {
   copyTemplate: object // 复制暂时存储区
   coreinfo: {
@@ -82,7 +83,13 @@ const Setting: Module<setting, any> = {
       state.coreinfo[index].click = status
     },
     set_scale(state, number) {
-      state.scale = state.scale + number
+      if (state.scale + number >= 1.6) {
+        message.warning('最多放大150%')
+      } else if (state.scale + number <= 0.3) {
+        message.warning('最多缩小30%')
+      } else {
+        state.scale = state.scale + number
+      }
     },
     toggle_backgroundLine(state) {
       state.backgroundLine = !state.backgroundLine
