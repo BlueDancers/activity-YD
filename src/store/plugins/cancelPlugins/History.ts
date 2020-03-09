@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-08 21:04:46
+ * @LastEditTime: 2020-03-09 15:44:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/store/plugins/cancelPlugins/History.ts
@@ -29,7 +29,6 @@ class History {
       }
       this.state.push(state)
       this.index = this.state.length - 1 // 方便下标的计算 都从0开始计算
-      console.log('最新下标', this.index)
     }, 100)
   }
   /**

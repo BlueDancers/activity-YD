@@ -212,10 +212,10 @@ export default Vue.extend({
   .main_header {
     z-index: 2;
     height: 50px;
-    background-color: #001529;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #001529;
     color: white;
     padding: 0 20px;
     .header_left {

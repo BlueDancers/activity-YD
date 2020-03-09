@@ -224,7 +224,7 @@ const core: Module<CoreInter, any> = {
         x: [], // x轴上面该出现标线的
         y: [] // y轴上面该出现标线的
       }
-      let offset: any[] = [1]
+      let offset: any[] = []
       state.template.map((res: any) => {
         if (!state.activeTemplate.includes(res._id)) {
           // 偏移绝对值
@@ -274,6 +274,20 @@ const core: Module<CoreInter, any> = {
           marking.x.push(right_x)
           marking.y.push(left_y)
           marking.y.push(right_y)
+          // 左侧/上测辅助线
+          marking.x.push([-1, 0, 1])
+          marking.y.push([-1, 0, 1])
+          // 右侧/ 下侧辅助线
+          marking.x.push([
+            state.commWidth - 1,
+            state.commWidth,
+            state.commWidth + 1
+          ])
+          marking.y.push([
+            state.commHeight - 1,
+            state.commHeight,
+            state.commHeight + 1
+          ])
         }
       })
       state.marking = {

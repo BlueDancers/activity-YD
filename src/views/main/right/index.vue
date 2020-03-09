@@ -162,7 +162,7 @@ export default {
 <style lang="less" scoped>
 .index_right {
   position: relative;
-  background-color: white;
+  background-color: rgb(251, 251, 251);
   width: 360px;
   height: 100%;
   display: flex;

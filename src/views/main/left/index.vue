@@ -1,20 +1,13 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-09 16:09:33
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/views/main/left/index.vue
+ -->
 <template>
   <div class="index_left">
-    <!-- <div class="left_menu_active">
-      <div
-        class="left_menu_item"
-        :class="{ item_active: item.key == activeLeftMenu }"
-        v-for="item in leftMenu"
-        :key="item.title"
-        @click="toggleLeftMenu(item.key)"
-      >{{ item.title }}</div>
-    </div>
-    <div class="left_menu_board">
-      <element-page v-show="activeLeftMenu == 1"></element-page>
-      <page v-show="activeLeftMenu == 2"></page>
-      <template-page v-show="activeLeftMenu == 3"></template-page>
-      <custom-component v-if="activeLeftMenu == 4"></custom-component>
-    </div> -->
     <a-tabs defaultActiveKey="1">
       <a-tab-pane tab="组件" key="1">
         <element-page></element-page>
@@ -24,7 +17,7 @@
       </a-tab-pane>
       <!-- <a-tab-pane tab="组件列表" key="3">
         <template-page></template-page>
-      </a-tab-pane> -->
+      </a-tab-pane>-->
       <a-tab-pane tab="插件" key="4">
         <custom-component></custom-component>
       </a-tab-pane>
@@ -84,6 +77,7 @@ export default Vue.extend({
   width: 290px;
   height: 100%;
   display: flex;
+  background-color: rgb(251, 251, 251);
   .left_menu_active {
     width: 100px;
     border-right: 1px solid rgb(216, 216, 216);

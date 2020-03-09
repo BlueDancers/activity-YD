@@ -11,7 +11,7 @@
       :css="item.css"
       :option="item.option"
       :text="item.text"
-      :ref="item.name == 'base-buttom' ? item.option.inputName : item.id"
+      :ref="item.name == 'base-input' ? item.option.inputName : item.id"
       @submitForm="submitForm"
     ></component>
   </div>

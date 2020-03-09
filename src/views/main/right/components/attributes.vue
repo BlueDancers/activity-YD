@@ -131,7 +131,7 @@
       <!-- <a-button class="fast_btn" @click="mallfastSet(5)">等距分配 </a-button> -->
     </div>
     <!-- 无组件 -->
-    <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
+    <div v-if="coreType == 3" class="active_showtext">当前无可操作组件</div>
   </div>
 </template>
 
@@ -159,7 +159,7 @@ export default {
       let activeCore = this.$store.state.core.activeTemplate;
       if (activeCore.length == 1) {
         return 1;
-      } else if (activeCore.length == 2) {
+      } else if (activeCore.length > 1) {
         return 2;
       } else if (activeCore.length == 0) {
         return 3;
@@ -247,7 +247,6 @@ export default {
 
 <style lang="less" scoped>
 .attributes {
-  width: 350px;
   .fast_attr {
     margin-left: 30px;
     margin-bottom: 10px;
@@ -262,7 +261,7 @@ export default {
     align-items: center;
     .attr_list_left {
       text-align: right;
-      width: 70px;
+      width: 75px;
       margin-left: 5px;
     }
     .attr_list_right {
@@ -295,5 +294,8 @@ export default {
   .colorBtn {
     width: 200px;
   }
+}
+.active_showtext {
+  text-align: center;
 }
 </style>

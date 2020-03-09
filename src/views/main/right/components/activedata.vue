@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-07 17:55:07
- * @LastEditTime: 2020-03-08 20:32:54
+ * @LastEditTime: 2020-03-09 15:22:15
  * @LastEditors: Please set LastEditors
  * @Description: 组件功能关系
  * @FilePath: /activity_generate/src/views/main/right/components/activedata.vue
@@ -295,7 +295,7 @@ export default {
       align-items: center;
       .active_list_left {
         text-align: right;
-        width: 70px;
+        width: 75px;
         margin-left: 5px;
       }
       .active_list_right {
@@ -346,6 +346,9 @@ export default {
         border-radius: 4px;
       }
     }
+  }
+  .attr_showtext {
+    text-align: center;
   }
 }
 </style>

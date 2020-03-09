@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     open(id, x, y) {
+      console.log(id);
       this.menuShow = true;
       this.id = id;
       this.x = x + 10;

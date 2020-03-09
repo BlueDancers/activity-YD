@@ -1,6 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 17:48:38
+ * @LastEditTime: 2020-03-09 16:56:54
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/prod/showInput.vue
+ -->
 <template>
   <input
-    :placeholder="baseplaceholder"
+    :placeholder="option.placeholder"
     class="baseComplate"
     type="text"
     :style="style"
@@ -19,10 +27,6 @@ export default {
     css: {
       type: Object,
       default: () => {}
-    },
-    baseplaceholder: {
-      type: String,
-      default: ""
     },
     option: {
       type: Object,

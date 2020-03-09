@@ -1,28 +1,20 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-09 16:51:44
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/components/header/index.vue
+ -->
 <template>
   <div class="header_con">
     <div class="header_back"></div>
     <div class="header">
-      <div @click="gotoHome" class="left_header">
-        易动编辑器
-      </div>
+      <div @click="gotoHome" class="left_header">易动编辑器</div>
       <!-- 左侧为操作栏 -->
       <div class="right_header">
-        <a-button
-          @click="saveObject(2)"
-          type="primary"
-          class="right_header_item"
-        >
-          发布
-        </a-button>
-        <a-button
-          @click="saveObject(1)"
-          type="primary"
-          icon="cloud"
-          class="right_header_item"
-        >
-          发布并预览
-        </a-button>
-        <span>github</span>
+        <a-button @click="saveObject(2)" type="primary" class="right_header_item">发布</a-button>
+        <a-button @click="saveObject(1)" type="primary" icon="cloud" class="right_header_item">发布并预览</a-button>
       </div>
     </div>
   </div>
@@ -30,17 +22,17 @@
 
 <script lang="ts">
 // 主页面头部组件
-import Vue from 'vue';
+import Vue from "vue";
 export default Vue.extend({
   methods: {
     gotoHome() {
-      this.$router.push({ name: "home" })
+      this.$router.push({ name: "home" });
     },
     saveObject(type) {
-      this.$emit('saveObject', type)
-    },
+      this.$emit("saveObject", type);
+    }
   }
-})
+});
 </script>
 
 <style lang="less" scoped>
@@ -48,6 +40,7 @@ export default Vue.extend({
   z-index: 2;
   min-height: 50px;
   height: 6%;
+
   .header_back {
     height: 100%;
     width: 100%;
@@ -63,7 +56,9 @@ export default Vue.extend({
     align-items: center;
     height: 6%;
     min-height: 50px;
-    background-color: white;
+    background-color: rgb(251, 251, 251);
+    // background-color: #001529;
+    // color: white;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     .left_header {
       cursor: pointer;

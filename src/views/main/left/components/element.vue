@@ -127,6 +127,11 @@ export default Vue.extend({
     background-color: rgb(247, 247, 247);
     width: 110px;
     text-align: center;
+    border: 1px dashed rgb(175, 175, 175);
+    &:hover {
+      border: 1px solid #1890ff;
+      background: rgb(227, 227, 227);
+    }
     .item_img {
       width: 20px;
       height: 20px;
