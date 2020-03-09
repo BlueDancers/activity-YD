@@ -5,8 +5,9 @@ interface baseNode {
   editStatus: false
   name: String
   text: String
-  option?: object
-  css: object
+  option?: Object
+  css: Object
+  animation: Object
 }
 
 /**
@@ -26,10 +27,16 @@ export function baseDiv(store: any): baseNode {
       height: 100,
       zIndex: store.template.length + 1,
       background: 'rgba(242, 242, 242, 1)',
-      'border-color': 'rgba(0, 0, 0, 1)',
-      'border-style': 'solid',
-      'border-width': 0,
-      'border-radius': 20
+      borderColor: 'rgba(0, 0, 0, 1)',
+      borderStyle: 'solid',
+      borderWidth: 0,
+      borderRadius: 20
+    },
+    animation: {
+      animationName: 'pulse',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 3 // 动画执行次数
     }
   }
 }
@@ -61,11 +68,17 @@ export function baseButtom(store: any): baseNode {
       zIndex: store.template.length + 1,
       background: 'rgba(241, 241, 241, 1)',
       color: 'rgba(0, 0, 0, 1)',
-      'font-size': 18,
-      'border-color': 'rgba(0, 0, 0, 1)',
-      'border-style': 'solid',
-      'border-width': 0,
-      'border-radius': 0
+      fontSize: 18,
+      borderColor: 'rgba(0, 0, 0, 1)',
+      borderStyle: 'solid',
+      borderWidth: 0,
+      borderRadius: 0
+    },
+    animation: {
+      animationName: 'pulse',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 3 // 动画执行次数
     }
   }
 }
@@ -86,6 +99,12 @@ export function baseImg(store: any, img: string): baseNode {
       width: 100,
       height: 50,
       zIndex: store.template.length + 1
+    },
+    animation: {
+      animationName: 'pulse',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 3 // 动画执行次数
     }
   }
 }
@@ -109,7 +128,13 @@ export function baseText(store: any): baseNode {
       background: 'rgba(255, 255, 255, 0)',
       border: 'none',
       color: 'rgba(0, 0, 0, 1)',
-      'font-size': 24
+      fontSize: 24
+    },
+    animation: {
+      animationName: 'pulse',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 3 // 动画执行次数
     }
   }
 }
@@ -137,13 +162,19 @@ export function baseInput(store: any): baseNode {
       zIndex: store.template.length + 1,
       background: 'rgba(255, 255, 255, 1)',
       color: 'rgba(0, 0, 0, 1)',
-      'border-color': 'rgba(0, 0, 0, 1)',
-      'border-style': 'solid',
-      'border-width': 1,
-      'border-radius': 1,
-      'padding-left': 5,
-      'padding-right': 5,
-      'font-size': 12
+      borderColor: 'rgba(0, 0, 0, 1)',
+      borderStyle: 'solid',
+      borderWidth: 1,
+      borderRadius: 1,
+      paddingLeft: 5,
+      paddingRight: 5,
+      fontSize: 12
+    },
+    animation: {
+      animationName: 'pulse',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 3 // 动画执行次数
     }
   }
 }
@@ -157,6 +188,8 @@ export function baseSwiper(store: any): baseNode {
   return {
     _id: String(new Date().getTime()),
     editStatus: false,
+    name: 'base-swiper',
+    text: '',
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
@@ -164,20 +197,20 @@ export function baseSwiper(store: any): baseNode {
       height: 100,
       zIndex: store.template.length + 1
     },
-    name: 'base-swiper',
-    text: '',
     option: {
       autoplay: '2000', // 轮播间隔
       item: [
         {
           img: 'https://images.591wsh.com/2020/02/02/home5.png',
           link: 'http://baidu.com'
-        },
-        {
-          img: 'https://images.591wsh.com/2020/02/02/home5.png',
-          link: 'http://baidu.com'
         }
       ]
+    },
+    animation: {
+      animationName: 'pulse',
+      animationDuration: 1000, // 动画时间
+      animationDelay: 0, // 延迟时间
+      animationIterationCount: 3 // 动画执行次数
     }
   }
 }

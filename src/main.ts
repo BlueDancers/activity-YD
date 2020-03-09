@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-09 18:00:07
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/main.ts
+ */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -5,6 +13,8 @@ import store from './store'
 import VueQriously from 'vue-qriously'
 import { showLoading, hideLoading } from 'vue-cap-ame'
 
+import animated from 'animate.css'
+Vue.use(animated)
 import 'vue-cap-ame/lib/Vue-cap-ame.css'
 Vue.prototype.$showLoading = showLoading
 Vue.prototype.$hideLoading = hideLoading

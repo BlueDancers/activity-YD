@@ -1,7 +1,7 @@
 <template>
   <div class="component">
     <div
-      class="item"
+      class="item animated pulse"
       v-for="(item, index) in reactList"
       :key="item.name"
       @click="setComponent(index)"

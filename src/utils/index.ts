@@ -14,11 +14,22 @@ export function handleStyle(css: any) {
     'border-radius',
     'border-width',
     'padding-left',
-    'padding-right'
+    'padding-right',
+    'fontSize',
+    'borderRadius',
+    'borderWidth',
+    'paddingLeft',
+    'paddingRight'
+  ]
+  const animation = [
+    'animationDuration',
+    'animationDelay'
   ]
   for (const key in css) {
     if (process.includes(key)) {
       cssUsable[key] = `${css[key]}px`
+    } else if(animation.includes(key)) {
+      cssUsable[key] = `${css[key]}ms`
     } else {
       cssUsable[key] = css[key]
     }

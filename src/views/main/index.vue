@@ -116,15 +116,15 @@ export default {
     },
     // 放大缩小
     coreSetting(type) {
-      if (type == 'cancel') {
+      if (type == "cancel") {
         // 撤销
         // cancelHistory();
-        history.replaceState()
+        history.replaceState();
         this.init();
-      } else if (type == 'uncancel') {
+      } else if (type == "uncancel") {
         // 反撤销
         // unCancelHistory();
-        history.unReplaceState()
+        history.unReplaceState();
       }
     },
     // 保存项目
@@ -192,6 +192,7 @@ export default {
       align-items: center;
       overflow-x: hidden;
       overflow-y: scroll;
+
       .core {
         margin-top: 50px;
         transform-origin: "center top";

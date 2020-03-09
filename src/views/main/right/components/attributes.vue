@@ -37,7 +37,7 @@
         <div class="attr_list_right">
           <a-slider
             class="attr_slider"
-            v-model="core.css['zIndex']"
+            v-model="core.css.zIndex"
             :tipFormatter="formatter"
             :min="1"
             :max="100"
@@ -45,7 +45,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
-            v-model="core.css['zIndex']"
+            v-model="core.css.zIndex"
           />
         </div>
       </div>
@@ -53,13 +53,13 @@
       <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
         <div class="attr_list_right">
-          <el-color-picker v-model="core.css['background']" show-alpha></el-color-picker>
+          <el-color-picker v-model="core.css.background" show-alpha></el-color-picker>
         </div>
       </div>
       <div class="attr_item" v-if="showFontColor(core)">
         <div class="attr_list_left">字体颜色:</div>
         <div class="attr_list_right">
-          <el-color-picker v-model="core.css['color']" show-alpha></el-color-picker>
+          <el-color-picker v-model="core.css.color" show-alpha></el-color-picker>
         </div>
       </div>
       <div class="attr_item" v-if="showFontsize(core)">
@@ -67,7 +67,7 @@
         <div class="attr_list_right">
           <a-slider
             class="attr_slider"
-            v-model="core.css['font-size']"
+            v-model="core.css.fontSize"
             :tipFormatter="formatter"
             :min="0"
             :max="100"
@@ -75,7 +75,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
-            v-model="core.css['font-size']"
+            v-model="core.css.fontSize"
           />
         </div>
       </div>
@@ -83,7 +83,7 @@
       <div class="attr_item" v-if="showBorder(core)">
         <div class="attr_list_left">边框颜色:</div>
         <div class="attr_list_right">
-          <el-color-picker v-model="core.css['border-color']" show-alpha></el-color-picker>
+          <el-color-picker v-model="core.css.borderColor" show-alpha></el-color-picker>
         </div>
       </div>
       <div class="attr_item" v-if="showBorder(core)">
@@ -91,7 +91,7 @@
         <div class="attr_list_right">
           <a-slider
             class="attr_slider"
-            v-model="core.css['border-width']"
+            v-model="core.css.borderWidth"
             :tipFormatter="formatter"
             :min="0"
             :max="20"
@@ -99,7 +99,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
-            v-model="core.css['border-width']"
+            v-model="core.css.borderWidth"
           />
         </div>
       </div>
@@ -108,7 +108,7 @@
         <div class="attr_list_right">
           <a-slider
             class="attr_slider"
-            v-model="core.css['border-radius']"
+            v-model="core.css.borderRadius"
             :tipFormatter="formatter"
             :min="0"
             :max="100"
@@ -116,7 +116,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
-            v-model="core.css['border-radius']"
+            v-model="core.css.borderRadius"
           />
         </div>
       </div>

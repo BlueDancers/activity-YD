@@ -5,10 +5,9 @@
     }">
     <component
       v-for="(item, index) in template"
-      :item="item"
       :key="index"
       :is="item.name"
-      :css="item.css"
+      :css="{...item.css,...item.animation}"
       :option="item.option"
       :text="item.text"
       :ref="item.name == 'base-input' ? item.option.inputName : item.id"
