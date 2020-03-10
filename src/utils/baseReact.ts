@@ -33,10 +33,10 @@ export function baseDiv(store: any): baseNode {
       borderRadius: 20
     },
     animation: {
-      animationName: 'pulse',
+      animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
-      animationIterationCount: 3 // 动画执行次数
+      animationIterationCount: 1 // 动画执行次数
     }
   }
 }
@@ -75,10 +75,10 @@ export function baseButtom(store: any): baseNode {
       borderRadius: 0
     },
     animation: {
-      animationName: 'pulse',
+      animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
-      animationIterationCount: 3 // 动画执行次数
+      animationIterationCount: 1 // 动画执行次数
     }
   }
 }
@@ -101,10 +101,10 @@ export function baseImg(store: any, img: string): baseNode {
       zIndex: store.template.length + 1
     },
     animation: {
-      animationName: 'pulse',
+      animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
-      animationIterationCount: 3 // 动画执行次数
+      animationIterationCount: 1 // 动画执行次数
     }
   }
 }
@@ -131,10 +131,10 @@ export function baseText(store: any): baseNode {
       fontSize: 24
     },
     animation: {
-      animationName: 'pulse',
+      animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
-      animationIterationCount: 3 // 动画执行次数
+      animationIterationCount: 1 // 动画执行次数
     }
   }
 }
@@ -171,10 +171,10 @@ export function baseInput(store: any): baseNode {
       fontSize: 12
     },
     animation: {
-      animationName: 'pulse',
+      animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
-      animationIterationCount: 3 // 动画执行次数
+      animationIterationCount: 1 // 动画执行次数
     }
   }
 }
@@ -207,10 +207,10 @@ export function baseSwiper(store: any): baseNode {
       ]
     },
     animation: {
-      animationName: 'pulse',
+      animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
-      animationIterationCount: 3 // 动画执行次数
+      animationIterationCount: 1 // 动画执行次数
     }
   }
 }

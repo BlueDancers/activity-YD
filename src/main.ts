@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-09 18:00:07
+ * @LastEditTime: 2020-03-10 09:48:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/main.ts
@@ -37,7 +37,9 @@ import {
   LocaleProvider,
   Menu,
   Pagination,
-  Tooltip
+  Tooltip,
+  Drawer,
+  Switch
 } from 'ant-design-vue'
 Vue.use(Button)
 Vue.use(Tabs)
@@ -57,6 +59,8 @@ Vue.use(Menu)
 Vue.use(LocaleProvider)
 Vue.use(Pagination)
 Vue.use(Tooltip)
+Vue.use(Drawer)
+Vue.use(Switch)
 Vue.prototype.$message = message
 
 import swipe from 'vant/lib/swipe'

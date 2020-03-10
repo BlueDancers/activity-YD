@@ -1,38 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2020-03-09 17:31:40
- * @LastEditTime: 2020-03-09 17:33:42
+ * @LastEditTime: 2020-03-10 09:51:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/utils/animation.ts
  */
-// #!zh: 可选的动画列表的第一个层级
-export const firstLevelAnimationOptions = [
-  {
-    label: '进入',
-    value: /进/
-  },
-  {
-    label: '退出',
-    value: /退/
-  },
-  {
-    label: '强调',
-    value: /强调|特殊/
-  }
-]
-
 export const animationOptions = [
-  {
-    label: '',
-    value: '空',
-    children: [
-      {
-        label: '无',
-        value: ''
-      }
-    ]
-  },
   {
     label: '强调',
     value: 'Attention Seekers',
@@ -70,11 +44,11 @@ export const animationOptions = [
         value: 'jello'
       },
       {
-        label: '',
+        label: '缩放摆动',
         value: 'tada'
       },
       {
-        label: '',
+        label: '左右强晃动',
         value: 'wobble'
       }
     ]
@@ -433,13 +407,4 @@ export const animationOptions = [
   }
 ]
 
-/**
- * @return {Object} { animationValue: animatonLabel }
- */
-export const animationValue2Name = animationOptions.reduce((obj, curr) => {
-  const items = curr.children
-  items.forEach(item => {
-    obj[item.value] = item.label
-  })
-  return obj
-}, {})
+export default animationOptions
