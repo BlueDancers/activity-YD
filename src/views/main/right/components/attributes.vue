@@ -42,11 +42,7 @@
             :min="1"
             :max="100"
           ></a-slider>
-          <a-input-number
-            class="attr_mintextarea"
-            placeholder="请输入文字"
-            v-model="core.css.zIndex"
-          />
+          <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.zIndex" />
         </div>
       </div>
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
@@ -72,11 +68,7 @@
             :min="0"
             :max="100"
           ></a-slider>
-          <a-input-number
-            class="attr_mintextarea"
-            placeholder="请输入文字"
-            v-model="core.css.fontSize"
-          />
+          <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.fontSize" />
         </div>
       </div>
       <!-- 一些共有属性 -->
@@ -122,12 +114,34 @@
       </div>
     </div>
     <!-- 多组件配置 -->
-    <div class="fast_attr" v-if="coreType == 2">
-      <a-button class="fast_btn" @click="mallfastSet(1)">靠左对齐</a-button>
-      <a-button class="fast_btn" @click="mallfastSet(4)">靠下对齐</a-button>
-      <br />
-      <a-button class="fast_btn" @click="mallfastSet(2)">横向对齐</a-button>
-      <a-button class="fast_btn" @click="mallfastSet(3)">竖向对齐</a-button>
+    <div class="arrt_list" v-if="coreType == 2">
+      <div class="attr_item">
+        <div class="attr_list_left">快捷操作:</div>
+        <div class="attr_list_right">
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span>横向对齐</span>
+            </template>
+            <img
+              class="postion_icon"
+              @click="mallfastSet(2)"
+              :src="require('@/assets/horizontalalignment.png')"
+              alt
+            />
+          </a-tooltip>
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span>竖向对齐</span>
+            </template>
+            <img
+              class="postion_icon"
+              @click="mallfastSet(3)"
+              :src="require('@/assets/verticalalignment.png')"
+              alt
+            />
+          </a-tooltip>
+        </div>
+      </div>
       <!-- <a-button class="fast_btn" @click="mallfastSet(5)">等距分配 </a-button> -->
     </div>
     <!-- 无组件 -->

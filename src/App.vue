@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-10 18:22:31
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/App.vue
+ -->
 <template>
   <div id="app">
     <a-locale-provider :locale="locale">
@@ -38,6 +46,22 @@ body {
       color: #42b983;
     }
   }
+}
+
+html {
+  overflow: -moz-hidden-unscrollable;
+  height: 100%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  height: 100%;
+  width: calc(100vw + 18px);
+  overflow: auto;
 }
 .baseComplate {
   position: absolute;

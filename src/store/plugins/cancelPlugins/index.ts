@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-09 16:40:10
+ * @LastEditTime: 2020-03-10 11:54:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/store/plugins/cancelPlugins/index.ts
@@ -34,9 +34,8 @@ export default function index(store) {
   // 保存初始状态
   history.setState(cloneDeep(store.state))
   store.subscribe((mutation, state) => {
+    // console.log(mutation.type)
     if (!filterMutation.includes(mutation.type)) {
-      console.log(mutation.type)
-
       history.setState(cloneDeep(state))
     }
   })

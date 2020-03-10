@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-08 18:32:38
- * @LastEditTime: 2020-03-10 10:01:16
+ * @LastEditTime: 2020-03-10 11:40:47
  * @LastEditors: Please set LastEditors
  * @Description: 组件动画配置
  * @FilePath: /activity_generate/src/views/main/right/components/animation.vue
@@ -46,6 +46,8 @@
         </div>
       </div>
     </div>
+    <!-- 无组件 -->
+    <div v-if="coreType == 3" class="active_showtext">当前无可操作组件</div>
     <animation ref="animation" @saveAnimation="saveAnimation"></animation>
   </div>
 </template>
@@ -145,5 +147,8 @@ export default {
       }
     }
   }
+}
+.active_showtext {
+  text-align: center;
 }
 </style>
