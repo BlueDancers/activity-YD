@@ -8,6 +8,7 @@ interface CoreInter {
   commHeight: number // 页面高度
   background: string // 页面背景色1
   parentName: string // 项目名
+  parentRouterName: string //项目路由
   parentId: number
   template: string[] // 组件
   activeTemplate: string[] // 选中的数组
@@ -30,6 +31,7 @@ const core: Module<CoreInter, any> = {
     commHeight: commHeight, // 页面高度
     background: 'rgba(255, 255, 255, 1)', // 页面背景色1
     parentName: '', // 项目名
+    parentRouterName: '', // 项目路由
     parentId: 0, // 组件id
     template: [], // 组件
     activeTemplate: [], // 选中的数组
@@ -49,7 +51,10 @@ const core: Module<CoreInter, any> = {
     set_objectName(state, name) {
       state.parentName = name
     },
-    // 保存当前项目名
+    set_parentRouterName(state, name) {
+      state.parentRouterName = name
+    },
+    // 保存当前项目id
     set_objectId(state, id) {
       state.parentId = id
     },
@@ -460,7 +465,14 @@ const core: Module<CoreInter, any> = {
       if (state.template.length == 0) {
         return Promise.reject('请不要保存空页面')
       }
-      let { parentId, parentName, commHeight, template, background } = state
+      let {
+        parentId,
+        parentName,
+        parentRouterName,
+        commHeight,
+        template,
+        background
+      } = state
       let saveActivityapi = saveActivity(parentId, parentName, template).then(
         e => e
       )
@@ -468,6 +480,8 @@ const core: Module<CoreInter, any> = {
         parentId,
         commHeight,
         background,
+        parentName,
+        parentRouterName,
         titlePage
       ).then(e => e)
       const objandSave = await Promise.all([
@@ -491,6 +505,7 @@ const core: Module<CoreInter, any> = {
             state.commHeight = e.data.data.height
             state.background = e.data.data.background
             state.parentName = e.data.data.textName
+            state.parentRouterName = e.data.data.name
             resolve('数据查询完成')
           }
         })

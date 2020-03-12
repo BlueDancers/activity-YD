@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-13 00:07:04
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/views/main/left/components/page.vue
+ -->
 <template>
   <div class="page">
     <div class="page_item">
@@ -21,6 +29,18 @@
             <el-color-picker v-model="background" show-alpha></el-color-picker>
           </div>
         </div>
+        <div class="page_form_item">
+          <div class="item_left">网页名称:</div>
+          <div class="item_right">
+            <a-input v-model="parentName" placeholder="请输入网页名"></a-input>
+          </div>
+        </div>
+        <div class="page_form_item">
+          <div class="item_left">路由名:</div>
+          <div class="item_right">
+            <a-input v-model="parentRouterName" placeholder="请输入路由名"></a-input>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -31,7 +51,6 @@ import { commHeight } from "@/config";
 export default {
   computed: {
     sliderHight() {
-      console.log(this.$store.state.core.commHeight);
       return Number(this.$store.state.core.commHeight / commHeight);
     },
     background: {
@@ -40,6 +59,22 @@ export default {
       },
       set(newColor) {
         this.$store.commit("core/updateBackground", newColor);
+      }
+    },
+    parentName: {
+      get() {
+        return this.$store.state.core.parentName;
+      },
+      set(value) {
+        this.$store.commit("core/set_objectName", value);
+      }
+    },
+    parentRouterName: {
+      get() {
+        return this.$store.state.core.parentRouterName;
+      },
+      set(value) {
+        this.$store.commit("core/set_parentRouterName", value);
       }
     }
   },

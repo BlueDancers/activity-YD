@@ -78,6 +78,8 @@ export function updateObj(
   objectId: number,
   height: number,
   background: string,
+  textName: String,
+  name: String,
   titlePage: string
 ) {
   return request({
@@ -87,6 +89,8 @@ export function updateObj(
       objectId,
       height,
       background,
+      textName,
+      name,
       titlePage
     }
   })
@@ -246,5 +250,19 @@ export function getTemplateDataById(templateId: string) {
   return request({
     url: `/getTemplateDataById/${templateId}`,
     method: 'GET'
+  })
+}
+
+/**
+ * 删除模板
+ * @param id 模板id
+ */
+export function deleteTemplate(id: string) {
+  return request({
+    url: '/deleteTemplate',
+    method: 'POST',
+    data: {
+      id
+    }
   })
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-12 21:24:48
+ * @LastEditTime: 2020-03-12 23:43:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/components/template.vue
@@ -15,6 +15,10 @@
             <div class="show_open_page">
               <img class="show_img" :src="item.titlePage" alt />
               <div class="template_info">
+                 <div class="info_item">
+                  <div class="info_left">模板名称:</div>
+                  <div class="info_right">{{item.name}}</div>
+                </div>
                 <div class="info_item">
                   <div class="info_left">作者:</div>
                   <div class="info_right">{{item.author}}</div>
@@ -52,7 +56,7 @@ export default Vue.extend({
       });
     },
     deleteTemplate(item) {
-      console.log(item);
+      this.$store.dispatch("complate/deleteTemplate", item.templateId);
     }
   }
 });
@@ -71,12 +75,17 @@ export default Vue.extend({
       margin-bottom: 10px;
       &:hover {
         box-shadow: 2px 2px 10px rgb(205, 205, 205);
+        .delete_icon {
+          opacity: 1;
+        }
       }
       .delete_icon {
+        opacity: 0;
         position: absolute;
         right: 10px;
         top: 10px;
       }
+
       .item_img {
         border-radius: 6px;
         width: 100%;
@@ -100,7 +109,7 @@ export default Vue.extend({
     .info_item {
       display: flex;
       align-items: center;
-      font-size: 16px;
+      font-size: 14px;
       margin: 5px;
       margin-left: 0px;
       .info_left {

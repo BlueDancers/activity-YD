@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-12 18:13:32
+ * @LastEditTime: 2020-03-12 23:23:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/store/modules/complate.ts
@@ -12,7 +12,8 @@ import {
   deleteSingComp,
   updateSingComp,
   saveSingleComplate,
-  getTemplate
+  getTemplate,
+  deleteTemplate
 } from '@/api/index'
 import { message } from 'ant-design-vue'
 interface Complate {
@@ -67,6 +68,13 @@ const complate: Module<Complate, any> = {
     getAllTemplate({ commit }) {
       getTemplate().then(res => {
         commit('set_template', res.data.data)
+      })
+    },
+    // 删除模板
+    deleteTemplate({ dispatch }, id) {
+      deleteTemplate(id).then(res => {
+        console.log(res)
+        dispatch('getAllTemplate')
       })
     }
   }
