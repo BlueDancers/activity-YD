@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-12 18:59:30
+ * @LastEditTime: 2020-03-12 21:24:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/components/template.vue
@@ -20,9 +20,10 @@
                   <div class="info_right">{{item.author}}</div>
                 </div>
               </div>
-              <a-button class="touch_template" type="primary">选择</a-button>
+              <a-button class="touch_template" type="primary" @click="selectTemplate(item)">选择</a-button>
             </div>
           </template>
+          <a-icon class="delete_icon" @click="deleteTemplate(item)" type="close-circle" />
           <img class="item_img" :src="item.titlePage" alt />
         </a-popover>
       </div>
@@ -32,6 +33,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { getTemplateDataById } from "@/api/index";
 export default Vue.extend({
   mounted() {
     this.$store.dispatch("complate/getAllTemplate");
@@ -39,6 +41,18 @@ export default Vue.extend({
   computed: {
     templateList() {
       return this.$store.state.complate.template;
+    }
+  },
+  methods: {
+    selectTemplate(item) {
+      getTemplateDataById(item.templateId).then(res => {
+        this.$store.commit("core/updateCommHeigth", item.height);
+        this.$store.commit("core/updateBackground", item.background);
+        this.$store.commit("core/update_template", res.data.data);
+      });
+    },
+    deleteTemplate(item) {
+      console.log(item);
     }
   }
 });
@@ -50,6 +64,7 @@ export default Vue.extend({
     display: flex;
     flex-wrap: wrap;
     .template_item {
+      position: relative;
       cursor: pointer;
       width: 46%;
       margin-left: 2%;
@@ -57,7 +72,11 @@ export default Vue.extend({
       &:hover {
         box-shadow: 2px 2px 10px rgb(205, 205, 205);
       }
-
+      .delete_icon {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
       .item_img {
         border-radius: 6px;
         width: 100%;
@@ -67,6 +86,8 @@ export default Vue.extend({
 }
 .show_open_page {
   width: 200px;
+  position: relative;
+
   .show_img {
     max-width: 200px;
     max-height: 500px;

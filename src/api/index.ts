@@ -238,3 +238,13 @@ export function getTemplate() {
     method: 'GET'
   })
 }
+
+/**
+ * 获取模板数据
+ */
+export function getTemplateDataById(templateId: string) {
+  return request({
+    url: `/getTemplateDataById/${templateId}`,
+    method: 'GET'
+  })
+}

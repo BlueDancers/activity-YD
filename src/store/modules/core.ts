@@ -53,6 +53,10 @@ const core: Module<CoreInter, any> = {
     set_objectId(state, id) {
       state.parentId = id
     },
+    // 替换元素
+    update_template(state, template) {
+      state.template = template
+    },
     // 增加元素
     set_tempLate(state, template) {
       // 增加页面上的元素
