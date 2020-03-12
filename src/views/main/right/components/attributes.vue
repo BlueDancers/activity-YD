@@ -158,12 +158,12 @@ export default {
       let activeCore = this.$store.state.core.activeTemplate;
       if (activeCore.length == 1) {
         let form = this.$store.state.core.template.filter(e =>
-          activeCore.includes(e._id)
+          activeCore.includes(e.activityId)
         )[0];
         return form;
       } else if (activeCore.length > 1) {
         return this.$store.state.core.template.filter(e =>
-          activeCore.includes(e._id)
+          activeCore.includes(e.activityId)
         );
       }
       return {};

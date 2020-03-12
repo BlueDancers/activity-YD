@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <base-header @saveObject="saveObject"></base-header>
+    <base-header></base-header>
     <div class="index_main">
       <!-- 左侧菜单栏 -->
       <left />
@@ -31,37 +31,25 @@
       <!-- 右侧菜单栏 -->
       <right @coreSetting="coreSetting" />
     </div>
-    <!-- 发布预览框 -->
-    <upload-modal ref="uploadModal" :objUrl="objUrl" />
   </div>
 </template>
 
 <script>
 import { cancelHistory, unCancelHistory } from "@/store/plugins/cancelPlugins";
 import history from "@/store/plugins/cancelPlugins/History";
-import baseHeader from "@/components/header/index.vue";
+import baseHeader from "./components/header.vue";
 import core from "./center/core.vue";
 import showCore from "./center/showCore.vue";
 import left from "./left/index.vue";
 import right from "./right/index.vue";
-import uploadModal from "./components/uploadModal.vue";
-import { mobileUrl } from "@/config/index";
-import html2canvas from "html2canvas";
-import {
-  base64ToBlob,
-  BlobToImgFile,
-  initMouse,
-  uninitMouse,
-  initKeyDown
-} from "@/utils/index";
-import { upTitleImg } from "@/api/index";
+import { initMouse, uninitMouse, initKeyDown } from "@/utils/index";
+
 export default {
   components: {
     baseHeader,
     left,
     core,
     right,
-    uploadModal,
     showCore
   },
   mounted() {
@@ -69,10 +57,10 @@ export default {
       initMouse(this.core);
       initKeyDown(this.core);
     });
-    let objName = this.$route.params.objectName;
-    this.$store.commit("core/set_objectName", objName);
+    let objectId = this.$route.params.objectId;
+    this.$store.commit("core/set_objectId", objectId);
     this.$store
-      .dispatch("core/getActivity", { name: objName })
+      .dispatch("core/getActivity", { id: objectId })
       .then(result => {
         this.$message.success(result);
       })
@@ -83,8 +71,7 @@ export default {
 
   data() {
     return {
-      mode: "dev", // dev 为开发模式 prod 为线上测试模式
-      objUrl: "" // 当前项目的url
+      mode: "dev" // dev 为开发模式 prod 为线上测试模式
     };
   },
   computed: {
@@ -126,45 +113,6 @@ export default {
         // unCancelHistory();
         history.unReplaceState();
       }
-    },
-    // 保存项目
-    saveObject(type) {
-      this.$showLoading();
-      html2canvas(document.querySelector(".core"), {
-        async: true,
-        useCORS: true,
-        scale: 1
-      })
-        .then(canvas => {
-          let dataURL = canvas.toDataURL("image/jpeg");
-          const data = new FormData();
-          data.append(
-            "image",
-            BlobToImgFile(base64ToBlob(dataURL), "image/jpeg")
-          );
-          return upTitleImg(data);
-        })
-        .then(res => {
-          // 保存当前页面的配置
-          return this.$store.dispatch("core/saveObject", res.data.data.data);
-        })
-        .then(res => {
-          this.$hideLoading();
-          if (res.data.code == 200) {
-            if (type == 1) {
-              console.log("打开弹窗");
-              this.objUrl = mobileUrl + res.data.data;
-              this.$refs["uploadModal"].openModal();
-            } else {
-              this.$message.success("发布成功");
-            }
-          } else {
-            this.$message.error(res.data.data);
-          }
-        })
-        .catch(err => {
-          this.$message.error("错误" + err);
-        });
     }
   },
   destroyed() {
@@ -192,7 +140,7 @@ export default {
       align-items: center;
       overflow-x: hidden;
       overflow-y: scroll;
-
+      background-color: #eee;
       .core {
         margin-top: 50px;
         transform-origin: "center top";

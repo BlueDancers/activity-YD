@@ -1,7 +1,7 @@
 // 虚拟元素的映射
-
+import { guid } from './utils'
 interface baseNode {
-  _id: String
+  activityId: String
   editStatus: false
   name: String
   text: String
@@ -16,7 +16,7 @@ interface baseNode {
 export function baseDiv(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    _id: String(new Date().getTime()), // 暂定
+    activityId: guid(),
     editStatus: false,
     name: 'base-div',
     text: '',
@@ -47,7 +47,7 @@ export function baseDiv(store: any): baseNode {
 export function baseButtom(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    _id: String(new Date().getTime()), // 暂定
+    activityId: guid(),
     editStatus: false,
     name: 'base-buttom',
     text: '按钮',
@@ -89,7 +89,7 @@ export function baseButtom(store: any): baseNode {
 export function baseImg(store: any, img: string): baseNode {
   let dynamic = store.template.length * 10
   return {
-    _id: String(new Date().getTime()), // 暂定
+    activityId: guid(),
     editStatus: false,
     name: 'base-img',
     text: img,
@@ -115,7 +115,7 @@ export function baseImg(store: any, img: string): baseNode {
 export function baseText(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    _id: String(new Date().getTime()), // 暂定
+    activityId: guid(),
     editStatus: false,
     name: 'base-text',
     text: '请修改此处的文字',
@@ -145,7 +145,7 @@ export function baseText(store: any): baseNode {
 export function baseInput(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    _id: String(new Date().getTime()), // 暂定
+    activityId: guid(),
     editStatus: false,
     name: 'base-input',
     text: '',
@@ -186,7 +186,7 @@ export function baseInput(store: any): baseNode {
 export function baseSwiper(store: any): baseNode {
   let dynamic = store.template.length * 10
   return {
-    _id: String(new Date().getTime()),
+    activityId: guid(),
     editStatus: false,
     name: 'base-swiper',
     text: '',
@@ -227,7 +227,7 @@ export function baseComplate(store: any, data: any): baseNode {
   data.css.left = 10 + dynamic
   data.css.zIndex = store.template.length + 1
   let compData: any = {
-    _id: String(new Date().getTime()),
+    activityId: guid(),
     editStatus: false,
     text: data.text,
     name: data.name,

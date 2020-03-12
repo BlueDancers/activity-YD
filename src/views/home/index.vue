@@ -56,7 +56,7 @@
             </template>
             <span @click="showObject(item.name)">查看项目</span>
           </a-popover>
-          <span @click="gotoObject(item.name)">编辑项目</span>
+          <span @click="gotoObject(item._id)">编辑项目</span>
           <a-popconfirm title="确定删除项目吗" @confirm="deleteObj(item.name)" okText="确定" cancelText="取消">
             <span>删除项目</span>
           </a-popconfirm>
@@ -181,7 +181,7 @@ export default Vue.extend({
         setObject(data).then(res => {
           this.$router.push({
             name: "main",
-            params: { objectName: res.data.data }
+            params: { objectId: res.data.data }
           });
         });
       }
@@ -191,8 +191,8 @@ export default Vue.extend({
       this.textNameStatus = true;
       this.nameStatus = true;
     },
-    gotoObject(name) {
-      this.$router.push({ name: "main", params: { objectName: name } });
+    gotoObject(id) {
+      this.$router.push({ name: "main", params: { objectId: id } });
     },
     showObject(name) {
       this.onShowUrlCode = mobileUrl + name;

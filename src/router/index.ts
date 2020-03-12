@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-10 11:33:31
+ * @LastEditTime: 2020-03-11 23:50:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/router/index.ts
@@ -25,7 +25,7 @@ const routes = [
     }
   },
   {
-    path: '/object/:objectName',
+    path: '/object/:objectId',
     name: 'main',
     component: () => import('@/views/main/index.vue'),
     meta: {

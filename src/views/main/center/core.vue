@@ -9,7 +9,7 @@
       v-for="(item, index) in template"
       :key="index"
       :is="item.name"
-      :id="item._id"
+      :id="item.activityId"
       :css="item.css"
       :option="item.option"
       :text="item.text"

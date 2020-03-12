@@ -37,14 +37,19 @@ export function deleteObj(name) {
 
 /**
  * 保存项目信息
- * @param {string} parentName 项目名
+ * @param {string} parentName 项目id
  * @param {Array} template 项目模板信息
  */
-export function saveActivity(parentName, template) {
+export function saveActivity(
+  parentId: number,
+  parentName: string,
+  template: any[]
+) {
   return request({
     url: `/saveActivity`,
     method: 'post',
     data: {
+      parentId,
       parentName,
       template
     }
@@ -53,11 +58,11 @@ export function saveActivity(parentName, template) {
 
 /**
  * 获取项目配置
- * @param {string} name 项目名称
+ * @param {number} id 项目名称
  */
-export function getActivity(name) {
+export function getActivity(id: number) {
   return request({
-    url: `/getActivity/${name}`,
+    url: `/getActivity/${id}`,
     method: 'post'
   })
 }
@@ -69,12 +74,17 @@ export function getActivity(name) {
  * @param {String} background
  * @param {String} titlePage
  */
-export function updateObj(objectName, height, background, titlePage) {
+export function updateObj(
+  objectId: number,
+  height: number,
+  background: string,
+  titlePage: string
+) {
   return request({
     url: '/updateObj',
     method: 'POST',
     data: {
-      objectName,
+      objectId,
       height,
       background,
       titlePage
@@ -172,6 +182,59 @@ export function deleteSingComp(id: string) {
 export function getUPloadImage() {
   return request({
     url: '/getImage',
+    method: 'GET'
+  })
+}
+
+/**
+ * 获取默认图片
+ */
+export function getDefaultImg() {
+  return request({
+    url: '/getDefaultImg',
+    method: 'GET'
+  })
+}
+
+/**
+ * 保存模板
+ * @param templateId 模板id
+ * @param name 模板名称
+ * @param height 模板高度
+ * @param background 背景颜色
+ * @param titlePage 缩略图
+ * @param template 模板数据
+ */
+export function setTemplate(
+  templateId: string,
+  author: string,
+  name: string,
+  height: number,
+  background: string,
+  titlePage: string,
+  template: any[]
+) {
+  return request({
+    url: '/setTemplate',
+    method: 'POST',
+    data: {
+      templateId,
+      author,
+      name,
+      height,
+      background,
+      titlePage,
+      template
+    }
+  })
+}
+
+/**
+ * 获取模板
+ */
+export function getTemplate() {
+  return request({
+    url: '/getTemplate',
     method: 'GET'
   })
 }

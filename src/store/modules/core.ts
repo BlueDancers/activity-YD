@@ -1,13 +1,14 @@
-import { saveActivity, getActivity, updateObj } from '@/api/index'
+import { saveActivity, getActivity, updateObj, setTemplate } from '@/api/index'
 import { commHeight, commWidth } from '../../config/index'
 import { Module } from 'vuex'
 import { message } from 'ant-design-vue'
-
+import { guid } from '@/utils/utils'
 interface CoreInter {
   commWidth: number // 页面宽度
   commHeight: number // 页面高度
   background: string // 页面背景色1
   parentName: string // 项目名
+  parentId: number
   template: string[] // 组件
   activeTemplate: string[] // 选中的数组
   hoverTemplate: string // 显示鼠标划过的组件提示
@@ -29,6 +30,7 @@ const core: Module<CoreInter, any> = {
     commHeight: commHeight, // 页面高度
     background: 'rgba(255, 255, 255, 1)', // 页面背景色1
     parentName: '', // 项目名
+    parentId: 0, // 组件id
     template: [], // 组件
     activeTemplate: [], // 选中的数组
     hoverTemplate: '', // 显示鼠标划过的组件提示
@@ -47,6 +49,10 @@ const core: Module<CoreInter, any> = {
     set_objectName(state, name) {
       state.parentName = name
     },
+    // 保存当前项目名
+    set_objectId(state, id) {
+      state.parentId = id
+    },
     // 增加元素
     set_tempLate(state, template) {
       // 增加页面上的元素
@@ -61,7 +67,7 @@ const core: Module<CoreInter, any> = {
       let list = JSON.parse(JSON.stringify(state.template))
       let activeTemplate: any[] = []
       list.map(item => {
-        if (item._id == id) {
+        if (item.activityId == id) {
           if (state.isLongDown) {
             // 多选状态
             activeTemplate = [...state.activeTemplate]
@@ -95,7 +101,7 @@ const core: Module<CoreInter, any> = {
     update_CompZindex(state, num) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
       list.map(item => {
-        if (state.activeTemplate.includes(item._id)) {
+        if (state.activeTemplate.includes(item.activityId)) {
           if (item.css.zIndex <= 0) {
             message.warning('元素层级不可小于0')
           } else {
@@ -109,7 +115,7 @@ const core: Module<CoreInter, any> = {
     updatePos(state, data) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
       list.map(item => {
-        if (state.activeTemplate.includes(item._id)) {
+        if (state.activeTemplate.includes(item.activityId)) {
           item.css.left = item.css.left + data.x
           item.css.top = item.css.top + data.y
         }
@@ -118,7 +124,7 @@ const core: Module<CoreInter, any> = {
       // 自动偏移到最近的上面
       // 判断是否存在辅助线
       list.map(res => {
-        if (state.activeTemplate.includes(res._id)) {
+        if (state.activeTemplate.includes(res.activityId)) {
           // 针对选中的组件进行匹配
           for (let index = 0; index < state.marking.x.length; index++) {
             // 组件下侧
@@ -160,7 +166,7 @@ const core: Module<CoreInter, any> = {
       let list = JSON.parse(JSON.stringify(state.template))
       if (state.roundDown == 1) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.top = Number(item.css.top) + data.y
             item.css.width = item.css.width - data.x
@@ -169,14 +175,14 @@ const core: Module<CoreInter, any> = {
         })
       } else if (state.roundDown == 2) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.height = item.css.height - data.y
           }
         })
       } else if (state.roundDown == 3) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.width = Number(item.css.width) + data.x
             item.css.height = item.css.height - data.y
@@ -184,7 +190,7 @@ const core: Module<CoreInter, any> = {
         })
       } else if (state.roundDown == 4) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.width = item.css.width - data.x
             item.css.height = Number(item.css.height) + data.y
@@ -192,13 +198,13 @@ const core: Module<CoreInter, any> = {
         })
       } else if (state.roundDown == 5) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.height = Number(item.css.height) + data.y
           }
         })
       } else if (state.roundDown == 6) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = Number(item.css.width) + data.x
             item.css.height = Number(item.css.height) + data.y
           }
@@ -210,7 +216,7 @@ const core: Module<CoreInter, any> = {
     deleteCompLate(state, data) {
       let list: any[] = JSON.parse(JSON.stringify(state.template))
       state.template = list.reduce((value, item) => {
-        if (item._id == data) {
+        if (item.activityId == data) {
           return value
         } else {
           return value.concat(item)
@@ -226,7 +232,7 @@ const core: Module<CoreInter, any> = {
       }
       let offset: any[] = []
       state.template.map((res: any) => {
-        if (!state.activeTemplate.includes(res._id)) {
+        if (!state.activeTemplate.includes(res.activityId)) {
           // 偏移绝对值
           let left_x: any[] = [] // 单个元素x轴
           let right_x: any[] = [] // 单个元素x轴
@@ -300,26 +306,26 @@ const core: Module<CoreInter, any> = {
       let list = JSON.parse(JSON.stringify(state.template))
       if (data.type == 1) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = (state.commWidth - item.css.width) / 2
           }
         })
       } else if (data.type == 2) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = state.commWidth
             item.css.left = 0
           }
         })
       } else if (data.type == 3) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = 0
           }
         })
       } else if (data.type == 4) {
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = state.commHeight - item.css.height
           }
         })
@@ -333,12 +339,12 @@ const core: Module<CoreInter, any> = {
         // 靠左对齐(取最右边的值)
         let minLeft = state.commWidth
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             minLeft = item.css.left < minLeft ? item.css.left : minLeft
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = minLeft
           }
         })
@@ -347,7 +353,7 @@ const core: Module<CoreInter, any> = {
         let minTop = 0
         let minTopToHeigth = 0
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             if (item.css.top > minTop) {
               minTop = item.css.top
               minTopToHeigth = item.css.height
@@ -355,7 +361,7 @@ const core: Module<CoreInter, any> = {
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = minTop + (minTopToHeigth - item.css.height) / 2
           }
         })
@@ -364,7 +370,7 @@ const core: Module<CoreInter, any> = {
         let minLeft = state.commWidth
         let minLeftToWidth = 0
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             if (item.css.left < minLeft) {
               minLeft = item.css.left
               minLeftToWidth = item.css.width
@@ -372,7 +378,7 @@ const core: Module<CoreInter, any> = {
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = minLeft + (minLeftToWidth - item.css.width) / 2
           }
         })
@@ -380,13 +386,13 @@ const core: Module<CoreInter, any> = {
         // 靠下对齐
         let minTop = 0
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             let topOrHeight = item.css.height + item.css.top
             minTop = topOrHeight < minTop ? minTop : topOrHeight
           }
         })
         list.map(item => {
-          if (state.activeTemplate.includes(item._id)) {
+          if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = minTop - item.css.height
           }
         })
@@ -404,14 +410,14 @@ const core: Module<CoreInter, any> = {
     // 更新swiper的图片
     update_swiperimg(state, { index, imgurl }) {
       state.template.map((res: any) => {
-        if (res._id == state.activeTemplate) {
+        if (res.activityId == state.activeTemplate) {
           res.option.item[index].img = imgurl
         }
       })
     },
     add_swiper(state) {
       state.template.map((res: any) => {
-        if (res._id == state.activeTemplate) {
+        if (res.activityId == state.activeTemplate) {
           res.option.item.push({
             img: 'https://images.591wsh.com/2020/02/02/home5.png',
             link: 'http://baidu.com'
@@ -421,7 +427,7 @@ const core: Module<CoreInter, any> = {
     },
     less_swiper(state) {
       state.template.map((res: any) => {
-        if (res._id == state.activeTemplate) {
+        if (res.activityId == state.activeTemplate) {
           res.option.item.pop()
         }
       })
@@ -450,14 +456,12 @@ const core: Module<CoreInter, any> = {
       if (state.template.length == 0) {
         return Promise.reject('请不要保存空页面')
       }
-      let { parentName, commHeight, template, background } = state
-      template = JSON.parse(JSON.stringify(template))
-      template.map((e: any) => {
-        delete e._id
-      })
-      let saveActivityapi = saveActivity(parentName, template).then(e => e)
+      let { parentId, parentName, commHeight, template, background } = state
+      let saveActivityapi = saveActivity(parentId, parentName, template).then(
+        e => e
+      )
       let updateObjHeightapi = updateObj(
-        parentName,
+        parentId,
         commHeight,
         background,
         titlePage
@@ -471,7 +475,7 @@ const core: Module<CoreInter, any> = {
     // 获取当前配置
     getActivity({ state, commit }, data) {
       return new Promise((resolve, reject) => {
-        getActivity(data.name).then(e => {
+        getActivity(data.id).then(e => {
           if (e.data.code !== 200) {
             reject(e.data.data)
           } else {
@@ -480,12 +484,25 @@ const core: Module<CoreInter, any> = {
               template.push({ ...e, editStatus: false })
             })
             state.template = template
-            state.commHeight = e.data.data.objHeight
+            state.commHeight = e.data.data.height
             state.background = e.data.data.background
+            state.parentName = e.data.data.textName
             resolve('数据查询完成')
           }
         })
       })
+    },
+    setTemplate({ state }, { tempName, author, titlePage }) {
+      let { commHeight, template, background } = state
+      return setTemplate(
+        guid(),
+        author,
+        tempName,
+        commHeight,
+        background,
+        titlePage,
+        template
+      )
     },
     // 更新元素位置
     updatePosition({ commit }, data) {

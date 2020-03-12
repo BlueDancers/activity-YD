@@ -1,11 +1,13 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:09
+ * @LastEditTime: 2020-03-12 09:35:06
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/views/main/components/uploadModal.vue
+ -->
 <template>
-  <a-modal
-    title="发布成功"
-    v-model="succModal"
-    @ok="hideModal"
-    okText="确认"
-    cancelText="取消"
-  >
+  <a-modal title="发布成功" v-model="succModal" @ok="hideModal" okText="确认" cancelText="取消">
     <div class="success_modal">
       <qriously :value="objUrl" :size="200" />
     </div>
@@ -18,21 +20,21 @@ import Vue from "vue";
 export default Vue.extend({
   props: {
     objUrl: {
-      type: String,
+      type: String
     }
   },
   data() {
     return {
       succModal: false
-    }
+    };
   },
   methods: {
     openModal() {
-      this.succModal = true
+      this.succModal = true;
     },
     hideModal() {
-      this.succModal = false
+      this.succModal = false;
     }
   }
-})
+});
 </script>

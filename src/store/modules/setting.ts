@@ -17,7 +17,7 @@ const Setting: Module<setting, any> = {
   namespaced: true,
   state: {
     copyTemplate: {
-      _id: 0
+      activityId: 0
     },
     coreinfo: [
       {

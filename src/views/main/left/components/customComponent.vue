@@ -4,18 +4,18 @@
       <a-list-item slot="renderItem" slot-scope="item">
         <div class="comp_item" @click="addUserComp(item)">
           <div class="item_header">
-            <div class="item_name" v-if="isEditid != item._id">组件名: {{ item.compName }}</div>
+            <div class="item_name" v-if="isEditid != item.activityId">组件名: {{ item.compName }}</div>
             <a-input
               class="item_input"
-              v-if="isEditid == item._id"
+              v-if="isEditid == item.activityId"
               placeholder="请输入组件名"
               ref="newName"
             />
-            <div class="item_icon" v-if="isEditid != item._id">
-              <a-icon type="form" class="icon" @click.stop="updateCompName(item._id)" />
-              <a-icon type="close-circle" class="icon" @click.stop="deleteCompName(item._id)" />
+            <div class="item_icon" v-if="isEditid != item.activityId">
+              <a-icon type="form" class="icon" @click.stop="updateCompName(item.activityId)" />
+              <a-icon type="close-circle" class="icon" @click.stop="deleteCompName(item.activityId)" />
             </div>
-            <div v-if="isEditid == item._id" class="item_icon">
+            <div v-if="isEditid == item.activityId" class="item_icon">
               <a-button-group>
                 <a-button class="icon_btn" type="primary" @click.stop="updateNewName">确认</a-button>
                 <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">取消</a-button>
@@ -24,9 +24,9 @@
           </div>
           <div class="item_main">
             <component
-              :key="item._id"
+              :key="item.activityId"
               :is="item.name"
-              :id="item._id"
+              :id="item.activityId"
               :css="item.css"
               :option="item.option"
               :text="item.text"

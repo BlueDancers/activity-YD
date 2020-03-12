@@ -43,7 +43,16 @@
             alt
           />
         </div>
-        <div class="img_list" v-if="Menukey.includes('2')">基础处图库</div>
+        <div class="img_list" v-if="Menukey.includes('2')">
+          <img
+            @click="addBaseImg(item)"
+            class
+            v-for="item in baseImage"
+            :key="item"
+            :src="item"
+            alt
+          />
+        </div>
       </div>
     </div>
   </a-modal>
@@ -51,7 +60,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { getUPloadImage } from "@/api/index";
+import { getUPloadImage, getDefaultImg } from "@/api/index";
 import { baseImg } from "@/utils/baseReact";
 import { imageUpUrl } from "@/config/index";
 export default Vue.extend({
@@ -77,6 +86,9 @@ export default Vue.extend({
       getUPloadImage().then(res => {
         console.log(res);
         this.userImage = res.data.data;
+      });
+      getDefaultImg().then(res => {
+        this.baseImage = res.data.data;
       });
     },
     handleOk() {

@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-09 16:09:33
- * @LastEditors: your name
+ * @LastEditTime: 2020-03-12 18:27:34
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/index.vue
  -->
@@ -15,9 +15,9 @@
       <a-tab-pane tab="设置" key="2">
         <page></page>
       </a-tab-pane>
-      <!-- <a-tab-pane tab="组件列表" key="3">
+      <a-tab-pane tab="模板" key="3">
         <template-page></template-page>
-      </a-tab-pane>-->
+      </a-tab-pane>
       <a-tab-pane tab="插件" key="4">
         <custom-component></custom-component>
       </a-tab-pane>
@@ -77,7 +77,7 @@ export default Vue.extend({
   width: 290px;
   height: 100%;
   display: flex;
-  background-color: rgb(251, 251, 251);
+  background-color: #fafafa;
   .left_menu_active {
     width: 100px;
     border-right: 1px solid rgb(216, 216, 216);

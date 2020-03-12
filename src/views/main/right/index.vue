@@ -110,7 +110,7 @@ export default {
       }
     },
     copyTemplate() {
-      if (this.copyTemplate._id != null) {
+      if (this.copyTemplate.activityId != null) {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 3,
           status: true
@@ -133,7 +133,9 @@ export default {
       } else if (index == 2) {
         this.$store.commit(
           "setting/set_copy",
-          cloneDeep(this.template.filter(e => e._id == this.activeTemplate)[0])
+          cloneDeep(
+            this.template.filter(e => e.activityId == this.activeTemplate)[0]
+          )
         );
         this.$message.success("已复制到粘贴板");
       } else if (index == 3) {
@@ -162,7 +164,7 @@ export default {
 <style lang="less" scoped>
 .index_right {
   position: relative;
-  background-color: rgb(251, 251, 251);
+  background-color: #fafafa;
   width: 360px;
   height: 100%;
   display: flex;
