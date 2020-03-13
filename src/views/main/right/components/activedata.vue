@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-07 17:55:07
- * @LastEditTime: 2020-03-09 15:22:15
+ * @LastEditTime: 2020-03-13 13:44:27
  * @LastEditors: Please set LastEditors
  * @Description: 组件功能关系
  * @FilePath: /activity_generate/src/views/main/right/components/activedata.vue
@@ -320,7 +320,8 @@ export default {
         }
       }
       .swiper_img {
-        height: 60px;
+        height: 50px;
+        max-width: 180px;
       }
     }
     .swiper_toggle {

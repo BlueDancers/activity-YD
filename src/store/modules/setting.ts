@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { message } from 'ant-design-vue'
 interface setting {
-  copyTemplate: object // 复制暂时存储区
+  copyTemplate: any[] // 复制暂时存储区
   coreinfo: {
     // 右侧菜单
     icon: object
@@ -16,9 +16,7 @@ interface setting {
 const Setting: Module<setting, any> = {
   namespaced: true,
   state: {
-    copyTemplate: {
-      activityId: 0
-    },
+    copyTemplate: [],
     coreinfo: [
       {
         icon: require('@/assets/cancel.png'),
@@ -77,6 +75,8 @@ const Setting: Module<setting, any> = {
   },
   mutations: {
     set_copy(state, data) {
+      console.log(data);
+      
       state.copyTemplate = data
     },
     set_coreinfoItem(state, { index, status }) {

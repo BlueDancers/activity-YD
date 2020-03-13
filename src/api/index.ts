@@ -80,7 +80,8 @@ export function updateObj(
   background: string,
   textName: String,
   name: String,
-  titlePage: string
+  titlePage: string,
+  parentDisp: string
 ) {
   return request({
     url: '/updateObj',
@@ -91,7 +92,8 @@ export function updateObj(
       background,
       textName,
       name,
-      titlePage
+      titlePage,
+      parentDisp
     }
   })
 }

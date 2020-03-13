@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-12 18:29:15
+ * @LastEditTime: 2020-03-13 16:42:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/components/header/index.vue
@@ -54,48 +54,56 @@ export default {
     // 保存项目
     saveObject(type) {
       this.$showLoading();
-      html2canvas(document.querySelector(".core"), {
-        async: true,
-        useCORS: true,
-        scale: 1
-      })
-        .then(canvas => {
-          let dataURL = canvas.toDataURL("image/jpeg");
-          const data = new FormData();
-          data.append(
-            "image",
-            BlobToImgFile(base64ToBlob(dataURL), "image/jpeg")
-          );
-          return upTitleImg(data);
+      // 保存之前取消选中 取消背景线的显示
+      this.$store.commit("setting/toggle_backgroundLine");
+      this.$store.commit("core/clear_template");
+      setTimeout(() => {
+        html2canvas(document.querySelector(".core"), {
+          async: true,
+          useCORS: true,
+          scale: 1
         })
-        .then(res => {
-          // 保存当前页面的配置
-          if (type != 3) {
-            // 保存项目
-            return this.$store
-              .dispatch("core/saveObject", res.data.data.data)
-              .then(() => {
-                this.$hideLoading();
-                if (res.data.code == 200) {
-                  if (type == 1) {
-                    this.objUrl = mobileUrl + res.data.data;
-                    this.$refs["uploadModal"].openModal();
+          .then(canvas => {
+            let dataURL = canvas.toDataURL("image/jpeg");
+            const data = new FormData();
+            data.append(
+              "image",
+              BlobToImgFile(base64ToBlob(dataURL), "image/jpeg")
+            );
+            return upTitleImg(data);
+          })
+          .then(res => {
+            // 保存当前页面的配置
+            if (type != 3) {
+              // 保存项目
+              return this.$store
+                .dispatch("core/saveObject", res.data.data.data)
+                .then(() => {
+                  this.$hideLoading();
+                  if (res.data.code == 200) {
+                    if (type == 1) {
+                      this.objUrl = mobileUrl + res.data.data;
+                      this.$refs["uploadModal"].openModal();
+                    } else {
+                      this.$message.success("发布成功");
+                    }
                   } else {
-                    this.$message.success("发布成功");
+                    this.$message.error(res.data.data);
                   }
-                } else {
-                  this.$message.error(res.data.data);
-                }
-              });
-          } else {
-            // 保存模板
-            this.$refs.setTemplate.openModal(res.data.data.data);
+                });
+            } else {
+              // 保存模板
+              this.$refs.setTemplate.openModal(res.data.data.data);
+              this.$hideLoading();
+            }
+          })
+          .catch(err => {
             this.$hideLoading();
-          }
-        })
-        .catch(err => {
-          this.$message.error("错误" + err);
-        });
+          })
+          .finally(() => {
+            this.$store.commit("setting/toggle_backgroundLine");
+          });
+      }, 1);
     }
   }
 };

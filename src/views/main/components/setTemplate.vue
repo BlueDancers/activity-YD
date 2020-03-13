@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-12 09:27:03
- * @LastEditTime: 2020-03-12 17:59:34
+ * @LastEditTime: 2020-03-13 17:02:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/components/setTemplate.vue
@@ -60,6 +60,7 @@ export default Vue.extend({
         })
         .then(res => {
           this.$message.success(res.data.data);
+          this.$store.dispatch("complate/getAllTemplate");
           this.succModal = false;
           this.tempName = "";
           this.author = "";

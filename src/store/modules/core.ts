@@ -9,7 +9,8 @@ interface CoreInter {
   background: string // 页面背景色1
   parentName: string // 项目名
   parentRouterName: string //项目路由
-  parentId: number
+  parentId: number // 项目id
+  parentDisp: string // 项目描述
   template: string[] // 组件
   activeTemplate: string[] // 选中的数组
   hoverTemplate: string // 显示鼠标划过的组件提示
@@ -29,10 +30,11 @@ const core: Module<CoreInter, any> = {
   state: {
     commWidth: commWidth, // 页面宽度
     commHeight: commHeight, // 页面高度
-    background: 'rgba(255, 255, 255, 1)', // 页面背景色1
+    background: 'rgba(255, 255, 255, 1)', // 页面背景色
     parentName: '', // 项目名
     parentRouterName: '', // 项目路由
-    parentId: 0, // 组件id
+    parentId: 0, // 项目id
+    parentDisp: '', // 项目描述
     template: [], // 组件
     activeTemplate: [], // 选中的数组
     hoverTemplate: '', // 显示鼠标划过的组件提示
@@ -51,8 +53,12 @@ const core: Module<CoreInter, any> = {
     set_objectName(state, name) {
       state.parentName = name
     },
+    // 保存项目路由名
     set_parentRouterName(state, name) {
       state.parentRouterName = name
+    },
+    set_parentDisp(state, disp) {
+      state.parentDisp = disp
     },
     // 保存当前项目id
     set_objectId(state, id) {
@@ -233,13 +239,23 @@ const core: Module<CoreInter, any> = {
       }, [])
       state.activeTemplate = []
     },
+    deleteActiveComplate(state) {
+      let list: any[] = JSON.parse(JSON.stringify(state.template))
+      let template: any[] = []
+      list.map(item => {
+        if (!state.activeTemplate.includes(item.activityId)) {
+          template.push(item)
+        }
+      })
+      state.template = template
+    },
     // 存储当前标线位置
     setMarking(state) {
       let marking: any = {
         x: [], // x轴上面该出现标线的
         y: [] // y轴上面该出现标线的
       }
-      let offset: any[] = []
+      let offset: any[] = [1] // 拓展值
       state.template.map((res: any) => {
         if (!state.activeTemplate.includes(res.activityId)) {
           // 偏移绝对值
@@ -428,8 +444,8 @@ const core: Module<CoreInter, any> = {
       state.template.map((res: any) => {
         if (res.activityId == state.activeTemplate) {
           res.option.item.push({
-            img: 'https://images.591wsh.com/2020/02/02/home5.png',
-            link: 'http://baidu.com'
+            img: require('@/assets/750-188.png'),
+            link: ''
           })
         }
       })
@@ -471,7 +487,8 @@ const core: Module<CoreInter, any> = {
         parentRouterName,
         commHeight,
         template,
-        background
+        background,
+        parentDisp
       } = state
       let saveActivityapi = saveActivity(parentId, parentName, template).then(
         e => e
@@ -482,7 +499,8 @@ const core: Module<CoreInter, any> = {
         background,
         parentName,
         parentRouterName,
-        titlePage
+        titlePage,
+        parentDisp
       ).then(e => e)
       const objandSave = await Promise.all([
         updateObjHeightapi,
@@ -501,11 +519,12 @@ const core: Module<CoreInter, any> = {
             e.data.data.data.map(e => {
               template.push({ ...e, editStatus: false })
             })
-            state.template = template
-            state.commHeight = e.data.data.height
-            state.background = e.data.data.background
-            state.parentName = e.data.data.textName
-            state.parentRouterName = e.data.data.name
+            commit('update_template', template)
+            commit('updateCommHeigth', e.data.data.height)
+            commit('updateBackground', e.data.data.background)
+            commit('set_objectName', e.data.data.textName)
+            commit('set_parentRouterName', e.data.data.name)
+            commit('set_parentDisp', e.data.data.disp)
             resolve('数据查询完成')
           }
         })

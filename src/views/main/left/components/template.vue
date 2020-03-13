@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-12 23:43:19
+ * @LastEditTime: 2020-03-13 17:04:22
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/components/template.vue
@@ -15,7 +15,7 @@
             <div class="show_open_page">
               <img class="show_img" :src="item.titlePage" alt />
               <div class="template_info">
-                 <div class="info_item">
+                <div class="info_item">
                   <div class="info_left">模板名称:</div>
                   <div class="info_right">{{item.name}}</div>
                 </div>
@@ -27,7 +27,15 @@
               <a-button class="touch_template" type="primary" @click="selectTemplate(item)">选择</a-button>
             </div>
           </template>
-          <a-icon class="delete_icon" @click="deleteTemplate(item)" type="close-circle" />
+          <a-popconfirm
+            title="模板删除后不可恢复,确认删除吗?"
+            @confirm="deleteTemplate(item)"
+            okText="删除"
+            cancelText="取消"
+          >
+            <a-icon class="delete_icon" type="close-circle" />
+          </a-popconfirm>
+
           <img class="item_img" :src="item.titlePage" alt />
         </a-popover>
       </div>
@@ -53,6 +61,7 @@ export default Vue.extend({
         this.$store.commit("core/updateCommHeigth", item.height);
         this.$store.commit("core/updateBackground", item.background);
         this.$store.commit("core/update_template", res.data.data);
+        this.$message.success("模板应用成功");
       });
     },
     deleteTemplate(item) {

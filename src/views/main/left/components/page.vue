@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-13 00:07:04
+ * @LastEditTime: 2020-03-13 11:48:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/components/page.vue
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="page_form_item">
-          <div class="item_left">页面背景色:</div>
+          <div class="item_left">背景色:</div>
           <div class="item_right">
             <el-color-picker v-model="background" show-alpha></el-color-picker>
           </div>
@@ -39,6 +39,12 @@
           <div class="item_left">路由名:</div>
           <div class="item_right">
             <a-input v-model="parentRouterName" placeholder="请输入路由名"></a-input>
+          </div>
+        </div>
+        <div class="page_form_item">
+          <div class="item_left">项目描述:</div>
+          <div class="item_right">
+            <a-textarea v-model="parentDisp" placeholder="请输入描述" :rows="2" />
           </div>
         </div>
       </div>
@@ -76,6 +82,14 @@ export default {
       set(value) {
         this.$store.commit("core/set_parentRouterName", value);
       }
+    },
+    parentDisp: {
+      get() {
+        return this.$store.state.core.parentDisp;
+      },
+      set(value) {
+        this.$store.commit("core/set_parentDisp", value);
+      }
     }
   },
   methods: {
@@ -107,7 +121,9 @@ export default {
         display: flex;
         align-items: center;
         .item_left {
+          text-align: right;
           margin-right: 10px;
+          width: 70px;
         }
         .item_right {
           width: 160px;

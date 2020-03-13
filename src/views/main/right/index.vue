@@ -110,7 +110,9 @@ export default {
       }
     },
     copyTemplate() {
-      if (this.copyTemplate.activityId != null) {
+      console.log(this.copyTemplate);
+
+      if (this.copyTemplate.length) {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 3,
           status: true
@@ -131,20 +133,23 @@ export default {
         // 反撤销
         this.$emit("coreSetting", "uncancel");
       } else if (index == 2) {
-        this.$store.commit(
-          "setting/set_copy",
-          cloneDeep(
-            this.template.filter(e => e.activityId == this.activeTemplate)[0]
-          )
-        );
+        let copyList = [];
+        this.activeTemplate.map(activityId => {
+          copyList.push(
+            cloneDeep(this.template.filter(e => e.activityId == activityId))[0]
+          );
+        });
+        this.$store.commit("setting/set_copy", copyList);
         this.$message.success("已复制到粘贴板");
       } else if (index == 3) {
-        this.$store.commit(
-          "core/set_tempLate",
-          cloneDeep(baseComplate(this.$store.state.core, this.copyTemplate))
-        );
+        this.copyTemplate.map(data => {
+          this.$store.commit(
+            "core/set_tempLate",
+            cloneDeep(baseComplate(this.$store.state.core, data))
+          );
+        });
       } else if (index == 4) {
-        this.$store.commit("core/deleteCompLate", this.activeTemplate[0]);
+        this.$store.commit("core/deleteActiveComplate");
       } else if (index == 5) {
         this.$store.commit("setting/toggle_backgroundLine");
       } else if (index == 6) {
