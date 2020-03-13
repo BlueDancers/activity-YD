@@ -490,9 +490,11 @@ const core: Module<CoreInter, any> = {
         background,
         parentDisp
       } = state
-      let saveActivityapi = saveActivity(parentId, parentName, template).then(
-        e => e
-      )
+      let saveActivityapi = saveActivity(
+        parentId,
+        parentRouterName,
+        template
+      ).then(e => e)
       let updateObjHeightapi = updateObj(
         parentId,
         commHeight,

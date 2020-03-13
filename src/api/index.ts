@@ -37,12 +37,12 @@ export function deleteObj(name) {
 
 /**
  * 保存项目信息
- * @param {string} parentName 项目id
+ * @param {string} parentRouterName 项目路由名
  * @param {Array} template 项目模板信息
  */
 export function saveActivity(
   parentId: number,
-  parentName: string,
+  parentRouterName: string,
   template: any[]
 ) {
   return request({
@@ -50,7 +50,7 @@ export function saveActivity(
     method: 'post',
     data: {
       parentId,
-      parentName,
+      parentRouterName,
       template
     }
   })
