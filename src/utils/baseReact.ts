@@ -237,13 +237,16 @@ export function baseComplate(store: any, data: any): baseNode {
     editStatus: false,
     text: data.text,
     name: data.name,
-    css: data.css
+    css: data.css,
+    animation: data.animation
   }
   if (data.name == 'base-input') {
     compData = {
       ...compData,
-      placeholder: data.placeholder,
-      inputName: `default${store.template.length}`
+      option: {
+        placeholder: data.option.placeholder,
+        inputName: `default${store.template.length}`
+      }
     }
   }
   if (data.name == 'base-div') {
@@ -273,12 +276,12 @@ export function baseComplate(store: any, data: any): baseNode {
         autoplay: '2000', // 轮播间隔
         item: [
           {
-            img: 'https://images.591wsh.com/2020/02/02/home5.png',
-            link: 'http://baidu.com'
+            img: require('@/assets/750-188.png'),
+            link: ''
           },
           {
-            img: 'https://images.591wsh.com/2020/02/02/home5.png',
-            link: 'http://baidu.com'
+            img: require('@/assets/750-188.png'),
+            link: ''
           }
         ]
       }
