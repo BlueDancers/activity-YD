@@ -211,6 +211,7 @@ export default Vue.extend({
 .main {
   .main_header {
     z-index: 2;
+    box-sizing: border-box;
     height: 50px;
     display: flex;
     align-items: center;
@@ -323,7 +324,7 @@ export default Vue.extend({
     transition: all 0.3s;
     &:hover {
       transition: all 0.3s;
-      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      box-shadow: 0 3px 8px rgba(0, 21, 41, 0.08);
       margin-top: 17px;
     }
   }

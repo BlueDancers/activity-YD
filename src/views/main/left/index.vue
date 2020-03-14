@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-12 23:39:49
+ * @LastEditTime: 2020-03-14 00:08:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/index.vue

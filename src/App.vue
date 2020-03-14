@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-10 18:22:31
- * @LastEditors: your name
+ * @LastEditTime: 2020-03-14 00:30:40
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/App.vue
  -->
@@ -36,6 +36,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: 100%;
+   overflow-x: hidden;
 }
 #nav {
   padding: 30px;
@@ -57,12 +58,6 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-body {
-  -ms-overflow-style: none;
-  height: 100%;
-  width: calc(100vw + 18px);
-  overflow: auto;
-}
 .baseComplate {
   position: absolute;
   user-select: none;

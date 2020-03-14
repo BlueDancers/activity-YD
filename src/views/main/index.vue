@@ -131,6 +131,7 @@ export default {
     height: 94%;
     display: flex;
     justify-content: space-between;
+   
     .index_center {
       padding: 20px 0;
       position: relative;
@@ -148,7 +149,8 @@ export default {
       .index_center_header {
         display: flex;
         justify-content: center;
-        border: 1px solid #1890ff;
+        border: 1px solid #4190F7;
+        border-radius: 6px;
         font-size: 10px;
         line-height: 20px;
         height: 26px;
@@ -166,11 +168,14 @@ export default {
         .header_dev {
           text-align: center;
           padding: 3px 5px;
-          border-right: 1px solid #1890ff;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
         }
         .header_prod {
           text-align: center;
           padding: 3px 5px;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
         }
       }
     }
