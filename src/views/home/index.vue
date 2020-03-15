@@ -40,15 +40,15 @@
         </div>
         <div class="item_disp">
           <p class="name_con">
-            项目名:
+            项目名：
             <span class="name">{{ item.name }}</span>
           </p>
           <p class="disp_con">
-            描述:
+            描述&nbsp;&nbsp; ：
             <span class="disp">{{ item.disp }}</span>
           </p>
           <p class="time_con">
-            时间:
+            时间&nbsp;&nbsp; ：
             <span class="time">{{ item.time }}</span>
           </p>
         </div>
@@ -224,7 +224,9 @@ export default Vue.extend({
     flex-wrap: wrap;
     margin: 0px 4%;
     margin-top: 8px;
+    
     .item {
+      overflow: hidden;
       .base_item();
       .item_img {
         width: 100%;
@@ -238,30 +240,44 @@ export default Vue.extend({
       }
       .base_img {
         // height: 300px;
+        height: 100%;
+        margin-top: -10px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
       
       .item_disp {
-        margin-left: 10px;
+        padding-left: 22px;
+        padding-right: 1em;
+        // padding-right: 28px;
         border-top: 1px solid #e8e8ea;
         // padding-top: 10px;
+        color:black;
+        white-space: pre-wrap;
+        vertical-align:middle;
         .name_con {
           font-size: 16px;
           margin-bottom: 5px;
           .name {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
           }
         }
         .disp_con {
           // color: #8d8d8d;
-          margin-bottom: 5px;
+          display: -webkit-box;
+          word-break: break-all;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          line-height: 15px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+           margin-bottom: 5px;
         }
         .time_con {
           // color: #8d8d8d;
-          margin-bottom: 5px;
+          // margin-bottom: 5px;
         }
       }
       .item_add {
@@ -336,10 +352,8 @@ export default Vue.extend({
     transition: all 0.3s;
     &:hover {
       transition: all 0.3s;
-       color: #1890ff;
-      // margin-top: 17px;
-      border:1px solid currentColor;
-      transform: scale(1.1,1.1);
+       box-shadow: 1px 5px 5px #b4b4b4;
+      transform: scale(1.05,1.08);
     }
   }
     @media screen and (min-width: 1680px){
@@ -347,20 +361,14 @@ export default Vue.extend({
         width: 18%;
         min-width: 250px;
         height: 350px;
-      .base_img {
-        height: 80%;
-        }
         .item_disp {
            padding-top: 10px;
           .name_con {
           font-size: 16px;
-          margin-bottom: 5px;
         }
         .disp_con {
-          margin-bottom: 5px;
         }
         .time_con {
-          margin-bottom: 5px;
         }
 
         }
@@ -379,21 +387,15 @@ export default Vue.extend({
       .item{
         width: 18%;
         min-width: 200px;
-        height: 310px;
-       .base_img {
-        height: 80%;
-        }
+        height: 322px;
         .item_disp {
            padding-top: 10px;
           .name_con {
           font-size: 16px;
-          margin-bottom: 5px;
         }
         .disp_con {
-          margin-bottom: 5px;
         }
         .time_con {
-          margin-bottom: 5px;
         }
 
         }
@@ -412,9 +414,6 @@ export default Vue.extend({
         width: 31%;
         min-width: 160px;
         height: 350px;
-       .base_img {
-        height: 80%;
-        }
         .item_disp {
            padding-top: 10px;
           .name_con {
@@ -443,9 +442,6 @@ export default Vue.extend({
         width: 95%;
         // min-width: 400px;
         height: 350px;
-      .base_img {
-        height: 80%;
-        }
         .item_disp {
            padding-top: 0px;
            line-height: 2em;
