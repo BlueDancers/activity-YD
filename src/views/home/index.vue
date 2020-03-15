@@ -3,7 +3,7 @@
     <div class="main_header">
       <div class="header_left">
         <img class="left_logo" src="@/assets/logo.png" alt />
-        <span>易动</span>
+        <span class="item_text">易动</span>
       </div>
       <div class="header_right">
         <div class="right_item" @click="gotoUrl('user')">
@@ -27,7 +27,7 @@
     </div>
     <div class="main_list">
       <div class="item pointer" @click="createObject">
-       <div class="base_img">
+        <div class="base_img">
           <div class="base_img add"></div>
         </div>
         <div class="item_add">新建项目</div>
@@ -68,39 +68,15 @@
     </div>
 
     <!-- 增加弹窗 -->
-    <a-modal
-      title="增加项目"
-      :visible="Objectvisible"
-      okText="确认"
-      cancelText="取消"
-      @ok="objSuccess"
-      :confirmLoading="confirmLoading"
-      @cancel="obFall"
-    >
+    <a-modal title="增加项目" :visible="Objectvisible" okText="确认" cancelText="取消" @ok="objSuccess" :confirmLoading="confirmLoading" @cancel="obFall">
       <a-form :form="objform">
-        <a-form-item
-          label="网页名称"
-          :label-col="formTailLayout.labelCol"
-          :wrapper-col="formTailLayout.wrapperCol"
-          :validate-status="textNameStatus ? '' : 'error'"
-          help="必填 浏览器头部显示的名字"
-        >
+        <a-form-item label="网页名称" :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol" :validate-status="textNameStatus ? '' : 'error'" help="必填 浏览器头部显示的名字">
           <a-input placeholder="请填写网页名称" v-model="objform.textName" />
         </a-form-item>
-        <a-form-item
-          label="路由名称"
-          :label-col="formTailLayout.labelCol"
-          :wrapper-col="formTailLayout.wrapperCol"
-          :validate-status="nameStatus ? '' : 'error'"
-          help="必填 活动页网址信息"
-        >
+        <a-form-item label="路由名称" :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol" :validate-status="nameStatus ? '' : 'error'" help="必填 活动页网址信息">
           <a-input placeholder="路由只能是数字与英文" v-model="objform.name" />
         </a-form-item>
-        <a-form-item
-          label="项目描述"
-          :label-col="formTailLayout.labelCol"
-          :wrapper-col="formTailLayout.wrapperCol"
-        >
+        <a-form-item label="项目描述" :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol">
           <a-input placeholder="项目的一些描述信息" type="textarea" v-model="objform.disp" />
         </a-form-item>
       </a-form>
@@ -238,6 +214,7 @@ export default Vue.extend({
         margin-left: 20px;
         .item_text {
           margin-left: 5px;
+          white-space: pre;
         }
       }
     }
@@ -245,34 +222,31 @@ export default Vue.extend({
   .main_list {
     display: flex;
     flex-wrap: wrap;
-    margin: 0px 8%;
+    margin: 0px 4%;
     margin-top: 8px;
     .item {
       .base_item();
       .item_img {
         width: 100%;
-        height: 200px;
         text-align: center;
-        line-height: 200px;
-        .img {
-          height: 180px;
-        }
+        // height: 200px;
+        
+        // line-height: 200px;
+        // .img {
+        //   height: 180px;
+        // }
       }
       .base_img {
-        height: 300px;
+        // height: 300px;
         display: flex;
         justify-content: center;
         align-items: center;
-        img {
-          width: 20px;
-          height: 20px;
-        }
       }
       
       .item_disp {
         margin-left: 10px;
         border-top: 1px solid #e8e8ea;
-        padding-top: 10px;
+        // padding-top: 10px;
         .name_con {
           font-size: 16px;
           margin-bottom: 5px;
@@ -282,11 +256,11 @@ export default Vue.extend({
           }
         }
         .disp_con {
-          color: #8d8d8d;
+          // color: #8d8d8d;
           margin-bottom: 5px;
         }
         .time_con {
-          color: #8d8d8d;
+          // color: #8d8d8d;
           margin-bottom: 5px;
         }
       }
@@ -320,18 +294,20 @@ export default Vue.extend({
   }
       .add {
       color:currentColor;
-      margin-top: -10px;
+      // margin-top: -10px;
       position: relative;
+      writing-mode: vertical-lr;
+        margin: auto;
       &::after{
-    content: '';
-    position: absolute;
-    border-radius:10px ;
-    left: 50%;
-    top: 50%;
-    height: 80px;
-    margin-left: -5px;
-    margin-top: -40px;
-    border-left: 10px solid;
+        content: '';
+         position: absolute;
+          border-radius:10px ;
+        left: 50%;
+        top: 50%;
+        height: 80px;
+        margin-left: -5px;
+        margin-top: -40px;
+         border-left: 10px solid;
     }
     &::before{
       content: '';
@@ -352,11 +328,9 @@ export default Vue.extend({
     position: relative;
     border: 1px solid #e8e8ea;
     box-sizing: border-box;
-    width: 18%;
-    min-width: 300px;
-    height: 350px;
-    margin: 0 1%;
-    margin-top: 20px;
+        margin: 0 1%;
+      margin-top: 20px;
+
     background-color: white;
 
     border-radius: 5px;
@@ -369,11 +343,136 @@ export default Vue.extend({
       transform: scale(1.1,1.1);
     }
   }
+    @media screen and (min-width: 1680px){
+      .item{
+        width: 18%;
+        min-width: 250px;
+        height: 350px;
+      .base_img {
+        height: 80%;
+        }
+        .item_disp {
+           padding-top: 10px;
+          .name_con {
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        .disp_con {
+          margin-bottom: 5px;
+        }
+        .time_con {
+          margin-bottom: 5px;
+        }
 
+        }
+      }
+       .item_img {
+        width: 100%;
+        height: 200px;
+        text-align: center;
+        line-height: 200px;
+        .img {
+          height: 180px;
+        }
+       }
+    }
+    @media screen and (min-width: 1280px) and (max-width: 1680px){
+      .item{
+        width: 18%;
+        min-width: 200px;
+        height: 310px;
+       .base_img {
+        height: 80%;
+        }
+        .item_disp {
+           padding-top: 10px;
+          .name_con {
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        .disp_con {
+          margin-bottom: 5px;
+        }
+        .time_con {
+          margin-bottom: 5px;
+        }
+
+        }
+        }
+       .item_img {
+        height: 180px;
+        line-height: 180px;
+        overflow: hidden;
+        .img {
+          height: 165px;
+        }
+       }
+    }
+    @media screen and (min-width: 600px) and( max-width: 1280px){
+      .item{
+        width: 31%;
+        min-width: 160px;
+        height: 350px;
+       .base_img {
+        height: 80%;
+        }
+        .item_disp {
+           padding-top: 10px;
+          .name_con {
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        .disp_con {
+          margin-bottom: 5px;
+        }
+        .time_con {
+          margin-bottom: 5px;
+        }
+
+        }
+        }
+       .item_img {
+        height: 200px;
+        line-height: 200px;
+        .img {
+          height: 180px;
+        }
+       }
+    }
+    @media screen and (max-width: 600px) {
+      .item{
+        width: 95%;
+        // min-width: 400px;
+        height: 350px;
+      .base_img {
+        height: 80%;
+        }
+        .item_disp {
+           padding-top: 0px;
+           line-height: 2em;
+          .name_con {
+          font-size: 16px;
+        }
+        .disp_con {
+        }
+        .time_con {
+        }
+
+        }
+      }
+       .item_img {
+        height: 180px;
+        line-height: 180px;
+        overflow: hidden;
+        .img {
+          height: 165px;
+        }
+       }
+    }
 }
 </style>
 <style>
   .ant-form-item-label{
-  margin-left:3em; 
+  margin-left:3em;
 }
 </style>
