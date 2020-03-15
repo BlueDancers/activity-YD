@@ -275,7 +275,6 @@ export default Vue.extend({
         text-align: center;
         background-color: #fafafa;
       }
-      
       .active {
         display: flex;
         cursor: pointer;
