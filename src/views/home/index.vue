@@ -27,8 +27,8 @@
     </div>
     <div class="main_list">
       <div class="item pointer" @click="createObject">
-        <div class="base_img">
-          <img src="../../assets/add.png" alt />
+       <div class="base_img">
+          <div class="base_img add"></div>
         </div>
         <div class="item_add">新建项目</div>
       </div>
@@ -245,6 +245,8 @@ export default Vue.extend({
   .main_list {
     display: flex;
     flex-wrap: wrap;
+    margin: 0px 8%;
+    margin-top: 8px;
     .item {
       .base_item();
       .item_img {
@@ -266,6 +268,7 @@ export default Vue.extend({
           height: 20px;
         }
       }
+      
       .item_disp {
         margin-left: 10px;
         border-top: 1px solid #e8e8ea;
@@ -298,6 +301,7 @@ export default Vue.extend({
         text-align: center;
         background-color: #fafafa;
       }
+      
       .active {
         display: flex;
         cursor: pointer;
@@ -312,6 +316,33 @@ export default Vue.extend({
         text-align: center;
         background-color: #fafafa;
       }
+    }
+  }
+      .add {
+      color:currentColor;
+      margin-top: -10px;
+      position: relative;
+      &::after{
+    content: '';
+    position: absolute;
+    border-radius:10px ;
+    left: 50%;
+    top: 50%;
+    height: 80px;
+    margin-left: -5px;
+    margin-top: -40px;
+    border-left: 10px solid;
+    }
+    &::before{
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 80px;
+      margin-left: -40px;
+      margin-top: -5px;
+    border-radius:10px ;
+      border-top: 10px solid;
     }
   }
   .pointer {
@@ -332,9 +363,17 @@ export default Vue.extend({
     transition: all 0.3s;
     &:hover {
       transition: all 0.3s;
-      box-shadow: 0 3px 8px rgba(0, 21, 41, 0.08);
-      margin-top: 17px;
+       color: #1890ff;
+      // margin-top: 17px;
+      border:1px solid currentColor;
+      transform: scale(1.1,1.1);
     }
   }
+
+}
+</style>
+<style>
+  .ant-form-item-label{
+  margin-left:3em; 
 }
 </style>
