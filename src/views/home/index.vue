@@ -1,7 +1,10 @@
 <template>
   <div class="main">
     <div class="main_header">
-      <div class="header_left">易动编辑器</div>
+      <div class="header_left">
+        <img class="left_logo" src="@/assets/logo.png" alt />
+        <span>易动</span>
+      </div>
       <div class="header_right">
         <div class="right_item" @click="gotoUrl('user')">
           <a-icon type="github" />
@@ -220,6 +223,11 @@ export default Vue.extend({
     color: white;
     padding: 0 20px;
     .header_left {
+      display: flex;
+      align-items: center;
+      .left_logo {
+        width: 30px;
+      }
     }
     .header_right {
       display: flex;

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-13 16:42:38
+ * @LastEditTime: 2020-03-15 11:42:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/components/header/index.vue
@@ -10,7 +10,10 @@
   <div class="header_con">
     <div class="header_back"></div>
     <div class="header">
-      <div @click="gotoHome" class="left_header">易动编辑器</div>
+      <div @click="gotoHome" class="left_header">
+        <img class="left_logo" src="@/assets/logo.png" alt="">
+        <span>易动</span>
+      </div>
       <!-- 左侧为操作栏 -->
       <div class="right_header">
         <a-button @click="saveObject(3)" type="primary" icon="book" class="right_header_item">保存为模板</a-button>
@@ -137,6 +140,11 @@ export default {
     .left_header {
       cursor: pointer;
       margin-left: 20px;
+      display: flex;
+      align-items: center;
+      .left_logo {
+        width: 30px;
+      }
     }
     .right_header {
       margin-right: 20px;
