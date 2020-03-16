@@ -68,15 +68,39 @@
     </div>
 
     <!-- 增加弹窗 -->
-    <a-modal title="增加项目" :visible="Objectvisible" okText="确认" cancelText="取消" @ok="objSuccess" :confirmLoading="confirmLoading" @cancel="obFall">
+    <a-modal
+      title="增加项目"
+      :visible="Objectvisible"
+      okText="确认"
+      cancelText="取消"
+      @ok="objSuccess"
+      :confirmLoading="confirmLoading"
+      @cancel="obFall"
+    >
       <a-form :form="objform">
-        <a-form-item label="网页名称" :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol" :validate-status="textNameStatus ? '' : 'error'" help="必填 浏览器头部显示的名字">
+        <a-form-item
+          label="网页名称"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          :validate-status="textNameStatus ? '' : 'error'"
+          help="必填 浏览器头部显示的名字"
+        >
           <a-input placeholder="请填写网页名称" v-model="objform.textName" />
         </a-form-item>
-        <a-form-item label="路由名称" :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol" :validate-status="nameStatus ? '' : 'error'" help="必填 活动页网址信息">
+        <a-form-item
+          label="路由名称"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          :validate-status="nameStatus ? '' : 'error'"
+          help="必填 活动页网址信息"
+        >
           <a-input placeholder="路由只能是数字与英文" v-model="objform.name" />
         </a-form-item>
-        <a-form-item label="项目描述" :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol">
+        <a-form-item
+          label="项目描述"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+        >
           <a-input placeholder="项目的一些描述信息" type="textarea" v-model="objform.disp" />
         </a-form-item>
       </a-form>
@@ -224,7 +248,7 @@ export default Vue.extend({
     flex-wrap: wrap;
     margin: 0px 4%;
     margin-top: 8px;
-    
+
     .item {
       overflow: hidden;
       .base_item();
@@ -232,7 +256,7 @@ export default Vue.extend({
         width: 100%;
         text-align: center;
         // height: 200px;
-        
+
         // line-height: 200px;
         // .img {
         //   height: 180px;
@@ -246,16 +270,16 @@ export default Vue.extend({
         justify-content: center;
         align-items: center;
       }
-      
+
       .item_disp {
         padding-left: 22px;
         padding-right: 1em;
         // padding-right: 28px;
         border-top: 1px solid #e8e8ea;
         // padding-top: 10px;
-        color:black;
+        color: black;
         white-space: pre-wrap;
-        vertical-align:middle;
+        vertical-align: middle;
         .name_con {
           font-size: 16px;
           margin-bottom: 5px;
@@ -273,7 +297,7 @@ export default Vue.extend({
           line-height: 15px;
           overflow: hidden;
           text-overflow: ellipsis;
-           margin-bottom: 5px;
+          margin-bottom: 5px;
         }
         .time_con {
           // color: #8d8d8d;
@@ -307,32 +331,32 @@ export default Vue.extend({
       }
     }
   }
-      .add {
-      color:currentColor;
-      // margin-top: -10px;
-      position: relative;
-      writing-mode: vertical-lr;
-        margin: auto;
-      &::after{
-        content: '';
-         position: absolute;
-          border-radius:10px ;
-        left: 50%;
-        top: 50%;
-        height: 80px;
-        margin-left: -5px;
-        margin-top: -40px;
-         border-left: 10px solid;
+  .add {
+    color: currentColor;
+    // margin-top: -10px;
+    position: relative;
+    writing-mode: vertical-lr;
+    margin: auto;
+    &::after {
+      content: "";
+      position: absolute;
+      border-radius: 10px;
+      left: 50%;
+      top: 50%;
+      height: 80px;
+      margin-left: -5px;
+      margin-top: -40px;
+      border-left: 10px solid;
     }
-    &::before{
-      content: '';
+    &::before {
+      content: "";
       position: absolute;
       left: 50%;
       top: 50%;
       width: 80px;
       margin-left: -40px;
       margin-top: -5px;
-    border-radius:10px ;
+      border-radius: 10px;
       border-top: 10px solid;
     }
   }
@@ -343,8 +367,8 @@ export default Vue.extend({
     position: relative;
     border: 1px solid #e8e8ea;
     box-sizing: border-box;
-        margin: 0 1%;
-      margin-top: 20px;
+    margin: 0 1%;
+    margin-top: 20px;
 
     background-color: white;
 
@@ -352,122 +376,118 @@ export default Vue.extend({
     transition: all 0.3s;
     &:hover {
       transition: all 0.3s;
-       box-shadow: 1px 5px 5px #b4b4b4;
-      transform: scale(1.05,1.08);
+      box-shadow: 2px 3px 8px rgb(219, 219, 219);
+      transform: scale(1.05, 1.08);
     }
   }
-    @media screen and (min-width: 1680px){
-      .item{
-        width: 18%;
-        min-width: 250px;
-        height: 350px;
-        .item_disp {
-           padding-top: 10px;
-          .name_con {
+  @media screen and (min-width: 1680px) {
+    .item {
+      width: 18%;
+      min-width: 250px;
+      height: 350px;
+      .item_disp {
+        padding-top: 10px;
+        .name_con {
           font-size: 16px;
         }
         .disp_con {
         }
         .time_con {
-        }
-
         }
       }
-       .item_img {
-        width: 100%;
-        height: 200px;
-        text-align: center;
-        line-height: 200px;
-        .img {
-          height: 180px;
-        }
-       }
     }
-    @media screen and (min-width: 1280px) and (max-width: 1680px){
-      .item{
-        width: 18%;
-        min-width: 200px;
-        height: 322px;
-        .item_disp {
-           padding-top: 10px;
-          .name_con {
-          font-size: 16px;
-        }
-        .disp_con {
-        }
-        .time_con {
-        }
-
-        }
-        }
-       .item_img {
+    .item_img {
+      width: 100%;
+      height: 200px;
+      text-align: center;
+      line-height: 200px;
+      .img {
         height: 180px;
-        line-height: 180px;
-        overflow: hidden;
-        .img {
-          height: 165px;
-        }
-       }
+      }
     }
-    @media screen and (min-width: 600px) and( max-width: 1280px){
-      .item{
-        width: 31%;
-        min-width: 160px;
-        height: 350px;
-        .item_disp {
-           padding-top: 10px;
-          .name_con {
-          font-size: 16px;
-          margin-bottom: 5px;
-        }
-        .disp_con {
-          margin-bottom: 5px;
-        }
-        .time_con {
-          margin-bottom: 5px;
-        }
-
-        }
-        }
-       .item_img {
-        height: 200px;
-        line-height: 200px;
-        .img {
-          height: 180px;
-        }
-       }
-    }
-    @media screen and (max-width: 600px) {
-      .item{
-        width: 95%;
-        // min-width: 400px;
-        height: 350px;
-        .item_disp {
-           padding-top: 0px;
-           line-height: 2em;
-          .name_con {
+  }
+  @media screen and (min-width: 1280px) and (max-width: 1680px) {
+    .item {
+      width: 18%;
+      min-width: 200px;
+      height: 322px;
+      .item_disp {
+        padding-top: 10px;
+        .name_con {
           font-size: 16px;
         }
         .disp_con {
         }
         .time_con {
-        }
-
         }
       }
-       .item_img {
-        height: 180px;
-        line-height: 180px;
-        overflow: hidden;
-        .img {
-          height: 165px;
-        }
-       }
     }
+    .item_img {
+      height: 180px;
+      line-height: 180px;
+      overflow: hidden;
+      .img {
+        height: 165px;
+      }
+    }
+  }
+  @media screen and (min-width: 600px) and( max-width: 1280px) {
+    .item {
+      width: 31%;
+      min-width: 160px;
+      height: 350px;
+      .item_disp {
+        padding-top: 10px;
+        .name_con {
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+        .disp_con {
+          margin-bottom: 5px;
+        }
+        .time_con {
+          margin-bottom: 5px;
+        }
+      }
+    }
+    .item_img {
+      height: 200px;
+      line-height: 200px;
+      .img {
+        height: 180px;
+      }
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .item {
+      width: 95%;
+      // min-width: 400px;
+      height: 350px;
+      .item_disp {
+        padding-top: 0px;
+        line-height: 2em;
+        .name_con {
+          font-size: 16px;
+        }
+        .disp_con {
+        }
+        .time_con {
+        }
+      }
+    }
+    .item_img {
+      height: 180px;
+      line-height: 180px;
+      overflow: hidden;
+      .img {
+        height: 165px;
+      }
+    }
+  }
 }
 </style>
 <style>
-  .ant-form-item-label{
-  margin-left:3em;
+.ant-form-item-label {
+  margin-left: 3em;
 }
 </style>
