@@ -131,7 +131,9 @@ export function baseText(store: any): baseNode {
       background: 'rgba(255, 255, 255, 0)',
       border: 'none',
       color: 'rgba(0, 0, 0, 1)',
-      fontSize: 24
+      fontSize: 24,
+      fontWeight: '400',
+      fontStyle: 'normal'
     },
     animation: {
       animationName: '',

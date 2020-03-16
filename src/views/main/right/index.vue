@@ -25,7 +25,7 @@
       <a-tab-pane tab="属性" key="1">
         <attributes-page />
       </a-tab-pane>
-      <a-tab-pane tab="功能" key="2">
+      <a-tab-pane tab="数据" key="2">
         <activedata-page />
       </a-tab-pane>
       <a-tab-pane tab="动画" key="3">

@@ -45,6 +45,18 @@
           <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.zIndex" />
         </div>
       </div>
+      <div class="attr_item">
+        <div class="attr_list_left">高度:</div>
+        <div class="attr_list_right">
+          <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.height" />
+        </div>
+      </div>
+      <div class="attr_item">
+        <div class="attr_list_left">宽度:</div>
+        <div class="attr_list_right">
+          <a-input-number class="attr_mintextarea" placeholder="请输入宽度" v-model="core.css.width" />
+        </div>
+      </div>
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
       <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
@@ -69,6 +81,17 @@
             :max="100"
           ></a-slider>
           <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.fontSize" />
+        </div>
+      </div>
+      <div class="attr_item" v-if="showFontsize(core)">
+        <div class="attr_list_left">字体粗度:</div>
+        <div class="attr_list_right">
+          <a-slider class="attr_slider" v-model="core.css.fontWeight" :min="100" :max="900"></a-slider>
+          <a-input-number
+            class="attr_mintextarea"
+            placeholder="请输入数字"
+            v-model="core.css.fontWeight"
+          />
         </div>
       </div>
       <!-- 一些共有属性 -->
