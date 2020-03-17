@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-12 23:23:08
+ * @LastEditTime: 2020-03-17 18:23:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/store/modules/complate.ts
@@ -60,6 +60,7 @@ const complate: Module<Complate, any> = {
       })
     },
     deleteCompName({ dispatch }, id) {
+      console.log(id)
       deleteSingComp(id).then(res => {
         message.success(res.data.data)
         dispatch('getSingList')

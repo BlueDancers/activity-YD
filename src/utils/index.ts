@@ -21,14 +21,11 @@ export function handleStyle(css: any) {
     'paddingLeft',
     'paddingRight'
   ]
-  const animation = [
-    'animationDuration',
-    'animationDelay'
-  ]
+  const animation = ['animationDuration', 'animationDelay']
   for (const key in css) {
     if (process.includes(key)) {
       cssUsable[key] = `${css[key]}px`
-    } else if(animation.includes(key)) {
+    } else if (animation.includes(key)) {
       cssUsable[key] = `${css[key]}ms`
     } else {
       cssUsable[key] = css[key]
@@ -63,7 +60,6 @@ export function initMouse(state) {
       const data = {
         x: e.movementX,
         y: e.movementY
-        // type: this.roundDownState
       }
       // 拖拽子元素分为两种情况
       // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)

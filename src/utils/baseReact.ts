@@ -126,7 +126,7 @@ export function baseText(store: any): baseNode {
       top: 10 + dynamic,
       left: 10 + dynamic,
       width: 300,
-      height: 50,
+      height: 33,
       zIndex: store.template.length + 1,
       background: 'rgba(255, 255, 255, 0)',
       border: 'none',
