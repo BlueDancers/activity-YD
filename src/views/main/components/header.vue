@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-15 11:42:26
+ * @LastEditTime: 2020-03-18 09:08:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/components/header/index.vue
@@ -11,7 +11,7 @@
     <div class="header_back"></div>
     <div class="header">
       <div @click="gotoHome" class="left_header">
-        <img class="left_logo" src="@/assets/logo.png" alt="">
+        <img class="left_logo" src="@/assets/logo.png" alt />
         <span>易动</span>
       </div>
       <!-- 左侧为操作栏 -->
@@ -81,17 +81,18 @@ export default {
               // 保存项目
               return this.$store
                 .dispatch("core/saveObject", res.data.data.data)
-                .then(() => {
+                .then(data => {
+                  console.log(data);
                   this.$hideLoading();
-                  if (res.data.code == 200) {
+                  if (data.data.code == 200) {
                     if (type == 1) {
-                      this.objUrl = mobileUrl + res.data.data;
+                      this.objUrl = mobileUrl + data.data.data;
                       this.$refs["uploadModal"].openModal();
                     } else {
                       this.$message.success("发布成功");
                     }
                   } else {
-                    this.$message.error(res.data.data);
+                    this.$message.error(data.data.data);
                   }
                 });
             } else {
