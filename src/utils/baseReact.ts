@@ -37,7 +37,7 @@ export function baseDiv(store: any): baseNode {
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'forwards' // 动画停留最后一帧
+      animationFillMode: 'both' // 动画停留最后一帧
     }
   }
 }
@@ -80,7 +80,7 @@ export function baseButtom(store: any): baseNode {
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'forwards' // 动画停留最后一帧
+      animationFillMode: 'both' // 动画停留最后一帧
     }
   }
 }
@@ -107,7 +107,7 @@ export function baseImg(store: any, img: string): baseNode {
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'forwards' // 动画停留最后一帧
+      animationFillMode: 'both' // 动画停留最后一帧
     }
   }
 }
@@ -140,7 +140,7 @@ export function baseText(store: any): baseNode {
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'forwards' // 动画停留最后一帧
+      animationFillMode: 'both' // 动画停留最后一帧
     }
   }
 }
@@ -181,7 +181,7 @@ export function baseInput(store: any): baseNode {
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'forwards' // 动画停留最后一帧
+      animationFillMode: 'both' // 动画停留最后一帧
     }
   }
 }
@@ -218,7 +218,7 @@ export function baseSwiper(store: any): baseNode {
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'forwards' // 动画停留最后一帧
+      animationFillMode: 'both' // 动画停留最后一帧
     }
   }
 }
