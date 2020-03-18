@@ -110,7 +110,7 @@ export default {
 .comp_list {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 100%;
+  height: 800px;
   .comp_item {
     width: 290px;
     line-height: 30px;

@@ -132,8 +132,9 @@ export function baseText(store: any): baseNode {
       border: 'none',
       color: 'rgba(0, 0, 0, 1)',
       fontSize: 24,
-      fontWeight: '400',
-      fontStyle: 'normal'
+      fontWeight: 'normal', // bold
+      fontStyle: 'normal', // italic
+      textDecoration: 'none' //underline
     },
     animation: {
       animationName: '',

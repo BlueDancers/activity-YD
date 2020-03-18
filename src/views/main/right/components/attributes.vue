@@ -84,13 +84,28 @@
         </div>
       </div>
       <div class="attr_item" v-if="showFontsize(core)">
-        <div class="attr_list_left">字体粗度:</div>
+        <div class="attr_list_left">字体属性:</div>
         <div class="attr_list_right">
-          <a-slider class="attr_slider" v-model="core.css.fontWeight" :min="100" :max="900"></a-slider>
-          <a-input-number
-            class="attr_mintextarea"
-            placeholder="请输入数字"
-            v-model="core.css.fontWeight"
+          <img
+            @click="togglefontWeight(core.css.fontWeight)"
+            :class="core.css.fontWeight == 'bold'?'click_icon_active':''"
+            class="click_icon"
+            src="@/assets/Bold.png"
+            alt
+          />
+          <img
+            @click="togglefontStyle(core.css.fontStyle)"
+            :class="core.css.fontStyle == 'italic'?'click_icon_active':''"
+            class="click_icon"
+            src="@/assets/Italic.png"
+            alt
+          />
+          <img
+            @click="toggletextDecoration(core.css.textDecoration)"
+            :class="core.css.textDecoration == 'underline'?'click_icon_active':''"
+            class="click_icon"
+            src="@/assets/Underline.png"
+            alt
           />
         </div>
       </div>
@@ -230,6 +245,30 @@ export default {
         return true;
       }
     },
+    // 切换字体粗细
+    togglefontWeight(type) {
+      if (type == "normal") {
+        this.core.css.fontWeight = "bold";
+      } else {
+        this.core.css.fontWeight = "normal";
+      }
+    },
+    // 切换字体斜体
+    togglefontStyle(type) {
+      if (type == "normal") {
+        this.core.css.fontStyle = "italic";
+      } else {
+        this.core.css.fontStyle = "normal";
+      }
+    },
+    // 切换下划线
+    toggletextDecoration(type) {
+      if (type == "none") {
+        this.core.css.textDecoration = "underline";
+      } else {
+        this.core.css.textDecoration = "none";
+      }
+    },
     // 是否显示文字颜色
     showFontColor(core) {
       if (
@@ -320,6 +359,18 @@ export default {
         cursor: pointer;
         margin-right: 15px;
         width: 15px;
+      }
+      .click_icon {
+        cursor: pointer;
+        margin-right: 5px;
+        padding: 3px;
+        width: 20px;
+        &:hover {
+          background-color: rgb(231, 231, 231);
+        }
+      }
+      .click_icon_active {
+        background-color: rgb(195, 195, 195);
       }
     }
     .swiper_img {

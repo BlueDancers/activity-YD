@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-13 17:04:22
+ * @LastEditTime: 2020-03-18 18:12:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/components/template.vue
@@ -73,6 +73,8 @@ export default Vue.extend({
 
 <style lang="less" scoped>
 .template {
+  height: 800px;
+  overflow-y: scroll;
   .template_list {
     display: flex;
     flex-wrap: wrap;
