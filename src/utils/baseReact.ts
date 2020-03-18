@@ -252,10 +252,8 @@ export function baseComplate(store: any, data: any): baseNode {
     }
   }
   if (data.name == 'base-div') {
-    compData
   }
   if (data.name == 'base-text') {
-    compData = { ...compData, text: data.text }
   }
   if (data.name == 'base-buttom') {
     compData = {

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-17 18:23:56
+ * @LastEditTime: 2020-03-18 17:20:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/store/modules/complate.ts
@@ -47,7 +47,8 @@ const complate: Module<Complate, any> = {
         text: activeData.text,
         css: activeData.css,
         compName: activeData.compName,
-        placeholder: activeData.placeholder || ''
+        animation: activeData.animation,
+        option: activeData.option
       }).then(res => {
         dispatch('getSingList')
         return res
