@@ -11,10 +11,26 @@ export function getObject() {
 }
 
 /**
+ * 效验项目是否可编辑
+ * @param id 项目id
+ * @param password 项目密码
+ */
+export function objectAuth(id: string, password: string) {
+  return request({
+    url: '/objectAuth',
+    method: 'POST',
+    data: {
+      id,
+      password
+    }
+  })
+}
+
+/**
  * 新建项目
  * @param {object} form 新建项目配置
  */
-export function setObject(form) {
+export function setObject(form: object) {
   return request({
     url: `/setObject`,
     method: 'post',

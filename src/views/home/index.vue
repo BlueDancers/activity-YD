@@ -35,7 +35,7 @@
       <div class="item" v-for="item in mainList" :key="item.id">
         <!--初始化项目 -->
         <div class="item_img">
-          <img class="img" v-if="!item.titlePage" src="../../assets/logo.png" alt />
+          <img class="img" v-if="!item.titlePage" src="@/assets/logo.png" alt />
           <img class="img" v-if="item.titlePage" :src="item.titlePage" alt />
         </div>
         <div class="item_disp">
@@ -60,7 +60,7 @@
             <span @click="showObject(item.name)">查看项目</span>
           </a-popover>
           <span @click="gotoObject(item._id)">编辑项目</span>
-          <a-popconfirm title="确定删除项目吗" @confirm="deleteObj(item.name)" okText="确定" cancelText="取消">
+          <a-popconfirm title="确定删除项目吗" @confirm="deleteObj(item)" okText="确定" cancelText="取消">
             <span>删除项目</span>
           </a-popconfirm>
         </div>
@@ -100,11 +100,21 @@
           label="项目描述"
           :label-col="formTailLayout.labelCol"
           :wrapper-col="formTailLayout.wrapperCol"
+          help="非必填"
         >
           <a-input placeholder="项目的一些描述信息" type="textarea" v-model="objform.disp" />
         </a-form-item>
+        <a-form-item
+          label="编辑密码"
+          :label-col="formTailLayout.labelCol"
+          :wrapper-col="formTailLayout.wrapperCol"
+          help="非必填 填写密码则需要密码才可编辑"
+        >
+          <a-input placeholder="请输入密码" v-model="objform.password" />
+        </a-form-item>
       </a-form>
     </a-modal>
+    <auth-modal ref="authModal" @authSuccess="authSuccess"></auth-modal>
   </div>
 </template>
 
@@ -112,8 +122,12 @@
 import { getObject, setObject, deleteObj } from "@/api/index";
 import { commHeight, mobileUrl } from "@/config/index";
 import { parseTime } from "@/utils/index";
+import authModal from "@/components/authModal/index.vue";
 import Vue from "vue";
 export default Vue.extend({
+  components: {
+    authModal
+  },
   mounted() {
     this.getObject();
   },
@@ -131,7 +145,8 @@ export default Vue.extend({
       objform: {
         textName: "", // 中文名称
         name: "", // 路由名称
-        disp: ""
+        disp: "", // 描述
+        password: "" // 密码
       },
       onShowUrlCode: ""
     };
@@ -200,8 +215,19 @@ export default Vue.extend({
     showObject(name) {
       this.onShowUrlCode = mobileUrl + name;
     },
-    deleteObj(name) {
-      deleteObj(name).then(result => {
+    deleteObj(data) {
+      if (data.isAuth) {
+        (this.$refs.authModal as any).open(data);
+      } else {
+        deleteObj(data.name).then(result => {
+          this.$message.success(result.data.data);
+          this.getObject();
+        });
+      }
+    },
+    authSuccess(data) {
+      console.log(data);
+      deleteObj(data.name).then(result => {
         this.$message.success(result.data.data);
         this.getObject();
       });
