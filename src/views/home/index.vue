@@ -248,7 +248,7 @@ export default Vue.extend({
     flex-wrap: wrap;
     margin: 0px 4%;
     margin-top: 8px;
-
+    margin-bottom: 230px;
     .item {
       overflow: hidden;
       .base_item();
