@@ -7,22 +7,13 @@
       </div>
       <div class="header_right">
         <div class="right_item" @click="gotoUrl('user')">
-          <a-icon type="github" />
+          <a-icon type="cloud" />
           <span class="item_text">作者主页</span>
         </div>
-        <div class="right_item" @click="gotoUrl('generate')">
-          <a-icon type="tool" />
-          <span class="item_text">项目管理端</span>
+        <div class="right_item" @click="gotoUrl">
+          <a-icon type="github" />
+          <span class="item_text">github</span>
         </div>
-        <div class="right_item" @click="gotoUrl('mobile')">
-          <a-icon type="html5" />
-          <span class="item_text">项目客户端</span>
-        </div>
-        <div class="right_item" @click="gotoUrl('server')">
-          <a-icon type="cloud" />
-          <span class="item_text">后端</span>
-        </div>
-        <div class="right_item"></div>
       </div>
     </div>
     <div class="main_list">
@@ -157,10 +148,6 @@ export default Vue.extend({
         window.open("https://github.com/vkcyan", "_blank");
       } else if (type == "generate") {
         window.open("https://github.com/vkcyan/activity_generate", "_blank");
-      } else if (type == "server") {
-        window.open("https://github.com/vkcyan/activity_server", "_blank");
-      } else if (type == "mobile") {
-        window.open("https://github.com/vkcyan/activity_mobile", "_blank");
       }
     },
     getObject() {
