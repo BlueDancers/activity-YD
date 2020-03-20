@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-19 15:42:40
+ * @LastEditTime: 2020-03-20 14:28:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/components/header/index.vue
@@ -28,7 +28,10 @@
     </div>
     <!-- 发布预览框 -->
     <upload-modal ref="uploadModal" :objUrl="objUrl" />
+    <!-- 发布模板 -->
     <set-template ref="setTemplate"></set-template>
+    <!-- 权限校验 -->
+    <auth-modal ref="authModal" @authSuccess="authSuccess"></auth-modal>
   </div>
 </template>
 
@@ -36,78 +39,114 @@
 // 主页面头部组件
 import uploadModal from "./uploadModal";
 import setTemplate from "./setTemplate";
+import authModal from "@/components/authModal/index";
 import { mobileUrl } from "@/config/index";
 import html2canvas from "html2canvas";
 import { base64ToBlob, BlobToImgFile } from "@/utils/index";
 import { upTitleImg } from "@/api/index";
+
 export default {
   components: {
     uploadModal,
-    setTemplate
+    setTemplate,
+    authModal
   },
   data() {
     return {
       objUrl: "" // 当前项目的url: value
     };
   },
+  computed: {
+    objectAuth() {
+      return this.$store.state.core.objectAuth;
+    },
+    parentId() {
+      return this.$store.state.core.parentId;
+    }
+  },
   methods: {
     gotoHome() {
       this.$router.push({ name: "home" });
     },
-    // 保存项目
-    saveObject(type) {
+    // 获取缩略图
+    getThumbnail() {
       this.$showLoading();
       // 保存之前取消选中 取消背景线的显示
       this.$store.commit("setting/toggle_backgroundLine");
       this.$store.commit("core/clear_template");
-      setTimeout(() => {
-        html2canvas(document.querySelector(".core"), {
-          async: true,
-          useCORS: true,
-          scale: 1
-        })
-          .then(canvas => {
-            let dataURL = canvas.toDataURL("image/jpeg");
-            const data = new FormData();
-            data.append(
-              "image",
-              BlobToImgFile(base64ToBlob(dataURL), "image/jpeg")
-            );
-            return upTitleImg(data);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          html2canvas(document.querySelector(".core"), {
+            async: true,
+            useCORS: true,
+            scale: 1
           })
-          .then(res => {
-            // 保存当前页面的配置
-            if (type != 3) {
-              // 保存项目
-              return this.$store
-                .dispatch("core/saveObject", res.data.data.data)
-                .then(data => {
-                  console.log(data);
-                  this.$hideLoading();
-                  if (data.data.code == 200) {
-                    if (type == 1) {
-                      this.objUrl = mobileUrl + data.data.data;
-                      this.$refs["uploadModal"].openModal();
-                    } else {
-                      this.$message.success("发布成功");
-                    }
-                  } else {
-                    this.$message.error(data.data.data);
-                  }
-                });
-            } else {
-              // 保存模板
-              this.$refs.setTemplate.openModal(res.data.data.data);
+            .then(canvas => {
+              let dataURL = canvas.toDataURL("image/jpeg");
+              const data = new FormData();
+              data.append(
+                "image",
+                BlobToImgFile(base64ToBlob(dataURL), "image/jpeg")
+              );
+              resolve(upTitleImg(data));
+            })
+            .catch(err => {
+              reject(err);
+            })
+            .finally(() => {
               this.$hideLoading();
-            }
-          })
-          .catch(err => {
-            this.$hideLoading();
-          })
-          .finally(() => {
-            this.$store.commit("setting/toggle_backgroundLine");
+              this.$store.commit("setting/toggle_backgroundLine");
+            });
+        }, 1);
+      });
+    },
+    // 通过效验
+    authSuccess(data) {
+      this.uploadObject(data.type, data.password);
+    },
+    // 保存项目
+    saveObject(type) {
+      if (type == 3) {
+        // 保存模板
+        this.getThumbnail().then(res => {
+          this.$refs.setTemplate.openModal(res.data.data.data);
+        });
+      } else {
+        if (this.objectAuth) {
+          this.$refs.authModal.open({
+            _id: this.parentId,
+            type
           });
-      }, 1);
+          return false;
+        } else {
+          this.uploadObject(type);
+        }
+      }
+    },
+    uploadObject(type, pass = "") {
+      console.log(pass);
+      this.getThumbnail().then(res => {
+        // 保存当前页面的配置
+        return this.$store
+          .dispatch("core/saveObject", {
+            titlePage: res.data.data.data,
+            pass
+          })
+          .then(data => {
+            console.log(data);
+            this.$hideLoading();
+            if (data.data.code == 200) {
+              if (type == 1) {
+                this.objUrl = mobileUrl + data.data.data;
+                this.$refs["uploadModal"].openModal();
+              } else {
+                this.$message.success("发布成功");
+              }
+            } else {
+              this.$message.error(data.data.data);
+            }
+          });
+      });
     }
   }
 };

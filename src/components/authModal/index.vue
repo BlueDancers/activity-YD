@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-19 18:04:00
- * @LastEditTime: 2020-03-19 18:41:39
+ * @LastEditTime: 2020-03-20 09:04:24
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/components/authModal/index.vue
@@ -31,7 +31,7 @@ export default Vue.extend({
     },
     handleOk() {
       objectAuth(this.data._id, this.passValue).then(res => {
-        this.$emit("authSuccess", this.data);
+        this.$emit("authSuccess", { ...this.data, password: this.passValue });
         this.data = {};
         this.visible = false;
       });

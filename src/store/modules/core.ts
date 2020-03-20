@@ -11,6 +11,7 @@ interface CoreInter {
   parentRouterName: string //项目路由
   parentId: number // 项目id
   parentDisp: string // 项目描述
+  objectAuth: Boolean // 项目是否需要验证
   template: string[] // 组件
   activeTemplate: string[] // 选中的数组
   hoverTemplate: string // 显示鼠标划过的组件提示
@@ -35,6 +36,7 @@ const core: Module<CoreInter, any> = {
     parentRouterName: '', // 项目路由
     parentId: 0, // 项目id
     parentDisp: '', // 项目描述
+    objectAuth: false, // 项目是否验证
     template: [], // 组件
     activeTemplate: [], // 选中的数组
     hoverTemplate: '', // 显示鼠标划过的组件提示
@@ -57,8 +59,13 @@ const core: Module<CoreInter, any> = {
     set_parentRouterName(state, name) {
       state.parentRouterName = name
     },
+    //保存项目描述
     set_parentDisp(state, disp) {
       state.parentDisp = disp
+    },
+    // 保存项目是否需要验证
+    set_objectAuth(state, type) {
+      state.objectAuth = type
     },
     // 保存当前项目id
     set_objectId(state, id) {
@@ -477,41 +484,14 @@ const core: Module<CoreInter, any> = {
   },
   actions: {
     // 保存当前项目数据
-    async saveObject({ state }, titlePage) {
+    saveObject({ state }, { titlePage, pass }) {
       if (state.template.length == 0) {
         return Promise.reject('请不要保存空页面')
       }
-      let {
-        parentId,
-        parentName,
-        parentRouterName,
-        commHeight,
-        template,
-        background,
-        parentDisp
-      } = state
-      let saveActivityapi = saveActivity(
-        parentId,
-        parentRouterName,
-        template
-      ).then(e => e)
-      let updateObjHeightapi = updateObj(
-        parentId,
-        commHeight,
-        background,
-        parentName,
-        parentRouterName,
-        titlePage,
-        parentDisp
-      ).then(e => e)
-      const objandSave = await Promise.all([
-        updateObjHeightapi,
-        saveActivityapi
-      ])
-      return objandSave[1]
+      return saveActivity({ ...state, titlePage, pass })
     },
     // 获取当前配置
-    getActivity({ state, commit }, data) {
+    getActivity({ commit }, data) {
       return new Promise((resolve, reject) => {
         getActivity(data.id).then(e => {
           if (e.data.code !== 200) {
@@ -527,6 +507,7 @@ const core: Module<CoreInter, any> = {
             commit('set_objectName', e.data.data.textName)
             commit('set_parentRouterName', e.data.data.name)
             commit('set_parentDisp', e.data.data.disp)
+            commit('set_objectAuth', e.data.data.isAuth)
             resolve('数据查询完成')
           }
         })

@@ -42,12 +42,17 @@ export function setObject(form: object) {
  * 删除项目
  * @export
  * @param {String} name 项目名称
+ * @param {String} password 项目密码
  * @returns
  */
-export function deleteObj(name) {
+export function deleteObj(id, password) {
   return request({
-    url: `/deleteObj/${name}`,
-    method: 'post'
+    url: `/deleteObj`,
+    method: 'post',
+    data: {
+      id,
+      password
+    }
   })
 }
 
@@ -56,18 +61,20 @@ export function deleteObj(name) {
  * @param {string} parentRouterName 项目路由名
  * @param {Array} template 项目模板信息
  */
-export function saveActivity(
-  parentId: number,
-  parentRouterName: string,
-  template: any[]
-) {
+export function saveActivity(data: any) {
   return request({
     url: `/saveActivity`,
     method: 'post',
     data: {
-      parentId,
-      parentRouterName,
-      template
+      titlePage: data.titlePage,
+      password: data.pass,
+      parentId: data.parentId,
+      parentName: data.parentName,
+      parentRouterName: data.parentRouterName,
+      commHeight: data.commHeight,
+      template: data.template,
+      background: data.background,
+      parentDisp: data.parentDisp
     }
   })
 }

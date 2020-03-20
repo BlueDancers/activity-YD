@@ -219,15 +219,14 @@ export default Vue.extend({
       if (data.isAuth) {
         (this.$refs.authModal as any).open(data);
       } else {
-        deleteObj(data.name).then(result => {
+        deleteObj(data._id, "").then(result => {
           this.$message.success(result.data.data);
           this.getObject();
         });
       }
     },
     authSuccess(data) {
-      console.log(data);
-      deleteObj(data.name).then(result => {
+      deleteObj(data._id, data.password).then(result => {
         this.$message.success(result.data.data);
         this.getObject();
       });
