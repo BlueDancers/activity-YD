@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-12 09:27:03
- * @LastEditTime: 2020-03-13 17:02:08
+ * @LastEditTime: 2020-03-21 21:19:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/components/setTemplate.vue
@@ -14,7 +14,7 @@
     @ok="hideModal"
     okText="确认"
     cancelText="取消"
-    :width="700"
+    :width="400"
   >
     <div class="set_template">
       <div class="template_img">
@@ -22,10 +22,10 @@
       </div>
       <div class="success_modal">
         <a-form>
-          <a-form-item label="模板名称" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-form-item label="模板名称" :label-col="{ span: 5 }" :wrapper-col="{ span: 8 }">
             <a-input v-model="tempName" placeholder="请输入模板名称" />
           </a-form-item>
-          <a-form-item label="创作人" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-form-item label="创作人 " :label-col="{ span: 5 }" :wrapper-col="{ span: 8 }">
             <a-input v-model="author" placeholder="请输入创作人" />
           </a-form-item>
         </a-form>
@@ -73,17 +73,33 @@ export default Vue.extend({
 
 <style lang="less" scoped>
 .set_template {
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
   .template_img {
-    border: 1px solid rgb(185, 185, 185);
+    background-color: #EEEEEE;
+    // border: 1px solid rgb(185, 185, 185);
+    text-align:center;
+    padding-top:20px;
+    padding-bottom: 20px; 
     img {
+      
       height: 400px;
     }
   }
   .success_modal {
-    margin-left: 20px;
+    text-align:center;
+    word-spacing: 0.8em;
     width: 500px;
+    padding-top: 1em;
   }
+}
+</style>
+<style>
+.ant-form-item-label{
+  margin-left: 0px;
+  
+}
+.ant-modal-body{
+  padding-bottom: 1em;
 }
 </style>

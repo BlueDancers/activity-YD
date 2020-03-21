@@ -1,24 +1,26 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-14 00:45:14
+ * @LastEditTime: 2020-03-21 21:40:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/components/uploadModal.vue
  -->
 <template>
-  <a-modal title="发布成功" v-model="succModal" @ok="hideModal" okText="确认" cancelText="取消">
+  <a-modal title="发布成功" v-model="succModal" @ok="hideModal" okText="确认" cancelText="取消" :width="380">
     <div class="success_modal">
       <qriously :value="objUrl" :size="200" />
+      <br>
+      </div>
       <a-form class="object_data">
-        <a-form-item label="项目名称" :label-col="{ span: 6 }" :wrapper-col="{ span: 12 }">
-          <span>{{parentName}}</span>
+        <a-form-item label="项目名称" :label-col="{ span: 8 }" :wrapper-col="{ span: 10 }">
+          <span class="object_span">{{parentName}}</span>
         </a-form-item>
-        <a-form-item label="项目描述" :label-col="{ span:6 }" :wrapper-col="{ span: 12 }">
-          <span>{{parentDisp}}</span>
+        <a-form-item label="项目描述" :label-col="{ span:8 }" :wrapper-col="{ span: 12}">
+          <span class="object_span">{{parentDisp}}</span>
         </a-form-item>
       </a-form>
-    </div>
+    
   </a-modal>
 </template>
 
@@ -58,9 +60,26 @@ export default {
 
 <style lang="less" scoped>
 .success_modal {
-  display: flex;
+  text-align: center;
+  // display: flex;
+}
   .object_data {
-    width: 300px;
+    // width: 300px;
+    .object_span{
+      text-align: left;
+      padding-left: 0.5em;
+      overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    }
   }
+  
+
+</style>
+<style>
+.ant-form-item{
+  margin-bottom:1em;
 }
 </style>
