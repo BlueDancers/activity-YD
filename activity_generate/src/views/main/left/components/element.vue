@@ -5,6 +5,8 @@
       v-for="(item, index) in reactList"
       :key="item.name"
       @click="setComponent(index)"
+      draggable
+      @dragstart="dragstart(index,$event)"
     >
       <div>
         <img class="item_img" :src="item.img" alt />
@@ -105,6 +107,10 @@ export default Vue.extend({
       } else if (index == 7) {
         this.$message.warn("组件升级中...");
       }
+    },
+    // 监听拖拽
+    dragstart(index, e) {
+      e.dataTransfer.setData("compIndex", index);
     }
   }
 });
