@@ -1,8 +1,11 @@
 <template>
-  <div class="core" :style="{
+  <div
+    class="show_core"
+    :style="{
       height: `${commHeight}px`,
       background: background
-    }">
+    }"
+  >
     <component
       v-for="(item, index) in template"
       :key="index"
@@ -98,7 +101,7 @@ export default Vue.extend({
 </script>
 
 <style lang="less" scoped>
-.core {
+.show_core {
   width: 375px;
   position: relative;
   background-color: white;

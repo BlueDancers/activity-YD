@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-21 18:07:26
+ * @LastEditTime: 2020-03-21 18:41:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/center/core.vue
@@ -108,7 +108,7 @@ export default Vue.extend({
       if (index == 0) {
         data = DivData(this.$store.state.core);
       } else if (index == 1) {
-        return false;
+        data = ImgData(this.$store.state.core, require("@/assets/750-188.png"));
       } else if (index == 2) {
         data = TextData(this.$store.state.core);
       } else if (index == 3) {
