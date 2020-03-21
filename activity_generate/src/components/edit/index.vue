@@ -77,46 +77,49 @@ export default {
 <style lang="less" scoped>
 .edit {
   position: absolute;
-  outline: 1px rgb(167, 167, 167) dashed;
+  border:1.5px rgb(24, 144, 255) solid;
+  padding:1px;
+  outline: 0.5px rgba(179, 179, 179, 0.15) solid;
   .inline_btn {
     margin: 0px;
   }
   .top_left {
     .base_circle();
     left: -3px;
-    top: -3px;
+    top: -4px;
     cursor: nw-resize;
   }
   .top_top {
     .base_circle();
     left: 50%;
-    top: -3px;
+    top: -4px;
     margin-left: -3px;
     cursor: n-resize;
+    
   }
   .top_right {
     .base_circle();
     right: -3px;
-    top: -3px;
+    top: -4px;
     cursor: ne-resize;
   }
   .bottom_left {
     .base_circle();
     left: -3px;
-    bottom: -3px;
+    bottom: -4px;
     cursor: sw-resize;
   }
   .bottom_bottom {
     .base_circle();
     left: 50%;
     margin-left: -3px;
-    bottom: -3px;
+    bottom: -4px;
     cursor: s-resize;
   }
   .bottom_right {
     .base_circle();
     right: -3px;
-    bottom: -3px;
+    bottom: -4px;
     cursor: se-resize;
   }
   .base_circle {
@@ -124,7 +127,9 @@ export default {
     position: absolute;
     width: 6px;
     height: 6px;
-    border: 2px solid #1890ff;
+    border-radius:50%;
+    background-color:white;
+    border: 1px solid #1890ff;
   }
 }
 </style>
