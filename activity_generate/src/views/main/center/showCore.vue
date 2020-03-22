@@ -12,7 +12,6 @@
       :is="item.name"
       :css="{...item.css,...item.animation}"
       :option="item.option"
-      :text="item.text"
       :ref="item.name == 'base-input' ? item.option.inputName : item.id"
       @submitForm="submitForm"
     ></component>
@@ -105,6 +104,8 @@ export default Vue.extend({
   width: 375px;
   position: relative;
   background-color: white;
+  margin-top: 50px;
+  transform-origin: top;
   #canvas {
     position: absolute;
   }

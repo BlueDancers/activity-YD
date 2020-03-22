@@ -7,7 +7,7 @@
         @mousedown="mousedown"
         @error="loadImg"
         class="inline_img"
-        :src="text"
+        :src="option.text"
         alt
       />
     </edit>
@@ -22,7 +22,7 @@
         @mousedown="mousedown"
         @error="loadImg"
         class="inline_img"
-        :src="text"
+        :src="option.text"
         alt
       />
     </div>
@@ -30,7 +30,7 @@
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       ondragstart="return false;"
-      :src="text"
+      :src="option.text"
       @error="loadImg"
       alt
       :style="style"
@@ -47,9 +47,6 @@ export default {
   },
   props: {
     id: {
-      type: String
-    },
-    text: {
       type: String
     },
     css: {

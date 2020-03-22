@@ -1,6 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 17:48:13
+ * @LastEditTime: 2020-03-21 19:21:11
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/prod/showButtom.vue
+ -->
 <template>
   <div class="btn_con">
-    <button class="baseComplate" :style="style" @click="clickBtn">{{ text }}</button>
+    <button class="baseComplate" :style="style" @click="clickBtn">{{ option.text }}</button>
   </div>
 </template>
 
@@ -8,10 +16,6 @@
 import { handleStyle } from "@/utils/index";
 export default {
   props: {
-    text: {
-      type: String,
-      default: "按钮"
-    },
     css: {
       type: Object,
       default: () => {}

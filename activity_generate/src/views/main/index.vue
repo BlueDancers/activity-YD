@@ -131,7 +131,7 @@ export default {
     height: 94%;
     display: flex;
     justify-content: space-between;
-   
+
     .index_center {
       padding: 20px 0;
       position: relative;
@@ -142,14 +142,11 @@ export default {
       overflow-x: hidden;
       overflow-y: scroll;
       background-color: #eee;
-      .core {
-        margin-top: 50px;
-        transform-origin: "center top";
-      }
+
       .index_center_header {
         display: flex;
         justify-content: center;
-        border: 1px solid #4190F7;
+        border: 1px solid #4190f7;
         border-radius: 6px;
         font-size: 10px;
         line-height: 20px;

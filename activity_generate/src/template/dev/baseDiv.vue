@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 16:09:57
+ * @LastEditTime: 2020-03-21 19:19:36
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/dev/baseDiv.vue
+ -->
 <template>
   <!-- <div class="base_img" @mouseover="toggleEdit" > -->
   <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
@@ -31,9 +39,6 @@ export default {
   },
   props: {
     id: {
-      type: String
-    },
-    text: {
       type: String
     },
     css: {

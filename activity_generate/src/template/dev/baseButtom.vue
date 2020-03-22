@@ -1,8 +1,16 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 16:09:57
+ * @LastEditTime: 2020-03-21 19:19:27
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/dev/baseButtom.vue
+ -->
 <template>
   <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <!-- 编辑状态 -->
     <edit v-show="editStatus" :styles="constyle" :id="id">
-      <button :style="style" class="inline_btn">{{ text }}</button>
+      <button :style="style" class="inline_btn">{{ option.text }}</button>
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -10,14 +18,14 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <button :style="style" class="inline_btn">{{ text }}</button>
+      <button :style="style" class="inline_btn">{{ option.text }}</button>
     </div>
     <!-- 未选中状态 -->
     <button
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       :style="style"
-    >{{ text }}</button>
+    >{{ option.text }}</button>
   </div>
 </template>
 
@@ -31,10 +39,6 @@ export default {
   props: {
     id: {
       type: String
-    },
-    text: {
-      type: String,
-      default: "按钮"
     },
     css: {
       type: Object,

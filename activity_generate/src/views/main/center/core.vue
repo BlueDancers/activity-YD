@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-21 18:41:50
+ * @LastEditTime: 2020-03-21 19:18:50
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/center/core.vue
@@ -26,7 +26,6 @@
       :id="item.activityId"
       :css="item.css"
       :option="item.option"
-      :text="item.text"
       :absolute="true"
     ></component>
   </div>
@@ -147,6 +146,8 @@ export default Vue.extend({
   width: 375px;
   position: relative;
   background-color: white;
+  margin-top: 50px;
+  transform-origin: top;
   #canvas {
     position: absolute;
   }

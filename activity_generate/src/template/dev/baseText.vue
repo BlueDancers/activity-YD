@@ -1,8 +1,16 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 16:09:57
+ * @LastEditTime: 2020-03-21 19:20:56
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/dev/baseText.vue
+ -->
 <template>
   <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
   <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :styles="constyle" :id="id">
-      <p :style="style" class="inline_btn" v-html="text.replace(/\n|\r\n/g, '<br>')"></p>
+      <p :style="style" class="inline_btn" v-html="option.text.replace(/\n|\r\n/g, '<br>')"></p>
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -10,10 +18,10 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <p :style="style" class="inline_btn" v-html="text.replace(/\n|\r\n/g, '<br>')"></p>
+      <p :style="style" class="inline_btn" v-html="option.text.replace(/\n|\r\n/g, '<br>')"></p>
     </div>
     <div v-show="!editStatus & !hoverStatus" :class="absolute ? 'baseComplate' : ''" :style="style">
-      <p v-html="text.replace(/\n|\r\n/g, '<br>')"></p>
+      <p v-html="option.text.replace(/\n|\r\n/g, '<br>')"></p>
     </div>
   </div>
 </template>
@@ -28,10 +36,6 @@ export default {
   props: {
     id: {
       type: String
-    },
-    text: {
-      type: String,
-      default: ""
     },
     css: {
       type: Object,

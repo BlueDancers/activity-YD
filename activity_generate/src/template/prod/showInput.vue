@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-24 17:48:38
- * @LastEditTime: 2020-03-09 16:56:54
+ * @LastEditTime: 2020-03-21 19:21:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/template/prod/showInput.vue
@@ -20,10 +20,6 @@
 import { handleStyle } from "@/utils/index";
 export default {
   props: {
-    text: {
-      type: String,
-      default: "按钮"
-    },
     css: {
       type: Object,
       default: () => {}

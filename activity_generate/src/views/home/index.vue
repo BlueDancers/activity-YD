@@ -6,6 +6,17 @@
         <span class="item_text">易动</span>
       </div>
       <div class="header_right">
+        <div class="right_item">
+          <a-popover placement="bottom">
+            <template slot="title">
+              <span>更新公告</span>
+            </template>
+            <template slot="content">
+              <p>v 0.5.2 增加组件拖拽到页面位置</p>
+            </template>
+            <span class="item_text">更新日志</span>
+          </a-popover>
+        </div>
         <div class="right_item" @click="gotoUrl('user')">
           <a-icon type="cloud" />
           <span class="item_text">作者主页</span>

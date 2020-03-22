@@ -8,9 +8,6 @@
 import { handleStyle } from "@/utils/index";
 export default {
   props: {
-    text: {
-      type: String
-    },
     css: {
       type: Object,
       default: () => {}

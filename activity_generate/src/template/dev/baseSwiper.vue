@@ -57,9 +57,6 @@ export default {
     id: {
       type: String
     },
-    text: {
-      type: String
-    },
     css: {
       type: Object,
       default: () => {}

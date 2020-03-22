@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-07 17:55:07
- * @LastEditTime: 2020-03-13 13:44:27
+ * @LastEditTime: 2020-03-21 19:18:38
  * @LastEditors: Please set LastEditors
  * @Description: 组件功能关系
  * @FilePath: /activity_generate/src/views/main/right/components/activedata.vue
@@ -15,9 +15,15 @@
       <div class="active_item" v-show="showText(core)">
         <div class="active_list_left">{{ core.name !== "base-img" ? "文本:" : "链接:" }}</div>
         <div class="active_list_right">
-          <a-input type="textarea" class="active_textarea" placeholder="请输入文字" v-model="core.text" />
+          <a-input
+            type="textarea"
+            class="active_textarea"
+            placeholder="请输入文字"
+            v-model="core.option.text"
+          />
         </div>
       </div>
+
       <div class="active_item" v-if="showElementName(core)">
         <div class="active_list_left">名称:</div>
         <div class="active_list_right">

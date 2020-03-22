@@ -1,14 +1,19 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 17:48:26
+ * @LastEditTime: 2020-03-21 19:21:20
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/prod/showImg.vue
+ -->
 <template>
-  <img class="baseComplate" ondragstart="return false;" :src="text" :style="style" />
+  <img class="baseComplate" ondragstart="return false;" :src="option.text" :style="style" />
 </template>
 
 <script>
 import { handleStyle } from "@/utils/index";
 export default {
   props: {
-    text: {
-      type: String
-    },
     css: {
       type: Object,
       default: () => {}

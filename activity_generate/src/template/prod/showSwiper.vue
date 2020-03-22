@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-01 13:59:40
+ * @LastEditTime: 2020-03-21 19:21:45
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/prod/showSwiper.vue
+ -->
 <template>
   <div class="btn_con baseComplate" :style="style">
     <van-swipe :autoplay="option.autoplay">
@@ -17,10 +25,6 @@
 import { handleStyle } from "@/utils/index";
 export default {
   props: {
-    text: {
-      type: String,
-      default: ""
-    },
     css: {
       type: Object,
       default: () => {}

@@ -4,7 +4,6 @@ interface baseNode {
   activityId: String
   editStatus: false
   name: String
-  text: String
   option?: Object
   css: Object
   animation: Object
@@ -19,7 +18,7 @@ export function baseDiv(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-div',
-    text: '',
+    option: {},
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
@@ -51,8 +50,8 @@ export function baseButtom(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-buttom',
-    text: '按钮',
     option: {
+      text: '按钮',
       btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3
       refInput: [], // 提交的input表单
       inputFromUrl: '', // 数据提交的地址
@@ -94,7 +93,9 @@ export function baseImg(store: any, img: string): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-img',
-    text: img,
+    option: {
+      text: img
+    },
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
@@ -121,7 +122,9 @@ export function baseText(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-text',
-    text: '请修改此处的文字',
+    option: {
+      text: '请修改此处的文字'
+    },
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
@@ -155,8 +158,8 @@ export function baseInput(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-input',
-    text: '',
     option: {
+      text: '',
       inputName: `default${store.template.length}`,
       placeholder: ''
     },
@@ -197,7 +200,6 @@ export function baseSwiper(store: any): baseNode {
     activityId: guid(),
     editStatus: false,
     name: 'base-swiper',
-    text: '',
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
@@ -238,7 +240,6 @@ export function baseComplate(store: any, data: any): baseNode {
   let compData: any = {
     activityId: guid(),
     editStatus: false,
-    text: data.text,
     name: data.name,
     css: data.css,
     animation: data.animation
@@ -247,6 +248,7 @@ export function baseComplate(store: any, data: any): baseNode {
     compData = {
       ...compData,
       option: {
+        text: data.option.text,
         placeholder: data.option.placeholder,
         inputName: `default${store.template.length}`
       }
@@ -255,11 +257,18 @@ export function baseComplate(store: any, data: any): baseNode {
   if (data.name == 'base-div') {
   }
   if (data.name == 'base-text') {
+    compData = {
+      ...compData,
+      option: {
+        text: data.option.text
+      }
+    }
   }
   if (data.name == 'base-buttom') {
     compData = {
       ...compData,
       option: {
+        text: data.option.text,
         btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3 qq客服 4 电话客服
         refInput: [], // 提交的input表单
         inputFromUrl: '', // 数据提交的地址

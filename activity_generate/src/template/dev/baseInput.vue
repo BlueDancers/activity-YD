@@ -38,10 +38,6 @@ export default {
     id: {
       type: String
     },
-    text: {
-      type: String,
-      default: "按钮"
-    },
     css: {
       type: Object,
       default: () => {}

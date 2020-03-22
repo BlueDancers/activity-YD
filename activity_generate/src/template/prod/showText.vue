@@ -1,15 +1,19 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 17:48:48
+ * @LastEditTime: 2020-03-21 19:21:54
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/template/prod/showText.vue
+ -->
 <template>
-  <p class="baseComplate" :style="style" v-html="text.replace(/\n|\r\n/g, '<br>')"></p>
+  <p class="baseComplate" :style="style" v-html="option.text.replace(/\n|\r\n/g, '<br>')"></p>
 </template>
 
 <script>
 import { handleStyle } from "@/utils/index";
 export default {
   props: {
-    text: {
-      type: String,
-      default: ""
-    },
     css: {
       type: Object,
       default: () => {}
@@ -17,7 +21,7 @@ export default {
     option: {
       type: Object,
       default: () => {}
-    },
+    }
   },
   computed: {
     style() {
