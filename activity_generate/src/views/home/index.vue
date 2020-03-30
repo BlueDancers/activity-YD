@@ -94,9 +94,9 @@
           :label-col="formTailLayout.labelCol"
           :wrapper-col="formTailLayout.wrapperCol"
           :validate-status="nameStatus ? '' : 'error'"
-          help="必填 活动页网址信息"
+          help="路由为数字和字母组成"
         >
-          <a-input placeholder="路由只能是数字与英文" v-model="objform.name" />
+          <a-input placeholder="请填写路由" v-model="objform.name" />
         </a-form-item>
         <a-form-item
           label="项目描述"
@@ -178,12 +178,13 @@ export default Vue.extend({
     },
     objSuccess() {
       // 创建项目基类
-      if (this.objform.textName == "") {
+      let { textName, name } = this.objform;
+      if (textName == "") {
         this.textNameStatus = false;
       } else {
         this.textNameStatus = true;
       }
-      if (this.objform.name == "") {
+      if (!/^[A-Za-z0-9]+$/.test(name)) {
         this.nameStatus = false;
       } else {
         this.nameStatus = true;
