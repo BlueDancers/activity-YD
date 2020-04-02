@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-30 11:48:31
- * @LastEditTime: 2020-04-02 11:24:04
+ * @LastEditTime: 2020-04-02 11:36:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/vue.config.js
@@ -53,7 +53,7 @@ module.exports = {
     config.optimization.splitChunks({
       chunks: 'all',
       minSize: 30000,
-      maxSize: 300000,
+      maxSize: 1000000,
       cacheGroups: {
         libs: {
           name: 'chunk-libs',
