@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="edit"
-    :style="stylesPush"
-    @click.right="mouseRight"
-    @click="mouseLeft"
-  >
+  <div class="edit" :style="stylesPush" @click.right="mouseRight" @click="mouseLeft">
     <div class="top_left" @mousedown.stop="roundMousedown(1)"></div>
     <div class="top_top" @mousedown.stop="roundMousedown(2)"></div>
     <div class="top_right" @mousedown.stop="roundMousedown(3)"></div>
@@ -29,7 +24,7 @@ export default {
     },
     styles: {
       type: Object,
-      default: () => { }
+      default: () => {}
     }
   },
   computed: {
@@ -56,14 +51,14 @@ export default {
       });
     },
     roundMousedown(state) {
-      this.$store.commit('core/toggle_roundDown', state)
+      this.$store.commit("core/toggle_roundDown", state);
     },
     // 删除元素
     deleteItem() {
       console.log(this.id);
       this.$store.commit("core/deleteCompLate", { id: this.id });
     },
-    mouseLeft(){
+    mouseLeft() {
       this.$refs.rightMenu.close();
     },
     mouseRight(e) {
@@ -77,9 +72,8 @@ export default {
 <style lang="less" scoped>
 .edit {
   position: absolute;
-  border:1.5px rgb(24, 144, 255) solid;
-  padding:1px;
-  outline: 0.5px rgba(179, 179, 179, 0.15) solid;
+  outline: 2px rgb(24, 144, 255) solid;
+  line-height: 1;
   .inline_btn {
     margin: 0px;
   }
@@ -95,7 +89,6 @@ export default {
     top: -4px;
     margin-left: -3px;
     cursor: n-resize;
-    
   }
   .top_right {
     .base_circle();
@@ -127,8 +120,8 @@ export default {
     position: absolute;
     width: 6px;
     height: 6px;
-    border-radius:50%;
-    background-color:white;
+    border-radius: 50%;
+    background-color: white;
     border: 1px solid #1890ff;
   }
 }

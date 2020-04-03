@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-09 17:31:40
- * @LastEditTime: 2020-03-10 09:51:40
+ * @LastEditTime: 2020-04-03 19:20:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/utils/animation.ts
@@ -12,8 +12,8 @@ export const animationOptions = [
     value: 'Attention Seekers',
     children: [
       {
-        label: '旋转',
-        value: 'justRotate'
+        label: '无',
+        value: ''
       },
       {
         label: '弹跳',
