@@ -73,7 +73,6 @@ export default {
 .edit {
   position: absolute;
   outline: 2px rgb(24, 144, 255) solid;
-  line-height: 1;
   .inline_btn {
     margin: 0px;
   }

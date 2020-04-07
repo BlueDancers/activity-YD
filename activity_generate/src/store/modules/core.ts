@@ -47,8 +47,8 @@ const core: Module<CoreInter, any> = {
     offsetvalueY: 0, // 辅助线位置配合变量auxiliary确定具体位置
     marking: {
       x: [], // x对齐标线
-      y: [] // y对齐标线
-    }
+      y: [], // y对齐标线
+    },
   },
   mutations: {
     // 保存当前项目名
@@ -88,7 +88,7 @@ const core: Module<CoreInter, any> = {
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template))
       let activeTemplate: any[] = []
-      list.map(item => {
+      list.map((item) => {
         if (item.activityId == id) {
           if (state.isLongDown) {
             // 多选状态
@@ -122,7 +122,7 @@ const core: Module<CoreInter, any> = {
     },
     update_CompZindex(state, num) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map(item => {
+      list.map((item) => {
         if (state.activeTemplate.includes(item.activityId)) {
           if (item.css.zIndex <= 0) {
             message.warning('元素层级不可小于0')
@@ -136,7 +136,7 @@ const core: Module<CoreInter, any> = {
     // 更新元素位置
     updatePos(state, data) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map(item => {
+      list.map((item) => {
         if (state.activeTemplate.includes(item.activityId)) {
           item.css.left = item.css.left + data.x
           item.css.top = item.css.top + data.y
@@ -145,7 +145,7 @@ const core: Module<CoreInter, any> = {
       // 判断绝对值
       // 自动偏移到最近的上面
       // 判断是否存在辅助线
-      list.map(res => {
+      list.map((res) => {
         if (state.activeTemplate.includes(res.activityId)) {
           // 针对选中的组件进行匹配
           for (let index = 0; index < state.marking.x.length; index++) {
@@ -187,7 +187,7 @@ const core: Module<CoreInter, any> = {
     updateZoom(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
       if (state.roundDown == 1) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.top = Number(item.css.top) + data.y
@@ -196,14 +196,14 @@ const core: Module<CoreInter, any> = {
           }
         })
       } else if (state.roundDown == 2) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.height = item.css.height - data.y
           }
         })
       } else if (state.roundDown == 3) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.width = Number(item.css.width) + data.x
@@ -211,7 +211,7 @@ const core: Module<CoreInter, any> = {
           }
         })
       } else if (state.roundDown == 4) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.width = item.css.width - data.x
@@ -219,13 +219,13 @@ const core: Module<CoreInter, any> = {
           }
         })
       } else if (state.roundDown == 5) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.height = Number(item.css.height) + data.y
           }
         })
       } else if (state.roundDown == 6) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = Number(item.css.width) + data.x
             item.css.height = Number(item.css.height) + data.y
@@ -249,7 +249,7 @@ const core: Module<CoreInter, any> = {
     deleteActiveComplate(state) {
       let list: any[] = JSON.parse(JSON.stringify(state.template))
       let template: any[] = []
-      list.map(item => {
+      list.map((item) => {
         if (!state.activeTemplate.includes(item.activityId)) {
           template.push(item)
         }
@@ -260,7 +260,7 @@ const core: Module<CoreInter, any> = {
     setMarking(state) {
       let marking: any = {
         x: [], // x轴上面该出现标线的
-        y: [] // y轴上面该出现标线的
+        y: [], // y轴上面该出现标线的
       }
       let offset: any[] = [1] // 拓展值
       state.template.map((res: any) => {
@@ -274,37 +274,37 @@ const core: Module<CoreInter, any> = {
           let bottom: number = res.css.top + res.css.height
           if (res.css.left > 0) {
             left_x.push(res.css.left)
-            offset.map(index => {
+            offset.map((index) => {
               left_x.push(res.css.left - index)
             })
-            offset.map(index => {
+            offset.map((index) => {
               left_x.push(res.css.left + index)
             })
           }
           if (right > 0) {
             right_x.push(right)
-            offset.map(index => {
+            offset.map((index) => {
               right_x.push(right - index)
             })
-            offset.map(index => {
+            offset.map((index) => {
               right_x.push(right + index)
             })
           }
           if (res.css.top > 0) {
             left_y.push(res.css.top)
-            offset.map(index => {
+            offset.map((index) => {
               left_y.push(res.css.top - index)
             })
-            offset.map(index => {
+            offset.map((index) => {
               left_y.push(res.css.top + index)
             })
           }
           if (bottom > 0) {
             right_y.push(bottom)
-            offset.map(index => {
+            offset.map((index) => {
               right_y.push(bottom - index)
             })
-            offset.map(index => {
+            offset.map((index) => {
               right_y.push(bottom + index)
             })
           }
@@ -319,44 +319,44 @@ const core: Module<CoreInter, any> = {
           marking.x.push([
             state.commWidth - 1,
             state.commWidth,
-            state.commWidth + 1
+            state.commWidth + 1,
           ])
           marking.y.push([
             state.commHeight - 1,
             state.commHeight,
-            state.commHeight + 1
+            state.commHeight + 1,
           ])
         }
       })
       state.marking = {
         x: Array.from(new Set(marking.y)),
-        y: Array.from(new Set(marking.x))
+        y: Array.from(new Set(marking.x)),
       }
     },
     // 单组件快捷配置
     fastOnlySet(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
       if (data.type == 1) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = (state.commWidth - item.css.width) / 2
           }
         })
       } else if (data.type == 2) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = state.commWidth
             item.css.left = 0
           }
         })
       } else if (data.type == 3) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = 0
           }
         })
       } else if (data.type == 4) {
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = state.commHeight - item.css.height
           }
@@ -370,12 +370,12 @@ const core: Module<CoreInter, any> = {
       if (data.type == 1) {
         // 靠左对齐(取最右边的值)
         let minLeft = state.commWidth
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             minLeft = item.css.left < minLeft ? item.css.left : minLeft
           }
         })
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = minLeft
           }
@@ -384,7 +384,7 @@ const core: Module<CoreInter, any> = {
         // 横向中心对齐
         let minTop = 0
         let minTopToHeigth = 0
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             if (item.css.top > minTop) {
               minTop = item.css.top
@@ -392,7 +392,7 @@ const core: Module<CoreInter, any> = {
             }
           }
         })
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = minTop + (minTopToHeigth - item.css.height) / 2
           }
@@ -401,7 +401,7 @@ const core: Module<CoreInter, any> = {
         // 竖向中心对齐
         let minLeft = state.commWidth
         let minLeftToWidth = 0
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             if (item.css.left < minLeft) {
               minLeft = item.css.left
@@ -409,7 +409,7 @@ const core: Module<CoreInter, any> = {
             }
           }
         })
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = minLeft + (minLeftToWidth - item.css.width) / 2
           }
@@ -417,13 +417,13 @@ const core: Module<CoreInter, any> = {
       } else if (data.type == 4) {
         // 靠下对齐
         let minTop = 0
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             let topOrHeight = item.css.height + item.css.top
             minTop = topOrHeight < minTop ? minTop : topOrHeight
           }
         })
-        list.map(item => {
+        list.map((item) => {
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = minTop - item.css.height
           }
@@ -447,20 +447,30 @@ const core: Module<CoreInter, any> = {
         }
       })
     },
+    // 增加轮播图
     add_swiper(state) {
       state.template.map((res: any) => {
         if (res.activityId == state.activeTemplate) {
           res.option.item.push({
             img: require('@/assets/750-188.png'),
-            link: ''
+            link: '',
           })
         }
       })
     },
+    // 减少轮播图
     less_swiper(state) {
       state.template.map((res: any) => {
         if (res.activityId == state.activeTemplate) {
           res.option.item.pop()
+        }
+      })
+    },
+    // 更新文本框文字
+    updateText(state, { id, text }) {
+      state.template.map((res: any) => {
+        if (res.activityId == id) {
+          res.option.text = text
         }
       })
     },
@@ -478,9 +488,9 @@ const core: Module<CoreInter, any> = {
       state.offsetvalueY = 0
       state.marking = {
         x: [],
-        y: []
+        y: [],
       }
-    }
+    },
   },
   actions: {
     // 保存当前项目数据
@@ -493,12 +503,12 @@ const core: Module<CoreInter, any> = {
     // 获取当前配置
     getActivity({ commit }, data) {
       return new Promise((resolve, reject) => {
-        getActivity(data.id).then(e => {
+        getActivity(data.id).then((e) => {
           if (e.data.code !== 200) {
             reject(e.data.data)
           } else {
             let template: any[] = []
-            e.data.data.data.map(e => {
+            e.data.data.data.map((e) => {
               template.push({ ...e, editStatus: false })
             })
             commit('update_template', template)
@@ -538,8 +548,8 @@ const core: Module<CoreInter, any> = {
         // 更新辅助线坐标
         commit('setMarking')
       }
-    }
-  }
+    },
+  },
 }
 
 export default core

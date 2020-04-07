@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-14 00:30:40
+ * @LastEditTime: 2020-04-07 21:16:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/App.vue
@@ -36,7 +36,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: 100%;
-   overflow-x: hidden;
+  overflow-x: hidden;
 }
 #nav {
   padding: 30px;
@@ -47,6 +47,10 @@ body {
       color: #42b983;
     }
   }
+}
+
+p {
+  margin: 0px;
 }
 
 html {
@@ -66,5 +70,14 @@ body::-webkit-scrollbar {
   position: absolute;
   user-select: none;
   outline: 1px solid #1890ff;
+}
+.ql-size-huge {
+  font-size: 32px;
+}
+.ql-size-large{
+    font-size: 18px;
+}
+.ql-size-small {
+  font-size: 10px;
 }
 </style>

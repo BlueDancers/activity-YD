@@ -24,7 +24,8 @@ import {
   baseText,
   baseInput,
   baseDiv,
-  baseSwiper
+  baseSwiper,
+  baseEditor
 } from "@/utils/baseReact";
 import imgUpload from "@/components/imgUpload/index.vue";
 import Vue from "vue";
@@ -66,6 +67,10 @@ export default Vue.extend({
         {
           name: "多选表单",
           img: require("@/assets/checked.png")
+        },
+        {
+          name: "富文本",
+          img: require("@/assets/swiper.png")
         }
       ]
     };
@@ -106,6 +111,11 @@ export default Vue.extend({
         this.$message.warn("组件升级中...");
       } else if (index == 7) {
         this.$message.warn("组件升级中...");
+      } else if (index == 8) {
+        this.$store.commit(
+          "core/set_tempLate",
+          baseEditor(this.$store.state.core)
+        );
       }
     },
     // 监听拖拽

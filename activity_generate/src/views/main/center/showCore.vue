@@ -1,11 +1,8 @@
 <template>
-  <div
-    class="show_core"
-    :style="{
+  <div class="core" :style="{
       height: `${commHeight}px`,
       background: background
-    }"
-  >
+    }">
     <component
       v-for="(item, index) in template"
       :key="index"
@@ -28,6 +25,7 @@ import baseText from "@/template/prod/showText.vue";
 import baseInput from "@/template/prod/showInput.vue";
 import baseDiv from "@/template/prod/showDiv.vue";
 import baseSwiper from "@/template/prod/showSwiper.vue";
+import baseEditor from "@/template/prod/showEditor.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 export default Vue.extend({
   components: {
@@ -37,7 +35,8 @@ export default Vue.extend({
     baseInput,
     auxiliaryLine,
     baseSwiper,
-    baseDiv
+    baseDiv,
+    baseEditor
   },
   mounted() {
     (this as any).init();
@@ -100,7 +99,7 @@ export default Vue.extend({
 </script>
 
 <style lang="less" scoped>
-.show_core {
+.core {
   width: 375px;
   position: relative;
   background-color: white;

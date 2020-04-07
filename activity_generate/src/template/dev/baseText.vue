@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-24 16:09:57
- * @LastEditTime: 2020-03-21 19:20:56
- * @LastEditors: your name
+ * @LastEditTime: 2020-04-06 17:47:36
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/template/dev/baseText.vue
  -->
@@ -10,7 +10,21 @@
   <!-- <div class="btn_con" @mouseover="toggleEdit"> -->
   <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :styles="constyle" :id="id">
-      <p :style="style" class="inline_btn" v-html="option.text.replace(/\n|\r\n/g, '<br>')"></p>
+      <p
+        v-show="!isInput"
+        @dblclick="updateText"
+        :style="style"
+        class="inline_btn"
+        v-html="option.text.replace(/\n|\r\n/g, '<br>')"
+      ></p>
+      <input
+        :style="style"
+        class="inline_btn"
+        v-show="isInput"
+        v-model="inputText"
+        @keydown.enter="saveText"
+        type="text"
+      />
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -49,6 +63,12 @@ export default {
       type: Boolean
     }
   },
+  data() {
+    return {
+      isInput: false,
+      inputText: ""
+    };
+  },
   computed: {
     style() {
       return handleStyle(this.css);
@@ -70,6 +90,11 @@ export default {
       return this.$store.state.core.hoverTemplate == this.id;
     }
   },
+  watch: {
+    editStatus() {
+      this.isInput = false;
+    }
+  },
   methods: {
     toggleEdit() {
       this.$store.commit("core/toggle_temp_status", this.id);
@@ -80,6 +105,17 @@ export default {
     },
     mouseleave() {
       this.$store.commit("core/set_hoverTemplate", "");
+    },
+    updateText() {
+      this.isInput = true;
+      this.inputText = this.option.text;
+    },
+    saveText() {
+      this.isInput = false;
+      this.$store.commit("core/updateText", {
+        id: this.id,
+        text: this.inputText
+      });
     }
   }
 };

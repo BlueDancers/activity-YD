@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-30 11:46:59
+ * @LastEditTime: 2020-04-06 19:18:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/main.ts
@@ -39,7 +39,7 @@ import {
   Pagination,
   Tooltip,
   Drawer,
-  Switch
+  Switch,
 } from 'ant-design-vue'
 Vue.use(Button)
 Vue.use(Tabs)
@@ -79,13 +79,16 @@ import ColorPicker from 'element-ui/lib/color-picker'
 import 'element-ui/lib/theme-chalk/color-picker.css'
 import EleInput from 'element-ui/lib/input'
 import 'element-ui/lib/theme-chalk/input.css'
+import EleUpload from 'element-ui/lib/upload'
+import 'element-ui/lib/theme-chalk/upload.css'
 Vue.component('el-button', ElButton)
 Vue.component('el-color-picker', ColorPicker)
 Vue.component('el-input', EleInput)
+Vue.component('el-upload', EleUpload)
 Vue.config.productionTip = false
 Vue.use(VueQriously)
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app')

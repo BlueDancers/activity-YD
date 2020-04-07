@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-21 19:18:50
+ * @LastEditTime: 2020-04-06 17:57:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/center/core.vue
@@ -40,6 +40,7 @@ import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
 import baseSwiper from "@/template/dev/baseSwiper.vue";
+import baseEditor from "@/template/dev/baseEditor.vue";
 import auxiliaryLine from "@/components/auxiliary-line/index.vue";
 import {
   baseButtom as ButtomData,
@@ -57,7 +58,8 @@ export default Vue.extend({
     baseInput,
     baseSwiper,
     auxiliaryLine,
-    baseDiv
+    baseDiv,
+    baseEditor
   },
   mounted() {
     (this as any).init();

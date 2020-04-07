@@ -1,13 +1,13 @@
 <template>
-  <img class="baseComplate" :class="animation.animationName" :src="text" alt :style="style" />
+  <img class="baseComplate" :class="animation.animationName" :src="option.text" alt :style="style" />
 </template>
 
 <script>
 import { handleStyle } from "../utils/index";
 export default {
   props: {
-    text: {
-      type: String
+    option: {
+      type: Object
     },
     css: {
       type: Object,

@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-07 17:55:07
- * @LastEditTime: 2020-03-21 19:18:38
+ * @LastEditTime: 2020-04-07 21:18:57
  * @LastEditors: Please set LastEditors
  * @Description: 组件功能关系
  * @FilePath: /activity_generate/src/views/main/right/components/activedata.vue
@@ -155,6 +155,11 @@
           />
         </div>
       </div>
+      <div class="active_item" v-if="showEditor(core)">
+        <div class="active_list_right">
+          <quill-editor :value="core.option.html" @changeHtml="changeHtml"></quill-editor>
+        </div>
+      </div>
     </div>
     <!-- 无组件 -->
     <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
@@ -166,10 +171,12 @@
 import Vue from "vue";
 import vuedraggable from "vuedraggable";
 import imgUpload from "@/components/imgUpload";
+import quillEditor from "@/components/Editor";
 export default {
   components: {
     vuedraggable,
-    imgUpload
+    imgUpload,
+    quillEditor
   },
   data() {
     return {
@@ -211,12 +218,16 @@ export default {
     }
   },
   methods: {
+    changeHtml(node) {
+      this.core.option.html = node;
+    },
     // 是否显示文本
     showText(core) {
       if (
         core.name == "base-input" ||
         core.name == "base-div" ||
-        core.name == "base-swiper"
+        core.name == "base-swiper" ||
+        core.name == "base-editor"
       ) {
         return false;
       } else {
@@ -265,6 +276,14 @@ export default {
     // 判断是否显示轮播图特有属性
     showSwiper(core) {
       if (core.name == "base-swiper") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    // 判断是否显示富文本特有属性
+    showEditor(core) {
+      if (core.name == "base-editor") {
         return true;
       } else {
         return false;
