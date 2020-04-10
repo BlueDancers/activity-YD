@@ -133,6 +133,16 @@ const core: Module<CoreInter, any> = {
       })
       state.template = list
     },
+    // 修改图片
+    update_img(state, { imgurl }) {
+      let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
+      list.map((item) => {
+        if (state.activeTemplate.includes(item.activityId)) {
+          item.option.text = imgurl
+        }
+      })
+      state.template = list
+    },
     // 更新元素位置
     updatePos(state, data) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体

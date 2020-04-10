@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-07 17:55:07
- * @LastEditTime: 2020-04-07 21:18:57
+ * @LastEditTime: 2020-04-10 09:02:47
  * @LastEditors: Please set LastEditors
  * @Description: 组件功能关系
  * @FilePath: /activity_generate/src/views/main/right/components/activedata.vue
@@ -35,6 +35,12 @@
         <div class="active_list_left">占位文字:</div>
         <div class="active_list_right">
           <a-input class="active_textarea" placeholder="请输入文字" v-model="core.option.placeholder" />
+        </div>
+      </div>
+      <div class="active_item" v-if="showImg(core)">
+        <div class="active_list_left">图片:</div>
+        <div class="active_list_right">
+          <img class="swiper_img" :src="core.option.text" @click="toggleBaseImg(core)" alt />
         </div>
       </div>
       <!-- 按钮独有的属性 -->
@@ -118,7 +124,7 @@
         </div>
       </div>
       <div class="active_item" v-if="showSwiper(core)">
-        <div class="active_list_left">图片链接:</div>
+        <div class="active_list_left">链接:</div>
         <div class="active_list_right">
           <a-input
             class="active_textarea"
@@ -227,11 +233,20 @@ export default {
         core.name == "base-input" ||
         core.name == "base-div" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor" ||
+        core.name == "base-img"
       ) {
         return false;
       } else {
         return true;
+      }
+    },
+    // 图片显示项
+    showImg(core) {
+      if (core.name == "base-img") {
+        return true;
+      } else {
+        return false;
       }
     },
     // 监听按钮提交input选项
@@ -300,11 +315,18 @@ export default {
     changeSwiper(index) {
       this.swiperItem = index;
     },
-    // 更换图片
+    // 更换轮播图图片
     toggleImg(index) {
       this.$refs.imgUpload.open({
         type: "swiper",
-        index: this.swiperItem
+        swiperItem: this.swiperItem
+      });
+    },
+    // 切换图片
+    toggleBaseImg(core) {
+      this.$refs.imgUpload.open({
+        type: "img",
+        activityId: core.activityId
       });
     }
   }

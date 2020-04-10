@@ -97,10 +97,10 @@ export default Vue.extend({
     handleCancel() {
       this.visible = false;
     },
-    open({ type, index }) {
+    open({ type, swiperItem }) {
       this.visible = true;
       this.type = type || "default";
-      this.swiperItem = index || 0;
+      this.swiperItem = swiperItem || 0;
     },
     toggleMenu(value) {
       this.Menukey = value.keyPath;
@@ -111,12 +111,15 @@ export default Vue.extend({
           "core/set_tempLate",
           baseImg(this.$store.state.core, item)
         );
-      } else {
+      } else if (this.type == "swiper") {
         this.$store.commit("core/update_swiperimg", {
           index: this.swiperItem,
           imgurl: item
         });
-        console.log("更新图片");
+      } else if (this.type == "img") {
+        this.$store.commit("core/update_img", {
+          imgurl: item
+        });
       }
       this.visible = false;
     },
