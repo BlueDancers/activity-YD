@@ -84,8 +84,9 @@ export function initKeyDown(state) {
   document.onkeydown = e => {
     var key: any = (window.event as any).keyCode
     if (detectOS() == 'Mac') {
-      if (key == 91) {
+      if (key == 91 || key == 93) {
         if (!state.isLongDown) {
+          console.log('多选')
           index.commit('core/toggle_isLongDown', true)
         }
       }
@@ -116,7 +117,8 @@ export function initKeyDown(state) {
   }
   document.onkeyup = e => {
     var key = (window.event as any).keyCode
-    if (key == 17 || key == 91) {
+    console.log(key)
+    if (key == 17 || key == 91 || key == 93) {
       index.commit('core/toggle_isLongDown', false)
     }
   }

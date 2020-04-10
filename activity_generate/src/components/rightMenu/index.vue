@@ -68,7 +68,6 @@ export default {
     confirm() {
       if (this.activeTemplate.length <= 1) {
         let activeData = this.templates.filter(e => e.activityId == this.id)[0];
-        console.log(activeData);
         if (activeData.css.width > commWidth) {
           this.$message.warning("保存超过屏幕宽度,无法保存");
           return false;

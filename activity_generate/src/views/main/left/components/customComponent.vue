@@ -29,7 +29,6 @@
               :id="item.activityId"
               :css="item.css"
               :option="item.option"
-              :text="item.text"
               :activeTemplate="[]"
               :absolute="false"
             ></component>
@@ -46,6 +45,7 @@ import baseImg from "@/template/dev/baseImg.vue";
 import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
+import baseEditor from "@/template/dev/baseEditor.vue";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
@@ -54,7 +54,8 @@ export default {
     baseImg,
     baseText,
     baseInput,
-    baseDiv
+    baseDiv,
+    baseEditor
   },
   mounted() {
     this.$store.dispatch("complate/getSingList");

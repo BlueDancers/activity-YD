@@ -29,15 +29,15 @@ export function baseDiv(store: any): baseNode {
       borderColor: 'rgba(0, 0, 0, 1)',
       borderStyle: 'solid',
       borderWidth: 0,
-      borderRadius: 20,
+      borderRadius: 20
     },
     animation: {
       animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
+      animationFillMode: 'both' // 动画停留最后一帧
+    }
   }
 }
 
@@ -58,7 +58,7 @@ export function baseButtom(store: any): baseNode {
       urlMethod: 'get', // 提交格式
       QQNum: '', // qq客服
       PhoneNum: '', // 电话客福
-      link: '', // 按钮点击跳转地址
+      link: '' // 按钮点击跳转地址
     },
     css: {
       top: 10 + dynamic,
@@ -72,15 +72,15 @@ export function baseButtom(store: any): baseNode {
       borderColor: 'rgba(0, 0, 0, 1)',
       borderStyle: 'solid',
       borderWidth: 0,
-      borderRadius: 0,
+      borderRadius: 0
     },
     animation: {
       animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
+      animationFillMode: 'both' // 动画停留最后一帧
+    }
   }
 }
 
@@ -94,22 +94,22 @@ export function baseImg(store: any, img: string): baseNode {
     editStatus: false,
     name: 'base-img',
     option: {
-      text: img,
+      text: img
     },
     css: {
       top: 10 + dynamic,
       left: 10 + dynamic,
       width: 100,
       height: 50,
-      zIndex: store.template.length + 1,
+      zIndex: store.template.length + 1
     },
     animation: {
       animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
+      animationFillMode: 'both' // 动画停留最后一帧
+    }
   }
 }
 
@@ -123,7 +123,7 @@ export function baseText(store: any): baseNode {
     editStatus: false,
     name: 'base-text',
     option: {
-      text: '请修改此处的文字',
+      text: '请修改此处的文字'
     },
     css: {
       top: 10 + dynamic,
@@ -138,15 +138,15 @@ export function baseText(store: any): baseNode {
       fontWeight: 'normal', // bold
       fontStyle: 'normal', // italic
       textAlign: 'center',
-      textDecoration: 'none', //underline
+      textDecoration: 'none' //underline
     },
     animation: {
       animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
+      animationFillMode: 'both' // 动画停留最后一帧
+    }
   }
 }
 
@@ -162,7 +162,7 @@ export function baseInput(store: any): baseNode {
     option: {
       text: '',
       inputName: `default${store.template.length}`,
-      placeholder: '',
+      placeholder: ''
     },
     css: {
       'box-sizing': 'border-box',
@@ -179,15 +179,15 @@ export function baseInput(store: any): baseNode {
       borderRadius: 1,
       paddingLeft: 5,
       paddingRight: 5,
-      fontSize: 12,
+      fontSize: 12
     },
     animation: {
       animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
+      animationFillMode: 'both' // 动画停留最后一帧
+    }
   }
 }
 
@@ -206,24 +206,24 @@ export function baseSwiper(store: any): baseNode {
       left: 10 + dynamic,
       width: 350,
       height: 100,
-      zIndex: store.template.length + 1,
+      zIndex: store.template.length + 1
     },
     option: {
       autoplay: '2000', // 轮播间隔
       item: [
         {
           img: require('@/assets/750-188.png'),
-          link: '',
-        },
-      ],
+          link: ''
+        }
+      ]
     },
     animation: {
       animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
+      animationFillMode: 'both' // 动画停留最后一帧
+    }
   }
 }
 
@@ -242,18 +242,18 @@ export function baseEditor(store: any): baseNode {
       left: 10 + dynamic,
       width: 350,
       height: 100,
-      zIndex: store.template.length + 1,
+      zIndex: store.template.length + 1
     },
     option: {
-      html: '请输入文字',
+      html: '请输入文字'
     },
     animation: {
       animationName: '',
       animationDuration: 1000, // 动画时间
       animationDelay: 0, // 延迟时间
       animationIterationCount: 1, // 动画执行次数
-      animationFillMode: 'both', // 动画停留最后一帧
-    },
+      animationFillMode: 'both' // 动画停留最后一帧
+    }
   }
 }
 
@@ -274,59 +274,7 @@ export function baseComplate(store: any, data: any): baseNode {
     name: data.name,
     css: data.css,
     animation: data.animation,
-  }
-  if (data.name == 'base-input') {
-    compData = {
-      ...compData,
-      option: {
-        text: data.option.text,
-        placeholder: data.option.placeholder,
-        inputName: `default${store.template.length}`,
-      },
-    }
-  }
-  if (data.name == 'base-div') {
-  }
-  if (data.name == 'base-text') {
-    compData = {
-      ...compData,
-      option: {
-        text: data.option.text,
-      },
-    }
-  }
-  if (data.name == 'base-buttom') {
-    compData = {
-      ...compData,
-      option: {
-        text: data.option.text,
-        btnType: 0, // 0 无事件 1 外部链接 2 提交表单 3 qq客服 4 电话客服
-        refInput: [], // 提交的input表单
-        inputFromUrl: '', // 数据提交的地址
-        urlMethod: 'get', // 提交格式
-        QQNum: '', // qq客服
-        PhoneNum: '', // 电话客福
-        link: '', // 按钮点击跳转地址
-      },
-    }
-  }
-  if (data.name == 'base-swiper') {
-    compData = {
-      ...compData,
-      option: {
-        autoplay: '2000', // 轮播间隔
-        item: [
-          {
-            img: require('@/assets/750-188.png'),
-            link: '',
-          },
-          {
-            img: require('@/assets/750-188.png'),
-            link: '',
-          },
-        ],
-      },
-    }
+    option: data.option
   }
   return compData
 }
