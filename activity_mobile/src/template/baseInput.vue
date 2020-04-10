@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-22 12:51:37
+ * @LastEditTime: 2020-04-10 10:28:08
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_mobile/src/template/baseInput.vue
+ -->
 <template>
   <input
     class="baseComplate"
@@ -15,10 +23,6 @@ export default {
   props: {
     id: {
       type: String
-    },
-    text: {
-      type: String,
-      default: "按钮"
     },
     option: {
       type: Object,

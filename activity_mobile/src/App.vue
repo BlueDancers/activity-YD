@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-03-18 10:56:31
+ * @LastEditTime: 2020-04-10 10:29:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_mobile/src/App.vue
@@ -42,5 +42,14 @@ img {
 }
 .van-fade-enter-active {
   animation: none;
+}
+.ql-size-huge {
+  font-size: 32px;
+}
+.ql-size-large {
+  font-size: 18px;
+}
+.ql-size-small {
+  font-size: 10px;
 }
 </style>

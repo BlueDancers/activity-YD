@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-03-13 18:24:35
+ * @LastEditTime: 2020-04-10 10:27:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_mobile/src/template/baseButtom.vue
@@ -12,17 +12,13 @@
     :class="animation.animationName"
     :style="style"
     @click="gotoLink"
-  >{{ text }}</button>
+  >{{ option.text }}</button>
 </template>
 
 <script>
 import { handleStyle } from "../utils/index";
 export default {
   props: {
-    text: {
-      type: String,
-      default: "按钮"
-    },
     link: {
       type: String
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="core" :style="{ height: coreHeigth, background: background }">
-    <!--  -->
+    <!-- baseEditor -->
     <component
       v-for="(item, index) in template"
       :key="index"
@@ -24,6 +24,7 @@ import baseText from "../template/baseText";
 import baseInput from "../template/baseInput";
 import baseDiv from "../template/baseDiv";
 import baseSwiper from "../template/baseSwiper";
+import baseEditor from "../template/baseEditor";
 import { isSoftKeyboard } from "../utils/index";
 import app from "../store/modules/app";
 import axios from "axios";
@@ -34,7 +35,8 @@ export default {
     baseText,
     baseInput,
     baseDiv,
-    baseSwiper
+    baseSwiper,
+    baseEditor
   },
   mounted() {
     this.init();
