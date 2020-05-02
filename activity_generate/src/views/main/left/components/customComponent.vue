@@ -20,6 +20,8 @@
                 <a-button class="icon_btn" type="primary" @click.stop="updateNewName">确认</a-button>
                 <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">取消</a-button>
               </a-button-group>
+              <a-icon type="check-circle" />
+              <a-icon type="close-circle" />
             </div>
           </div>
           <div class="item_main">
@@ -123,6 +125,7 @@ export default {
     }
     .item_main {
       margin-top: 20px;
+      width: 200px;
     }
     .item_name {
       font-size: 16px;
@@ -133,8 +136,7 @@ export default {
     }
     .item_icon {
       display: flex;
-      .icon_btn {
-      }
+      justify-content: space-around;
     }
     .icon {
       padding: 10px;

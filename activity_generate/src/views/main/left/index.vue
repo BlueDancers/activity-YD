@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-03-14 00:08:33
+ * @LastEditTime: 2020-05-02 13:58:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/index.vue
  -->
 <template>
   <div class="index_left">
-    <a-tabs defaultActiveKey="1">
+    <a-tabs defaultActiveKey="1" tabPosition="left"> 
       <a-tab-pane tab="组件" key="1">
         <element-page></element-page>
       </a-tab-pane>
@@ -74,7 +74,7 @@ export default Vue.extend({
 .index_left {
   position: relative;
   background-color: #ffffff;
-  width: 290px;
+  width: 360px;
   height: 100%;
   display: flex;
   background-color: #fafafa;
@@ -106,5 +106,8 @@ export default Vue.extend({
 <style>
 .index_left .ant-tabs-tab {
   margin-right: 10px;
+}
+.index_left .ant-tabs .ant-tabs-left-content {
+  padding: 0px;
 }
 </style>

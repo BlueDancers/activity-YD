@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-10 10:29:33
+ * @LastEditTime: 2020-04-11 20:09:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_mobile/src/App.vue
@@ -11,6 +11,18 @@
     <router-view />
   </div>
 </template>
+
+
+<script>
+export default {
+  mounted() {
+    // 获取屏幕宽度
+    // 判断系统
+    // 进行pc端处理
+  }
+};
+</script>
+
 
 <style lang="less">
 * {
