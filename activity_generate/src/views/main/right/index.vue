@@ -1,25 +1,7 @@
 <template>
   <div class="index_right">
     <!-- 侧边快捷操作栏 -->
-    <div class="right_setting">
-      <div
-        class="setting_item"
-        v-for="(item, index) in coreInfo"
-        :key="index"
-        @click="userSetting(index)"
-      >
-        <div v-if="item.text != '背景线'" :class="item.click ? 'item' : 'test item'">
-          <img class="settion_item_icon" :src="item.icon" alt />
-          <span class="settion_item_text">{{ item.text }}</span>
-        </div>
-        <div v-if="item.text == '背景线'" :class="item.click ? 'item' : 'test item'">
-          <img v-if="backgroundLine" class="settion_item_icon" :src="item.openIcon" alt />
-          <img v-if="!backgroundLine" class="settion_item_icon" :src="item.icon" alt />
-          <span class="settion_item_text">{{ item.text }}</span>
-        </div>
-      </div>
-      <p class="scale">{{ coreScale }}</p>
-    </div>
+
     <!-- 组件设置 -->
     <a-tabs defaultActiveKey="1" @change="callback">
       <a-tab-pane tab="属性" key="1">
@@ -111,7 +93,6 @@ export default {
     },
     copyTemplate() {
       console.log(this.copyTemplate);
-
       if (this.copyTemplate.length) {
         this.$store.commit("setting/set_coreinfoItem", {
           index: 3,
