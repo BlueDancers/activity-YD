@@ -1,11 +1,3 @@
-<!--
- * @Author: your name
- * @Date: 2020-04-06 18:00:29
- * @LastEditTime: 2020-04-07 21:50:14
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_generate/src/components/Editor/index.vue
- -->
 <template>
   <div>
     <el-upload
@@ -28,11 +20,20 @@
 </template>
 
 <script>
-// require styles
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import { quillEditor } from "vue-quill-editor";
+import { quillEditor, Quill } from "vue-quill-editor";
+import { container, ImageExtend, QuillWatch } from "quill-image-extend-module";
+import ImageResize from "quill-image-resize-module";
+Quill.register("modules/ImageExtend", ImageExtend);
+Quill.register("modules/imageResize", ImageResize);
+
+//自定义字体大小
+var sizes = [false, "16px", "18px", "20px", "22px"];
+var Size = Quill.import("formats/size");
+Size.whitelist = sizes;
+Quill.register(Size, true);
+var aligns = [false, "center", "none"];
+var Align = Quill.import("formats/align");
+Quill.register(Align, true);
 import { uploadImg } from "@/api";
 import { url } from "@/config/index";
 export default {
@@ -43,33 +44,45 @@ export default {
     value: {
       type: String,
       default: ""
+    },
+    action: {
+      type: String,
+      default: ""
     }
   },
   data() {
     return {
-      action: url + "/upimage",
       content: "",
       editorOption: {
         placeholder: "请输入文字",
         modules: {
+          imageResize: {
+            displayStyles: {
+              backgroundColor: "black",
+              border: "none",
+              color: "white"
+            },
+            modules: ["Resize", "DisplaySize", "Toolbar"]
+          },
           toolbar: {
             container: [
+              ["bold", "italic", "underline", "strike"], // toggled buttons
+              ["blockquote", "code-block"],
+              [{ header: 1 }, { header: 2 }], // custom button values
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ script: "sub" }, { script: "super" }], // superscript/subscript
+              [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+              [{ direction: "rtl" }], // text direction
+              [{ size: sizes }], // custom dropdown
+              [{ header: [1, 2, 3, 4, 5, 6, false] }],
+              [{ color: [] }, { background: [] }], // dropdown with defaults from theme
               [
-                "bold",
-                "italic",
-                "underline",
-                "strike",
-                "clean",
-                "link",
-                // "image",
-                { align: [] },
-                { color: [] }
+                { align: "left" },
+                { align: "center" },
+                { align: "right" },
+                { align: "justify" }
               ],
-              [{ color: [] }, { background: [] }],
-              [{ size: ["small", false, "large", "huge"] }],
-              [{ header: [1, 2, 3, 4, 5, 6, false] }]
-              // +源码编辑器
-              // ["sourceEditor"]
+              ["link", "image"]
             ],
             handlers: {
               image(value) {
@@ -92,11 +105,9 @@ export default {
     }
   },
   watch: {
-    value: {
-      handler() {
-        this.content = this.value;
-      },
-      immediate: true
+    value() {
+      console.log("传入文字", this.value);
+      this.content = this.value;
     }
   },
   methods: {
@@ -104,7 +115,6 @@ export default {
       this.$emit("changeHtml", quill);
     },
     uploadother(param) {
-      console.log(param);
       const formData = new FormData();
       formData.append("image", param.file);
       uploadImg(formData).then(e => {

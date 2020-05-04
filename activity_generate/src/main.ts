@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-04-06 19:18:39
+ * @LastEditTime: 2020-05-04 18:31:40
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/main.ts
@@ -81,6 +81,10 @@ import EleInput from 'element-ui/lib/input'
 import 'element-ui/lib/theme-chalk/input.css'
 import EleUpload from 'element-ui/lib/upload'
 import 'element-ui/lib/theme-chalk/upload.css'
+
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 Vue.component('el-button', ElButton)
 Vue.component('el-color-picker', ColorPicker)
 Vue.component('el-input', EleInput)
