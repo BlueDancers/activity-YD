@@ -14,6 +14,7 @@
             <template slot="content">
               <p>v 0.5.3 增加点击标题组件快速修改文字,增加图片快捷更换操作</p>
               <p>v 0.5.2 增加组件拖拽到页面位置</p>
+              <p>v 0.5.3 增加属性颜色自定义支持,现可支持渐变色</p>
             </template>
             <span class="item_text">更新日志</span>
           </a-popover>

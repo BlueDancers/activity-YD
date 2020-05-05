@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <base-header></base-header>
+    <base-header @coreSetting="coreSetting"></base-header>
     <div class="index_main">
       <!-- 左侧菜单栏 -->
       <left />

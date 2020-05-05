@@ -32,6 +32,17 @@
           </a-tooltip>
         </div>
       </div>
+      <div class="attr_item" v-if="showColorType(core)">
+        <div class="attr_list_left">高级模式:</div>
+        <div class="attr_list_right">
+          <a-popover title="警告" trigger="hover">
+            <template slot="content">
+              <p>切换会清空所有颜色数据,请谨慎操作</p>
+            </template>
+            <a-switch default-checked @change="toggleCssType" v-model="core.option.colorType" />
+          </a-popover>
+        </div>
+      </div>
       <div class="attr_item">
         <div class="attr_list_left">层级:</div>
         <div class="attr_list_right">
@@ -61,13 +72,27 @@
       <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
         <div class="attr_list_right">
-          <el-color-picker v-model="core.css.background" show-alpha></el-color-picker>
+          <el-color-picker v-if="!core.option.colorType" v-model="core.css.background" show-alpha></el-color-picker>
+          <a-input
+            class="attr_list_right_input"
+            placeholder="请输入颜色代码值"
+            size="small"
+            v-else
+            v-model="core.css.background"
+          ></a-input>
         </div>
       </div>
       <div class="attr_item" v-if="showFontColor(core)">
         <div class="attr_list_left">字体颜色:</div>
         <div class="attr_list_right">
-          <el-color-picker v-model="core.css.color" show-alpha></el-color-picker>
+          <el-color-picker v-if="!core.option.colorType" v-model="core.css.color" show-alpha></el-color-picker>
+          <a-input
+            class="attr_list_right_input"
+            placeholder="请输入颜色代码值"
+            size="small"
+            v-else
+            v-model="core.css.color"
+          ></a-input>
         </div>
       </div>
       <div class="attr_item" v-if="showFontsize(core)">
@@ -113,7 +138,14 @@
       <div class="attr_item" v-if="showBorder(core)">
         <div class="attr_list_left">边框颜色:</div>
         <div class="attr_list_right">
-          <el-color-picker v-model="core.css.borderColor" show-alpha></el-color-picker>
+          <el-color-picker v-if="!core.option.colorType" v-model="core.css.borderColor" show-alpha></el-color-picker>
+          <a-input
+            class="attr_list_right_input"
+            placeholder="请输入颜色代码值"
+            size="small"
+            v-else
+            v-model="core.css.borderColor"
+          ></a-input>
         </div>
       </div>
       <div class="attr_item" v-if="showBorder(core)">
@@ -190,6 +222,11 @@
 <script>
 export default {
   name: "attributes",
+  data() {
+    return {
+      type: /(^rgb\((\d+),\s*(\d+),\s*(\d+)\)$)|(^rgba\((\d+),\s*(\d+),\s*(\d+)(,\s*\d+\.\d+)*\)$)/
+    };
+  },
   computed: {
     // 可能是单组件 可能是多组件 可能无组件
     core() {
@@ -237,9 +274,25 @@ export default {
     formatter(value) {
       return `${value}px`;
     },
+    // 判断是否可切换css颜色模式
+    showColorType(core) {
+      if (
+        core.name == "base-img" ||
+        core.name == "base-swiper" ||
+        core.name == "base-editor"
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     // 是否显示背景颜色
     showBackground(core) {
-      if (core.name == "base-img" || core.name == "base-swiper") {
+      if (
+        core.name == "base-img" ||
+        core.name == "base-swiper" ||
+        core.name == "base-editor"
+      ) {
         return false;
       } else {
         return true;
@@ -274,7 +327,8 @@ export default {
       if (
         core.name == "base-img" ||
         core.name == "base-div" ||
-        core.name == "base-swiper"
+        core.name == "base-swiper" ||
+        core.name == "base-editor"
       ) {
         return false;
       } else {
@@ -286,7 +340,8 @@ export default {
       if (
         core.name == "base-img" ||
         core.name == "base-div" ||
-        core.name == "base-swiper"
+        core.name == "base-swiper" ||
+        core.name == "base-editor"
       ) {
         return false;
       } else {
@@ -316,6 +371,13 @@ export default {
       } else {
         return false;
       }
+    },
+    // 切换css属性
+    toggleCssType() {
+      // 每次切换都会清空颜色值
+      this.core.css.background = "";
+      this.core.css.color = "";
+      this.core.css.borderColor = "";
     }
   }
 };
@@ -371,6 +433,10 @@ export default {
       }
       .click_icon_active {
         background-color: rgb(195, 195, 195);
+      }
+      .attr_list_right_input {
+        margin-left: 10px;
+        width: 200px;
       }
     }
     .swiper_img {

@@ -1,9 +1,17 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-02-24 16:09:57
+ * @LastEditTime: 2020-05-05 09:47:35
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /activity_generate/src/views/main/right/index.vue
+ -->
 <template>
   <div class="index_right">
     <!-- 侧边快捷操作栏 -->
 
     <!-- 组件设置 -->
-    <a-tabs defaultActiveKey="1" @change="callback">
+    <a-tabs defaultActiveKey="1">
       <a-tab-pane tab="属性" key="1">
         <attributes-page />
       </a-tab-pane>
@@ -32,118 +40,7 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    coreScale() {
-      return Number((this.$store.state.setting.scale * 100).toFixed(1)) + "%";
-    },
-    backgroundLine() {
-      return this.$store.state.setting.backgroundLine;
-    },
-    coreInfo() {
-      return this.$store.state.setting.coreinfo;
-    },
-    activeTemplate() {
-      return this.$store.state.core.activeTemplate;
-    },
-    template() {
-      return this.$store.state.core.template;
-    },
-    copyTemplate() {
-      return this.$store.state.setting.copyTemplate;
-    }
-  },
-  watch: {
-    activeTemplate() {
-      if (this.activeTemplate.length > 0) {
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 2,
-          status: true
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 4,
-          status: true
-        });
-
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 6,
-          status: true
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 7,
-          status: true
-        });
-      } else {
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 2,
-          status: false
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 4,
-          status: false
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 6,
-          status: false
-        });
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 7,
-          status: false
-        });
-      }
-    },
-    copyTemplate() {
-      console.log(this.copyTemplate);
-      if (this.copyTemplate.length) {
-        this.$store.commit("setting/set_coreinfoItem", {
-          index: 3,
-          status: true
-        });
-      }
-    }
-  },
-  methods: {
-    callback() {
-      // 暂无右侧切换
-    },
-    //
-    userSetting(index) {
-      if (index == 0) {
-        // 撤销
-        this.$emit("coreSetting", "cancel");
-      } else if (index == 1) {
-        // 反撤销
-        this.$emit("coreSetting", "uncancel");
-      } else if (index == 2) {
-        let copyList = [];
-        this.activeTemplate.map(activityId => {
-          copyList.push(
-            cloneDeep(this.template.filter(e => e.activityId == activityId))[0]
-          );
-        });
-        this.$store.commit("setting/set_copy", copyList);
-        this.$message.success("已复制到粘贴板");
-      } else if (index == 3) {
-        this.copyTemplate.map(data => {
-          this.$store.commit(
-            "core/set_tempLate",
-            cloneDeep(baseComplate(this.$store.state.core, data))
-          );
-        });
-      } else if (index == 4) {
-        this.$store.commit("core/deleteActiveComplate");
-      } else if (index == 5) {
-        this.$store.commit("setting/toggle_backgroundLine");
-      } else if (index == 6) {
-        this.$store.commit("core/update_CompZindex", 1);
-      } else if (index == 7) {
-        this.$store.commit("core/update_CompZindex", -1);
-      } else if (index == 8) {
-        this.$store.commit("setting/set_scale", 0.1);
-      } else if (index == 9) {
-        this.$store.commit("setting/set_scale", -0.1);
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 
