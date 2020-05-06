@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:50:34
- * @LastEditTime: 2020-03-20 09:20:59
+ * @LastEditTime: 2020-05-06 17:14:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_server/app/service/activityObjectService.js
@@ -37,7 +37,7 @@ class activityObjectService extends Service {
    */
   async setActivityData(data) {
     const ActivityList = await this.ctx.model.ActivityObject.find({
-      name: data.name
+      name: data.name,
     })
 
     if (ActivityList.length > 0) {
@@ -47,8 +47,8 @@ class activityObjectService extends Service {
       ...data,
       height: 667,
       background: 'rgba(255, 255, 255, 1)',
-      time: new Date().getTime()
-    }).then(data => {
+      time: new Date().getTime(),
+    }).then((data) => {
       return data._id
     })
   }
@@ -63,14 +63,23 @@ class activityObjectService extends Service {
       textName,
       name,
       titlePage,
-      parentDisp
+      parentDisp,
+      defaultLeft,
     } = data
     try {
       let res = await this.ctx.model.ActivityObject.findOne({ name })
       if (res == null || res._id == objectId) {
         await this.ctx.model.ActivityObject.update(
           { _id: objectId },
-          { height, background, titlePage, textName, name, disp: parentDisp }
+          {
+            height,
+            background,
+            titlePage,
+            textName,
+            name,
+            disp: parentDisp,
+            defaultLeft,
+          }
         )
         return '更新项目成功'
       } else {
@@ -86,7 +95,7 @@ class activityObjectService extends Service {
    */
   async objectAuth(data) {
     let objectData = await this.ctx.model.ActivityObject.findOne({
-      _id: data.id
+      _id: data.id,
     })
     if (objectData.password == data.password) {
       return true

@@ -9,6 +9,7 @@ interface CoreInter {
   background: string // 页面背景色1
   parentName: string // 项目名
   parentRouterName: string //项目路由
+  defaultLeft: string // 生命周期
   parentId: number // 项目id
   parentDisp: string // 项目描述
   objectAuth: Boolean // 项目是否需要验证
@@ -36,6 +37,7 @@ const core: Module<CoreInter, any> = {
     parentRouterName: '', // 项目路由
     parentId: 0, // 项目id
     parentDisp: '', // 项目描述
+    defaultLeft: '', // 生命周期
     objectAuth: false, // 项目是否验证
     template: [], // 组件
     activeTemplate: [], // 选中的数组
@@ -449,6 +451,10 @@ const core: Module<CoreInter, any> = {
     updateBackground(state, color) {
       state.background = color
     },
+    // 修改生命周期函数
+    updateDefaultLeft(state, defaultLeft) {
+      state.defaultLeft = defaultLeft
+    },
     // 更新swiper的图片
     update_swiperimg(state, { index, imgurl }) {
       state.template.map((res: any) => {
@@ -528,6 +534,7 @@ const core: Module<CoreInter, any> = {
             commit('set_parentRouterName', e.data.data.name)
             commit('set_parentDisp', e.data.data.disp)
             commit('set_objectAuth', e.data.data.isAuth)
+            commit('updateDefaultLeft', e.data.data.defaultLeft)
             resolve('数据查询完成')
           }
         })

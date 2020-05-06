@@ -107,7 +107,6 @@ export default {
         return this.value;
       },
       set(value) {
-        console.log('通知父组件');
         this.$emit("changeHtml", value);
       }
     }

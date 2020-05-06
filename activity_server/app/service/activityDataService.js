@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-01 16:48:58
- * @LastEditTime: 2020-03-20 14:44:28
+ * @LastEditTime: 2020-05-06 17:52:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_server/app/service/activityDataService.js
@@ -17,13 +17,13 @@ class activityDataService extends Service {
    */
   async findById(parentId) {
     let object = await this.ctx.model.ActivityObject.find({
-      _id: parentId
+      _id: parentId,
     })
     if (object.length > 0) {
       let data = await this.ctx.model.ActivityData.find({ parentId })
       console.log(JSON.parse(JSON.stringify(object)))
       object = JSON.parse(JSON.stringify(object))
-      object.map(res => {
+      object.map((res) => {
         if (res.password) {
           res.isAuth = true
         } else {
@@ -43,12 +43,12 @@ class activityDataService extends Service {
     const object = await this.ctx.model.ActivityObject.find({ name })
     if (object.length > 0) {
       const data = await this.ctx.model.ActivityData.find({
-        parentRouterName: name
+        parentRouterName: name,
       })
       const objData = {
         objHeight: object[0].height,
         background: object[0].background,
-        textName: object[0].textName
+        textName: object[0].textName,
       }
       return Promise.resolve({ ...objData, datas: data })
     }
@@ -65,10 +65,11 @@ class activityDataService extends Service {
       commHeight,
       template,
       background,
-      parentDisp
+      parentDisp,
+      defaultLeft,
     } = data
     let objectData = await this.ctx.model.ActivityObject.findOne({
-      _id: parentId
+      _id: parentId,
     })
     // 效验密码
     if (objectData.password == null || objectData.password == password) {
@@ -81,17 +82,18 @@ class activityDataService extends Service {
           titlePage,
           textName: parentName,
           name: parentRouterName,
-          disp: parentDisp
+          disp: parentDisp,
+          defaultLeft,
         }
       )
       // 删除项目之前的数据
       await this.ctx.model.ActivityData.remove({ parentId: parentId })
       const newData = []
-      template.map(temp => {
+      template.map((temp) => {
         newData.push({
           parentId: parentId,
           parentRouterName: parentRouterName,
-          ...temp
+          ...temp,
         })
         return true
       })

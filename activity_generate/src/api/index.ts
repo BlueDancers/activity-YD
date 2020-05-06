@@ -6,7 +6,7 @@ import request from '../utils/request'
 export function getObject() {
   return request({
     url: `/getObject`,
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -21,8 +21,8 @@ export function objectAuth(id: string, password: string) {
     method: 'POST',
     data: {
       id,
-      password
-    }
+      password,
+    },
   })
 }
 
@@ -34,7 +34,7 @@ export function setObject(form: object) {
   return request({
     url: `/setObject`,
     method: 'post',
-    data: form
+    data: form,
   })
 }
 
@@ -51,8 +51,8 @@ export function deleteObj(id, password) {
     method: 'post',
     data: {
       id,
-      password
-    }
+      password,
+    },
   })
 }
 
@@ -74,8 +74,9 @@ export function saveActivity(data: any) {
       commHeight: data.commHeight,
       template: data.template,
       background: data.background,
-      parentDisp: data.parentDisp
-    }
+      parentDisp: data.parentDisp,
+      defaultLeft: data.defaultLeft,
+    },
   })
 }
 
@@ -86,7 +87,7 @@ export function saveActivity(data: any) {
 export function getActivity(id: number) {
   return request({
     url: `/getActivity/${id}`,
-    method: 'post'
+    method: 'post',
   })
 }
 
@@ -116,8 +117,8 @@ export function updateObj(
       textName,
       name,
       titlePage,
-      parentDisp
-    }
+      parentDisp,
+    },
   })
 }
 
@@ -130,9 +131,9 @@ export function uploadImg(data) {
     url: '/upimage',
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
     },
-    data
+    data,
   })
 }
 
@@ -145,9 +146,9 @@ export function upTitleImg(data) {
     url: '/uptitleimage',
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
     },
-    data
+    data,
   })
 }
 
@@ -160,8 +161,8 @@ export function saveSingleComplate(obj: object) {
     url: '/saveSingleComplate',
     method: 'POST',
     data: {
-      complate: obj
-    }
+      complate: obj,
+    },
   })
 }
 
@@ -171,7 +172,7 @@ export function saveSingleComplate(obj: object) {
 export function getSingleComplate() {
   return request({
     url: '/getSingleComplate',
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -186,8 +187,8 @@ export function updateSingComp(id: string, compName: string) {
     method: 'POST',
     data: {
       id,
-      compName
-    }
+      compName,
+    },
   })
 }
 
@@ -200,8 +201,8 @@ export function deleteSingComp(id: string) {
     url: '/deleteSingComp',
     method: 'POST',
     data: {
-      id
-    }
+      id,
+    },
   })
 }
 
@@ -211,7 +212,7 @@ export function deleteSingComp(id: string) {
 export function getUPloadImage() {
   return request({
     url: '/getImage',
-    method: 'GET'
+    method: 'GET',
   })
 }
 
@@ -221,7 +222,7 @@ export function getUPloadImage() {
 export function getDefaultImg() {
   return request({
     url: '/getDefaultImg',
-    method: 'GET'
+    method: 'GET',
   })
 }
 
@@ -253,8 +254,8 @@ export function setTemplate(
       height,
       background,
       titlePage,
-      template
-    }
+      template,
+    },
   })
 }
 
@@ -264,7 +265,7 @@ export function setTemplate(
 export function getTemplate() {
   return request({
     url: '/getTemplate',
-    method: 'GET'
+    method: 'GET',
   })
 }
 
@@ -274,7 +275,7 @@ export function getTemplate() {
 export function getTemplateDataById(templateId: string) {
   return request({
     url: `/getTemplateDataById/${templateId}`,
-    method: 'GET'
+    method: 'GET',
   })
 }
 
@@ -287,7 +288,7 @@ export function deleteTemplate(id: string) {
     url: '/deleteTemplate',
     method: 'POST',
     data: {
-      id
-    }
+      id,
+    },
   })
 }
