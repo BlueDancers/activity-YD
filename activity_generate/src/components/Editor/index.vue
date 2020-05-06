@@ -11,10 +11,9 @@
     />
     <quill-editor
       ref="myTextEditor"
-      v-model="content"
+      v-model="editorValue"
       class="texteditor"
       :options="editorOption"
-      @input="onEditInput($event)"
     />
   </div>
 </template>
@@ -102,18 +101,18 @@ export default {
   computed: {
     editor() {
       return this.$refs.myTextEditor;
-    }
-  },
-  watch: {
-    value() {
-      console.log("传入文字", this.value);
-      this.content = this.value;
+    },
+    editorValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        console.log('通知父组件');
+        this.$emit("changeHtml", value);
+      }
     }
   },
   methods: {
-    onEditInput(quill) {
-      this.$emit("changeHtml", quill);
-    },
     uploadother(param) {
       const formData = new FormData();
       formData.append("image", param.file);
