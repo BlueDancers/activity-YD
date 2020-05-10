@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-24 16:09:57
- * @LastEditTime: 2020-05-06 11:03:29
+ * @LastEditTime: 2020-05-10 22:10:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/right/index.vue
@@ -24,6 +24,7 @@
       <a-tab-pane tab="脚本" key="4">
         <runscript-page />
       </a-tab-pane>
+      <a-tab-pane tab="图层" key="5"></a-tab-pane>
     </a-tabs>
   </div>
 </template>
