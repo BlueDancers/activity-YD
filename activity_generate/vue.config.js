@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-30 11:48:31
- * @LastEditTime: 2020-05-04 18:29:51
+ * @LastEditTime: 2020-05-06 16:45:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/vue.config.js
@@ -11,6 +11,7 @@ const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 module.exports = {
   publicPath: '/docs/',
   lintOnSave: false,
@@ -89,5 +90,10 @@ module.exports = {
       },
     })
     config.plugin('loadshReplace').use(new LodashModuleReplacementPlugin()) //优化lodash
+    config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
+      {
+        languages: ['javascript'],
+      },
+    ])
   },
 }

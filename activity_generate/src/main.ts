@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-05-04 18:31:40
+ * @LastEditTime: 2020-05-06 14:09:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/main.ts
@@ -91,6 +91,7 @@ Vue.component('el-input', EleInput)
 Vue.component('el-upload', EleUpload)
 Vue.config.productionTip = false
 Vue.use(VueQriously)
+
 new Vue({
   router,
   store,

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-04-06 17:57:33
+ * @LastEditTime: 2020-05-09 22:50:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/center/core.vue
@@ -105,6 +105,8 @@ export default Vue.extend({
     // 拖拽放下事件
     drop(e) {
       const index = e.dataTransfer.getData("compIndex");
+      
+      if(index.trim()==''){return;}
       let data: any;
       if (index == 0) {
         data = DivData(this.$store.state.core);

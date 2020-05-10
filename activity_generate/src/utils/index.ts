@@ -19,7 +19,7 @@ export function handleStyle(css: any) {
     'borderRadius',
     'borderWidth',
     'paddingLeft',
-    'paddingRight'
+    'paddingRight',
   ]
   const animation = ['animationDuration', 'animationDelay']
   for (const key in css) {
@@ -46,20 +46,20 @@ export function initMouse(state) {
       index.commit('core/toggle_roundDown', 0)
     }
   }
-  indexCenter.onmousemove = e => {
+  indexCenter.onmousemove = (e) => {
     if (state.isDown) {
       let moveX = e.movementX
       let moveY = e.movementY
       index.dispatch('core/updatePosition', {
         x: moveX,
-        y: moveY
+        y: moveY,
       })
     }
     if (state.roundDown) {
       // 对接缩放元素的偏移坐标
       const data = {
         x: e.movementX,
-        y: e.movementY
+        y: e.movementY,
       }
       // 拖拽子元素分为两种情况
       // 1. 下方中间 下方右边 上方右边 (无需处理 直接缩放即可)
@@ -81,7 +81,7 @@ export function uninitMouse() {
  *监听键盘的上下左右按键
  */
 export function initKeyDown(state) {
-  document.onkeydown = e => {
+  document.onkeydown = (e) => {
     var key: any = (window.event as any).keyCode
     if (detectOS() == 'Mac') {
       if (key == 91 || key == 93) {
@@ -115,9 +115,8 @@ export function initKeyDown(state) {
       _updatePos(0, 1)
     }
   }
-  document.onkeyup = e => {
+  document.onkeyup = (e) => {
     var key = (window.event as any).keyCode
-    console.log(key)
     if (key == 17 || key == 91 || key == 93) {
       index.commit('core/toggle_isLongDown', false)
     }
@@ -126,7 +125,7 @@ export function initKeyDown(state) {
 function _updatePos(moveX: number, moveY: number) {
   index.commit('core/updatePos', {
     x: moveX,
-    y: moveY
+    y: moveY,
   })
 }
 
@@ -146,7 +145,7 @@ export function base64ToBlob(urlData: string) {
     ia[i] = bytes.charCodeAt(i)
   }
   return new Blob([ab], {
-    type: mime
+    type: mime,
   })
 }
 
@@ -182,7 +181,7 @@ export function parseTime(time: any, cFormat?: string) {
     h: date.getHours(),
     i: date.getMinutes(),
     s: date.getSeconds(),
-    a: date.getDay()
+    a: date.getDay(),
   }
   const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]

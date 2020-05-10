@@ -28,6 +28,7 @@
         <!-- 测试查看模式 -->
         <show-core v-if="mode == 'prod'"></show-core>
       </div>
+      <coverage class='coverage'></coverage>
       <!-- 右侧菜单栏 -->
       <right @coreSetting="coreSetting" />
     </div>
@@ -43,6 +44,7 @@ import showCore from "./center/showCore.vue";
 import left from "./left/index.vue";
 import right from "./right/index.vue";
 import { initMouse, uninitMouse, initKeyDown } from "@/utils/index";
+import coverage from '@/views/coverage/coverage'
 
 export default {
   components: {
@@ -50,12 +52,14 @@ export default {
     left,
     core,
     right,
-    showCore
+    showCore,
+    coverage
   },
   mounted() {
     this.$nextTick(() => {
       initMouse(this.core);
       initKeyDown(this.core);
+      
     });
     let objectId = this.$route.params.objectId;
     this.$store.commit("core/set_objectId", objectId);
@@ -177,6 +181,16 @@ export default {
       }
     }
   }
+  .coverage{
+    position: absolute;
+    // top:200px;
+    width:250px;
+    // right: 370px;
+    background-color: white;
+    height:300px;
+    overflow: hidden;
+    z-index: 2;
+    }
 }
 </style>
 

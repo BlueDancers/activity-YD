@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-24 16:09:57
- * @LastEditTime: 2020-05-05 09:47:35
- * @LastEditors: your name
+ * @LastEditTime: 2020-05-06 11:03:29
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/right/index.vue
  -->
@@ -21,6 +21,9 @@
       <a-tab-pane tab="动画" key="3">
         <animation-page />
       </a-tab-pane>
+      <a-tab-pane tab="脚本" key="4">
+        <runscript-page />
+      </a-tab-pane>
     </a-tabs>
   </div>
 </template>
@@ -29,13 +32,15 @@
 import attributesPage from "./components/attributes";
 import activedataPage from "./components/activedata";
 import animationPage from "./components/animation";
+import runscriptPage from "./components/runscript";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
   components: {
     attributesPage,
     activedataPage,
-    animationPage
+    animationPage,
+    runscriptPage
   },
   data() {
     return {};

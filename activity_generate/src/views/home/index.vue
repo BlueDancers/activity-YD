@@ -195,7 +195,16 @@ export default Vue.extend({
         let data = {
           ...this.objform,
           height: this.$store.state.core.commHeight, // 页面高度默认667
-          background: "rgba(255, 255, 255, 1)" // 页面背景色默认白色
+          background: "rgba(255, 255, 255, 1)", // 页面背景色默认白色
+          defaultLeft: `created(){
+    // 页面开始生命周期
+}
+mounted(){
+    // 页面挂载生命周期
+}
+destroyed(){
+    // 页面卸载生命周期
+}` // 注入生命周期
         };
         setObject(data).then(res => {
           this.$router.push({

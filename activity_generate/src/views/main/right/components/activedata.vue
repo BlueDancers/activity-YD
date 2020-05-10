@@ -1,7 +1,7 @@
 <!--
  * @Author: vkcyan
  * @Date: 2020-03-07 17:55:07
- * @LastEditTime: 2020-04-10 09:02:47
+ * @LastEditTime: 2020-05-06 11:57:46
  * @LastEditors: Please set LastEditors
  * @Description: 组件功能关系
  * @FilePath: /activity_generate/src/views/main/right/components/activedata.vue
@@ -225,6 +225,7 @@ export default {
   },
   methods: {
     changeHtml(node) {
+      console.log('变化');
       this.core.option.html = node;
     },
     // 是否显示文本

@@ -1,5 +1,13 @@
-export const url = process.env.NODE_ENV == "development" ? "http://127.0.0.1" : "http://121.36.37.117"
-// export const url = "http://121.36.37.117"
+/*
+ * @Author: your name
+ * @Date: 2020-05-08 14:09:38
+ * @LastEditTime: 2020-05-09 21:58:39
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \activity_generate\src\config\index.ts
+ */
+// export const url = process.env.NODE_ENV == "development" ? "http://127.0.0.1" : "http://121.36.37.117"
+export const url = "http://121.36.37.117"
 export const mobileUrl = `${url}/mobile/index/`; // 前台域名
 export const baseURL = `${url}:7001`; // 后台地址
 export const imageUpUrl = `${baseURL}/upimage`; // 上传图片地址
