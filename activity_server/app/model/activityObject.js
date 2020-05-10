@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:50:34
- * @LastEditTime: 2020-03-19 17:14:47
+ * @LastEditTime: 2020-05-06 17:12:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_server/app/model/activityObject.js
@@ -11,7 +11,7 @@
 /**
  * @param {Egg.model} app - 项目表
  */
-module.exports = app => {
+module.exports = (app) => {
   const mongoose = app.mongoose
   const Schema = mongoose.Schema
   /**
@@ -25,7 +25,8 @@ module.exports = app => {
     height: { type: Number }, // 页面高度
     background: { type: String }, // 项目背景色
     password: { type: Number }, // 项目密码
-    time: { type: Number } // 项目创建的时间
+    defaultLeft: { type: String }, // 项目生命周期
+    time: { type: Number }, // 项目创建的时间
   })
   return mongoose.model('activityObject', ObjectSchema)
 }

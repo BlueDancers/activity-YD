@@ -59,11 +59,7 @@ export default {
     form(formList) {
       let { refInput, inputFromUrl, urlMethod } = formList;
       let formData = {};
-      console.log(this.$refs);
-
-      refInput.map(e => {
-        formData[e] = this.$refs[e][0].$el.value;
-      });
+      refInput.map(e => (formData[e] = this.$refs[e][0].$el.value));
       for (const key in formData) {
         if (formData[key] == "") {
           this.$Toast("请完善表单");

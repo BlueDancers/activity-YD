@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
- * @LastEditTime: 2020-05-06 17:40:46
+ * @LastEditTime: 2020-05-10 21:52:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/left/components/page.vue
@@ -82,7 +82,7 @@ export default {
   },
   data() {
     return {
-      codeDrawer: true,
+      codeDrawer: false,
       options: {
         selectOnLineNumbers: true,
         roundedSelection: false,
