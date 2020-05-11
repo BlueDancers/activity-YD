@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-24 16:09:57
- * @LastEditTime: 2020-05-06 11:03:29
+ * @LastEditTime: 2020-05-11 20:41:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /activity_generate/src/views/main/right/index.vue
@@ -24,6 +24,9 @@
       <a-tab-pane tab="脚本" key="4">
         <runscript-page />
       </a-tab-pane>
+       <a-tab-pane tab="图层" key="5" >
+         <coverage class="coverage"></coverage>
+       </a-tab-pane>
     </a-tabs>
   </div>
 </template>
@@ -33,6 +36,7 @@ import attributesPage from "./components/attributes";
 import activedataPage from "./components/activedata";
 import animationPage from "./components/animation";
 import runscriptPage from "./components/runscript";
+import coverage from "./components/coverage"
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
@@ -40,7 +44,8 @@ export default {
     attributesPage,
     activedataPage,
     animationPage,
-    runscriptPage
+    runscriptPage,
+    coverage
   },
   data() {
     return {};
@@ -93,6 +98,10 @@ export default {
     .scale {
       text-align: center;
     }
+
   }
+
+    
+
 }
 </style>
