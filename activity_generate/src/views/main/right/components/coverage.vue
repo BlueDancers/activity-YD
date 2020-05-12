@@ -2,7 +2,7 @@
 import templateVue from '@/views/main/left/components/template.vue';
  * @Author: your name
  * @Date: 2020-05-08 14:12:40
- * @LastEditTime: 2020-05-11 22:51:08
+ * @LastEditTime: 2020-05-12 15:55:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \activity_generate\src\views\main\right\components\coverage.vue
@@ -69,15 +69,15 @@ export default {
     templateLists(){
         
        let tmp=JSON.parse(JSON.stringify(this.$store.state.core.template));
-       
-      tmp.map(
-        (item)=>{
-         
-          tmp.sort(
+         tmp.sort(
            (a,b)=>{
                   return a.css.zIndex-b.css.zIndex;
                    }
                );
+      tmp.map(
+        (item)=>{
+         
+
           if(!this.cache.keyValue.namekey.includes(item.activityId)){//没存储的对象
           
           if(!this.cache.nameCache.namekey.includes(item.name)){//新的类型
@@ -135,69 +135,60 @@ export default {
 
      //evt里面有两个值，一个evt.added 和evt.removed  可以分别知道移动元素的ID和删除元素的ID
     change(e) {
-      console.log(e , 'change...')
+      
+      //console.log(e , 'change...')
     },
     //start ,end ,add,update, sort, remove 得到的都差不多
     start(e) {
-      this.drag = true
-      console.log(e , 'start...')
+      this.drag = true;
+      this.startTemplate=e.item._underlying_vm_;
+     // console.log(this.startTemplate);
+     // console.log(e , 'start...')
     },
     end(e) {
-      console.log(e , 'end....')
-      this.drag = true
+      //console.log(e , 'end....')
+      this.drag = true;
+      //this.changeTemplate=this.getItem(e);
+            let change=this.changeTemplate.css.zIndex,
+          start=this.startTemplate.css.zIndex;
+      if(change>start){
+      this.setZIndex(this.changeTemplate.activityId,--change);
+      this.setZIndex(this.startTemplate.activityId,change+1);
+      }else{
+        this.setZIndex(this.changeTemplate.activityId,++change);
+        this.setZIndex(this.startTemplate.activityId,change-1);
+      }
+      console.log(this.startTemplate.css.zIndex,this.changeTemplate.css.zIndex);
+
       // evt.item //可以知道拖动的本身
       // evt.to    // 可以知道拖动的目标列表
       // evt.from  // 可以知道之前的列表
       // evt.oldIndex  // 可以知道拖动前的位置
       // evt.newIndex  // 可以知道拖动后的位置
     },
+
     move(e, originalEvent) {
-      console.log(e , 'move')
-      console.log(originalEvent,"鼠标位置") //鼠标位置
+      this.changeTemplate=e.relatedContext.element;
+      console.log(this.changeTemplate);
+      //console.log(e , 'move')
+      //console.log(originalEvent,"鼠标位置") //鼠标位置
     },
-          isActive(id){
-           return this.activeTemplates.includes(id);
-          },
-          setZIndex(id,index){
-              for(let i=0,len= this.$store.state.core.template.length;i<len;i++){
-                if(this.$store.state.core.template[i].activityId==id){
-                  this.$store.state.core.template[i].css.zIndex=index;
-                  break;
-                }
-                
-              }
-          },
-         addItem(itemId){
+    isActive(id){
+    return this.activeTemplates.includes(id);
+    },
+    setZIndex(id,index){
+    for(let i=0,len= this.$store.state.core.template.length;i<len;i++){
+       if(this.$store.state.core.template[i].activityId==id){
+          this.$store.state.core.template[i].css.zIndex=index;
+           break;
+        }
+                    
+       }
+    },
+    addItem(itemId){
            
-             this.$store.commit("core/toggle_temp_status",itemId);
-         },
-        /**
-     * 推拽开始，解决火狐无法拖拽情况
-    */
-    dragStart (e, item) {
-       this.startTemplate=item;
-      //  e.preventDefault();
+          this.$store.commit("core/toggle_temp_status",itemId);
     },
-    dragover(e){
-
-      e.preventDefault();
-    },
-    /**
-     * 拖拽元素至目标元素内时触发
-     * @item 目标元素
-     * @info 可在此处获取，拖拽元素的一系列属性
-    */
-    dragEnter (e, item) {
-      e.preventDefault();
-      this.changeTemplate=item;
-
-      // e.preventDefault();
-    },
-    /**
-     * 拖拽完成之后触发
-     * @item 目标元素
-     * @info 可在此处获取，拖拽元素的目标元素一系列属性
-    */
     dragEnd (e, item) {
 
       let change=this.changeTemplate.css.zIndex,
