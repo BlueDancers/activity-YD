@@ -72,6 +72,7 @@ export default {
 <style lang="less" scoped>
 .edit {
   position: absolute;
+  z-index: 999 !important;
   outline: 2px rgb(24, 144, 255) solid;
   .inline_btn {
     margin: 0px;
