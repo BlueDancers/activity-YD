@@ -12,10 +12,6 @@
             <a-icon type="pie-chart" />
             <span>用户上传</span>
           </a-menu-item>
-          <a-menu-item key="2">
-            <a-icon type="desktop" />
-            <span>基础图库</span>
-          </a-menu-item>
         </a-menu>
         <a-upload
           class="item_file"
@@ -35,21 +31,11 @@
       <div class="img_con">
         <div class="img_list" v-if="Menukey.includes('1')">
           <img
-            @click="addBaseImg(item)"
+            @click="addBaseImg(item.imageName)"
             class
-            v-for="item in userImage"
-            :key="item"
-            :src="item"
-            alt
-          />
-        </div>
-        <div class="img_list" v-if="Menukey.includes('2')">
-          <img
-            @click="addBaseImg(item)"
-            class
-            v-for="item in baseImage"
-            :key="item"
-            :src="item"
+            v-for="(item,index) in userImage"
+            :key="'ima'+index"
+            :src="imageStaticUrl+item.imageName"
             alt
           />
         </div>
@@ -62,14 +48,15 @@
 import Vue from "vue";
 import { getUPloadImage, getDefaultImg } from "@/api/index";
 import { baseImg } from "@/utils/baseReact";
-import { imageUpUrl } from "@/config/index";
+import { imageUpUrl,imageStaticUrl } from "@/config/index";
+
 export default Vue.extend({
   data() {
     return {
+      imageStaticUrl:imageStaticUrl,
       visible: false,
       Menukey: ["1"],
       userImage: [],
-      baseImage: [],
       imageUpUrl: imageUpUrl,
       headers: {
         authorization: "authorization-text"
@@ -84,11 +71,7 @@ export default Vue.extend({
   methods: {
     init() {
       getUPloadImage().then(res => {
-        console.log(res);
         this.userImage = res.data.data;
-      });
-      getDefaultImg().then(res => {
-        this.baseImage = res.data.data;
       });
     },
     handleOk() {

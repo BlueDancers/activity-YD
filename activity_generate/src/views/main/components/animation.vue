@@ -1,20 +1,16 @@
-<!--
- * @Author: your name
- * @Date: 2020-03-10 08:30:24
- * @LastEditTime: 2020-03-10 09:40:41
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_generate/src/views/main/components/animation.vue
- -->
-
 <template>
-  <a-drawer title="请选择动画" placement="top" :closable="false" @close="onClose" :visible="show">
+  <a-drawer title="请选择动画" placement="top" height="400" :closable="false" @close="onClose" :visible="show">
+        <div class="animation-show" >
+              <a-button type="primary" 
+              class=" show-btn animated "
+              :class="btnAnimation"
+              >效果浏览</a-button>
+        </div>
     <a-tabs @change="callback" type="card">
       <a-tab-pane v-for="item in animationAPI" :key="item.value" :tab="item.label">
         <div v-if="item.value == activeApI" class="btn_list">
           <a-button
-            class="animation_btn animated"
-            :class="child.value == btnAnimation?btnAnimation:''"
+            class="animation_btn "
             v-for="child in item.children"
             :key="child.value"
             type="primary"
@@ -64,11 +60,28 @@ export default Vue.extend({
 </script>
 <style lang="less" scoped>
 .btn_list {
-  height: 100px;
+  height: 30px;
   .animation_btn {
     margin: 0 10px;
     padding: 0px 10px;
-    box-sizing: border-box;
+  box-sizing: border-box;
   }
+}
+.animation-show{
+  width: 400px;
+  height: 200px;
+  margin:  auto;
+  margin-bottom: 10px;
+  border: 1px solid #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.show-btn , .show-btn{
+  margin: 0 20px;
+  padding: 0px 20px;
+  -webkit-animation-duration: 5s !important;
+  animation-duration: 5s !important;
+  animation-iteration-count: infinite !important;
 }
 </style>
