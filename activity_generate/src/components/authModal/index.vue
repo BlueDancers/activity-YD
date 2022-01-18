@@ -21,17 +21,19 @@ export default Vue.extend({
     return {
       visible: false,
       data: {} as any, // 项目数据
-      passValue: "" // 项目密码
+      passValue: "" ,// 项目密码
+      index:null,//对应的项目id
     };
   },
   methods: {
-    open(data) {
+    open(data,index) {
       this.data = data;
       this.visible = true;
+      this.index=index;
     },
     handleOk() {
       objectAuth(this.data._id, this.passValue).then(res => {
-        this.$emit("authSuccess", { ...this.data, password: this.passValue });
+        this.$emit("authSuccess", { ...this.data, password: this.passValue },this.index);
         this.data = {};
         this.visible = false;
       });

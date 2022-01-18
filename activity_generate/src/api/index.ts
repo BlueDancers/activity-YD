@@ -1,4 +1,12 @@
 import request from '../utils/request'
+import axios from 'axios'
+/**
+ * AIUI机器人
+ */
+export const toRobot = (word) => ajax('http://121.36.37.117:3001/aiui', {
+  word
+}, 'POST');
+
 
 /**
  * 获取所有项目
@@ -37,7 +45,17 @@ export function setObject(form: object) {
     data: form,
   })
 }
-
+/**
+ * 新建页面
+ * @param {object} form 新建项目配置
+ */
+export function addPage(form: object) {
+  return request({
+    url: `/addPage`,
+    method: 'post',
+    data: form,
+  })
+}
 /**
  * 删除项目
  * @export
@@ -62,6 +80,7 @@ export function deleteObj(id, password) {
  * @param {Array} template 项目模板信息
  */
 export function saveActivity(data: any) {
+  console.log(data);
   return request({
     url: `/saveActivity`,
     method: 'post',
@@ -75,19 +94,38 @@ export function saveActivity(data: any) {
       template: data.template,
       background: data.background,
       parentDisp: data.parentDisp,
-      defaultLeft: data.defaultLeft,
+      initSet: data.initSet,
     },
   })
 }
 
+/**
+ * 保存所有页面
+ * @param {string} parentRouterName 项目路由名
+ * 
+ */
+export function saveAllPage(data: any) {
+  return request({
+    url: `/saveAllPage`,
+    method: 'post',
+    data: {
+      allPgae: data.allPage,
+      password: data.pass,
+      titlePage: data.titlePage,
+    },
+  })
+}
 /**
  * 获取项目配置
  * @param {number} id 项目名称
  */
 export function getActivity(id: number) {
   return request({
-    url: `/getActivity/${id}`,
+    url: `/getActivity`,
     method: 'post',
+    data: {
+      id
+    }
   })
 }
 
@@ -274,8 +312,11 @@ export function getTemplate() {
  */
 export function getTemplateDataById(templateId: string) {
   return request({
-    url: `/getTemplateDataById/${templateId}`,
-    method: 'GET',
+    url: `/getTemplateDataById/`,
+    method: 'POST',
+    data: {
+      id: templateId,
+    },
   })
 }
 
@@ -284,6 +325,7 @@ export function getTemplateDataById(templateId: string) {
  * @param id 模板id
  */
 export function deleteTemplate(id: string) {
+  console.log(id);
   return request({
     url: '/deleteTemplate',
     method: 'POST',
@@ -291,4 +333,63 @@ export function deleteTemplate(id: string) {
       id,
     },
   })
+}
+
+
+function ajax(url = '', params = {}, type = 'GET') {
+  // 1. 变量
+  let promise;
+  // 2. 返回一个promise对象
+  return new Promise((resolve, reject) => {
+    // 2.1 判断请求的类型
+    if (type.toUpperCase() === 'GET') { // get请求
+      // 2.2 拼接字符串
+      let paramsStr = '';
+      // 2.3 遍历
+      Object.keys(params).forEach(key => {
+        paramsStr += key + '=' + params[key] + '&';
+      });
+      // 2.4 过滤最后的&
+      /*
+        注意：为了防止请求缓存，在尾部加了时间戳
+      */
+      if (paramsStr) {
+        paramsStr = paramsStr.substr(0, paramsStr.lastIndexOf('&'));
+        // 2.5 拼接完整路径
+        if (url.indexOf('127.0.0.1') === -1) {
+          url += '?' + paramsStr + '&Geek-James=' + randomCode(20);
+        } else {
+          url += '?' + paramsStr;
+        }
+      } else {
+        if (url.indexOf('127.0.0.1') === -1) {
+          url += '?Geek-James=' + randomCode(20)
+        }
+      }
+      // 2.6 发起get请求
+      promise = axios.get(url);
+    } else if (type.toUpperCase() === 'POST') { // post请求
+      // 2.7 发起post请求
+      promise = axios.post(url, params);
+    }
+    // 2.8 处理结果并返回
+    promise.then((response) => {
+
+      resolve(response.data);
+    }).catch(error => {
+      reject(error);
+    })
+  });
+
+}
+
+/*生成指定长度的随机数*/
+function randomCode(length) {
+  let chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    let index = Math.ceil(Math.random() * 9);
+    result += chars[index];
+  }
+  return result;
 }

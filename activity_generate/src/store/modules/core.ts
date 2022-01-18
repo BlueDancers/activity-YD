@@ -1,15 +1,20 @@
-import { saveActivity, getActivity, updateObj, setTemplate } from '@/api/index'
+import { saveActivity, getActivity, updateObj, setTemplate, saveAllPage } from '@/api/index'
 import { commHeight, commWidth } from '../../config/index'
 import { Module } from 'vuex'
 import { message } from 'ant-design-vue'
 import { guid } from '@/utils/utils'
+import { getBaseCovName } from '@/utils/baseReact'
+import store from '..'
+
 interface CoreInter {
+  allPageList: Array<any>//所有页面
+  nowPageName: string//当前页面ID
   commWidth: number // 页面宽度
   commHeight: number // 页面高度
   background: string // 页面背景色1
   parentName: string // 项目名
   parentRouterName: string //项目路由
-  defaultLeft: string // 生命周期
+  initSet: string // 动态组件编辑
   parentId: number // 项目id
   parentDisp: string // 项目描述
   objectAuth: Boolean // 项目是否需要验证
@@ -24,12 +29,27 @@ interface CoreInter {
   marking: {
     x: any[] // x对齐标线
     y: any[] // y对齐标线
-  }
+  },
+  coverageCache: {
+    includeCache: string[],
+    'base-input': number,
+    "base-div": number,
+    "base-swiper": number,
+    "base-text": number,
+    "base-img": number,
+    'base-buttom': number,
+    'base-radio': number,
+    'base-check': number,
+    'base-icon': number
+  },
+  maxZIndex: number,
 }
 
 const core: Module<CoreInter, any> = {
   namespaced: true,
   state: {
+    allPageList: [],//所有页面
+    nowPageName: '',//当前页面索引
     commWidth: commWidth, // 页面宽度
     commHeight: commHeight, // 页面高度
     background: 'rgba(255, 255, 255, 1)', // 页面背景色
@@ -37,7 +57,7 @@ const core: Module<CoreInter, any> = {
     parentRouterName: '', // 项目路由
     parentId: 0, // 项目id
     parentDisp: '', // 项目描述
-    defaultLeft: '', // 生命周期
+    initSet: '', // 动态组件编辑
     objectAuth: false, // 项目是否验证
     template: [], // 组件
     activeTemplate: [], // 选中的数组
@@ -51,8 +71,85 @@ const core: Module<CoreInter, any> = {
       x: [], // x对齐标线
       y: [], // y对齐标线
     },
+    coverageCache: {
+      includeCache: [],
+      'base-input': 0,
+      "base-div": 0,
+      "base-swiper": 0,
+      "base-text": 0,
+      "base-img": 0,
+      'base-icon': 0,
+      'base-buttom': 0,
+      'base-radio': 0,
+      'base-check': 0,
+    },
+    maxZIndex: 0
   },
   mutations: {
+    //设置所有界面
+    setAllPageList(state, allPage) {
+      state.allPageList = allPage;
+    },
+    //设置当前页面索引
+    setNowPageName(state, name) {
+      state.nowPageName = name;
+    },
+    //添加页面
+    addPage(state, pageData: any) {
+      state.allPageList.push(pageData);
+    },
+    //用于标志初始化完毕，撤销，反撤销用
+    loadOver() {
+    },
+    //保存页面
+    saveNowPage(state) {
+      let index = 0, leng = state.allPageList.length;
+      for (index = 0; index < leng; index++) {
+        if (state.allPageList[index].name == state.nowPageName) {
+          state.allPageList[index].doms = state.template;
+          state.allPageList[index].height = state.commHeight;
+          state.allPageList[index].textName = state.parentName;
+          state.allPageList[index].name = state.parentRouterName;
+          state.allPageList[index].disp = state.parentDisp;
+          state.allPageList[index].background = state.background;
+          state.allPageList[index].initSet = state.initSet;
+          break;
+        }
+      }
+    },
+    deletePage(state, id) {
+      let i = 0, leng = state.allPageList.length;
+      for (i = 0; i < leng; i++) {
+        if (id == state.allPageList[i]._id) {
+          state.allPageList.splice(i, 1);
+          break;
+        }
+      }
+    },
+    //改变当前项目的编辑的页面
+    changeNowPage(state, name) {
+      let i = 0, leng = state.allPageList.length;
+      store.commit('core/saveNowPage');
+      for (i = 0; i < leng; i++) {
+        if (state.allPageList[i].name == name) {
+          let template: any[] = [];
+          let nowPage = state.allPageList[i];
+          state.activeTemplate = [];
+          store.commit('core/setNowPageName', name);
+          nowPage.doms.map((e) => {
+            template.push({ ...e, editStatus: false })
+          })
+          store.commit('core/update_template', template)
+          store.commit('core/updateCommHeigth', nowPage.height)
+          store.commit('core/updateBackground', nowPage.background)
+          store.commit('core/set_objectName', nowPage.textName)
+          store.commit('core/set_parentRouterName', nowPage.name)
+          store.commit('core/set_parentDisp', nowPage.disp)
+          store.commit('core/updateInitSet', nowPage.initSet)
+          break;
+        }
+      }
+    },
     // 保存当前项目名
     set_objectName(state, name) {
       state.parentName = name
@@ -61,13 +158,18 @@ const core: Module<CoreInter, any> = {
     set_parentRouterName(state, name) {
       state.parentRouterName = name
     },
+
     //保存项目描述
     set_parentDisp(state, disp) {
       state.parentDisp = disp
     },
     // 保存项目是否需要验证
     set_objectAuth(state, type) {
-      state.objectAuth = type
+      if (type.trim() == '1') {
+        state.objectAuth = true
+      } else {
+        state.objectAuth = false
+      }
     },
     // 保存当前项目id
     set_objectId(state, id) {
@@ -80,6 +182,11 @@ const core: Module<CoreInter, any> = {
     // 增加元素
     set_tempLate(state, template) {
       // 增加页面上的元素
+      if (template.covName.trim() == '') {
+        template.covName = getBaseCovName(template.name) + (state.coverageCache[template.name] + 1);
+      }
+      state.coverageCache[template.name]++;
+      state.coverageCache.includeCache.push(template.activityId);
       state.template.push(template)
     },
     // 更新当前是否处于鼠标按下状态
@@ -90,7 +197,9 @@ const core: Module<CoreInter, any> = {
     toggle_temp_status(state, id) {
       let list = JSON.parse(JSON.stringify(state.template))
       let activeTemplate: any[] = []
-      list.map((item) => {
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (item.activityId == id) {
           if (state.isLongDown) {
             // 多选状态
@@ -102,8 +211,9 @@ const core: Module<CoreInter, any> = {
             // 单选状态
             activeTemplate.push(id)
           }
+          break;
         }
-      })
+      }
       state.activeTemplate = activeTemplate
     },
     // 更新组件的鼠标活动状态
@@ -124,12 +234,38 @@ const core: Module<CoreInter, any> = {
     },
     update_CompZindex(state, num) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map((item) => {
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (state.activeTemplate.includes(item.activityId)) {
+          item.css.zIndex = item.css.zIndex + num
           if (item.css.zIndex <= 0) {
             message.warning('元素层级不可小于0')
+            return;
+          }
+          break;
+        }
+      }
+      state.template = list
+    },
+    set_CompZindex(state, { actId, num }) {
+      let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
+      let i = 0, leng = list.length;
+      list.map((item) => {
+        if (item.css.zIndex > num) {
+          item.css.zIndex++;
+        }
+        if (item.css.zIndex >= state.maxZIndex) {
+          state.maxZIndex = item.css.zIndex;
+        }
+        if (actId == (item.activityId)) {
+          if (num <= 0) {
+            list.map((item) => {
+              item.css.zIndex++;
+            });
+            item.css.zIndex = 0;
           } else {
-            item.css.zIndex = item.css.zIndex + num
+            item.css.zIndex = num;
           }
         }
       })
@@ -138,22 +274,42 @@ const core: Module<CoreInter, any> = {
     // 修改图片
     update_img(state, { imgurl }) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map((item) => {
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.option.text = imgurl
+          break;
         }
-      })
+      }
+      state.template = list
+    },
+    // 修改图标
+    update_icon(state, { iconType, theme }) {
+      let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
+        if (state.activeTemplate.includes(item.activityId)) {
+          item.option.iconType = iconType;
+          item.option.theme = theme;
+          break;
+        }
+      }
       state.template = list
     },
     // 更新元素位置
     updatePos(state, data) {
       let list = JSON.parse(JSON.stringify(state.template)) // 元素总体
-      list.map((item) => {
+      let i = 0, leng = list.length;
+      for (i = 0; i < leng; i++) {
+        let item = list[i];
         if (state.activeTemplate.includes(item.activityId)) {
           item.css.left = item.css.left + data.x
           item.css.top = item.css.top + data.y
+          break;
         }
-      })
+      }
       // 判断绝对值
       // 自动偏移到最近的上面
       // 判断是否存在辅助线
@@ -198,51 +354,100 @@ const core: Module<CoreInter, any> = {
     // 更新元素大小
     updateZoom(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
+      let i = 0, leng = list.length;
       if (state.roundDown == 1) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.top = Number(item.css.top) + data.y
             item.css.width = item.css.width - data.x
             item.css.height = item.css.height - data.y
+            if (item.css.width <= 0) {
+              item.css.width = 0;
+            }
+            if (item.css.height <= 0) {
+              item.css.height = 0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 2) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.height = item.css.height - data.y
+            if (item.css.width <= 0) {
+              item.css.width = 0;
+            }
+            if (item.css.height <= 0) {
+              item.css.height = 0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 3) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = Number(item.css.top) + data.y
             item.css.width = Number(item.css.width) + data.x
             item.css.height = item.css.height - data.y
+            if (item.css.width <= 0) {
+              item.css.width = 0;
+            }
+            if (item.css.height <= 0) {
+              item.css.height = 0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 4) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = Number(item.css.left) + data.x
             item.css.width = item.css.width - data.x
             item.css.height = Number(item.css.height) + data.y
+            if (item.css.width <= 0) {
+              item.css.width = 0;
+            }
+            if (item.css.height <= 0) {
+              item.css.height = 0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 5) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.height = Number(item.css.height) + data.y
+            if (item.css.width <= 0) {
+              item.css.width = 0;
+            }
+            if (item.css.height <= 0) {
+              item.css.height = 0;
+            }
+            break;
           }
-        })
+        }
       } else if (state.roundDown == 6) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = Number(item.css.width) + data.x
             item.css.height = Number(item.css.height) + data.y
+            if (item.css.width <= 0) {
+              item.css.width = 0;
+            }
+            if (item.css.height <= 0) {
+              item.css.height = 0;
+            }
+            break;
           }
-        })
+        }
       }
       state.template = list
     },
@@ -275,7 +480,9 @@ const core: Module<CoreInter, any> = {
         y: [], // y轴上面该出现标线的
       }
       let offset: any[] = [1] // 拓展值
-      state.template.map((res: any) => {
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (!state.activeTemplate.includes(res.activityId)) {
           // 偏移绝对值
           let left_x: any[] = [] // 单个元素x轴
@@ -338,8 +545,9 @@ const core: Module<CoreInter, any> = {
             state.commHeight,
             state.commHeight + 1,
           ])
+          break;
         }
-      })
+      }
       state.marking = {
         x: Array.from(new Set(marking.y)),
         y: Array.from(new Set(marking.x)),
@@ -348,31 +556,40 @@ const core: Module<CoreInter, any> = {
     // 单组件快捷配置
     fastOnlySet(state, data) {
       let list = JSON.parse(JSON.stringify(state.template))
+      let i = 0, leng = list.length;
       if (data.type == 1) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.left = (state.commWidth - item.css.width) / 2
+            break;
           }
-        })
+        }
       } else if (data.type == 2) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.width = state.commWidth
             item.css.left = 0
+            break;
           }
-        })
+        }
       } else if (data.type == 3) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = 0
+            break;
           }
-        })
+        }
       } else if (data.type == 4) {
-        list.map((item) => {
+        for (i = 0; i < leng; i++) {
+          let item = list[i];
           if (state.activeTemplate.includes(item.activityId)) {
             item.css.top = state.commHeight - item.css.height
+            break;
           }
-        })
+        }
       }
       state.template = list
     },
@@ -451,44 +668,56 @@ const core: Module<CoreInter, any> = {
     updateBackground(state, color) {
       state.background = color
     },
-    // 修改生命周期函数
-    updateDefaultLeft(state, defaultLeft) {
-      state.defaultLeft = defaultLeft
+    // 修改动态组件编辑函数
+    updateInitSet(state, initSet) {
+      state.initSet = initSet
     },
     // 更新swiper的图片
     update_swiperimg(state, { index, imgurl }) {
-      state.template.map((res: any) => {
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item[index].img = imgurl
+          break;
         }
-      })
+      }
     },
     // 增加轮播图
     add_swiper(state) {
-      state.template.map((res: any) => {
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item.push({
-            img: require('@/assets/750-188.png'),
+            img: 'pleStatic.png',
             link: '',
           })
+          break;
         }
-      })
+      }
     },
     // 减少轮播图
     less_swiper(state) {
-      state.template.map((res: any) => {
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == state.activeTemplate) {
           res.option.item.pop()
+          break;
         }
-      })
+      }
     },
     // 更新文本框文字
     updateText(state, { id, text }) {
-      state.template.map((res: any) => {
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
         if (res.activityId == id) {
           res.option.text = text
+          break;
         }
-      })
+      }
     },
     // vuex数据初始化
     destroyedTemplate(state) {
@@ -506,35 +735,97 @@ const core: Module<CoreInter, any> = {
         x: [],
         y: [],
       }
+      state.maxZIndex = 0
+      state.coverageCache = {
+        includeCache: [],
+        'base-input': 0,
+        "base-div": 0,
+        "base-swiper": 0,
+        "base-text": 0,
+        "base-img": 0,
+        'base-buttom': 0,
+        'base-radio': 0,
+        'base-check': 0,
+        'base-icon': 0,
+      }
     },
+    initCovName(state) {//初始化图层信息
+      state.template.forEach((item: any, i) => {
+        if (item.css.zIndex >= state.maxZIndex) {
+          state.maxZIndex = item.css.zIndex;
+        }
+        if (state.coverageCache.includeCache.includes(item.activityId)) {
+          return;
+        }
+        if (item.covName.trim() == '') {
+          item.covName = getBaseCovName(item.name) + (state.coverageCache[item.name] + 1);
+        }
+        state.coverageCache[item.name]++;
+        state.coverageCache.includeCache.push(item.activityId);
+      })
+    },
+    switchTemplateShow(state, domId) {//切换元素是否可见
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
+        if (res.activityId == domId) {
+          res.isShow = !res.isShow;
+          break;
+        }
+      }
+    },
+    addMaxZindex(state) {//让maxZIndex永远保持最大
+      state.maxZIndex++;
+    },
+    changeCoverName(state, { covName, id }) {
+      let i = 0, leng = state.template.length;
+      for (i = 0; i < leng; i++) {
+        let res: any = state.template[i];
+        if (res.activityId == id) {
+          res.covName = covName;
+          break;
+        }
+      }
+    }
   },
   actions: {
     // 保存当前项目数据
-    saveObject({ state }, { titlePage, pass }) {
+    saveObject({ state, commit }, { titlePage, pass }) {
       if (state.template.length == 0) {
-        return Promise.reject('请不要保存空页面')
+        return message.warning('请不要保存空页面')
       }
-      return saveActivity({ ...state, titlePage, pass })
+      if (state.allPageList.length == 1) {
+        return saveActivity({ ...state, titlePage, pass })
+      }
+      if (state.allPageList.length >= 1) {
+        commit('saveNowPage');
+        return saveAllPage({ allPage: state.allPageList, titlePage, pass })
+      }
     },
     // 获取当前配置
-    getActivity({ commit }, data) {
+    getActivity({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         getActivity(data.id).then((e) => {
           if (e.data.code !== 200) {
             reject(e.data.data)
           } else {
-            let template: any[] = []
-            e.data.data.data.map((e) => {
+            commit('setAllPageList', e.data.data);
+            let template: any[] = [];
+            let mainPage = state.allPageList[0];
+            commit('setNowPageName', mainPage.name);
+            console.log(e);
+            mainPage.doms.map((e) => {
               template.push({ ...e, editStatus: false })
             })
             commit('update_template', template)
-            commit('updateCommHeigth', e.data.data.height)
-            commit('updateBackground', e.data.data.background)
-            commit('set_objectName', e.data.data.textName)
-            commit('set_parentRouterName', e.data.data.name)
-            commit('set_parentDisp', e.data.data.disp)
-            commit('set_objectAuth', e.data.data.isAuth)
-            commit('updateDefaultLeft', e.data.data.defaultLeft)
+            commit('updateCommHeigth', mainPage.height)
+            commit('updateBackground', mainPage.background)
+            commit('set_objectName', mainPage.textName)
+            commit('set_parentRouterName', mainPage.name)
+            commit('set_parentDisp', mainPage.disp)
+            commit('set_objectAuth', mainPage.password)
+            commit('updateInitSet', mainPage.initSet)
+            commit('loadOver');
             resolve('数据查询完成')
           }
         })
