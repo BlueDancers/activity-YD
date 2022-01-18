@@ -1,14 +1,12 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-05 22:18:50
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/template/baseText.vue
- -->
 <template>
-  <div class="baseComplate" :style="style" :class="animation.animationName">
-    <p v-html="option.text"></p>
+  <div
+    :class="[
+      animation.animationName,'text',
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
+    :style="style"
+  >
+    <p v-html="showText"></p>
   </div>
 </template>
 
@@ -28,18 +26,33 @@ export default {
       type: Object
     }
   },
+  data() {
+    return {
+      showText: ""
+    };
+  },
+  mounted() {
+    this.showText = this.option.text.replace(/\n|\r\n/g, "<br>");
+  },
   computed: {
     style() {
       let keyword = this.$store.state.app.isSoftKeyboard;
       return handleStyle(this.css, keyword);
     }
   },
-  methods: {}
+  methods: {
+    setShowText(value) {
+      this.showText = value.replace(/\n|\r\n/g, "<br>");
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
 .btn_con {
   user-select: none;
+}
+.text{
+  overflow: hidden;
 }
 </style>

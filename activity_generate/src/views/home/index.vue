@@ -5,7 +5,7 @@
         <img class="left_logo" src="@/assets/logo.png" alt />
         <span class="item_text">易动</span>
       </div>
-      <div class="header_right">
+      <!-- <div class="header_right">
         <div class="right_item">
           <a-popover placement="bottom">
             <template slot="title">
@@ -27,7 +27,7 @@
           <a-icon type="github" />
           <span class="item_text">github</span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="main_list">
       <div class="item pointer" @click="createObject">
@@ -36,7 +36,7 @@
         </div>
         <div class="item_add">新建项目</div>
       </div>
-      <div class="item" v-for="item in mainList" :key="item.id">
+      <div class="item" v-for="(item,index) in mainList" :key="item.id">
         <!--初始化项目 -->
         <div class="item_img">
           <img class="img" v-if="!item.titlePage" src="@/assets/logo.png" alt />
@@ -64,7 +64,7 @@
             <span @click="showObject(item.name)">查看项目</span>
           </a-popover>
           <span @click="gotoObject(item._id)">编辑项目</span>
-          <a-popconfirm title="确定删除项目吗" @confirm="deleteObj(item)" okText="确定" cancelText="取消">
+          <a-popconfirm title="确定删除项目吗" @confirm="deleteObj(item,index)" okText="确定" cancelText="取消">
             <span>删除项目</span>
           </a-popconfirm>
         </div>
@@ -119,18 +119,23 @@
       </a-form>
     </a-modal>
     <auth-modal ref="authModal" @authSuccess="authSuccess"></auth-modal>
+    <robot></robot>
   </div>
 </template>
 
 <script lang="ts">
+import {initPage} from '@/config';
 import { getObject, setObject, deleteObj } from "@/api/index";
-import { commHeight, mobileUrl } from "@/config/index";
+import { commHeight, mobileUrl ,imageStaticUrl} from "@/config/index";
 import { parseTime } from "@/utils/index";
 import authModal from "@/components/authModal/index.vue";
+import robot from '@/views/home/components/robot.vue';
 import Vue from "vue";
+
 export default Vue.extend({
   components: {
-    authModal
+    authModal,
+    robot
   },
   mounted() {
     this.getObject();
@@ -163,13 +168,20 @@ export default Vue.extend({
         window.open("https://github.com/vkcyan/activity_generate", "_blank");
       }
     },
+    
     getObject() {
       getObject()
         .then(e => {
-          e.data.data.map((e: any) => {
-            e.time = parseTime(e.time);
-          });
+          // e.data.data.map((e: any) => {
+          //   e.time = parseTime(e.time);
+          // });
           this.mainList = e.data.data;
+          this.mainList.map((item:any)=>{
+            if(item.titlePage.trim()!=""){
+            item.titlePage=imageStaticUrl+item.titlePage;
+            }
+          });
+          this.mainList.reverse();
         })
         .catch(err => {
           console.log("错误", err);
@@ -196,15 +208,7 @@ export default Vue.extend({
           ...this.objform,
           height: this.$store.state.core.commHeight, // 页面高度默认667
           background: "rgba(255, 255, 255, 1)", // 页面背景色默认白色
-          defaultLeft: `created(){
-    // 页面开始生命周期
-}
-mounted(){
-    // 页面挂载生命周期
-}
-destroyed(){
-    // 页面卸载生命周期
-}` // 注入生命周期
+          initSet: initPage // 注入动态组件编辑
         };
         setObject(data).then(res => {
           this.$router.push({
@@ -225,20 +229,20 @@ destroyed(){
     showObject(name) {
       this.onShowUrlCode = mobileUrl + name;
     },
-    deleteObj(data) {
-      if (data.isAuth) {
-        (this.$refs.authModal as any).open(data);
+    deleteObj(data,index) {
+      if (data.password.trim()=='1') {
+        (this.$refs.authModal as any).open(data,index);
       } else {
         deleteObj(data._id, "").then(result => {
           this.$message.success(result.data.data);
-          this.getObject();
+          this.mainList.splice(index,1);
         });
       }
     },
-    authSuccess(data) {
+    authSuccess(data,index) {
       deleteObj(data._id, data.password).then(result => {
         this.$message.success(result.data.data);
-        this.getObject();
+        this.mainList.splice(index,1);
       });
     }
   }
@@ -281,6 +285,7 @@ destroyed(){
   .main_list {
     display: flex;
     flex-wrap: wrap;
+    // justify-content: space-between;
     margin: 0px 4%;
     margin-top: 8px;
     margin-bottom: 230px;
@@ -290,12 +295,6 @@ destroyed(){
       .item_img {
         width: 100%;
         text-align: center;
-        // height: 200px;
-
-        // line-height: 200px;
-        // .img {
-        //   height: 180px;
-        // }
       }
       .base_img {
         // height: 300px;
@@ -309,9 +308,7 @@ destroyed(){
       .item_disp {
         padding-left: 22px;
         padding-right: 1em;
-        // padding-right: 28px;
         border-top: 1px solid #e8e8ea;
-        // padding-top: 10px;
         color: black;
         white-space: pre-wrap;
         vertical-align: middle;
@@ -324,7 +321,6 @@ destroyed(){
           }
         }
         .disp_con {
-          // color: #8d8d8d;
           display: -webkit-box;
           word-break: break-all;
           -webkit-box-orient: vertical;
@@ -335,8 +331,6 @@ destroyed(){
           margin-bottom: 5px;
         }
         .time_con {
-          // color: #8d8d8d;
-          // margin-bottom: 5px;
         }
       }
       .item_add {
@@ -368,7 +362,6 @@ destroyed(){
   }
   .add {
     color: currentColor;
-    // margin-top: -10px;
     position: relative;
     writing-mode: vertical-lr;
     margin: auto;
@@ -451,10 +444,6 @@ destroyed(){
         .name_con {
           font-size: 16px;
         }
-        .disp_con {
-        }
-        .time_con {
-        }
       }
     }
     .item_img {
@@ -503,10 +492,6 @@ destroyed(){
         line-height: 2em;
         .name_con {
           font-size: 16px;
-        }
-        .disp_con {
-        }
-        .time_con {
         }
       }
     }

@@ -8,11 +8,10 @@
  -->
 <template>
   <input
-    :placeholder="option.placeholder"
+    :placeholder="placeholder"
     class="baseComplate"
     type="text"
     :style="style"
-    :ref="option.inputName"
   />
 </template>
 
@@ -29,9 +28,22 @@ export default {
       default: () => {}
     }
   },
+  data(){
+    return{
+      placeholder:''
+    }
+  },
+  mounted(){
+    this.placeholder=this.option.placeholder;
+  },
   computed: {
     style() {
       return handleStyle(this.css);
+    },
+  },
+  methods:{
+    changePla(word){
+      this.placeholder=word;
     }
   }
 };
