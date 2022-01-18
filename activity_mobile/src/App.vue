@@ -1,17 +1,8 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-11 20:09:45
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/App.vue
- -->
 <template>
   <div id="app">
     <router-view />
   </div>
 </template>
-
 
 <script>
 export default {
@@ -22,7 +13,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="less">
 * {
@@ -50,6 +40,10 @@ img {
 }
 .baseComplate {
   position: absolute;
+  animation-fill-mode: forwards;
+}
+.fixedComplate {
+  position: fixed;
   animation-fill-mode: forwards;
 }
 .van-fade-enter-active {
