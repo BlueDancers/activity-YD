@@ -16,12 +16,10 @@
               <a-icon type="close-circle" class="icon" @click.stop="deleteCompName(item._id)" />
             </div>
             <div v-if="isEditid == item._id" class="item_icon">
-              <a-button-group>
+              <!-- <a-button-group> -->
                 <a-button class="icon_btn" type="primary" @click.stop="updateNewName">确认</a-button>
                 <a-button class="icon_btn" type="danger" @click.stop="cancelEdit">取消</a-button>
-              </a-button-group>
-              <a-icon type="check-circle" />
-              <a-icon type="close-circle" />
+              <!-- </a-button-group> -->
             </div>
           </div>
           <div class="item_main">
@@ -47,7 +45,10 @@ import baseImg from "@/template/dev/baseImg.vue";
 import baseText from "@/template/dev/baseText.vue";
 import baseInput from "@/template/dev/baseInput.vue";
 import baseDiv from "@/template/dev/baseDiv.vue";
-import baseEditor from "@/template/dev/baseEditor.vue";
+import baseRadio from '@/template/dev/baseRadio.vue';
+import baseCheck from '@/template/dev/baseCheck.vue';
+import baseSwiper from "@/template/dev/baseSwiper.vue";
+import baseIcon from "@/template/dev/baseIcon.vue";
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
@@ -57,7 +58,10 @@ export default {
     baseText,
     baseInput,
     baseDiv,
-    baseEditor
+    baseRadio,
+    baseCheck,
+    baseSwiper,
+    baseIcon
   },
   mounted() {
     this.$store.dispatch("complate/getSingList");
@@ -78,7 +82,7 @@ export default {
       if (this.isEditid == 0) {
         this.$store.commit(
           "core/set_tempLate",
-          cloneDeep(baseComplate(this.$store.state.core, data))
+          cloneDeep(baseComplate(this.$store.state.core,{ ...data,isShow:true}))
         );
       }
     },

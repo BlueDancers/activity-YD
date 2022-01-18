@@ -8,7 +8,7 @@
           @mousedown="mousedown"
           @error="loadImg"
           class="inline_img"
-          :src="option.item[0].img"
+          :src="imageList"
           alt
         />
         <div class="indicator">
@@ -28,7 +28,7 @@
           @mousedown="mousedown"
           @error="loadImg"
           class="inline_img"
-          :src="option.item[0].img"
+          :src="imageList"
           alt
         />
       </div>
@@ -37,7 +37,7 @@
       <img
         :class="absolute ? 'baseComplate' : ''"
         ondragstart="return false;"
-        :src="option.item[0].img"
+        :src="imageList"
         @error="loadImg"
         alt
         :style="style"
@@ -49,6 +49,7 @@
 <script>
 import { handleStyle } from "@/utils/index";
 import edit from "@/components/edit/index";
+import { imageStaticUrl } from "@/config/index";
 export default {
   components: {
     edit
@@ -70,6 +71,9 @@ export default {
     }
   },
   computed: {
+    imageList(){
+     return  imageStaticUrl+this.option.item[0].img;
+    },
     style() {
       return handleStyle(this.css);
     },

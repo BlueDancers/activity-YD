@@ -25,10 +25,17 @@
     "@nestjs/core": "^7.0.0",
     "@nestjs/mongoose": "^7.0.1",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/swagger": "^4.5.12",
+    "@nestjs/typeorm": "^7.1.0",
+    "fastify-swagger": "^3.2.0",
     "mongoose": "^5.9.15",
+    "mysql": "^2.18.1",
+    "nestjs-redis": "^1.2.8",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.5.4"
+    "rxjs": "^6.5.4",
+    "swagger-ui-express": "^4.1.4",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
