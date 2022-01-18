@@ -7,7 +7,7 @@
       :style="{ border: 'none', padding: '0px' }"
       :id="id"
     >
-      <input :placeholder="option.placeholder" type="text" class="btn_con" :style="style" />
+      <input  disabled :placeholder="option.placeholder" type="text" class="btn_con" :style="style" />
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -15,7 +15,7 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <input :placeholder="option.placeholder" type="text" :style="style" />
+      <input disabled :placeholder="option.placeholder" type="text" :style="style" />
     </div>
     <input
       :placeholder="option.placeholder"
