@@ -19,6 +19,9 @@
         <a-form-item label="项目描述" :label-col="{ span:8 }" :wrapper-col="{ span: 12}">
           <span class="object_span">{{parentDisp}}</span>
         </a-form-item>
+        <a-form-item label="浏览链接" :label-col="{ span:8 }" :wrapper-col="{ span: 12}">
+          <a class="object_span" :href="objUrl" target ="_blank">{{objUrl}}</a>
+        </a-form-item>
       </a-form>
     
   </a-modal>
