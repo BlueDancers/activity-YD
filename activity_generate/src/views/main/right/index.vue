@@ -11,20 +11,23 @@
     <!-- 侧边快捷操作栏 -->
 
     <!-- 组件设置 -->
-    <a-tabs defaultActiveKey="1">
+    <a-tabs defaultActiveKey="1"  size="large">
       <a-tab-pane tab="属性" key="1">
         <attributes-page />
       </a-tab-pane>
       <a-tab-pane tab="数据" key="2">
         <activedata-page />
       </a-tab-pane>
-      <a-tab-pane tab="动画" key="3">
+      <a-tab-pane tab="图层" key="3">
+        <coverage></coverage>
+      </a-tab-pane>
+      <a-tab-pane tab="动画" key="4">
         <animation-page />
       </a-tab-pane>
-      <a-tab-pane tab="脚本" key="4">
+      <!-- <a-tab-pane tab="脚本" key="5">
         <runscript-page />
-      </a-tab-pane>
-      <a-tab-pane tab="图层" key="5"></a-tab-pane>
+      </a-tab-pane> -->
+
     </a-tabs>
   </div>
 </template>
@@ -34,6 +37,7 @@ import attributesPage from "./components/attributes";
 import activedataPage from "./components/activedata";
 import animationPage from "./components/animation";
 import runscriptPage from "./components/runscript";
+import coverage from './components/coverage'
 import { baseComplate } from "@/utils/baseReact";
 import { cloneDeep } from "lodash";
 export default {
@@ -41,7 +45,8 @@ export default {
     attributesPage,
     activedataPage,
     animationPage,
-    runscriptPage
+    runscriptPage,
+    coverage
   },
   data() {
     return {};

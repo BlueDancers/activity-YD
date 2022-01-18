@@ -8,19 +8,15 @@
  -->
 <template>
   <div id="app">
-    <a-locale-provider :locale="locale">
       <router-view />
-    </a-locale-provider>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import zhCN from "ant-design-vue/lib/locale-provider/zh_CN";
 export default Vue.extend({
   data() {
     return {
-      locale: zhCN
     };
   }
 });

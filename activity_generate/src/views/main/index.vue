@@ -5,30 +5,18 @@
       <!-- 左侧菜单栏 -->
       <left />
       <!-- 中控台 -->
-      <div class="index_center" @click="cancelActive">
-        <div class="index_center_header" v-if="scale == 1">
-          <div
-            :class="mode == 'dev'?'active':'unactive'"
-            class="header_dev"
-            @click="toggleMode('dev')"
-          >开发模式</div>
-          <div
-            :class="mode == 'prod'?'active':'unactive'"
-            class="header_prod"
-            @click="toggleMode('prod')"
-          >预览模式</div>
-        </div>
+      <div class="index_center"
+           @click="cancelActive">
         <!-- 开发模式 -->
-        <core
-          v-if="mode == 'dev'"
-          :style="{ transform: `scale(${scale},${scale})` }"
-          class="core"
-          ref="core"
-        />
+        <core v-if="coreMode == 'dev'"
+              :style="{ transform: `scale(${scale},${scale})` }"
+              class="core"
+              ref="core" />
         <!-- 测试查看模式 -->
-        <show-core v-if="mode == 'prod'"></show-core>
+        <show-core v-if="coreMode == 'prod'"
+                   class="mobile"></show-core>
       </div>
-      <coverage class='coverage'></coverage>
+
       <!-- 右侧菜单栏 -->
       <right @coreSetting="coreSetting" />
     </div>
@@ -44,8 +32,6 @@ import showCore from "./center/showCore.vue";
 import left from "./left/index.vue";
 import right from "./right/index.vue";
 import { initMouse, uninitMouse, initKeyDown } from "@/utils/index";
-import coverage from '@/views/coverage/coverage'
-
 export default {
   components: {
     baseHeader,
@@ -53,13 +39,11 @@ export default {
     core,
     right,
     showCore,
-    coverage
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       initMouse(this.core);
       initKeyDown(this.core);
-      
     });
     let objectId = this.$route.params.objectId;
     this.$store.commit("core/set_objectId", objectId);
@@ -67,46 +51,52 @@ export default {
       .dispatch("core/getActivity", { id: objectId })
       .then(result => {
         this.$message.success(result);
+        this.$store.commit("core/initCovName");
       })
       .catch(err => {
         this.$message.error(err);
       });
+    let innerCenter = document.querySelector('.index_center');
+    innerCenter.addEventListener('scroll', this.handleScroll, true);
   },
 
-  data() {
+  data () {
     return {
       mode: "dev" // dev 为开发模式 prod 为线上测试模式
     };
   },
   computed: {
-    scale() {
+    scale () {
       return this.$store.state.setting.scale;
     },
-    coreScale() {
+    coreScale () {
       return Number((this.scale * 100).toFixed(1)) + "%";
     },
-    core() {
+    core () {
       return this.$store.state.core;
+    },
+    coreMode () {
+      return this.$store.state.setting.coreMode;
     }
   },
   methods: {
     // 点击屏幕外侧取消选中
-    cancelActive(e) {
+    cancelActive (e) {
       if (e.target.getAttribute("class") == "index_center") {
         this.$store.commit("core/clear_template");
+        this.$store.commit("setting/closeRightMenu");
       }
     },
-    init() {
+    handleScroll (e) {
+      this.$store.commit("setting/setScollTop", e.target.scrollTop);
+    },
+    init () {
       initMouse(this.core);
       initKeyDown(this.core);
       this.$store.commit("core/clear_template");
     },
-    toggleMode(mode) {
-      this.mode = mode;
-      this.$store.commit("core/clear_template");
-    },
     // 放大缩小
-    coreSetting(type) {
+    coreSetting (type) {
       if (type == "cancel") {
         // 撤销
         // cancelHistory();
@@ -119,7 +109,7 @@ export default {
       }
     }
   },
-  destroyed() {
+  destroyed () {
     // 清空vuex
     this.$store.commit("core/destroyedTemplate");
     // 写在鼠标监听
@@ -181,16 +171,6 @@ export default {
       }
     }
   }
-  .coverage{
-    position: absolute;
-    // top:200px;
-    width:250px;
-    // right: 370px;
-    background-color: white;
-    height:300px;
-    overflow: hidden;
-    z-index: 2;
-    }
 }
 </style>
 

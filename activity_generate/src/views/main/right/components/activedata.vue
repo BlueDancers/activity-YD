@@ -23,11 +23,39 @@
           />
         </div>
       </div>
-
+      <!-- 对应表单key值，对应选中值 -->
+      <div v-show="showFormMap(core)">
+        <div class="active_item" >
+          <div class="active_list_left">名称:</div>
+          <div class="active_list_right">
+            <a-input
+              class="active_textarea"
+              placeholder="请发起请求的key值"
+              v-model="core.option.formName"
+            />
+          </div>
+        </div>
+        <div class="active_item">
+          <div class="active_list_left">选中值:</div>
+          <div class="active_list_right">
+            <a-input
+              class="active_textarea"
+              placeholder="请发起请求的key值"
+              v-model="core.option.itemValue"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="active_item" v-if="showHttpName(core)">
+        <div class="active_list_left">名称:</div>
+        <div class="active_list_right">
+          <a-input class="active_textarea" placeholder="请输入文字" v-model="core.option.httpName" />
+        </div>
+      </div>
       <div class="active_item" v-if="showElementName(core)">
         <div class="active_list_left">名称:</div>
         <div class="active_list_right">
-          <a-input class="active_textarea" placeholder="请输入文字" v-model="core.option.inputName" />
+          <a-input class="active_textarea" placeholder="请输入文字" v-model="core.option.formName" />
         </div>
       </div>
       <!-- placeholder 只有文本框才有 -->
@@ -40,7 +68,27 @@
       <div class="active_item" v-if="showImg(core)">
         <div class="active_list_left">图片:</div>
         <div class="active_list_right">
-          <img class="swiper_img" :src="core.option.text" @click="toggleBaseImg(core)" alt />
+          <img class="swiper_img" :src="imageStaticUrl+core.option.text" @click="toggleBaseImg(core)" alt />
+        </div>
+      </div>
+      <div class="active_item" v-if="isIcon(core)">
+        <div class="active_list_left">图标:</div>
+        <div class="active_list_right">
+          <a-icon :type="core.option.iconType" style="font-size:30px;"  @click="changeIcon"/>
+        </div>
+      </div>
+      <div class="active_item" v-if="isIcon(core)">
+        <div class="active_list_left">填充选项:</div>
+        <div class="active_list_right">
+          <a-select
+            defaultValue="lucy"
+            style="width: 120px"
+            v-model="core.option.theme"
+          >
+            <a-select-option :value="'filled'">填充</a-select-option>
+            <a-select-option :value="'outlined'">线条</a-select-option>
+            <a-select-option :value="'twoTone'">半填充</a-select-option>
+          </a-select>
         </div>
       </div>
       <!-- 按钮独有的属性 -->
@@ -58,6 +106,7 @@
             <a-select-option :value="2">提交表单</a-select-option>
             <a-select-option :value="3">QQ客服</a-select-option>
             <a-select-option :value="4">电话客服</a-select-option>
+            <a-select-option :value="5">跳转项目页</a-select-option>
           </a-select>
         </div>
       </div>
@@ -86,22 +135,48 @@
           </a-radio-group>
         </div>
       </div>
-      <div class="active_item" v-if="showButtom(core) && core.option.btnType == 2">
-        <div class="active_list_left">提交表单:</div>
-        <div class="active_list_right">
-          <a-select
-            mode="tags"
-            v-model="core.option.refInput"
-            placeholder="请选择需要提交的"
-            style="width: 200px"
-            @change="handleChange"
-          >
-            <a-select-option
-              v-for="inputItem in refInputList"
-              :key="inputItem.id"
-              :value="inputItem.option.inputName"
-            >{{ inputItem.option.inputName }}</a-select-option>
-          </a-select>
+      <div v-if="showButtom(core) && core.option.btnType == 2">
+        <div  class="active_item" >
+          <div class="active_list_left">提交表单:</div>
+          <div class="active_list_right">
+            <a-select
+              mode="tags"
+              v-model="core.option.refInput"
+              placeholder="请选择需要提交的"
+              style="width: 200px"
+              @change="handleChange"
+            >
+              <a-select-option
+                v-for="formItem in refFormList"
+                :key="formItem.id"
+                :value="formItem.option.formName"
+              >{{ formItem.option.formName }}</a-select-option>
+            </a-select>
+          </div>
+        </div>
+        <div  class="active_item" >
+          <div class="active_list_left">必填表单:</div>
+          <div class="active_list_right">
+            <a-select
+              mode="tags"
+              v-model="core.option.mustInput"
+              placeholder="请选择必填表单"
+              style="width: 200px"
+              @change="handleChange"
+            >
+              <a-select-option
+                v-for="formItem in core.option.refInput"
+                :key="formItem"
+                :value="formItem"
+              >{{ formItem }}</a-select-option>
+            </a-select>
+          </div>
+        </div>
+        <div  class="active_item" >
+          <div class="active_list_left">单设备只能提交一次:</div>
+          <div class="active_list_right">
+            <a-switch v-model="core.option.formOne" />
+          </div>
         </div>
       </div>
       <div class="active_item" v-if="showButtom(core) && core.option.btnType == 3">
@@ -116,11 +191,29 @@
           <a-input class="active_textarea" placeholder="请输入客服电话号码" v-model="core.option.PhoneNum" />
         </div>
       </div>
+      <div class="active_item" v-if="showButtom(core) && core.option.btnType == 5">
+        <div class="active_list_left">跳转页面:</div>
+        <div class="active_list_right">
+                <a-select
+                    v-model="core.option.link"
+                    placeholder="请选择必填表单"
+                    style="width: 200px"
+                    @change="handleChange"
+                  >
+                    <a-select-option
+                      v-if="item.name!=nowPageName"
+                      v-for="item in allPageList"
+                      :key="item.name+'selPage'"
+                      :value="item.name"
+                    >{{ item.name}}</a-select-option>
+                  </a-select>
+        </div>
+      </div>
       <!-- 高阶组件 轮播图配置 -->
       <div class="active_item" v-if="showSwiper(core)">
         <div class="active_list_left">图片:</div>
         <div class="active_list_right">
-          <img class="swiper_img" :src="core.option.item[swiperItem].img" @click="toggleImg" alt />
+          <img class="swiper_img" :src="imageStaticUrl+core.option.item[swiperItem].img||''" @click="toggleImg" alt />
         </div>
       </div>
       <div class="active_item" v-if="showSwiper(core)">
@@ -161,14 +254,11 @@
           />
         </div>
       </div>
-      <div class="active_item" v-if="showEditor(core)">
-        <div class="active_list_right">
-          <quill-editor :value="core.option.html" @changeHtml="changeHtml"></quill-editor>
-        </div>
-      </div>
     </div>
     <!-- 无组件 -->
     <div v-if="coreType == 3" class="attr_showtext">当前无可操作组件</div>
+     <!-- 多选组件 -->
+    <div v-if="coreType == 2" class="attr_showtext">当前多选状态</div>
     <img-upload ref="imgUpload"></img-upload>
   </div>
 </template>
@@ -177,16 +267,17 @@
 import Vue from "vue";
 import vuedraggable from "vuedraggable";
 import imgUpload from "@/components/imgUpload";
-import quillEditor from "@/components/Editor";
+import { imageStaticUrl } from "@/config/index";
 export default {
   components: {
     vuedraggable,
     imgUpload,
-    quillEditor
+    
   },
   data() {
     return {
-      swiperItem: 0 // 轮播图临时变量
+      swiperItem: 0, // 轮播图临时变量
+      imageStaticUrl:imageStaticUrl,
     };
   },
   computed: {
@@ -210,24 +301,40 @@ export default {
       let activeCore = this.$store.state.core.activeTemplate;
       if (activeCore.length == 1) {
         return 1;
-      } else if (activeCore.length == 2) {
+      } else if (activeCore.length>= 2) {
         return 2;
       } else if (activeCore.length == 0) {
         return 3;
       }
       return 3;
     },
-    refInputList() {
-      return this.$store.state.core.template.filter(
-        e => e.name == "base-input"
+    refFormList() {
+      let buttonFormList=[];
+      let result=this.$store.state.core.template.filter(
+        e =>{
+          if ((e.name == "base-input"||e.name=="base-radio"||e.name=="base-check")&&!buttonFormList.includes(e.option.formName)){
+            buttonFormList.push(e.option.formName);
+            return true;
+          }
+          return false;
+        }
       );
+      this.core.option.refInput.forEach((e,i)=>{
+        if(!buttonFormList.includes(e)){
+          this.core.option.refInput.splice(i,1);
+        }
+      });
+      return result;
+    },
+    nowPageName(){
+      return this.$store.state.core.nowPageName;
+    }
+    ,
+    allPageList(){
+      return this.$store.state.core.allPageList;
     }
   },
   methods: {
-    changeHtml(node) {
-      console.log('变化');
-      this.core.option.html = node;
-    },
     // 是否显示文本
     showText(core) {
       if (
@@ -235,7 +342,8 @@ export default {
         core.name == "base-div" ||
         core.name == "base-swiper" ||
         core.name == "base-editor" ||
-        core.name == "base-img"
+        core.name == "base-img"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
@@ -246,9 +354,21 @@ export default {
     showImg(core) {
       if (core.name == "base-img") {
         return true;
-      } else {
+      } 
         return false;
+    },
+    isIcon(core){
+      if(core.name=="base-icon"){
+        return true;
       }
+      return false;
+    },
+    //展示http动态请求的组件
+    showHttpName(core){
+      if(core.name=="base-img"||core.name=='base-swiper'||core.name=='base-text'||core.name=='base-buttom'){
+        return true;
+      }
+      return false;
     },
     // 监听按钮提交input选项
     btnTypeChange(item) {
@@ -267,6 +387,13 @@ export default {
       if (core.name == "base-input") {
         return true;
       } else {
+        return false;
+      }
+    },
+    showFormMap(core){
+      if(core.name=="base-radio"||core.name=="base-check"){
+        return true;
+      }else{
         return false;
       }
     },
@@ -297,21 +424,31 @@ export default {
         return false;
       }
     },
-    // 判断是否显示富文本特有属性
-    showEditor(core) {
-      if (core.name == "base-editor") {
-        return true;
-      } else {
-        return false;
-      }
-    },
+    // // 判断是否显示富文本特有属性
+    // showEditor(core) {
+    //   if (core.name == "base-editor") {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // },
     // 增加轮播图
     addSwiper() {
       this.$store.commit("core/add_swiper");
+      this.swiperItem=this.core.option.item.length-1;
     },
     // 减去轮播图
     lessSwiper() {
+      if(this.core.option.item.length==1){
+        this.$message.error(`至少剩余一张图片`);
+        return ;
+      }
+      if(this.core.option.item.length-1==this.swiperItem){
+        this.swiperItem=this.swiperItem-1;
+      }
+
       this.$store.commit("core/less_swiper");
+      
     },
     changeSwiper(index) {
       this.swiperItem = index;
@@ -329,6 +466,9 @@ export default {
         type: "img",
         activityId: core.activityId
       });
+    },
+    changeIcon(){
+      this.$store.commit("setting/showIconChoose",2);
     }
   }
 };
