@@ -1,18 +1,14 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-10 10:27:42
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/template/baseButtom.vue
- -->
 <template>
   <button
-    class="baseComplate"
-    :class="animation.animationName"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
     :style="style"
     @click="gotoLink"
-  >{{ option.text }}</button>
+  >
+    {{ showText }}
+  </button>
 </template>
 
 <script>
@@ -32,6 +28,9 @@ export default {
     },
     animation: {
       type: Object
+    },
+    id: {
+      type: String
     }
   },
   computed: {
@@ -40,8 +39,27 @@ export default {
       return handleStyle(this.css, keyword);
     }
   },
+  data() {
+    return {
+      showText: "",
+      clickEvent: undefined
+    };
+  },
+  mounted() {
+    this.showText = this.option.text;
+  },
   methods: {
+    setShowText(value) {
+      this.showText = value;
+    },
+    setClickEvent(event) {
+      this.clickEvent = event;
+    },
     gotoLink() {
+      if (this.clickEvent != undefined) {
+        this.clickEvent();
+        return;
+      }
       if (this.option.btnType == 0) {
       } else if (this.option.btnType == 1) {
         if (this.option.link) {
@@ -50,9 +68,19 @@ export default {
       } else if (this.option.btnType == 2) {
         this.$emit("form", {
           refInput: this.option.refInput,
+          mustInput: this.option.mustInput,
           inputFromUrl: this.option.inputFromUrl,
-          urlMethod: this.option.urlMethod
+          urlMethod: this.option.urlMethod,
+          domId: this.id,
+          formOne: this.option.formOne
         });
+      } else if (this.option.btnType == 3) {
+        console.log("qq客服");
+        window.location.href =
+          "http://wpa.qq.com/msgrd?v=3&uin=2467230789&site=qq&menu=yes";
+      } else if (this.option.btnType == 4) {
+        console.log("电话客服");
+        location.href = "tel:10086";
       }
     }
   }

@@ -48,7 +48,8 @@ const complate: Module<Complate, any> = {
         css: activeData.css,
         compName: activeData.compName,
         animation: activeData.animation,
-        option: activeData.option
+        option: activeData.option,
+        isShow:activeData.isShow
       }).then(res => {
         dispatch('getSingList')
         return res
@@ -61,7 +62,6 @@ const complate: Module<Complate, any> = {
       })
     },
     deleteCompName({ dispatch }, id) {
-      console.log(id)
       deleteSingComp(id).then(res => {
         message.success(res.data.data)
         dispatch('getSingList')
@@ -75,7 +75,6 @@ const complate: Module<Complate, any> = {
     // 删除模板
     deleteTemplate({ dispatch }, id) {
       deleteTemplate(id).then(res => {
-        console.log(res)
         dispatch('getAllTemplate')
       })
     }

@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
-/dist
+/mobileb
 dist.zip
-
+/mobile
 # local env files
 .env.local
 .env.*.local
