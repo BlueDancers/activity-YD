@@ -4,5 +4,5 @@
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /mobile/index.html [L]
+  RewriteRule . /mobileb/index.html [L]
 </IfModule>

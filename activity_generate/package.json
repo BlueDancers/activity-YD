@@ -14,7 +14,7 @@
     "axios": "^0.19.2",
     "element-ui": "^2.13.0",
     "html2canvas": "^1.0.0-rc.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "monaco-editor": "^0.20.0",
     "monaco-editor-vue": "^1.0.10",
     "vant": "^2.5.8",

@@ -9,7 +9,7 @@
 <template>
   <div class="btn_con baseComplate" :style="style">
     <van-swipe :autoplay="option.autoplay">
-      <van-swipe-item v-for="(item,index) in option.item" :key="index">
+      <van-swipe-item v-for="(item,index) in showUrlList" :key="index">
         <img
           :style="{'width':style.width,'height': style.height}"
           :src="item.img"
@@ -23,7 +23,14 @@
 
 <script>
 import { handleStyle } from "@/utils/index";
+import {imageStaticUrl } from "@/config/index";
 export default {
+  data(){
+    return{
+      imageStaticUrl:imageStaticUrl,
+      showUrlList:[],
+    }
+  },
   props: {
     css: {
       type: Object,
@@ -33,6 +40,14 @@ export default {
       type: Object,
       default: () => {}
     }
+  },
+  mounted(){
+    this.showUrlList=this.option.item.map(e=>{
+      return {
+        img:imageStaticUrl+e.img,
+        link:e.link,
+      }
+    });
   },
   computed: {
     style() {
@@ -44,6 +59,22 @@ export default {
       if (link) {
         location.href = link;
       }
+    },
+    setShowUrlList(list){
+      let result=[];
+      list.map(e=>{
+        if(e.img==undefined){
+          e={
+            img:e,
+            link:''
+          };
+        }
+        if(e.link==undefined){
+          e.link=""
+        }
+        result.push(e);
+      });
+      this.showUrlList=result;
     }
   }
 };
