@@ -20,10 +20,23 @@ const filterMutation = [
   'core/set_isDown',
   'core/set_hoverTemplate',
   'core/toggle_roundDown',
-  'core/clear_template',
   'setting/set_coreinfoItem',
-  'core/setMarking'
+  'core/setMarking',
+  'core/updateInitSet',
+  "setting/closeRightMenu",
+  "core/set_objectAuth",
+  "core/initCovName",
+  "core/set_objectId",
+  "setting/setCoreCanvasXY",
+  "core/setAllPageList",
+  "core/update_template",
+  "core/setNowPageName",
+  "core/set_parentDisp",
+  "core/addMaxZindex",
+  "setting/closeIconChoose",
+  "setting/showIconChoose",
 ]
+let isLoadOver = false;
 /**
  *  监听vuex的行为
  * @param store vuex实例
@@ -31,12 +44,14 @@ const filterMutation = [
 export default function index(store) {
   // 保存vuex的实例
   history.init(store, 20)
-  // 保存初始状态
-  history.setState(cloneDeep(store.state))
   store.subscribe((mutation, state) => {
-    // console.log(mutation.type)
-    if (!filterMutation.includes(mutation.type)) {
-      history.setState(cloneDeep(state))
+    if (mutation.type == "core/loadOver") {
+      isLoadOver = true;
+    }
+    if (isLoadOver) {
+      if (!filterMutation.includes(mutation.type)) {
+        history.setState(cloneDeep(state))
+      }
     }
   })
 }

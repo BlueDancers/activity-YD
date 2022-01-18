@@ -1,16 +1,10 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-22 12:51:37
- * @LastEditTime: 2020-04-10 10:28:08
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/template/baseInput.vue
- -->
 <template>
   <input
-    class="baseComplate"
-    :class="animation.animationName"
-    :placeholder="option.placeholder"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
+    :placeholder="placeholder"
     :ref="option.inputName"
     type="text"
     :style="style"
@@ -36,15 +30,26 @@ export default {
       type: Object
     }
   },
+  data() {
+    return {
+      placeholder: ""
+    };
+  },
+  mounted() {
+    this.placeholder = this.option.placeholder;
+  },
   computed: {
     style() {
       let keyword = this.$store.state.app.isSoftKeyboard;
       return handleStyle(this.css, keyword);
     }
   },
-  methods: {}
+  methods: {
+    changePla(word) {
+      this.placeholder = word;
+    }
+  }
 };
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
