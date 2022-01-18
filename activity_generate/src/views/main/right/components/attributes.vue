@@ -32,6 +32,17 @@
           </a-tooltip>
         </div>
       </div>
+      <div class="attr_item" >
+        <div class="attr_list_left">固定定位:</div>
+        <div class="attr_list_right">
+          <a-popover title="提示" trigger="hover">
+            <template slot="content">
+              <p>固定于手机屏幕的定位</p>
+            </template>
+            <a-switch default-checked  v-model="core.option.isFixed" />
+          </a-popover>
+        </div>
+      </div>
       <div class="attr_item" v-if="showColorType(core)">
         <div class="attr_list_left">高级模式:</div>
         <div class="attr_list_right">
@@ -43,31 +54,93 @@
           </a-popover>
         </div>
       </div>
+      <div v-if="showWidth(core)">
       <div class="attr_item">
-        <div class="attr_list_left">层级:</div>
+        <div class="attr_list_left">长度:</div>
         <div class="attr_list_right">
-          <a-slider
-            class="attr_slider"
-            v-model="core.css.zIndex"
-            :tipFormatter="formatter"
-            :min="1"
-            :max="100"
-          ></a-slider>
-          <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.zIndex" />
-        </div>
-      </div>
-      <div class="attr_item">
-        <div class="attr_list_left">高度:</div>
-        <div class="attr_list_right">
-          <a-input-number class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.height" />
+          <a-input-number :min="0" class="attr_mintextarea" placeholder="请输入高度" v-model="core.css.height" />
         </div>
       </div>
       <div class="attr_item">
         <div class="attr_list_left">宽度:</div>
         <div class="attr_list_right">
-          <a-input-number class="attr_mintextarea" placeholder="请输入宽度" v-model="core.css.width" />
+          <a-input-number  :min="0" class="attr_mintextarea"  placeholder="请输入宽度" v-model="core.css.width" />
         </div>
       </div>
+      </div>
+      <div class="attr_item" >
+        <div class="attr_list_left">透明度:</div>
+        <div class="attr_list_right">
+          <a-input-number class="attr_mintextarea" :min="0"
+            :step="0.1"
+            :max="1" placeholder="请输入宽度" v-model="core.css.opacity" />
+        </div>
+      </div>
+      <div v-if="showFrameSet(core)">
+        <div class="attr_item">
+          <div class="attr_list_left">框宽:</div>
+              <div class="attr_list_right">
+                <a-input-number class="attr_mintextarea" :min="0" placeholder="请输入高度" v-model="core.css.frameWidth" />
+          </div>
+        </div>
+        <div class="attr_item" >
+          <div class="attr_list_left">框底颜色:</div>
+            <div class="attr_list_right">
+              <el-color-picker v-if="!core.option.colorType" v-model="core.css.frameBackGround" show-alpha></el-color-picker>
+              <a-input
+                class="attr_list_right_input"
+                placeholder="请输入颜色代码值"
+                size="small"
+                v-else
+                v-model="core.css.frameBackGround"
+              ></a-input>
+            </div>
+        </div>
+        <div class="attr_item" >
+        <div class="attr_list_left">选中颜色:</div>
+          <div class="attr_list_right">
+            <el-color-picker v-if="!core.option.colorType" v-model="core.css.frameChooseGround" show-alpha></el-color-picker>
+            <a-input
+              class="attr_list_right_input"
+              placeholder="请输入颜色代码值"
+              size="small"
+              v-else
+              v-model="core.css.frameChooseGround"
+            ></a-input>
+          </div>
+        </div>
+
+      </div>
+      <!-- 图标的属性 -->
+      <div  v-if="isIcon(core)">
+        <div class="attr_item" >
+          <div class="attr_list_left">图标颜色:</div>
+          <div class="attr_list_right">
+            <el-color-picker v-if="!core.option.colorType" v-model="core.css.color" show-alpha></el-color-picker>
+            <a-input
+              class="attr_list_right_input"
+              placeholder="请输入颜色代码值"
+              size="small"
+              v-else
+              v-model="core.css.color"
+            ></a-input>
+          </div>
+        </div>
+        <div class="attr_item" >
+                <div class="attr_list_left">图标大小:</div>
+            <div class="attr_list_right">
+              <a-slider
+                class="attr_slider"
+                v-model="core.css.fontSize"
+                :tipFormatter="formatter"
+                :min="0"
+                :max="200"
+              ></a-slider>
+              <a-input-number class="attr_mintextarea" :min="0" placeholder="请输入文字" v-model="core.css.fontSize" />
+            </div>
+        </div>
+      </div>
+        
       <!-- 文本框 按钮 文本框 可以使用的属性 -->
       <div class="attr_item" v-if="showBackground(core)">
         <div class="attr_list_left">背景颜色:</div>
@@ -105,7 +178,7 @@
             :min="0"
             :max="100"
           ></a-slider>
-          <a-input-number class="attr_mintextarea" placeholder="请输入文字" v-model="core.css.fontSize" />
+          <a-input-number class="attr_mintextarea" :min="0" placeholder="请输入文字" v-model="core.css.fontSize" />
         </div>
       </div>
       <div class="attr_item" v-if="showFontsize(core)">
@@ -161,6 +234,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
+            :min="0"
             v-model="core.css.borderWidth"
           />
         </div>
@@ -178,6 +252,7 @@
           <a-input-number
             class="attr_mintextarea"
             placeholder="请输入文字"
+            :min="0"
             v-model="core.css.borderRadius"
           />
         </div>
@@ -279,7 +354,9 @@ export default {
       if (
         core.name == "base-img" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-radio"||
+        core.name=="base-check"
       ) {
         return false;
       } else {
@@ -291,7 +368,10 @@ export default {
       if (
         core.name == "base-img" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-radio"||
+        core.name=="base-check"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
@@ -328,12 +408,20 @@ export default {
         core.name == "base-img" ||
         core.name == "base-div" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
         return true;
       }
+    },
+    //判断是否为图标
+    isIcon(core){
+      if(core.name=="base-icon"){
+        return true;
+      }
+      return false;
     },
     // 是否显示文字大小
     showFontsize(core) {
@@ -341,7 +429,8 @@ export default {
         core.name == "base-img" ||
         core.name == "base-div" ||
         core.name == "base-swiper" ||
-        core.name == "base-editor"
+        core.name == "base-editor"||
+        core.name=="base-icon"
       ) {
         return false;
       } else {
@@ -371,6 +460,19 @@ export default {
       } else {
         return false;
       }
+    },
+    //是否显示宽高
+    showWidth(core){
+      if(core.name=='base-radio'||core.name=="base-check"||core.name=="base-icon"){
+        return false;
+      }
+      return true;
+    },
+    showFrameSet(core){
+      if(core.name=='base-radio'||core.name=="base-check"){
+        return true;
+      }
+      return false;
     },
     // 切换css属性
     toggleCssType() {
