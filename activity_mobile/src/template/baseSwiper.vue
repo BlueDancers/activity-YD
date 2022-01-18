@@ -1,25 +1,18 @@
-<!--
- * @Author: your name
- * @Date: 2020-03-01 15:17:44
- * @LastEditTime: 2020-03-13 17:34:31
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_mobile/src/template/baseSwiper.vue
- -->
 <template>
   <van-swipe
-    class="baseComplate"
-    :class="animation.animationName"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
     :style="style"
     :autoplay="Number(option.autoplay)"
   >
-    <van-swipe-item v-for="(item,index) in option.item" :key="index">
+    <van-swipe-item v-for="(item, index) in showUrlList" :key="index">
       <img
-        :style="{width: style.width,height: style.height}"
+        :style="{ width: style.width, height: style.height }"
         :src="item.img"
         alt
         @click="link(item.link)"
-        @error="errorImg(index)"
       />
     </van-swipe-item>
   </van-swipe>
@@ -27,7 +20,14 @@
 
 <script>
 import { handleStyle } from "../utils/index";
+import { imageStaticUrl } from "@/utils/request";
 export default {
+  data() {
+    return {
+      imageStaticUrl: imageStaticUrl,
+      showUrlList: []
+    };
+  },
   props: {
     css: {
       type: Object,
@@ -41,6 +41,14 @@ export default {
       type: Object
     }
   },
+  mounted() {
+    this.showUrlList = this.option.item.map(e => {
+      return {
+        img: imageStaticUrl + e.img,
+        link: e.link
+      };
+    });
+  },
   computed: {
     style() {
       let keyword = this.$store.state.app.isSoftKeyboard;
@@ -53,7 +61,23 @@ export default {
         location.href = link;
       }
     },
-    // 商品无法加载
+    setShowUrlList(list) {
+      let result = [];
+      list.map(e => {
+        if (e.img == undefined) {
+          e = {
+            img: e,
+            link: ""
+          };
+        }
+        if (e.link == undefined) {
+          e.link = "";
+        }
+        result.push(e);
+      });
+      this.showUrlList = result;
+    },
+    // 图片无法加载
     errorImg(index) {
       this.option.item[index].img = require("../assets/750-188.png");
     }

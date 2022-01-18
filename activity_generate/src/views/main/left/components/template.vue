@@ -9,11 +9,15 @@
 <template>
   <div class="template">
     <div class="template_list">
-      <div class="template_item" v-for="item in templateList" :key="item.templateId">
+      <div class="template_item"
+           v-for="item in templateList"
+           :key="item.templateId">
         <a-popover placement="right">
           <template slot="content">
             <div class="show_open_page">
-              <img class="show_img" :src="item.titlePage" alt />
+              <img class="show_img"
+                   :src="imageStaticUrl+item.titlePage"
+                   alt />
               <div class="template_info">
                 <div class="info_item">
                   <div class="info_left">模板名称:</div>
@@ -24,19 +28,25 @@
                   <div class="info_right">{{item.author}}</div>
                 </div>
               </div>
-              <a-button class="touch_template" type="primary" @click="selectTemplate(item)">选择</a-button>
+              <a-button class="touch_template"
+                        type="primary"
+                        @click="selectTemplate(item)">选择</a-button>
             </div>
           </template>
-          <a-popconfirm
-            title="模板删除后不可恢复,确认删除吗?"
-            @confirm="deleteTemplate(item)"
-            okText="删除"
-            cancelText="取消"
-          >
-            <a-icon class="delete_icon" type="close-circle" />
+          <a-popconfirm title="模板删除后不可恢复,确认删除吗?"
+                        @confirm="deleteTemplate(item)"
+                        okText="删除"
+                        cancelText="取消">
+            <a-icon class="delete_icon"
+                    type="close-circle" />
           </a-popconfirm>
-
-          <img class="item_img" :src="item.titlePage" alt />
+          <el-image :src="imageStaticUrl+item.titlePage">
+            <div slot="error"
+                 class="image-slot">
+              <el-image :src="require('@/assets/swiper.png')"
+                        style="border:2px #fff solid;"></el-image>
+            </div>
+          </el-image>
         </a-popover>
       </div>
     </div>
@@ -46,26 +56,34 @@
 <script lang="ts">
 import Vue from "vue";
 import { getTemplateDataById } from "@/api/index";
+import { imageStaticUrl } from "@/config/index";
 export default Vue.extend({
   mounted() {
     this.$store.dispatch("complate/getAllTemplate");
   },
   computed: {
     templateList() {
-      return this.$store.state.complate.template;
+      return (this as any).$store.state.complate.template;
+    }
+  },
+  data(){
+    return{
+      imageStaticUrl:imageStaticUrl,
     }
   },
   methods: {
     selectTemplate(item) {
-      getTemplateDataById(item.templateId).then(res => {
+      console.log(item)
+      getTemplateDataById(item._id).then(res => {
         this.$store.commit("core/updateCommHeigth", item.height);
         this.$store.commit("core/updateBackground", item.background);
-        this.$store.commit("core/update_template", res.data.data);
+        console.log(res)
+        this.$store.commit("core/update_template", res.data.data[0].doms);
         this.$message.success("模板应用成功");
       });
     },
     deleteTemplate(item) {
-      this.$store.dispatch("complate/deleteTemplate", item.templateId);
+      this.$store.dispatch("complate/deleteTemplate", item._id);
     }
   }
 });
@@ -88,8 +106,10 @@ export default Vue.extend({
         box-shadow: 2px 2px 10px rgb(205, 205, 205);
         .delete_icon {
           opacity: 1;
+          z-index: 999;
         }
       }
+
       .delete_icon {
         opacity: 0;
         position: absolute;
@@ -104,6 +124,8 @@ export default Vue.extend({
     }
   }
 }
+
+
 .show_open_page {
   width: 200px;
   position: relative;

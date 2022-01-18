@@ -7,17 +7,12 @@
     <div class="bottom_bottom" @mousedown.stop="roundMousedown(5)"></div>
     <div class="bottom_right" @mousedown.stop="roundMousedown(6)"></div>
     <slot></slot>
-    <right-menu ref="rightMenu" />
   </div>
 </template>
 
 <script>
 // 全局拖拽组件
-import rightMenu from "../rightMenu/index";
 export default {
-  components: {
-    rightMenu
-  },
   props: {
     id: {
       type: String
@@ -59,13 +54,17 @@ export default {
       this.$store.commit("core/deleteCompLate", { id: this.id });
     },
     mouseLeft() {
-      this.$refs.rightMenu.close();
+      this.$store.commit("setting/closeRightMenu");
     },
     mouseRight(e) {
-      this.$refs.rightMenu.open(this.id, e.layerX, e.layerY);
+      this.$store.commit("setting/openRightMenu",{
+        chooseId:this.id,
+        openX:e.clientX,
+        openY:e.clientY
+      });
       e.preventDefault();
     }
-  }
+  },
 };
 </script>
 
@@ -73,6 +72,7 @@ export default {
 .edit {
   position: absolute;
   outline: 2px rgb(24, 144, 255) solid;
+  z-index: 99999 !important;
   .inline_btn {
     margin: 0px;
   }

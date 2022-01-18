@@ -8,7 +8,7 @@
  -->
 <template>
   <div class="btn_con">
-    <button class="baseComplate" :style="style" @click="clickBtn">{{ option.text }}</button>
+    <button class="baseComplate" :style="style" @click="clickBtn">{{ showText }}</button>
   </div>
 </template>
 
@@ -30,8 +30,21 @@ export default {
       return handleStyle(this.css);
     }
   },
+  data(){
+    return{
+      showText:'',
+      clickEvent:undefined,
+    }
+  },
+  mounted(){
+    this.showText=this.option.text;
+  },
   methods: {
     clickBtn() {
+      if(this.clickEvent!=undefined){
+        this.clickEvent();
+        return ;
+      }
       if (this.option.btnType == 0) {
         console.log("无事件");
       } else if (this.option.btnType == 1) {
@@ -39,7 +52,6 @@ export default {
         location.href = this.option.link;
       } else if (this.option.btnType == 2) {
         // 提交表单
-        console.log("请求");
         this.$emit("submitForm", this.option);
       } else if (this.option.btnType == 3) {
         console.log("qq客服");
@@ -48,7 +60,15 @@ export default {
       } else if (this.option.btnType == 4) {
         console.log("电话客服");
         location.href = "tel:10086";
+      }else if(this.option.btnType==5){
+        this.$store.commit('core/changeNowPage',this.option.link);
       }
+    },
+    setShowText(value){
+      this.showText=value;
+    },
+    setClickEvent(event){
+      this.clickEvent=event;
     }
   }
 };
