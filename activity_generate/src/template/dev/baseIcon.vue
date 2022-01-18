@@ -1,16 +1,10 @@
-<!--
- * @Author: your name
- * @Date: 2020-02-24 16:09:57
- * @LastEditTime: 2020-04-10 10:59:26
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /activity_generate/src/template/dev/baseDiv.vue
- -->
 <template>
-  <!-- <div class="base_img" @mouseover="toggleEdit" > -->
   <div class="btn_con" @mousedown="toggleEdit" @mouseenter="mouseenter" @mouseleave="mouseleave">
     <edit v-show="editStatus" :id="id" :styles="constyle">
-      <div :style="style" @mousedown="mousedown" class="inline_div" v-html="option.html"></div>
+      
+        <div class="aIcon"  :style="constyle">
+              <a-icon :type="option.iconType" :theme="option.theme"/>
+        </div>
     </edit>
     <!-- 鼠标进入状态 -->
     <div
@@ -18,16 +12,14 @@
       :style="constyle"
       :class="hoverStatus && absolute ? ' hoverTemplate' : ''"
     >
-      <div :style="style" @mousedown="mousedown" class="inline_div" v-html="option.html"></div>
+    <div class="aIcon"  :style="constyle">
+            <a-icon :type="option.iconType" :theme="option.theme"/>
+    </div>
     </div>
     <!-- 未选中状态 -->
-    <div
-      v-show="!editStatus & !hoverStatus"
-      :class="absolute ? 'baseComplate' : ''"
-      ondragstart="return false;"
-      :style="style"
-      v-html="option.html"
-    ></div>
+    <div class="aIcon"  :class="absolute ? 'baseComplate' : ''"  v-show="!editStatus & !hoverStatus" :style="constyle">
+            <a-icon :type="option.iconType" :theme="option.theme" />
+    </div>
   </div>
 </template>
 
@@ -55,17 +47,17 @@ export default {
     }
   },
   computed: {
-    style() {
-      return handleStyle(this.css);
-    },
     constyle() {
       let style = handleStyle(this.css);
       return {
         top: style.top,
         left: style.left,
-        width: style.width,
-        height: style.height,
-        zIndex: style.zIndex
+        width: style.fontSize+5+'px',
+        height:this.css.fontSize+5+'px',
+        fontSize:style.fontSize,
+        color:style.color,
+        'font-weight':style.fontSize+'px',
+        'z-index':style.zIndex,
       };
     },
     editStatus() {
@@ -94,14 +86,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.inline_div {
-  user-select: none;
-  border-style: none;
-  width: 100%;
-  height: 100%;
-}
-img {
-  width: 100%;
-  height: 100%;
+.aIcon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
