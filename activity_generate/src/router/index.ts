@@ -36,7 +36,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: '/docs/',
+  base: '/docsb/',
   routes
 })
 

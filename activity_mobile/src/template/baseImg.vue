@@ -1,10 +1,25 @@
 <template>
-  <img class="baseComplate" :class="animation.animationName" :src="option.text" alt :style="style" />
+  <img
+    :src="showImgUrl"
+    :class="[
+      animation.animationName,
+      option.isFixed ? 'fixedComplate' : 'baseComplate'
+    ]"
+    alt
+    :style="style"
+  />
 </template>
 
 <script>
 import { handleStyle } from "../utils/index";
+import { imageStaticUrl } from "@/utils/request";
 export default {
+  data() {
+    return {
+      imageStaticUrl: imageStaticUrl,
+      showImgUrl: ""
+    };
+  },
   props: {
     option: {
       type: Object
@@ -23,7 +38,14 @@ export default {
       return handleStyle(this.css, keyword);
     }
   },
-  methods: {}
+  methods: {
+    setShowUrl(value) {
+      this.showImgUrl = value;
+    }
+  },
+  mounted() {
+    this.showImgUrl = imageStaticUrl + this.option.text;
+  }
 };
 </script>
 
