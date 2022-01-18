@@ -1,3 +1,5 @@
+
+
 /*
  * @Author: your name
  * @Date: 2020-02-22 12:51:09
@@ -40,8 +42,11 @@ import {
   Tooltip,
   Drawer,
   Switch,
+  Card,
+  Divider
 } from 'ant-design-vue'
 Vue.use(Button)
+Vue.use(Card)
 Vue.use(Tabs)
 Vue.use(Input)
 Vue.use(InputNumber)
@@ -61,6 +66,7 @@ Vue.use(Pagination)
 Vue.use(Tooltip)
 Vue.use(Drawer)
 Vue.use(Switch)
+Vue.use(Divider)
 Vue.prototype.$message = message
 
 import swipe from 'vant/lib/swipe'
@@ -81,11 +87,17 @@ import EleInput from 'element-ui/lib/input'
 import 'element-ui/lib/theme-chalk/input.css'
 import EleUpload from 'element-ui/lib/upload'
 import 'element-ui/lib/theme-chalk/upload.css'
-
+import ElTag from 'element-ui/lib/tag'
+import 'element-ui/lib/theme-chalk/tag.css'
+import ElImage from 'element-ui/lib/image';
+import 'element-ui/lib/theme-chalk/image.css'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
+
 Vue.component('el-button', ElButton)
+Vue.component('el-tag', ElTag)
+Vue.component('el-image', ElImage)
 Vue.component('el-color-picker', ColorPicker)
 Vue.component('el-input', EleInput)
 Vue.component('el-upload', EleUpload)

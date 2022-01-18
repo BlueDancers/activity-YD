@@ -7,8 +7,9 @@
         @mousedown="mousedown"
         @error="loadImg"
         class="inline_img"
-        :src="option.text"
+        :src="imgUrl"
         alt
+        draggable="false"
       />
     </edit>
     <!-- 鼠标进入状态 -->
@@ -22,18 +23,20 @@
         @mousedown="mousedown"
         @error="loadImg"
         class="inline_img"
-        :src="option.text"
+        :src="imgUrl"
         alt
+        draggable="false"
       />
     </div>
     <img
       v-show="!editStatus & !hoverStatus"
       :class="absolute ? 'baseComplate' : ''"
       ondragstart="return false;"
-      :src="option.text"
+      :src="imgUrl"
       @error="loadImg"
       alt
       :style="style"
+      draggable="false"
     />
   </div>
 </template>
@@ -41,6 +44,7 @@
 <script>
 import { handleStyle } from "@/utils/index";
 import edit from "@/components/edit/index";
+import {imageStaticUrl } from "@/config/index";
 export default {
   components: {
     edit
@@ -62,6 +66,9 @@ export default {
     }
   },
   computed: {
+    imgUrl(){
+      return imageStaticUrl+this.option.text;
+    },
     style() {
       return handleStyle(this.css);
     },
